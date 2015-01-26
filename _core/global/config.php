@@ -6,7 +6,7 @@ define('DB_USERNAME', 'pms');
 define('DB_PASSWORD', '__$pmsadmin)(--');
 
 //PROJECT CONFIG
-define('PROJECT_NAME', 'pms');
+define('PROJECT_NAME', 'pms'); //Change project name here, and in global/_require.php
 
 //FOLDER ALIASES
 define('MODEL', '_core/model/');

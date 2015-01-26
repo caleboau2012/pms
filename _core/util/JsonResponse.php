@@ -6,9 +6,9 @@ class JsonResponse
     const STATUS_ERROR = 2;
     const STATUS_ACCESS_DENIED = 3;
     const STATUS_NO_DATA = 4;
-    const STATUS_JSON_FAIL = "fail";
+    /*const STATUS_JSON_FAIL = "fail";
     const STATUS_JSON_ERROR = "error";
-    const STATUS_JSON_SUCCESS = "success";
+    const STATUS_JSON_SUCCESS = "success";*/
 
     const P_STATUS = 'status';
     const P_DATA = 'data';
