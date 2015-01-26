@@ -76,4 +76,4 @@ class SqlClient {
     public function getLastInsertedId(){
         return $this->pdo->lastInsertId();
     }
-} 
+}

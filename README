@@ -1,0 +1,65 @@
+Minimum Project Requirements
+- php5.4 and above
+
+PROJECT STRUCTURE
+-------------------------------------------------------------------------------
+NB: All folders whose names start with "_" cannot be accessed directly from the
+    URL
+
+This document describes organization of code.
+
+Each folder would be discussed from the root directory
+
+|- PMS
+|  |-- _core/
+|  |  |-- controller/
+|  |  |-- global/
+|  |  |-- model/
+|  |  |-- util/
+|  |
+|  |-- _resource/
+|  |
+|  |-- css/
+|  |
+|  |-- js/
+|  |
+|  |-- phase/
+
+PMS
+  - root folder containing all project files & folders
+
+_core
+  - contains all project business logic.
+
+_core/controller
+  - provides functions to be used in files located in the phase/ directory
+  - each function may/may not use functions from the model class to manipulate
+    data from the database
+
+_core/global
+  - contains configuration, constants etc that may be referenced accross the
+    whole project
+  - "SqlStatement.php" contains all Sql queries to be used by the system
+  - "config.php" contains constants that are required for the projects
+    configuration
+  - "constants.php" contains constants that can be used throughout the system
+    and not for project configuration
+
+_core/model
+  - handles all CRUD operations
+
+_core/util
+  - contains all utility files and third-party libraries/modules
+
+_resource
+  - handles file uploads
+  - stores images, videos, documents etc.
+
+css
+  - contains css files
+
+js
+  - contains all js files
+
+phase
+  - proxy layer for all views
