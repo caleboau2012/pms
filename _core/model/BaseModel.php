@@ -5,7 +5,7 @@ abstract class BaseModel {
     /**
      * @var
      */
-    private $conn;
+    protected $conn;
 
     public function __construct($conn_params=array()){
         $db_host = (isset($conn_params['HOST'])) ? $conn_params['HOST'] : DB_HOST;

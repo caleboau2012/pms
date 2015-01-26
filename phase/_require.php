@@ -5,5 +5,5 @@
 
   require_once '../_core/util/Crave.php';
 
-  Crave::requireFiles(UTIL, array('JsonResponse'));
-  var_dump(get_included_files());
+  Crave::requireFiles(UTIL, array('SqlClient'));
+  Crave::requireFiles(MODEL, array('BaseModel'));
