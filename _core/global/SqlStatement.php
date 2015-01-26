@@ -9,3 +9,6 @@
  * }
  */
 
+class UserAuthSqlStatement {
+  const VERIFY_USER = "SELECT COUNT(*) AS count FROM user_auth WHERE regNo = :regNo AND passcode = :passcode";
+}
