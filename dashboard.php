@@ -26,48 +26,58 @@
 </head>
 
 <body>
-
 <div class="container">
     <div id="dashboard">
-
-        <div class="dashboard-item">
-            <img src="images/dash-icons.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-        <div class="dashboard-item">
-            <img src="images/student_access_code.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-        <div class="dashboard-item">
-            <img src="images/file-edit.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-        <div class="dashboard-item">
-            <img src="images/photo_capture.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-
-        <div class="dashboard-item">
-            <img src="images/photo_capture.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-        <div class="dashboard-item">
-            <img src="images/student_access_code.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-        <div class="dashboard-item">
-            <img src="images/file-edit.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-        <div class="dashboard-item">
-            <img src="images/photo_capture.png">
-            <div class="dashboard-desc">Admin Access</div>
-        </div>
-
-
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/dash-icons.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/student_access_code.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/file-edit.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/photo_capture.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/photo_capture.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/student_access_code.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/file-edit.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
+        <a href="#">
+            <div class="col-md-3 dashboard-item">
+                <img src="images/photo_capture.png">
+                <div class="dashboard-desc">Admin Access</div>
+            </div>
+        </a>
         <div class="clearfix"></div>
     </div>
-
 
 </div> <!-- /container -->
 
