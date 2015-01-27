@@ -22,9 +22,24 @@ if ($intent == 'login') {
     $authenticator = new AuthenticationController();
     $verify = $authenticator->verify($credentials);
 
-    if ($verify) {
-      echo JsonResponse::message(STATUS_OK, 'Login successful!');
-      exit();
+    if (is_array($verify)) {
+      if ($verify[P_STATUS] == STATUS_OK) {
+
+        //SET SESSION VARIABLES
+        $user_credentials = $verify[P_DATA];
+        foreach ($user_credentials as $key => $value) {
+          CxSessionHandler::setItem($key, $value);
+        }
+
+        //ECHO RESPONSE
+        echo JsonResponse::message($verify[P_STATUS], $verify[P_MESSAGE]);
+        exit();
+
+      } else {
+        //ECHO RESPONSE
+        echo JsonResponse::error($verify[P_MESSAGE]);
+        exit();
+      }
     } else {
       echo JsonResponse::error('Invalid combination of registration number and passcode!');
       exit();
