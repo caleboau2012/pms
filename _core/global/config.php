@@ -10,6 +10,6 @@ define('PROJECT_NAME', 'pms'); //Change project name here, and in global/_requir
 
 //FOLDER ALIASES
 define('MODEL', '_core/model/');
-define('GLOBAL', '_core/global/');
+define('GLOBAL_VAR', '_core/global/');
 define('CONTROLLER', '_core/controller/');
 define('UTIL', '_core/util/');

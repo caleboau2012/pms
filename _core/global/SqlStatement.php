@@ -10,6 +10,7 @@
  */
 
 class UserAuthSqlStatement {
+    const VERIFY_USER = "SELECT COUNT(*) AS count FROM user_auth WHERE regNo = :regNo AND passcode = :passcode";
     const ADD = 'INSERT INTO user_auth (usertype, regNo, passcode, create_date, modified_date, status) VALUES (:usertype, :regNo, SHA1(:passcode), NOW(), NOW(), :status)';
     const GET = 'SELECT userid, usertype, regNo, create_date, modified_date, status, online_status
                 FROM user_auth
