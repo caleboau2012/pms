@@ -28,16 +28,16 @@
 <body>
 <div class="container">
     <div id="dashboard">
-        <a href="#">
+        <a href="admin/staff.php">
             <div class="col-md-3 dashboard-item">
                 <img src="images/dash-icons.png">
-                <div class="dashboard-desc">Admin Access</div>
+                <div class="dashboard-desc">Staff Access</div>
             </div>
         </a>
-        <a href="#">
+        <a href="admin/patients.php">
             <div class="col-md-3 dashboard-item">
                 <img src="images/student_access_code.png">
-                <div class="dashboard-desc">Admin Access</div>
+                <div class="dashboard-desc">Patient Access</div>
             </div>
         </a>
         <a href="#">
