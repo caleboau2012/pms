@@ -1,17 +1,31 @@
 <?php
 
-class StaffModel extends BaseModel{
+class StaffModel extends UserModel{
+    /*
+    $user_type;
+
+    public function __construct($usertype){
+        parent::__construct();
+        $this->$user_type = $usertype;
+    }*/
+
     public static function addStaff(){
 
     }
 
+    /*$regNo*/
     public static function getStaff(){
 
     }
 
-    public static function addProfile($userId, $surname, $firstName, $middleName,
-                                      $workAddress, $homeAddress, $telephone,
-                                      $birthDate, $sex, $height, $weight){
+    public static function getAllStaff(){
+
+    }
+
+    /*$userId, $surname, $firstName, $middleName,
+    $workAddress, $homeAddress, $telephone,
+    $birthDate, $sex, $height, $weight*/
+    public static function addProfile($data){
 
     }
 
@@ -19,11 +33,13 @@ class StaffModel extends BaseModel{
 
     }
 
-    public static function addAuthInfo($regNo, $passcode, $userType){
+    /*$regNo, $passcode, $userType*/
+    public static function addAuthInfo($data){
 
     }
 
-    public static function editPasscode($regNo, $passcode){
+    /*$regNo, $passcode*/
+    public static function editPasscode($data){
 
     }
 
