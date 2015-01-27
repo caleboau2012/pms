@@ -56,7 +56,7 @@ class ProfileTable {
   const surname = 'surname';
   const firstname = 'firstname';
   const middlename = 'middlename';
-  const department = 'department';
+  const department_id = 'department_id';
   const local_address = 'local_address';
   const home_address = 'home_address';
   const telephone = 'telephone';

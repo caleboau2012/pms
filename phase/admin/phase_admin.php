@@ -1,6 +1,6 @@
 <?php
 
-require_once '../_core/global/_require.php';
+require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));

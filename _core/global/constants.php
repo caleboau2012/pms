@@ -12,4 +12,4 @@ define('P_ACCESS_TOKEN', 'access_token');
 
 //ONLINE STATUS CODES
 define('ONLINE', 1);
-define('OFFLINE', 2);
+define('OFFLINE', 0);
