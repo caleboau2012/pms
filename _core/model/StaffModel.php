@@ -9,12 +9,12 @@ class StaffModel extends UserModel{
         $this->$user_type = $usertype;
     }*/
 
-    public static function addStaff(){
+    public static function addStaff($data){
 
     }
 
     /*$regNo*/
-    public static function getStaff(){
+    public static function getStaff($data){
 
     }
 
@@ -29,7 +29,8 @@ class StaffModel extends UserModel{
 
     }
 
-    public static function getProfile($regNo){
+    /*$regNo*/
+    public static function getProfile($data){
 
     }
 

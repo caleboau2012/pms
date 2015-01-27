@@ -7,6 +7,5 @@ class StaffController{
 
     public static function getStaff($data){
         StaffModel::getStaff($data);
-
     }
 }
