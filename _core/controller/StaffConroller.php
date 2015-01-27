@@ -1,11 +1,19 @@
 <?php
 
 class StaffController{
-    public static function addStaff($data){
-        StaffModel::addStaff($data);
+
+    private $staff;
+
+    public function __construct(){
+        $this->staff = new StaffModel();
     }
 
-    public static function getStaff($data){
-        StaffModel::getStaff($data);
+    public function addStaff($authData, $profileData){
+        $this->staff->addStaff($authData, $profileData);
     }
+
+    public function getStaff($data){
+        $this->staff->getStaff($data);
+    }
+
 }
