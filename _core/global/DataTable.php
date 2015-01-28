@@ -14,12 +14,8 @@ class UserAuthTable {
 
 class UserTypeTable {
 
-  const permission_role_id = 'permission_role_id';
-  const userid = 'userid';
-  const staff_permission_id = 'staff_permission_id';
-  const staff_role_id = 'staff_role_id';
-  const create_date = 'create_date';
-  const modified_date = 'modified_date';
+  const usertype_id = 'usertype_id';
+  const type = 'type';
   const active_fg = 'active_fg';
 }
 

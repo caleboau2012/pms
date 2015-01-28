@@ -27,18 +27,21 @@ if ($intent == 'getStaffDetails') {
             echo JsonResponse::error('No details found!');
             exit();
         }
+    }  else {
+        echo JsonResponse::error('User ID not set!');
+        exit();
     }
 } elseif($intent == 'getAllStaff'){
-        $staffController = new StaffController();
-        $list_of_staff = $staffController->getAllStaff();
+    $staffController = new StaffController();
+    $list_of_staff = $staffController->getAllStaff();
 
-        if (is_array($list_of_staff)) {
-            echo JsonResponse::success($list_of_staff);
-            exit();
-        } else {
-            echo JsonResponse::error('No staff found!');
-            exit();
-        }
+    if (is_array($list_of_staff)) {
+        echo JsonResponse::success($list_of_staff);
+        exit();
+    } else {
+        echo JsonResponse::error('No staff found!');
+        exit();
+    }
 } elseif($intent == 'registerStaff'){
     if(isset($_REQUEST['authInfo'])){
         $staffAuthInfo = $_REQUEST['authInfo'];
@@ -65,7 +68,6 @@ if ($intent == 'getStaffDetails') {
             exit();
         }
     }
-} else{
-    echo JsonResponse::error('No details found!');
-    exit();
+} else {
+    echo JsonResponse::error("Invalid intent!");
 }

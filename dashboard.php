@@ -47,8 +47,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
         <!--        USER ROLES -->
         <?php
-        foreach(CxSessionHandler::getItem(UserTypeTable::staff_role_id) as $role){
-            if($role == ADMINISTRATOR){
+        foreach(CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff){
+            if($staff[StaffRoleTable::staff_role_id] == ADMINISTRATOR){
                 ?>
                 <div class="col-md-3 dashboard-item">
                     <a href="admin/staff.php">
@@ -57,7 +57,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     </a>
                 </div>
             <?php
-            }else if($role == DOCTOR){
+            }else if($staff[StaffRoleTable::staff_role_id] == DOCTOR){
                 ?>
                 <div class="col-md-3 dashboard-item">
                     <a href="admin/staff.php">
@@ -66,7 +66,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     </a>
                 </div>
             <?php
-            }else if($role == PHARMACIST){
+            }else if($staff[StaffRoleTable::staff_role_id] == PHARMACIST){
                 ?>
                 <div class="col-md-3 dashboard-item">
                     <a href="admin/staff.php">
