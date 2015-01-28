@@ -151,3 +151,7 @@ body {
     display: inline-block;
     border-radius: 50%;
 }
+
+.modal .container div{
+   padding: 0;
+}
