@@ -1,46 +1,29 @@
 <?php
 
-class StaffModel extends UserModel{
-    /*
-    $user_type;
+class StaffModel extends BaseModel{
 
-    public function __construct($usertype){
-        parent::__construct();
-        $this->$user_type = $usertype;
-    }*/
-
-    public static function addStaff(){
-
+    public function getStaff($regNo){
+        return $this->conn->execute(ProfileSqlStatement::GET, $regNo);  /*Note: this uses 'userid' as the sql condition*/
     }
 
-    /*$regNo*/
-    public static function getStaff(){
-
-    }
-
-    public static function getAllStaff(){
-
+    public function getAllStaff($userType){
+        return $this->conn->execute(ProfileSqlStatement::GET, array());  /*Note: this uses 'userid' as the sql condition*/
     }
 
     /*$userId, $surname, $firstName, $middleName,
     $workAddress, $homeAddress, $telephone,
     $birthDate, $sex, $height, $weight*/
-    public static function addProfile($data){
-
+    public function addProfile($profileData){
+        return $this->conn->execute(ProfileSqlStatement::ADD, $profileData);
     }
 
-    public static function getProfile($regNo){
-
+    public function getProfile($regNo){
+        return $this->conn->execute(ProfileSqlStatement::GET_PROFILE, $regNo);
     }
 
-    /*$regNo, $passcode, $userType*/
-    public static function addAuthInfo($data){
-
-    }
-
-    /*$regNo, $passcode*/
-    public static function editPasscode($data){
-
+    /*$regNo, $passcode, $userType, $status*/
+    public function addAuthInfo($authData){
+        return $this->conn->execute(UserAuthSqlStatement::ADD, $authData);
     }
 
 }
