@@ -3,11 +3,11 @@
 class StaffModel extends BaseModel{
 
     public function getStaff($regNo){
-        return $this->conn->execute(ProfileSqlStatement::GET, $regNo);  /*Note: this uses 'userid' as the sql condition*/
+        return $this->conn->fetch(ProfileSqlStatement::GET, $regNo);  /*Note: this uses 'userid' as the sql condition*/
     }
 
     public function getAllStaff($userType){
-        return $this->conn->execute(ProfileSqlStatement::GET, array());  /*Note: this uses 'userid' as the sql condition*/
+        return $this->conn->fetch(UserAuthSqlStatement::GET_ALL, $userType);  /*Note: this uses 'userid' as the sql condition*/
     }
 
     /*$userId, $surname, $firstName, $middleName,
@@ -18,12 +18,16 @@ class StaffModel extends BaseModel{
     }
 
     public function getProfile($regNo){
-        return $this->conn->execute(ProfileSqlStatement::GET_PROFILE, $regNo);
+        return $this->conn->fetch(ProfileSqlStatement::GET_PROFILE, $regNo);
     }
 
     /*$regNo, $passcode, $userType, $status*/
     public function addAuthInfo($authData){
         return $this->conn->execute(UserAuthSqlStatement::ADD, $authData);
+    }
+
+    public function getUserId($regNo){
+        return $this->conn->fetch(UserAuthSqlStatement::GEt_ID, $regNo);
     }
 
 }
