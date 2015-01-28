@@ -17,7 +17,7 @@ class SqlClient {
 
         //initializing PDO
         try {
-            $this->pdo = new PDO("mysql://host=$host;dbname=$dbname", $username, $password);
+            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         } catch (PDOException $e) {
             $this->has_error = true;
         }

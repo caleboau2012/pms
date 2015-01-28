@@ -28,22 +28,17 @@ class UserAuthSqlStatement {
                               ORDER by p.surname, p.firstname, p.middlename';
 
     const UPDATE_STATUS = 'UPDATE user_auth SET status = :status WHERE userid = :userid LIMIT 1';
-    const GET_USER_BY_CREDENTIALS = 'SELECT u.userid, u.regNo, u.usertype, u.passcode, u.online_status, pr.staff_permission_id, pr.staff_role_id,
-                                                p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
-                                      FROM user_auth AS u
-                                        LEFT JOIN PROFILE AS p
-                                          ON(u.userid=p.userid)
-                                        LEFT JOIN permission_role AS pr
-                                          ON(p.userid=pr.userid)
-                                      WHERE regNo=:regNo AND passcode=SHA1(:passcode)';
+    const GET_USER_BY_CREDENTIALS = "SELECT u.userid, u.regNo, u.usertype, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
+                                          FROM user_auth AS u
+                                            LEFT JOIN PROFILE AS p
+                                              ON(u.userid=p.userid)
+                                          WHERE regNo=:regNo AND passcode=SHA1(:passcode)";
 
-    const GET_USER_BY_ID = 'SELECT u.userid, u.regNo, u.usertype, u.passcode, u.online_status, pr.staff_permission_id, pr.staff_role_id,
+    const GET_USER_BY_ID = 'SELECT u.userid, u.regNo, u.usertype, u.online_status,
                                                 p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
                                       FROM user_auth AS u
                                         LEFT JOIN PROFILE AS p
                                           ON(u.userid=p.userid)
-                                        LEFT JOIN permission_role AS pr
-                                          ON(p.userid=pr.userid)
                                       WHERE u.userid=:userid';
 
     const FLAG_USER_ONLINE = 'UPDATE user_auth SET online_status = 1 WHERE userid=:userid';
@@ -58,4 +53,8 @@ class ProfileSqlStatement {
                     height, weight, birth_date, create_date, modified_date FROM profile WHERE userid=:userid';
     const UPDATE = 'UPDATE profile SET surname = :surname, firstname = :firstname, middlename = :middlename, work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight,department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
     const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
+}
+
+class PermissionRoleSqlStatement {
+    const GET_STAFF_ROLE = "SELECT staff_role_id FROM permission_role WHERE userid = :userid";
 }
