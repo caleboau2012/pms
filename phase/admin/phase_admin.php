@@ -42,12 +42,15 @@ if ($intent == 'getStaffDetails') {
         echo JsonResponse::error('No staff found!');
         exit();
     }
-} elseif($intent == 'registerStaff'){
+} elseif($intent == 'addNewStaff'){
     if(isset($_REQUEST['authInfo'])){
-        $staffAuthInfo = $_REQUEST['authInfo'];
+        $regNo = isset($_REQUEST['regNo']) ? $_REQUEST[''] : null;
+        $passcode = isset($_REQUEST['passcode']) ? $_REQUEST['passcode'] : null;
+        $usertype = isset($_REQUEST['usertype']) ? $_REQUEST['usertype'] : null;
+
         $staffController = new StaffController();
 
-        if($staffController->addStaff($staffAuthInfo)){
+        if($staffController->addStaff($regNo, $passcode, $usertype)){
             echo JsonResponse::success("Successfully created!");
             exit();
         } else {

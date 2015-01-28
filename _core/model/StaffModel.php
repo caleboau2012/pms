@@ -6,8 +6,8 @@ class StaffModel extends BaseModel{
         return $this->conn->fetch(ProfileSqlStatement::GET, $regNo);  /*Note: this uses 'userid' as the sql condition*/
     }
 
-    public function getAllStaff($userType){
-        return $this->conn->fetch(UserAuthSqlStatement::GET_ALL, $userType);  /*Note: this uses 'userid' as the sql condition*/
+    public function getAllStaff(){
+        return $this->conn->fetchAll(UserAuthSqlStatement::GET_ALL, array());
     }
 
     /*$userId, $surname, $firstName, $middleName,

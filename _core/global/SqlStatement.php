@@ -15,7 +15,7 @@ class UserAuthSqlStatement {
     const GET = 'SELECT userid, usertype, regNo, create_date, modified_date, status, online_status
                 FROM user_auth
                 WHERE regNo = :regNo AND userid = :userid';
-    const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.local_address, p.home_address, p.telephone, p.sex, p.birth_date FROM profile as p LEFT JOIN user_auth as ua ON (p.userid = ua.userid) WHERE ua.usertype = :usertype';
+    const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.local_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.usertype FROM profile as p LEFT JOIN user_auth as ua ON (p.userid = ua.userid)';
 
     const CHANGE_PASSCODE = 'UPDATE user_auth SET passcode = SHA1(:passcode) WHERE regNo = :regNo';
     const CHANGE_ONLINE_STATUS = 'UPDATE user_auth SET online_status = :online_status WHERE userid = :userid';

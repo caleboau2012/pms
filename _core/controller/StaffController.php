@@ -8,7 +8,12 @@ class StaffController{
         $this->staff = new StaffModel();
     }
 
-    public function addStaff($authData){
+    public function addStaff($regNo, $passcode, $status = 1){
+        if (!($regNo && $passcode)){
+            return false;
+        }
+        $authData = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => $status);
+        die(var_dump($authData));
         return $this->staff->addAuthInfo($authData);
     }
 
@@ -23,16 +28,7 @@ class StaffController{
     }
 
     public function getAllStaff(){
-        $result = array();
-
-        $params = array('usertype'=> STAFF);
-        $result["staff"] = $this->staff->getAllStaff($params);
-        unset($params['usertype']);
-
-        $params = array('usertype'=> ADMIN);
-        $result["admin"] = $this->staff->getAllStaff($params);
-
-        return $result;
+        return $this->staff->getAllStaff();
     }
 
 }
