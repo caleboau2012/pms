@@ -47,36 +47,37 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
         <!--        USER ROLES -->
         <?php
-            foreach(CxSessionHandler::getItem(UserTypeTable::staff_role_id) as $role){
-                if($role == ADMINISTRATOR){
-                    ?>
+        foreach(CxSessionHandler::getItem(UserTypeTable::staff_role_id) as $role){
+            if($role == ADMINISTRATOR){
+                ?>
+                <div class="col-md-3 dashboard-item">
                     <a href="admin/staff.php">
-                        <div class="col-md-3 dashboard-item">
-                            <img src="images/file-edit.png">
-                            <div class="dashboard-desc">Admin Access</div>
-                        </div>
+                        <img src="images/file-edit.png">
+                        <div class="dashboard-desc">Admin Access</div>
                     </a>
-                <?php
-                }else if($role == DOCTOR){
-                    ?>
+                </div>
+            <?php
+            }else if($role == DOCTOR){
+                ?>
+                <div class="col-md-3 dashboard-item">
                     <a href="admin/staff.php">
-                        <div class="col-md-3 dashboard-item">
-                            <img src="images/dash-icons.png">
-                            <div class="dashboard-desc">Doctor Access</div>
-                        </div>
+                        <img src="images/dash-icons.png">
+                        <div class="dashboard-desc">Doctor Access</div>
                     </a>
-                <?php
-                }else if($role == PHARMACIST){
-                    ?>
+                </div>
+            <?php
+            }else if($role == PHARMACIST){
+                ?>
+                <div class="col-md-3 dashboard-item">
                     <a href="admin/staff.php">
-                        <div class="col-md-3 dashboard-item">
-                            <img src="images/dash-icons.png">
-                            <div class="dashboard-desc">Pharmacist Access</div>
-                        </div>
+                        <img src="images/dash-icons.png">
+                        <div class="dashboard-desc">Pharmacist Access</div>
                     </a>
-                <?php
-                }
+                </div>
+
+            <?php
             }
+        }
         ?>
         <div class="clearfix"></div>
     </div>
