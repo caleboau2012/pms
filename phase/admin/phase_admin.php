@@ -43,21 +43,20 @@ if ($intent == 'getStaffDetails') {
         exit();
     }
 } elseif($intent == 'addNewStaff'){
-    if(isset($_REQUEST['authInfo'])){
-        $regNo = isset($_REQUEST['regNo']) ? $_REQUEST[''] : null;
-        $passcode = isset($_REQUEST['passcode']) ? $_REQUEST['passcode'] : null;
-        $usertype = isset($_REQUEST['usertype']) ? $_REQUEST['usertype'] : null;
+    $regNo = isset($_REQUEST['regNo']) ? $_REQUEST['regNo'] : null;
+    $passcode = isset($_REQUEST['passcode']) ? $_REQUEST['passcode'] : null;
+    $usertype = isset($_REQUEST['usertype']) ? $_REQUEST['usertype'] : null;
 
-        $staffController = new StaffController();
+    $staffController = new StaffController();
 
-        if($staffController->addStaff($regNo, $passcode, $usertype)){
-            echo JsonResponse::success("Successfully created!");
-            exit();
-        } else {
-            echo JsonResponse::error("Failed! Please retry");
-            exit();
-        }
+    if($staffController->addStaff($regNo, $passcode, $usertype)){
+        echo JsonResponse::success("Successfully created!");
+        exit();
+    } else {
+        echo JsonResponse::error("Failed! User already exist");
+        exit();
     }
+
 } elseif($intent == 'updateStaff'){
     if(isset($_REQUEST['profileInfo'])){
         $profileInfo = $_REQUEST['profileInfo'];
