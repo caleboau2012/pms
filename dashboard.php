@@ -1,3 +1,14 @@
+<?php
+require_once '_core/global/_require.php';
+
+Crave::requireAll(GLOBAL_VAR);
+Crave::requireAll(UTIL);
+
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -28,54 +39,45 @@
 <body>
 <div class="container">
     <div id="dashboard">
-        <a href="admin/staff.php">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/dash-icons.png">
-                <div class="dashboard-desc">Staff Access</div>
-            </div>
-        </a>
-        <a href="admin/patients.php">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/student_access_code.png">
-                <div class="dashboard-desc">Patient Access</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/file-edit.png">
-                <div class="dashboard-desc">Admin Access</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/photo_capture.png">
-                <div class="dashboard-desc">Admin Access</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/photo_capture.png">
-                <div class="dashboard-desc">Admin Access</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/student_access_code.png">
-                <div class="dashboard-desc">Admin Access</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/file-edit.png">
-                <div class="dashboard-desc">Admin Access</div>
-            </div>
-        </a>
-        <a href="#">
-            <div class="col-md-3 dashboard-item">
-                <img src="images/photo_capture.png">
-                <div class="dashboard-desc">Admin Access</div>
-            </div>
-        </a>
+        <div class="pull-right">
+            <img src="images/profile.png">
+            <span>Hi, <?php echo CxSessionHandler::getItem(ProfileTable::surname)?></span>
+        </div>
+        <div class="clearfix"></div>
+
+        <!--        USER ROLES -->
+        <?php
+            foreach(CxSessionHandler::getItem(UserTypeTable::staff_role_id) as $role){
+                if($role == ADMINISTRATOR){
+                    ?>
+                    <a href="admin/staff.php">
+                        <div class="col-md-3 dashboard-item">
+                            <img src="images/file-edit.png">
+                            <div class="dashboard-desc">Admin Access</div>
+                        </div>
+                    </a>
+                <?php
+                }else if($role == DOCTOR){
+                    ?>
+                    <a href="admin/staff.php">
+                        <div class="col-md-3 dashboard-item">
+                            <img src="images/dash-icons.png">
+                            <div class="dashboard-desc">Doctor Access</div>
+                        </div>
+                    </a>
+                <?php
+                }else if($role == PHARMACIST){
+                    ?>
+                    <a href="admin/staff.php">
+                        <div class="col-md-3 dashboard-item">
+                            <img src="images/dash-icons.png">
+                            <div class="dashboard-desc">Pharmacist Access</div>
+                        </div>
+                    </a>
+                <?php
+                }
+            }
+        ?>
         <div class="clearfix"></div>
     </div>
 
