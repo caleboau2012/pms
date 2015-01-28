@@ -60,3 +60,11 @@ class ProfileSqlStatement {
 class PermissionRoleSqlStatement {
     const GET_STAFF_ROLE = "SELECT staff_role_id FROM permission_role WHERE userid = :userid";
 }
+
+class PatientSqlStatement {
+    const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, create_date, modified_date)
+                 VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, NOW(), NOW() )';
+    const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, create_date, modified_date
+                  FROM patient WHERE patient_id = :patient_id';
+    const UPDATE = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, modified_date = NOW()';
+}
