@@ -43,11 +43,14 @@ class UserModel extends BaseModel {
         $data[PermissionRoleTable::userid] =  $userid;
         $result = $this->conn->fetchAll($stmt, $data);
 
-        $user_role_array = array();
-        foreach ($result as $role) {
-            array_push($user_role_array, $role[PermissionRoleTable::staff_role_id]);
-        }
+        return $result;
+    }
 
-        return $user_role_array;
+    public function getAllRoles() {
+        $stmt = PermissionRoleSqlStatement::GET_ALL_ROLES;
+        $data = array();
+        $result = $this->conn->fetchAll($stmt, $data);
+
+        return $result;
     }
 }

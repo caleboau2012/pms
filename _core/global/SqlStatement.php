@@ -42,6 +42,8 @@ class UserAuthSqlStatement {
                                       WHERE u.userid=:userid';
 
     const FLAG_USER_ONLINE = 'UPDATE user_auth SET online_status = 1 WHERE userid=:userid';
+
+    const GET_BY_REGNO = 'SELECT userid FROM user_auth WHERE regNo=:regNo';
 }
 
 class ProfileSqlStatement {
@@ -56,5 +58,14 @@ class ProfileSqlStatement {
 }
 
 class PermissionRoleSqlStatement {
-    const GET_STAFF_ROLE = "SELECT staff_role_id FROM permission_role WHERE userid = :userid";
+    const GET_STAFF_ROLE = "SELECT pr.staff_role_id, pr.staff_permission_id, pr.userid, sr.role_label, sp.staff_permission FROM permission_role AS pr INNER JOIN staff_role AS sr on pr.staff_role_id = sr.staff_role_id INNER JOIN staff_permission AS sp ON pr.staff_permission_id = sp.staff_permission_id WHERE pr.userid = :userid AND pr.active_fg = 1";
+    const GET_ALL_ROLES = "SELECT staff_role_id, role_label FROM staff_role";
+}
+
+class PatientSqlStatement {
+    const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, create_date, modified_date)
+                 VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, NOW(), NOW() )';
+    const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, create_date, modified_date
+                  FROM patient WHERE patient_id = :patient_id';
+    const UPDATE = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, modified_date = NOW()';
 }
