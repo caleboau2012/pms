@@ -58,7 +58,8 @@ class ProfileSqlStatement {
 }
 
 class PermissionRoleSqlStatement {
-    const GET_STAFF_ROLE = "SELECT staff_role_id FROM permission_role WHERE userid = :userid";
+    const GET_STAFF_ROLE = "SELECT pr.staff_role_id, pr.staff_permission_id, pr.userid, sr.role_label, sp.staff_permission FROM permission_role AS pr INNER JOIN staff_role AS sr on pr.staff_role_id = sr.staff_role_id INNER JOIN staff_permission AS sp ON pr.staff_permission_id = sp.staff_permission_id WHERE pr.userid = :userid AND pr.active_fg = 1";
+    const GET_ALL_ROLES = "SELECT staff_role_id, role_label FROM staff_role";
 }
 
 class PatientSqlStatement {

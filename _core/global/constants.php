@@ -20,6 +20,9 @@ define('STAFF', 2);
 define('ADMIN', 3);
 
 //staff roles
+define('ROLES', 'roles');
+define('EXISTING', 'existing');
+define('AVAILABLE', 'available');
 define('ADMINISTRATOR', 1);
 define('DOCTOR', 2);
 define('PHARMACIST', 3);
