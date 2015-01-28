@@ -58,6 +58,10 @@ class ProfileSqlStatement {
 }
 
 class PermissionRoleSqlStatement {
+    const DELETE_STAFF_ROLE = 'UPDATE permission_role SET active_fg = 0, modified_date = NOW() WHERE permission_role_id = :permission_role_id AND userid = :userid';
+    const UPDATE_ROLE_PERMISSION = 'UPDATE permission_role SET staff_role_id = :staff_role_id, modified_date = NOW() WHERE userid = :userid AND permission_role_id = 1';
+    const ADD_STAFF_ROLE = 'INSERT INTO (userid, staff_permission_id, staff_role_id, create_date, modified_date)
+                            VALUES (:userid, :staff_permission_id, :staff_role_id, NOW(), NOW() )';
     const GET_STAFF_ROLE = "SELECT pr.staff_role_id, pr.staff_permission_id, pr.userid, sr.role_label, sp.staff_permission FROM permission_role AS pr INNER JOIN staff_role AS sr on pr.staff_role_id = sr.staff_role_id INNER JOIN staff_permission AS sp ON pr.staff_permission_id = sp.staff_permission_id WHERE pr.userid = :userid AND pr.active_fg = 1";
     const GET_ALL_ROLES = "SELECT staff_role_id, role_label FROM staff_role";
 }
