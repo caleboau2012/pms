@@ -8,27 +8,27 @@ Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
 Crave::requireFiles(CONTROLLER, array('UserController'));
 
 if (isset($_REQUEST['intent'])) {
-  $intent = $_REQUEST['intent'];
+    $intent = $_REQUEST['intent'];
 } else {
-  echo JsonResponse::error('Intent not set!');
-  exit();
+    echo JsonResponse::error('Intent not set!');
+    exit();
 }
 
 if ($intent == 'getStaffDetails') {
-  if (isset($_REQUEST['userid'])) {
-    $userid = $_REQUEST['userid'];
-    $controller = new UserController();
-    $staff_details = $controller->getStaffDetails($userid);
+    if (isset($_REQUEST['userid'])) {
+        $userid = $_REQUEST['userid'];
+        $controller = new UserController();
+        $staff_details = $controller->getStaffDetails($userid);
 
-    if (is_array($staff_details)) {
-      echo JsonResponse::success($staff_details);
-      exit();
+        if (is_array($staff_details)) {
+            echo JsonResponse::success($staff_details);
+            exit();
+        } else {
+            echo JsonResponse::error('No details found!');
+            exit();
+        }
     } else {
-      echo JsonResponse::error('No details found!');
-      exit();
+        echo JsonResponse::error('User ID not set!');
+        exit();
     }
-  } else {
-    echo JsonResponse::error('No details found!');
-    exit();
-  }
 }
