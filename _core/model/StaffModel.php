@@ -27,7 +27,7 @@ class StaffModel extends BaseModel{
     }
 
     public function getUserId($regNo){
-        return $this->conn->fetch(UserAuthSqlStatement::GEt_ID, $regNo);
+        return $this->conn->fetch(UserAuthSqlStatement::GET_USER_BY_ID, $regNo);
     }
 
 }
