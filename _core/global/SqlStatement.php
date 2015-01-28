@@ -47,6 +47,8 @@ class UserAuthSqlStatement {
                                       WHERE u.userid=:userid';
 
     const FLAG_USER_ONLINE = 'UPDATE user_auth SET online_status = 1 WHERE userid=:userid';
+
+    const GET_BY_REGNO = 'SELECT userid FROM user_auth WHERE regNo=:regNo';
 }
 
 class ProfileSqlStatement {
