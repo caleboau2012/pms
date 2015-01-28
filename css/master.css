@@ -46,12 +46,15 @@ body {
     box-shadow: inset 0 0 8px #B5ACAC;
     padding: 1.2em;
 }
-.dashboard-item{
-    margin: 1.5em 0;
-    text-align: center;
+.dashboard-items{
+    width: 90%;
+    margin: 1.5em auto;
 }
 .dashboard-desc{
     color: #23527c;
+    font-size: 1.2em;
+    line-height: 2;
+    margin: 0 0 1.4em 0;
 }
 
 /*
