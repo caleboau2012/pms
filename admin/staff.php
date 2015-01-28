@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -55,22 +54,8 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-                <li><a href="#">Add new Staff</a></li>
-<!--                <li><a href="#">Analytics</a></li>-->
-<!--                <li><a href="#">Export</a></li>-->
+                <li id="newStaff"><a href="#" onclick="newStaff()">Add new Staff</a></li>
             </ul>
-<!--            <ul class="nav nav-sidebar">-->
-<!--                <li><a href="">Nav item</a></li>-->
-<!--                <li><a href="">Nav item again</a></li>-->
-<!--                <li><a href="">One more nav</a></li>-->
-<!--                <li><a href="">Another nav item</a></li>-->
-<!--                <li><a href="">More navigation</a></li>-->
-<!--            </ul>-->
-<!--            <ul class="nav nav-sidebar">-->
-<!--                <li><a href="">Nav item again</a></li>-->
-<!--                <li><a href="">One more nav</a></li>-->
-<!--                <li><a href="">Another nav item</a></li>-->
-<!--            </ul>-->
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="table-responsive">
@@ -140,32 +125,61 @@
                     <div class="panel-body">
                         <form class="container">
                             <div class="row">
-                                <div class="col-sm-4">
+                                <div class="col-lg-2 col-sm-3">
                                     <label for="role" class="label label-info">Role</label>
                                     <select class="btn btn-default">
-                                        <option>Role0</option>
+                                        <option>Doctor</option>
                                         <option>Role1</option>
                                     </select>
                                 </div>
-                                <div class="col-sm-4 col-sm-offset-1">
+                                <div class="col-lg-3 col-sm-4">
                                     <div>
-                                        <span class="tab-pane">
-                                            <input type="radio" class="radio radio-inline">
-                                            <span>Read_only</span>
-                                        </span>
-                                        <input type="radio" class="radio radio-inline"><span>Read_write</span>
+                                        <div class="btn-group" role="group">
+                                            <span class="btn btn-sm btn-default">
+                                                <input name="permission" type="radio" class="radio radio-inline">
+                                                <span>Read_Only</span>
+                                            </span>
+                                            <span class="btn btn-sm btn-default">
+                                                <input name="permission" type="radio" class="radio radio-inline">
+                                                <span>Read_Write</span>
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
+                                <div class="col-sm-1">
+                                    <button class="btn btn-sm btn-primary">Submit</button>
+                                </div>
                             </div>
-
-
-                            <button class="btn btn-info">Submit</button>
                         </form>
                     </div>
                 </div>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary" data-dismiss="modal">Save</button>
+                <div class="panel panel-info">
+                    <div class="panel-heading">
+                        <h1 class="panel-title">Edit Existing role(s)</h1>
+                    </div>
+                    <div class="panel-body">
+                        <table class="table table-responsive">
+                            <thead>
+                                <th>Role</th>
+                                <th>Permission</th>
+                                <th>Delete</th>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td>[SHING]</td>
+                                <td>[SHING]</td>
+                                <td><button class="btn btn-sm btn-default">Delete</button></td>
+                            </tr>
+                            <tr>
+                                <td>[SHING]</td>
+                                <td>[SHING]</td>
+                                <td><button class="btn btn-sm btn-default">Delete</button></td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <button class="btn btn-info pull-right" data-dismiss="modal">Save Changes</button>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
