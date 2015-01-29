@@ -26,3 +26,12 @@ define('AVAILABLE', 'available');
 define('ADMINISTRATOR', 1);
 define('DOCTOR', 2);
 define('PHARMACIST', 3);
+
+//ACTIVE STATUS CONSTANTS
+define('ACTIVE', 1);
+define('INACTIVE', 2);
+define('UNCLEAR', 3);
+define('CLEARED', 4);
+define('PENDING', 5);
+define('PROCESSING', 6);
+define('COMPLETED', 7);

@@ -45,11 +45,10 @@ if ($intent == 'getStaffDetails') {
 } elseif($intent == 'addNewStaff'){
     $regNo = isset($_REQUEST['regNo']) ? $_REQUEST['regNo'] : null;
     $passcode = isset($_REQUEST['passcode']) ? $_REQUEST['passcode'] : null;
-    $usertype = isset($_REQUEST['usertype']) ? $_REQUEST['usertype'] : null;
 
     $staffController = new StaffController();
 
-    if($staffController->addStaff($regNo, $passcode, $usertype)){
+    if($staffController->addStaff($regNo, $passcode)){
         echo JsonResponse::success("Successfully created!");
         exit();
     } else {

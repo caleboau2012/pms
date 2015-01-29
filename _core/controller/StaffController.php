@@ -8,7 +8,7 @@ class StaffController{
         $this->staff = new StaffModel();
     }
 
-    public function addStaff($regNo, $passcode, $usertype, $status = 1){
+    public function addStaff($regNo, $passcode, $status = INACTIVE){
         if (!($regNo && $passcode)){
             return false;
         }
@@ -17,7 +17,7 @@ class StaffController{
             return false;
         }
 
-        $authData = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::usertype => $usertype, UserAuthTable::status => $status);
+        $authData = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => $status);
         return $this->staff->addAuthInfo($authData);
     }
 
