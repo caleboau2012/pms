@@ -54,9 +54,9 @@ class UserController {
     }
 
     public function updateStaff($profileInfo){
-        $profile = $profileInfo;
-        $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);
-        return $this->staff->addProfile($profile);
+        /*$profile = $profileInfo;
+        $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);*/
+        return $this->staff->addProfile($profileInfo);
     }
 
     public function getStaff($regNo){
