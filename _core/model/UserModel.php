@@ -29,11 +29,27 @@ class UserModel extends BaseModel {
         return $result;
     }
 
+    public function flagUserOffline($userid) {
+        $stmt = UserAuthSqlStatement::FLAG_USER_OFFLINE;
+        $data = array();
+        $data[UserAuthTable::userid] = $userid;
+
+        $result = $this->conn->execute($stmt, $data);
+        return $result;
+    }
+
     public function getUserDetails($userid) {
         $stmt = UserAuthSqlStatement::GET_USER_BY_ID;
         $data = array();
         $data[UserAuthTable::userid] = $userid;
         $result = $this->conn->fetch($stmt, $data);
+        return $result;
+    }
+
+    public function changePassword($data) {
+        $stmt = UserAuthSqlStatement::CHANGE_PASSCODE;
+        $result = $this->conn->execute($stmt, $data, true);
+
         return $result;
     }
 

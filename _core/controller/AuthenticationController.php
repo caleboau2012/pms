@@ -41,6 +41,21 @@ class AuthenticationController {
         }
     }
 
+    public function changePassword($userid, $passcode){
+        $user_model = new UserModel();
+        $credentials = array();
+        $credentials[UserAuthTable::userid] = $userid;
+        $credentials[UserAuthTable::passcode] = $passcode;
+
+        $feedback = $user_model->changePassword($credentials);
+        return $feedback;
+    }
+
+    public function flagUserOffline($userid) {
+        $user_model = new UserModel();
+        $user_model->flagUserOffline($userid);
+    }
+
     public function progressStatus($userid) {
         $user_model = new UserModel();
         //GET USER PROGRESS STATUS

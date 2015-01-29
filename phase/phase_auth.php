@@ -52,6 +52,43 @@ if ($intent == 'login') {
         echo JsonResponse::error('Registration number or passcode not set!');
         exit();
     }
+} elseif ($intent == "changePassword") {
+    if (isset($_REQUEST['userid'], $_REQUEST['passcode'])) {
+        # code...
+        $authenticator = new AuthenticationController();
+        $change = $authenticator->changePassword($_REQUEST['userid'], $_REQUEST['passcode']);
+        if($change) {
+            //DESTROY SESSION TO LOG USER OUT
+            CxSessionHandler::destroy();
+
+            //CONSTRUCT RESPONSE
+            $response = array();
+            $response[P_MESSAGE] = "Password change successful!";
+
+            //SET MESSAGE FOR USER ON NEXT LOGIN
+            CxSessionHandler::setViewBag("You just changed your password. Log in again with your new password.");
+
+            //ECHO RESPONSE
+            echo JsonResponse::success($response);
+            exit();
+        } else {
+            echo JsonResponse::error("Unable to change password! Please try again.");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error('Incomplete request parameters!');
+        exit();
+    }
+} elseif ($intent == "logout") {
+    $authenticator = new AuthenticationController();
+
+    $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+
+    $authenticator->flagUserOffline($userid);
+
+    CxSessionHandler::destroy();
+    echo JsonResponse::message(STATUS_OK, "Logout successful");
+    exit();
 } else {
     echo JsonResponse::error('Invalid intent!');
     exit();
