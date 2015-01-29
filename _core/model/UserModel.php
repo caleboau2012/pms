@@ -1,17 +1,38 @@
 <?php
 class UserModel extends BaseModel {
-    //public function verify($data) {
-    //    //die(var_dump($this->conn));
-    //    $stmt = UserAuthSqlStatement::VERIFY_USER;
-    //    $result = $this->conn->fetch($stmt, $data);
-    //    /*die(var_dump($result['count']));*/
-    //    return intval($result['count']) == 1 ? true : false;
-    //}
-    public function verify($data) {
-        $stmt = UserAuthSqlStatement::VERIFY_USER;
-        $result = $this->conn->fetch($stmt, $data);
-        /*die(var_dump($result['count']));*/
-        //return intval($result['count']) == 1 ? true : false;
+
+    public function getStaff($regNo){
+        return $this->conn->fetch(ProfileSqlStatement::GET, array(UserAuthTable::regNo => $regNo));
+    }
+
+    public function getAllStaff(){
+        return $this->conn->fetchAll(UserAuthSqlStatement::GET_ALL, array());
+    }
+
+    /*$userId, $surname, $firstName, $middleName,
+    $workAddress, $homeAddress, $telephone,
+    $birthDate, $sex, $height, $weight*/
+    public function addProfile($profileData){
+        return $this->conn->execute(ProfileSqlStatement::ADD, $profileData);
+    }
+
+    public function getProfile($regNo){
+        return $this->conn->fetch(ProfileSqlStatement::GET_PROFILE, array(UserAuthTable::regNo => $regNo));
+    }
+
+    /*$regNo, $passcode, $status*/
+    public function addAuthInfo($authData){
+        return $this->conn->execute(UserAuthSqlStatement::ADD, $authData);
+    }
+
+    public function getUserId($regNo){
+        return $this->conn->fetch(UserAuthSqlStatement::GET_BY_REGNO, array(UserAuthTable::regNo => $regNo));
+    }
+
+    public function staffExists($regNo){
+        if($this->getUserId($regNo))
+            return true;
+        return false;
     }
 
     public function getByCredentials($data) {

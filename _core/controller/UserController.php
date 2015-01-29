@@ -1,5 +1,11 @@
 <?php
 class UserController {
+    private $staff;
+
+    public function __construct() {
+        $this->staff = new UserModel();
+    }
+
     public function getStaffDetails($userid){
         $user_model = new UserModel();
 
@@ -33,4 +39,32 @@ class UserController {
 
         return $staff_details;
     }
+
+    public function addStaff($regNo, $passcode, $status = INACTIVE){
+        if (!($regNo && $passcode)){
+            return false;
+        }
+
+        if ($this->staff->staffExists($regNo)){
+            return false;
+        }
+
+        $authData = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => $status);
+        return $this->staff->addAuthInfo($authData);
+    }
+
+    public function updateStaff($profileInfo){
+        $profile = $profileInfo;
+        $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);
+        return $this->staff->addProfile($profile);
+    }
+
+    public function getStaff($regNo){
+        $this->staff->getStaff($regNo);
+    }
+
+    public function getAllStaff(){
+        return $this->staff->getAllStaff();
+    }
+
 }

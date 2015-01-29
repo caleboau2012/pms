@@ -4,8 +4,8 @@ require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
-Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'StaffModel'));
-Crave::requireFiles(CONTROLLER, array('UserController', 'StaffController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
+Crave::requireFiles(CONTROLLER, array('UserController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -32,8 +32,8 @@ if ($intent == 'getStaffDetails') {
         exit();
     }
 } elseif($intent == 'getAllStaff'){
-    $staffController = new StaffController();
-    $list_of_staff = $staffController->getAllStaff();
+    $userController = new UserController();
+    $list_of_staff = $userController->getAllStaff();
 
     if (is_array($list_of_staff)) {
         echo JsonResponse::success($list_of_staff);
@@ -46,9 +46,9 @@ if ($intent == 'getStaffDetails') {
     $regNo = isset($_REQUEST['regNo']) ? $_REQUEST['regNo'] : null;
     $passcode = isset($_REQUEST['passcode']) ? $_REQUEST['passcode'] : null;
 
-    $staffController = new StaffController();
+    $userController = new UserController();
 
-    if($staffController->addStaff($regNo, $passcode)){
+    if($userController->addStaff($regNo, $passcode)){
         echo JsonResponse::success("Successfully created!");
         exit();
     } else {
@@ -59,9 +59,9 @@ if ($intent == 'getStaffDetails') {
 } elseif($intent == 'updateStaff'){
     if(isset($_REQUEST['profileInfo'])){
         $profileInfo = $_REQUEST['profileInfo'];
-        $staffController = new StaffController();
+        $userController = new UserController();
 
-        if($staffController->updateStaff($profileInfo)){
+        if($userController->updateStaff($profileInfo)){
             echo JsonResponse::success("Profile Successfully Added!");
             exit();
         } else {
