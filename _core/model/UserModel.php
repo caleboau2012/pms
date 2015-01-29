@@ -53,4 +53,14 @@ class UserModel extends BaseModel {
 
         return $result;
     }
+
+    public function getStatus($userid) {
+        $stmt = UserAuthSqlStatement::GET_STATUS;
+        $data = array();
+        $data[UserAuthSqlStatement::GET_STATUS] = $userid;
+
+        $result = $this->conn->fetch($stmt, $data);
+
+        return $result;
+    }
 }

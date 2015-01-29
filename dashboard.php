@@ -4,6 +4,7 @@ require_once '_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 
+var_dump($_SESSION);
 if(!isset($_SESSION[UserAuthTable::userid])){
     header("Location: index.php");
 }

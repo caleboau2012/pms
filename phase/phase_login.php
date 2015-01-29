@@ -7,48 +7,52 @@ Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
 Crave::requireFiles(CONTROLLER, array('AuthenticationController'));
 
 if (isset($_REQUEST['intent'])) {
-  $intent = $_REQUEST['intent'];
+    $intent = $_REQUEST['intent'];
 } else {
-  echo JsonResponse::error('Intent not set!');
-  exit();
+    echo JsonResponse::error('Intent not set!');
+    exit();
 }
 
 if ($intent == 'login') {
-  if (isset($_REQUEST['regNo'], $_REQUEST['passcode'])) {
-    $credentials = array();
-    $credentials[UserAuthTable::regNo] = $_REQUEST['regNo'];
-    $credentials[UserAuthTable::passcode] = $_REQUEST['passcode'];
+    if (isset($_REQUEST['regNo'], $_REQUEST['passcode'])) {
+        $credentials = array();
+        $credentials[UserAuthTable::regNo] = $_REQUEST['regNo'];
+        $credentials[UserAuthTable::passcode] = $_REQUEST['passcode'];
 
-    $authenticator = new AuthenticationController();
-    $verify = $authenticator->verify($credentials);
+        $authenticator = new AuthenticationController();
+        $verify = $authenticator->verify($credentials);
 
-    if (is_array($verify)) {
-      if ($verify[P_STATUS] == STATUS_OK) {
+        if (is_array($verify)) {
+            if ($verify[P_STATUS] == STATUS_OK) {
 
-        //SET SESSION VARIABLES
-        $user_credentials = $verify[P_DATA];
-        foreach ($user_credentials as $key => $value) {
-          CxSessionHandler::setItem($key, $value);
+                //SET SESSION VARIABLES
+                $user_credentials = $verify[P_DATA];
+                foreach ($user_credentials as $key => $value) {
+                    CxSessionHandler::setItem($key, $value);
+                }
+
+                //CONSTRUCT RESPONSE
+                $response = array();
+                $response[UserAuthTable::status] = $user_credentials[UserAuthTable::status];
+                $response[P_MESSAGE] = $verify[P_MESSAGE];
+                //ECHO RESPONSE
+                echo JsonResponse::success($response);
+                exit();
+
+            } else {
+                //ECHO RESPONSE
+                echo JsonResponse::error($verify[P_MESSAGE]);
+                exit();
+            }
+        } else {
+            echo JsonResponse::error('Invalid combination of registration number and passcode!');
+            exit();
         }
-
-        //ECHO RESPONSE
-        echo JsonResponse::message($verify[P_STATUS], $verify[P_MESSAGE]);
-        exit();
-
-      } else {
-        //ECHO RESPONSE
-        echo JsonResponse::error($verify[P_MESSAGE]);
-        exit();
-      }
     } else {
-      echo JsonResponse::error('Invalid combination of registration number and passcode!');
-      exit();
+        echo JsonResponse::error('Registration number or passcode not set!');
+        exit();
     }
-  } else {
-    echo JsonResponse::error('Registration number or passcode not set!');
-    exit();
-  }
 } else {
-  echo JsonResponse::error('Invalid intent!');
-  exit();
+    echo JsonResponse::error('Invalid intent!');
+    exit();
 }
