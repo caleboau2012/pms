@@ -52,9 +52,9 @@ class UserAuthSqlStatement {
 }
 
 class ProfileSqlStatement {
-        const ADD = 'INSERT INTO profile (userid, surname, firstname, middlename, department_id, local_address, home_address, telephone, sex,
+        const ADD = 'INSERT INTO profile (userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex,
                                         height, weight, birth_date, create_date, modified_date)
-                                 VALUES (:userid, LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :department_id, LOWER(:local_address), LOWER(:home_address), :telephone, :sex,
+                                 VALUES (:userid, LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :department_id, LOWER(:work_address), LOWER(:home_address), :telephone, :sex,
                                                         :height, :weight, :birth_date, NOW(), NOW()) ';
         const GET = 'SELECT ua.regNo, p.userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex, height, weight, birth_date
             FROM profile AS p
