@@ -17,7 +17,7 @@ class SqlClient {
 
         //initializing PDO
         try {
-            $this->pdo = new PDO("mysql://host=$host;dbname=$dbname", $username, $password);
+            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
         } catch (PDOException $e) {
             $this->has_error = true;
         }
@@ -58,6 +58,7 @@ class SqlClient {
         if (!$check){
             return false;
         }
+
         return ($zero_allowed) ? $pds->rowCount() > 0 : $pds->rowCount() >= 0;
     }
 
