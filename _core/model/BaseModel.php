@@ -1,7 +1,7 @@
 <?php
 
 
-abstract class BaseModel {
+abstract class  BaseModel {
     /**
      * @var
      */
@@ -14,6 +14,8 @@ abstract class BaseModel {
         $db_password = (isset($conn_params['PWD'])) ? $conn_params['PWD'] : DB_PASSWORD;
 
         $this->conn = new SqlClient($db_host, $db_name, $db_username, $db_password);
+
+
     }
 
 }
