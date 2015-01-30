@@ -26,6 +26,9 @@ if ($intent == 'addProfile') {
             exit();
         }
     }
+    else{
+        echo JsonResponse::error("Profile data not set");
+    }
 } else {
     echo JsonResponse::error('Invalid intent!');
     exit();
