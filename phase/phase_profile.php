@@ -4,7 +4,7 @@ require_once '../_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
-Crave::requireFiles(CONTROLLER, array('AuthenticationController'));
+Crave::requireFiles(CONTROLLER, array('AuthenticationController', 'UserController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -14,8 +14,10 @@ if (isset($_REQUEST['intent'])) {
 }
 
 if ($intent == 'addProfile') {
-    if(isset($_REQUEST['profileInfo'])){
-        $profileInfo = $_REQUEST['profileInfo'];
+    if(isset($_REQUEST['profile'])){
+        $profileInfo = $_REQUEST['profile'];
+
+//        echo JsonResponse::error($profileInfo);
         $userController = new UserController();
 
         if($userController->updateStaff($profileInfo)){
@@ -28,6 +30,7 @@ if ($intent == 'addProfile') {
     }
     else{
         echo JsonResponse::error("Profile data not set");
+        exit();
     }
 } else {
     echo JsonResponse::error('Invalid intent!');
