@@ -6,7 +6,7 @@ $(function(){
     $('#login').on('submit', function (e) {
         e.preventDefault();
         var form_data = $(this).serialize();
-        var request = $.post('phase/phase_login.php', form_data);
+        var request = $.post('phase/phase_auth.php', form_data);
         request.done(function(data){
             var response = JSON.parse(data);
             if(response.status == 2){

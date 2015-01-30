@@ -58,6 +58,7 @@ class SqlClient {
         if (!$check){
             return false;
         }
+
         return ($zero_allowed) ? $pds->rowCount() > 0 : $pds->rowCount() >= 0;
     }
 
