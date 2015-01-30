@@ -39,7 +39,7 @@ class PatientModel extends BaseModel {
     }
 
     public function  GetAllPatientDetails ($Patient_data){
-        $sql = ProfileSqlStatement::GET
+        $sql = ProfileSqlStatement::GET;
         $result =$this->conn->fetch($sql, $Patient_data);
         return $result;
     }
