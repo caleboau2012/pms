@@ -4,6 +4,7 @@ class UserController {
 
     public function __construct() {
         $this->staff = new UserModel();
+
     }
 
     public function getStaffDetails($userid){
@@ -14,6 +15,8 @@ class UserController {
 
         //GET USER EXISTING ROLE(S)
         $user_roles = $user_model->getUserRoles($userid);
+
+
 
         //EXTRACT ROLE ID(S)
         $user_role_ids = array();
@@ -61,6 +64,7 @@ class UserController {
 
     public function getStaff($regNo){
         $this->staff->getStaff($regNo);
+
     }
 
     public function getAllStaff(){

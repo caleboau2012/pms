@@ -7,6 +7,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
+
 class PatientModel extends BaseModel {
 
     /*Insert Operations*/
@@ -32,15 +33,15 @@ class PatientModel extends BaseModel {
 
     /*Fetch Operation*/
 
-    public function  GetPatientDetails ($Patient_data){
-        $sql = ProfileSqlStatement::GET;
-        $result =$this->conn->fetch($sql, $Patient_data);
+    public function  GetPatientDetails ($patient_id){
+        $sql = PatientSqlStatement::GET;
+        $result =$this->conn->fetch($sql, array('patient_id' => $patient_id));
         return $result;
     }
 
-    public function  GetAllPatientDetails ($Patient_data){
-        $sql = ProfileSqlStatement::GET;
-        $result =$this->conn->fetch($sql, $Patient_data);
+    public function  GetAllPatientDetails (){
+        $sql = PatientSqlStatement::GET_ALL;
+        $result =$this->conn->fetchAll($sql, array());
         return $result;
     }
 
