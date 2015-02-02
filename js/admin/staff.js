@@ -7,7 +7,7 @@ var addNewRoleOptionHTML = "";
 var existingRolesTableHTML = "";
 
 $(document).ready(function(){
-    $.get(host + "phase/admin/phase_admin.php?intent=getAllStaff", function(data){
+    $.get(host + "phase/admin/phase_admin.php?intent=getAllUsers", function(data){
         data = JSON.parse(data);
         console.log(data);
 

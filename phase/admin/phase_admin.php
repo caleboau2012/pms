@@ -31,9 +31,9 @@ if ($intent == 'getStaffDetails') {
         echo JsonResponse::error('User ID not set!');
         exit();
     }
-} elseif($intent == 'getAllStaff'){
+} elseif($intent == 'getAllUsers'){
     $userController = new UserController();
-    $list_of_staff = $userController->getAllStaff();
+    $list_of_staff = $userController->getAllUsers();
 
     if (is_array($list_of_staff)) {
         echo JsonResponse::success($list_of_staff);
@@ -48,7 +48,7 @@ if ($intent == 'getStaffDetails') {
 
     $userController = new UserController();
 
-    if($userController->addStaff($regNo, $passcode)){
+    if($userController->addUser($regNo, $passcode)){
         echo JsonResponse::success("Successfully created!");
         exit();
     } else {
@@ -56,12 +56,12 @@ if ($intent == 'getStaffDetails') {
         exit();
     }
 
-} elseif($intent == 'updateStaff'){
+} elseif($intent == 'addProfile'){
     if(isset($_REQUEST['profileInfo'])){
         $profileInfo = $_REQUEST['profileInfo'];
         $userController = new UserController();
 
-        if($userController->updateStaff($profileInfo)){
+        if($userController->addProfile($profileInfo)){
             echo JsonResponse::success("Profile Successfully Added!");
             exit();
         } else {

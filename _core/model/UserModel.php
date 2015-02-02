@@ -1,11 +1,11 @@
 <?php
 class UserModel extends BaseModel {
 
-    public function getStaff($regNo){
+    public function getUser($regNo){
         return $this->conn->fetch(ProfileSqlStatement::GET, array(UserAuthTable::regNo => $regNo));
     }
 
-    public function getAllStaff(){
+    public function getAllUsers(){
         return $this->conn->fetchAll(UserAuthSqlStatement::GET_ALL, array());
     }
 
@@ -29,7 +29,7 @@ class UserModel extends BaseModel {
         return $this->conn->fetch(UserAuthSqlStatement::GET_BY_REGNO, array(UserAuthTable::regNo => $regNo));
     }
 
-    public function staffExists($regNo){
+    public function userExists($regNo){
         if($this->getUserId($regNo))
             return true;
         return false;

@@ -20,7 +20,7 @@ if ($intent == 'addProfile') {
 //        echo JsonResponse::error($profileInfo);
         $userController = new UserController();
 
-        if($userController->updateStaff($profileInfo)){
+        if($userController->addProfile($profileInfo)){
             echo JsonResponse::success("Profile Successfully Added!");
             exit();
         } else {

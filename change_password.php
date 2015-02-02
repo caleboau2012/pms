@@ -52,6 +52,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
             <input type="hidden" name="intent" value="changePassword">
             <input type="hidden" name="userid" value="<?php echo CxSessionHandler::getItem(UserAuthTable::userid)?>">
+            <input type="hidden" name="status" value="<?php echo CxSessionHandler::getItem(UserAuthTable::status)?>">
             <label for="passcode" class="sr-only">Password</label>
             <input type="password" autocomplete="off" id="passcode" class="form-control" placeholder="New Password" required name="passcode">
             <label for="confirm_passcode" class="sr-only">Change Password</label>

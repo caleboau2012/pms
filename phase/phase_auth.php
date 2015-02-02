@@ -55,8 +55,9 @@ if ($intent == 'login') {
 } elseif ($intent == "changePassword") {
     if (isset($_REQUEST['userid'], $_REQUEST['passcode'])) {
         # code...
+        $status = ($_REQUEST['status'] == INACTIVE) ? PROCESSING : $_REQUEST['status'];
         $authenticator = new AuthenticationController();
-        $change = $authenticator->changePassword($_REQUEST['userid'], $_REQUEST['passcode']);
+        $change = $authenticator->changePassword($_REQUEST['userid'], $_REQUEST['passcode'], $status);
         if($change) {
             //DESTROY SESSION TO LOG USER OUT
             CxSessionHandler::destroy();

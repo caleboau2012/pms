@@ -43,12 +43,12 @@ class UserController {
         return $staff_details;
     }
 
-    public function addStaff($regNo, $passcode, $status = INACTIVE){
+    public function addUser($regNo, $passcode, $status = INACTIVE){
         if (!($regNo && $passcode)){
             return false;
         }
 
-        if ($this->staff->staffExists($regNo)){
+        if ($this->staff->userExists($regNo)){
             return false;
         }
 
@@ -56,19 +56,19 @@ class UserController {
         return $this->staff->addAuthInfo($authData);
     }
 
-    public function updateStaff($profileInfo){
+    public function addProfile($profileInfo){
         /*$profile = $profileInfo;
         $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);*/
         return $this->staff->addProfile($profileInfo);
     }
 
-    public function getStaff($regNo){
-        $this->staff->getStaff($regNo);
+    public function getUsers($regNo){
+        $this->staff->getUser($regNo);
 
     }
 
-    public function getAllStaff(){
-        return $this->staff->getAllStaff();
+    public function getAllUsers(){
+        return $this->staff->getAllUsers();
     }
 
 }
