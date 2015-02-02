@@ -1,9 +1,9 @@
 <?php
 class UserController {
-    private $staff;
+    private $user;
 
     public function __construct() {
-        $this->staff = new UserModel();
+        $this->user = new UserModel();
 
     }
 
@@ -48,27 +48,31 @@ class UserController {
             return false;
         }
 
-        if ($this->staff->userExists($regNo)){
+        if ($this->user->userExists($regNo)){
             return false;
         }
 
         $authData = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => $status);
-        return $this->staff->addAuthInfo($authData);
+        return $this->user->addAuthInfo($authData);
     }
 
     public function addProfile($profileInfo){
         /*$profile = $profileInfo;
         $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);*/
-        return $this->staff->addProfile($profileInfo);
+        return $this->user->addProfile($profileInfo);
     }
 
     public function getUsers($regNo){
-        $this->staff->getUser($regNo);
+        $this->user->getUser($regNo);
 
     }
 
     public function getAllUsers(){
-        return $this->staff->getAllUsers();
+        return $this->user->getAllUsers();
+    }
+
+    public function updateStatus($userid, $status){
+        return $this->user->updateStatus($userid, $status);
     }
 
 }

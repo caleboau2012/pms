@@ -100,4 +100,12 @@ class UserModel extends BaseModel {
 
         return $result;
     }
+
+    public function updateStatus($userid, $status){
+        $data = array();
+        $data[UserAuthTable::userid] = $userid;
+        $data[UserAuthTable::status] = $status;
+
+        return $this->conn->execute(UserAuthSqlStatement::UPDATE_STATUS, $data);
+    }
 }
