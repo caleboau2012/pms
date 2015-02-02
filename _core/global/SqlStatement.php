@@ -15,7 +15,7 @@ class UserAuthSqlStatement {
         const GET = 'SELECT userid, regNo, create_date, modified_date, status, online_status
                                 FROM user_auth
                                 WHERE regNo = :regNo AND userid = :userid';
-        const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.local_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo FROM profile as p LEFT JOIN user_auth as ua ON (p.userid = ua.userid)';
+        const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid)';
 
         const CHANGE_PASSCODE = 'UPDATE user_auth SET passcode = SHA1(:passcode), modified_date = NOW() WHERE userid = :userid';
         const CHANGE_ONLINE_STATUS = 'UPDATE user_auth SET online_status = :online_status WHERE userid = :userid';
@@ -54,14 +54,14 @@ class UserAuthSqlStatement {
 class ProfileSqlStatement {
         const ADD = 'INSERT INTO profile (userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex,
                                         height, weight, birth_date, create_date, modified_date)
-                                 VALUES (:userid, LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :department_id, LOWER(:work_address), LOWER(:home_address), :telephone, :sex
+                                 VALUES (:userid, LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :department_id, LOWER(:work_address), LOWER(:home_address), :telephone, :sex,
                                                         :height, :weight, :birth_date, NOW(), NOW()) ';
-        const GET = 'SELECT ua.regNo, p.userid, surname, firstname, middlename, department_id, local_address, home_address, telephone, sex, height, weight, birth_date
+        const GET = 'SELECT ua.regNo, p.userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex, height, weight, birth_date
             FROM profile AS p
                 INNER JOIN user_auth AS ua
                     ON p.userid = ua.userid
             WHERE regNo = :regNo';
-        const UPDATE = 'UPDATE profile SET surname = :surname, firstname = :firstname, middlename = :middlename, work_address = :local_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight,department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
+        const UPDATE = 'UPDATE profile SET surname = :surname, firstname = :firstname, middlename = :middlename, work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight,department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
         const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
         const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department, p.work_address, p.home_address, p.telephone, p.sex,
                                         p.height, p.weight, p.birth_date, p.create_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';

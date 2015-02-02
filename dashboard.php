@@ -4,7 +4,6 @@ require_once '_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 
-var_dump($_SESSION);
 if(!isset($_SESSION[UserAuthTable::userid])){
     header("Location: index.php");
 }
@@ -20,7 +19,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="author" content="">
 
     <title>PMS</title>
-
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
@@ -28,7 +26,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <link href="css/master.css" rel="stylesheet">
 
     <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
-    <script src="js/login.js"></script>
+    <script src="js/index.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -50,57 +48,70 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <!--        USER ROLES -->
             <div class="dashboard-items col-md-12">
                 <?php
-                foreach(CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff){
+                if(sizeof(CxSessionHandler::getItem(StaffRoleTable::staff_role_id)) == 0){
                     ?>
-                    <?php
-                    if($staff[StaffRoleTable::staff_role_id] == ADMINISTRATOR){
-                        ?>
-                        <div class="col-md-3 col-sm-offset-1 text-center">
-                            <a href="admin/staff.php">
-                                <img src="images/file-edit.png">
-                                <div class="dashboard-desc">Admin Access</div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-sm-offset-1 text-center">
-                            <a href="admin/staff.php">
-                                <img src="images/reports.png" width="60" height="60">
-                                <div class="dashboard-desc">Report Creation</div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-sm-offset-1 text-center">
-                            <a href="admin/staff.php">
-                                <img src="images/student_access_code.png" width="60" height="60" alt="Student Access Code">
-                                <div class="dashboard-desc">Patient Access code</div>
-                            </a>
-                        </div>
-                        <div class="col-md-3 col-sm-offset-1 text-center">
-                            <a href="admin/staff.php">
-                                <img src="images/file-edit.png" >
-                                <div class="dashboard-desc">Health Scheme</div>
-                            </a>
-                        </div>
-                    <?php
-                    }else if($staff[StaffRoleTable::staff_role_id] == DOCTOR){
-                        ?>
-                        <div class="col-md-3 col-sm-offset-1 text-center">
-                            <a href="admin/staff.php">
-                                <img src="images/dash-icons.png">
-                                <div class="dashboard-desc">Doctor Access</div>
-                            </a>
-                        </div>
-                    <?php
-                    }else if($staff[StaffRoleTable::staff_role_id] == PHARMACIST){
-                        ?>
-                        <div class="col-md-3 col-sm-offset-1 text-center">
-                            <a href="admin/staff.php">
-                                <img src="images/dash-icons.png">
-                                <div class="dashboard-desc">Pharmacist Access</div>
-                            </a>
-                        </div>
-                    <?php
-                    }?>
-
+                    <div class="alert alert-info">
+                        No Role assigned to you yet!
+                    </div>
                 <?php
+                }else {
+                    foreach (CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff) {
+                        ?>
+                        <?php
+                        if ($staff[StaffRoleTable::staff_role_id] == ADMINISTRATOR) {
+                            ?>
+                            <div class="col-md-3 col-sm-offset-1 text-center">
+                                <a href="admin/staff.php">
+                                    <img src="images/file-edit.png">
+
+                                    <div class="dashboard-desc">Admin Access</div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-sm-offset-1 text-center">
+                                <a href="admin/staff.php">
+                                    <img src="images/reports.png" width="60" height="60">
+
+                                    <div class="dashboard-desc">Report Creation</div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-sm-offset-1 text-center">
+                                <a href="admin/staff.php">
+                                    <img src="images/student_access_code.png" width="60" height="60"
+                                         alt="Student Access Code">
+
+                                    <div class="dashboard-desc">Patient Access code</div>
+                                </a>
+                            </div>
+                            <div class="col-md-3 col-sm-offset-1 text-center">
+                                <a href="admin/staff.php">
+                                    <img src="images/file-edit.png">
+
+                                    <div class="dashboard-desc">Health Scheme</div>
+                                </a>
+                            </div>
+                        <?php
+                        } else if ($staff[StaffRoleTable::staff_role_id] == DOCTOR) {
+                            ?>
+                            <div class="col-md-3 col-sm-offset-1 text-center">
+                                <a href="admin/staff.php">
+                                    <img src="images/dash-icons.png">
+
+                                    <div class="dashboard-desc">Doctor Access</div>
+                                </a>
+                            </div>
+                        <?php
+                        } else if ($staff[StaffRoleTable::staff_role_id] == PHARMACIST) {
+                            ?>
+                            <div class="col-md-3 col-sm-offset-1 text-center">
+                                <a href="admin/staff.php">
+                                    <img src="images/dash-icons.png">
+
+                                    <div class="dashboard-desc">Pharmacist Access</div>
+                                </a>
+                            </div>
+                        <?php
+                        }
+                    }
                 }
                 ?>
             </div>

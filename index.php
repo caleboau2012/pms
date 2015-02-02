@@ -30,7 +30,8 @@
 <div class="container">
 
     <form class="form-signin" id="login">
-        <h2 class="form-signin-heading">Please sign in</h2>
+        <h2 class="form-signin-heading text-center text-muted">PMS Signin</h2>
+        <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
         <div class=" alert alert-danger hidden" id="form-error"></div>
 
         <label for="inputEmail" class="sr-only">Email address</label>
