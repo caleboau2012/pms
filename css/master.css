@@ -6,8 +6,9 @@ body {
     background-color: #eee;
     font-family: "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
 }
-
-
+textarea{
+    resize: none;
+}
 /*Edit Bootstrap*/
 .edit-read-only.form-control[readonly]{
     cursor: pointer;
@@ -48,6 +49,14 @@ body {
     margin-bottom: 10px;
     border-top-left-radius: 0;
     border-top-right-radius: 0;
+}
+.form-group-lg{
+    margin: 1em 0;
+}
+.form-group-lg >label{
+    font-weight: 300;
+    font-size: 1.3em;
+    color: #454242;
 }
 
 #dashboard{
