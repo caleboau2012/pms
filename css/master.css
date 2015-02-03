@@ -58,10 +58,16 @@ textarea{
     font-size: 1.3em;
     color: #454242;
 }
-
+#form-error{
+    width: 300px;
+}
 #dashboard{
-    box-shadow: inset 0 0 8px #B5ACAC;
-    padding: 1.2em;
+    box-shadow: inset 0 0 8px #E5E3E3;
+    padding: 1.2em 3em;
+    background: #FFF;
+}
+.dashboard-panels{
+    margin: 2em 0;
 }
 .dashboard-items{
     width: 90%;

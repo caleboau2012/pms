@@ -46,48 +46,31 @@ Crave::requireAll(UTIL);
     <div class="row">
         <div class="col-md-12">
             <div class="text-muted text-center text-uppercase ">
-                <h1 class="text-primary">Setup profile below</h1>
+                <h1 class="text-primary">Setup Staff profile </h1>
             </div>
             <div class="form-profile">
                 <div class="hidden text-center" id="form-loading">
                     <img src="images/loading.gif">
                 </div>
-                <div class=" alert alert-danger hidden" id="form-error"></div>
+                <div class="row">
+                        <div class="center-block alert alert-danger hidden" id="form-error"></div>
+                </div>
                 <form action="#" method="post" role="form"  id="profile-form">
                     <input type="hidden" name="<?php echo ProfileTable::table_name.'['.ProfileTable::userid.']'?>" value="<?php echo CxSessionHandler::getItem(UserAuthTable::userid)?>">
                     <input type="hidden" name="intent" value="addProfile">
                     <div class="form-group-lg col-md-4">
-                        <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="surname" name="<?php echo ProfileTable::table_name.'['.ProfileTable::surname.']'?>" >
+                        <label for="first-name">First Name</label>
+                        <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" >
                     </div>
                     <div class="form-group-lg col-md-4">
                         <label for="middle-name">Middle Name</label>
                         <input type="text" class="form-control" id="middle-name"  name="<?php echo ProfileTable::table_name.'['.ProfileTable::middlename.']'?>" >
                     </div>
                     <div class="form-group-lg col-md-4">
-                        <label for="first-name">First Name</label>
-                        <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" >
+                        <label for="surname">Surname</label>
+                        <input type="text" class="form-control" id="surname" name="<?php echo ProfileTable::table_name.'['.ProfileTable::surname.']'?>" >
                     </div>
-                    <div class="form-group-lg col-md-6">
-                        <label for="dept">Department</label>
-                        <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::department_id.']'?>">
-                            <option value="1">Doctor</option>
-                            <option value="2">Pharmacy</option>
-                            <option value="3">Medical Records</option>
-                            <option value="4">Agent</option>
-                        </select>
-                    </div>
-                    <div class="form-group-lg col-md-3">
-                        <label for="sex">Sex</label>
-                        <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::sex.']'?>">
-                            <option value="MALE">Male</option>
-                            <option value="FEMALE">Female</option>
-                        </select>
-                    </div>
-                    <div class="form-group-lg col-md-3">
-                        <label for="telephone">Mobile Number</label>
-                        <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::telephone.']'?>" id="telephone" >
-                    </div>
+
                     <div class="form-group-lg col-md-4">
                         <label for="dob">Date of Birth</label>
                         <input name="<?php echo ProfileTable::table_name.'['.ProfileTable::birth_date.']'?>" class="date-picker form-control edit-read-only" readonly id="dob" type="text" data-date-format="yyyy-mm-dd"/>
@@ -100,13 +83,33 @@ Crave::requireAll(UTIL);
                         <label for="weight">Weight</label>
                         <input type="text" class="form-control" id="weight" name="<?php echo ProfileTable::table_name.'['.ProfileTable::weight.']'?>" >
                     </div>
+                    <div class="form-group-lg col-md-3">
+                        <label for="sex">Sex</label>
+                        <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::sex.']'?>">
+                            <option value="MALE">Male</option>
+                            <option value="FEMALE">Female</option>
+                        </select>
+                    </div>
+                    <div class="form-group-lg col-md-3">
+                        <label for="telephone">Mobile Number</label>
+                        <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::telephone.']'?>" id="telephone" >
+                    </div>
                     <div class="form-group-lg col-md-6">
-                        <label for="l-address">Work Address</label>
-                        <textarea class="form-control" rows="3" id="l-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::work_address.']'?>"></textarea>
+                        <label for="dept">Department</label>
+                        <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::department_id.']'?>">
+                            <option value="1">Doctor</option>
+                            <option value="2">Pharmacy</option>
+                            <option value="3">Medical Records</option>
+                            <option value="4">Agent</option>
+                        </select>
                     </div>
                     <div class="form-group-lg col-md-6">
                         <label for="h-address">Home Address</label>
                         <textarea class="form-control" rows="3" id="h-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::home_address.']'?>"></textarea>
+                    </div>
+                    <div class="form-group-lg col-md-6">
+                        <label for="l-address">Work Address</label>
+                        <textarea class="form-control" rows="3" id="l-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::work_address.']'?>"></textarea>
                     </div>
                     <div class="form-group-lg col-md-6">
                       <button type="submit" class="btn btn-lg btn-primary">Submit</button>
