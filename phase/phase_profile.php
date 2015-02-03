@@ -16,11 +16,12 @@ if (isset($_REQUEST['intent'])) {
 if ($intent == 'addProfile') {
     if(isset($_REQUEST['profile'])){
         $profileInfo = $_REQUEST['profile'];
+        $userid = $_REQUEST['userid'];
 
 //        echo JsonResponse::error($profileInfo);
         $userController = new UserController();
 
-        if($userController->updateStaff($profileInfo)){
+        if($userController->addProfile($profileInfo) && $userController->updateStatus($userid, ACTIVE)){
             echo JsonResponse::success("Profile Successfully Added!");
             exit();
         } else {

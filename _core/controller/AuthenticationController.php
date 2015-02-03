@@ -41,11 +41,13 @@ class AuthenticationController {
         }
     }
 
-    public function changePassword($userid, $passcode){
+    public function changePassword($userid, $passcode, $status, $online_status = OFFLINE){
         $user_model = new UserModel();
         $credentials = array();
         $credentials[UserAuthTable::userid] = $userid;
         $credentials[UserAuthTable::passcode] = $passcode;
+        $credentials[UserAuthTable::status] = $status;
+        $credentials[UserAuthTable::online_status] = $online_status;
 
         $feedback = $user_model->changePassword($credentials);
         return $feedback;

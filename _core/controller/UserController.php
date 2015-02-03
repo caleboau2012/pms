@@ -1,9 +1,10 @@
 <?php
 class UserController {
-    private $staff;
+    private $user;
 
     public function __construct() {
-        $this->staff = new UserModel();
+        $this->user = new UserModel();
+
     }
 
     public function getStaffDetails($userid){
@@ -14,6 +15,8 @@ class UserController {
 
         //GET USER EXISTING ROLE(S)
         $user_roles = $user_model->getUserRoles($userid);
+
+
 
         //EXTRACT ROLE ID(S)
         $user_role_ids = array();
@@ -40,31 +43,36 @@ class UserController {
         return $staff_details;
     }
 
-    public function addStaff($regNo, $passcode, $status = INACTIVE){
+    public function addUser($regNo, $passcode, $status = INACTIVE){
         if (!($regNo && $passcode)){
             return false;
         }
 
-        if ($this->staff->staffExists($regNo)){
+        if ($this->user->userExists($regNo)){
             return false;
         }
 
         $authData = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => $status);
-        return $this->staff->addAuthInfo($authData);
+        return $this->user->addAuthInfo($authData);
     }
 
-    public function updateStaff($profileInfo){
+    public function addProfile($profileInfo){
         /*$profile = $profileInfo;
         $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);*/
-        return $this->staff->addProfile($profileInfo);
+        return $this->user->addProfile($profileInfo);
     }
 
-    public function getStaff($regNo){
-        $this->staff->getStaff($regNo);
+    public function getUsers($regNo){
+        $this->user->getUser($regNo);
+
     }
 
-    public function getAllStaff(){
-        return $this->staff->getAllStaff();
+    public function getAllUsers(){
+        return $this->user->getAllUsers();
+    }
+
+    public function updateStatus($userid, $status){
+        return $this->user->updateStatus($userid, $status);
     }
 
 }
