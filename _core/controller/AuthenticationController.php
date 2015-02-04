@@ -42,14 +42,26 @@ class AuthenticationController {
     }
 
     public function changePassword($userid, $passcode, $status, $online_status = OFFLINE){
+        //INSTANTIATE A MODEL OBJECT
         $user_model = new UserModel();
+
+        //BUILD DATA ARRAY
         $credentials = array();
         $credentials[UserAuthTable::userid] = $userid;
         $credentials[UserAuthTable::passcode] = $passcode;
         $credentials[UserAuthTable::status] = $status;
         $credentials[UserAuthTable::online_status] = $online_status;
 
+        //CALL MODEL METHOD FOR UPDATING PASSWORD
         $feedback = $user_model->changePassword($credentials);
+
+        //CHANGE PROGRESS STATUS TO PROCESSING FOR NEWLY CREATED USERS THAT
+        //WHOSE PROGRESS STATUS IS SET TO INACTIVE
+        $current_status = $user_model->getStatus($userid);
+        if($current_status == INACTIVE) {
+            $user_model->updateStatus($userid, PROCESSING);
+        }
+
         return $feedback;
     }
 
