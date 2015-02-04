@@ -12,11 +12,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
-    <script src="../js/constants.js"></script>
-       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="#">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -43,9 +43,9 @@
                 <li><a href="#">Config</a></li>
                 <li><a href="#">Help</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
+<!--            <form class="navbar-form navbar-right">-->
+<!--                <input type="text" class="form-control" placeholder="Search...">-->
+<!--            </form>-->
         </div>
     </div>
 </nav>
@@ -59,6 +59,46 @@
     </tr>
 </script>
 
+<script id="tmplPopover" type="text/html">
+    <div class='form'>
+        <div class="hidden alert alert-danger alert-dismissable" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <strong>Warning!</strong> Invalid Registration No and Password
+        </div>
+        <input class='form-control' id='regNo' placeholder='Registration No'><br>
+        <div class="input-group">
+            <input disabled class="form-control" id='password' placeholder='Password' aria-describedby="generate">
+            <span class="btn btn-info input-group-addon" id="generate" onclick="generatePassword()">Generate</span>
+        </div>
+        <br>
+        <button class='form-control btn btn-info' onclick="addNewStaff(this)">Add</button>
+    </div>
+</script>
+
+<script id="tmplPrint" type="text/html">
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">New User Created</h1>
+            </div>
+            <div class="panel-body">
+                <div class="pull-left">
+                    <div class="">
+                        <label for="username" class="label label-primary">Username</label>
+                        <span name="username" class="btn btn-default">{{username}}</span>
+                    </div>
+                </div>
+                <div class="pull-left">
+                    <div style="margin-left: 10px;">
+                        <label for="password" class="label label-info">Password</label>
+                        <span name="password" class="btn btn-default">{{password}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
@@ -69,7 +109,7 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table dataTable table-striped">
                     <thead>
                     <tr>
                         <th>#</th>
@@ -102,38 +142,35 @@
                 <h4 class="modal-title" id="rapModalTitle">Roles and Permission</h4>
             </div>
             <div class="modal-body">
-                <input id="regNo" name="regNo" hidden>
+                <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                    <span id="alertMSG"></span>
+                </div>
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h1 id="addNewRoleName" class="panel-title">[Name]</h1>
                     </div>
                     <div class="panel-body">
-                        <form class="form">
+                        <form class="form" onsubmit="return addNewRole(this)">
                             <div class="pull-left">
                                 <div class="">
                                     <label for="role" class="label label-info">Role</label>
-                                    <select id="addNewRoleSelect" class="btn btn-default">
-                                        <option>Doctor</option>
-                                        <option>Role1</option>
+                                    <select name="role" id="addNewRoleSelect" class="btn btn-default">
                                     </select>
                                 </div>
                             </div>
                             <div class="pull-right">
-                                <div class="">
-                                    <div>
-                                        <div class="btn-group" role="group">
-                                            <span class="btn btn-sm btn-default">
-                                                <input name="permission" type="radio" class="radio radio-inline">
-                                                <span>Read_Only</span>
-                                            </span>
-                                            <span class="btn btn-sm btn-default">
-                                                <input name="permission" type="radio" class="radio radio-inline">
-                                                <span>Read_Write</span>
-                                            </span>
-                                        </div>
-                                        <button class="btn btn-sm btn-primary">Add</button>
-                                    </div>
+                                <div class="btn-group" role="group">
+                                    <span class="btn btn-sm btn-default">
+                                        <input name="permission" type="radio" value="1" checked class="radio radio-inline">
+                                        <span>Read_Only</span>
+                                    </span>
+                                    <span class="btn btn-sm btn-default">
+                                        <input name="permission" type="radio" value="2" class="radio radio-inline">
+                                        <span>Read_Write</span>
+                                    </span>
                                 </div>
+                                <button type="submit" class="btn btn-sm btn-primary">Add</button>
                             </div>
                         </form>
                     </div>
@@ -145,9 +182,9 @@
                     <div class="panel-body">
                         <table class="table table-responsive">
                             <thead>
-                                <th>Role</th>
-                                <th>Permission</th>
-                                <th>Delete</th>
+                            <th>Role</th>
+                            <th>Permission</th>
+                            <th>Delete</th>
                             </thead>
                             <tbody id="existingRolesTable">
                             <tr>
@@ -169,7 +206,9 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/constants.js"></script>
 <script src="../js/admin/staff.js"></script>
 </body>
 </html>

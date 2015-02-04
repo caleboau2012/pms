@@ -21,7 +21,7 @@ if (isset($_REQUEST['intent'])) {
     exit();
 }
 
-if ($intent == 'getAllPatient') {
+if ($intent == 'getAllPatients') {
         $patientController = new PatientController();
         $patient_list = $patientController->RetrieveAllPatientInfo();
 

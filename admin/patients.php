@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -13,10 +12,11 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
-       <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
     <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
@@ -34,7 +34,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Project name</a>
+            <a class="navbar-brand" href="#">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
@@ -43,12 +43,72 @@
                 <li><a href="#">Config</a></li>
                 <li><a href="#">Help</a></li>
             </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
+<!--            <form class="navbar-form navbar-right">-->
+<!--                <input type="text" class="form-control" placeholder="Search...">-->
+<!--            </form>-->
         </div>
     </div>
 </nav>
+
+<script id="tmplTable" type="text/html">
+    <tr>
+        <td>{{sn}}</td>
+        <td>{{patientId}}</td>
+        <td>{{name}}</td>
+        <td>{{dob}}</td>
+        <td><button class="btn btn-sm btn-default" patientId="{{patient_id}}" onclick="printDetails(this)">Print</button></td>
+    </tr>
+</script>
+
+<script id="tmplPrint" type="text/html">
+    <div class="container">
+        <div class="panel panel-primary">
+            <div class="panel-heading">
+                <h1 class="panel-title">Patient Details</h1>
+            </div>
+            <div class="panel-body">
+                <div class="row">
+                    <div class="pull-left" style="margin: 10px;">
+                        <label for="name" class="label label-primary">Name</label>
+                        <span name="name" class="btn btn-default">{{name}}</span>
+                    </div>
+                    <div class="pull-right" style="margin: 10px;">
+                        <label for="regNo" class="label label-primary">Registration No</label>
+                        <span name="regNo" class="btn btn-default">{{regNo}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="pull-left" style="margin: 10px;">
+                        <label for="addy" class="label label-info">Address</label>
+                        <span name="addy" class="btn btn-default">{{addy}}</span>
+                    </div>
+                    <div class="pull-left" style="margin: 10px;">
+                        <label for="phone" class="label label-info">Telephone</label>
+                        <span name="phone" class="btn btn-default">{{phone}}</span>
+                    </div>
+                    <div class="pull-right" style="margin: 10px;">
+                        <label for="sex" class="label label-info">Gender</label>
+                        <span name="sex" class="btn btn-default">{{sex}}</span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="pull-left" style="margin: 10px;">
+                        <label for="height" class="label label-info">Height</label>
+                        <span name="height" class="btn btn-default">{{height}}</span>
+                    </div>
+                    <div class="pull-left" style="margin: 10px;">
+                        <label for="weight" class="label label-info">Weight</label>
+                        <span name="weight" class="btn btn-default">{{weight}}</span>
+                    </div>
+                    <div class="pull-right" style="margin: 10px;">
+                        <label for="birth" class="label label-info">Birth Date</label>
+                        <span name="birth" class="btn btn-default">{{birth}}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
 
 <div class="container-fluid">
     <div class="row">
@@ -59,128 +119,22 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="table-responsive">
-                <table class="table table-striped">
+                <table class="table dataTable table-striped">
                     <thead>
                     <tr>
                         <th>#</th>
                         <th>Patient ID</th>
-                        <th>Name</th>
-                        <th>D. O. B</th>
+                        <th>Name </th>
+                        <th>DOB</th>
                         <th>Print Details</th>
                     </tr>
                     </thead>
-                    <tbody>
+                    <tbody id="patientsTable">
                     <tr>
-                        <td>1,001</td>
+                        <td>1</td>
                         <td>Lorem</td>
                         <td>ipsum</td>
-                        <td>dolor</td>
-                        <td><button class="btn btn-sm b btn-default">Print</button></td>
-                    </tr>
-                    <tr>
-                        <td>1,002</td>
-                        <td>amet</td>
-                        <td>consectetur</td>
-                        <td>adipiscing</td>
-                        <td>elit</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>Integer</td>
-                        <td>nec</td>
-                        <td>odio</td>
-                        <td>Praesent</td>
-                    </tr>
-                    <tr>
-                        <td>1,003</td>
-                        <td>libero</td>
-                        <td>Sed</td>
-                        <td>cursus</td>
-                        <td>ante</td>
-                    </tr>
-                    <tr>
-                        <td>1,004</td>
-                        <td>dapibus</td>
-                        <td>diam</td>
-                        <td>Sed</td>
-                        <td>nisi</td>
-                    </tr>
-                    <tr>
-                        <td>1,005</td>
-                        <td>Nulla</td>
-                        <td>quis</td>
-                        <td>sem</td>
-                        <td>at</td>
-                    </tr>
-                    <tr>
-                        <td>1,006</td>
-                        <td>nibh</td>
-                        <td>elementum</td>
-                        <td>imperdiet</td>
-                        <td>Duis</td>
-                    </tr>
-                    <tr>
-                        <td>1,007</td>
-                        <td>sagittis</td>
-                        <td>ipsum</td>
-                        <td>Praesent</td>
-                        <td>mauris</td>
-                    </tr>
-                    <tr>
-                        <td>1,008</td>
-                        <td>Fusce</td>
-                        <td>nec</td>
-                        <td>tellus</td>
-                        <td>sed</td>
-                    </tr>
-                    <tr>
-                        <td>1,009</td>
-                        <td>augue</td>
-                        <td>semper</td>
-                        <td>porta</td>
-                        <td>Mauris</td>
-                    </tr>
-                    <tr>
-                        <td>1,010</td>
-                        <td>massa</td>
-                        <td>Vestibulum</td>
-                        <td>lacinia</td>
-                        <td>arcu</td>
-                    </tr>
-                    <tr>
-                        <td>1,011</td>
-                        <td>eget</td>
-                        <td>nulla</td>
-                        <td>Class</td>
-                        <td>aptent</td>
-                    </tr>
-                    <tr>
-                        <td>1,012</td>
-                        <td>taciti</td>
-                        <td>sociosqu</td>
-                        <td>ad</td>
-                        <td>litora</td>
-                    </tr>
-                    <tr>
-                        <td>1,013</td>
-                        <td>torquent</td>
-                        <td>per</td>
-                        <td>conubia</td>
-                        <td>nostra</td>
-                    </tr>
-                    <tr>
-                        <td>1,014</td>
-                        <td>per</td>
-                        <td>inceptos</td>
-                        <td>himenaeos</td>
-                        <td>Curabitur</td>
-                    </tr>
-                    <tr>
-                        <td>1,015</td>
-                        <td>sodales</td>
-                        <td>ligula</td>
-                        <td>in</td>
-                        <td>libero</td>
+                        <td><button class="btn btn-sm btn-default" userid="1" onclick="rapModal(this)">Manage</button></td>
                     </tr>
                     </tbody>
                 </table>
@@ -192,10 +146,10 @@
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script src="../../dist/js/bootstrap.min.js"></script>
-<script src="../../assets/js/docs.min.js"></script>
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<script src="../../assets/js/ie10-viewport-bug-workaround.js"></script>
+<script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap/jquery.dataTables.js"></script>
+<script src="../js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/constants.js"></script>
+<script src="../js/admin/patients.js"></script>
 </body>
 </html>
