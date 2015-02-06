@@ -16,7 +16,7 @@ if (isset($_REQUEST['intent'])) {
 if ($intent == 'addProfile') {
     if(isset($_REQUEST['profile'])){
         $profileInfo = $_REQUEST['profile'];
-        $userid = $_REQUEST['userid'];
+        $userid = $profileInfo['userid'];
 
 //        echo JsonResponse::error($profileInfo);
         $userController = new UserController();
