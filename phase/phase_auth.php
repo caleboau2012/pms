@@ -55,7 +55,7 @@ if ($intent == 'login') {
 } elseif ($intent == "changePassword") {
     if (isset($_REQUEST['userid'], $_REQUEST['passcode'])) {
         # code...
-        $status = ($_REQUEST['status'] == INACTIVE) ? PROCESSING : $_REQUEST['status'];
+        $status = (CxSessionHandler::getItem('status') == INACTIVE) ? PROCESSING : CxSessionHandler::getItem('status');
         $authenticator = new AuthenticationController();
         $change = $authenticator->changePassword($_REQUEST['userid'], $_REQUEST['passcode'], $status);
         if($change) {

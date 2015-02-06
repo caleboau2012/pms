@@ -64,6 +64,7 @@ $(function(){
                         $('#form-error').html(response.message);
                 }
             }).fail(function(data){
+                console.log('fail');
                 console.log(data.responseText);
             });
         }else{

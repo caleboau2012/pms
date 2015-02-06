@@ -51,7 +51,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <div class="clearfix"></div>
 
             <div class="dashboard-panels">
-                <div class="panel panel-default">
+                <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Core Functions</h3>
                     </div>
@@ -103,7 +103,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <?php
                 if ($staff[StaffRoleTable::staff_role_id] == ADMINISTRATOR) {
                 ?>
-                <div class="panel panel-default">
+                <div class="panel panel-info">
                     <div class="panel-heading">
                         <h3 class="panel-title">Administrative Functions</h3>
                     </div>

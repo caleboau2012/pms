@@ -52,15 +52,16 @@ class AuthenticationController {
         $credentials[UserAuthTable::status] = $status;
         $credentials[UserAuthTable::online_status] = $online_status;
 
+//        die(var_dump($credentials));
         //CALL MODEL METHOD FOR UPDATING PASSWORD
         $feedback = $user_model->changePassword($credentials);
 
         //CHANGE PROGRESS STATUS TO PROCESSING FOR NEWLY CREATED USERS THAT
         //WHOSE PROGRESS STATUS IS SET TO INACTIVE
-        $current_status = $user_model->getStatus($userid);
-        if($current_status == INACTIVE) {
-            $user_model->updateStatus($userid, PROCESSING);
-        }
+//        $current_status = $user_model->getStatus($userid);
+//        if($current_status == INACTIVE) {
+//            $user_model->updateStatus($userid, PROCESSING);
+//        }
 
         return $feedback;
     }
