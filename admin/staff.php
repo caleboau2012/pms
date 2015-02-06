@@ -194,7 +194,7 @@
                             </tr>
                             </tbody>
                         </table>
-                        <button class="btn btn-info pull-right" data-dismiss="modal">Save Changes</button>
+<!--                        <button class="btn btn-info pull-right" data-dismiss="modal">Save Changes</button>-->
                     </div>
                 </div>
             </div>
