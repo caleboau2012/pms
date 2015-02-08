@@ -115,33 +115,103 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            </ul>
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <h2 class="panel-title">General Queue</h2>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">1st Patient</li>
+                        <li class="list-group-item list-group-item-success">2nd Patient</li>
+                    </ul>
+                </div>
+            </div>
+<!--            <ul class="nav nav-sidebar">-->
+<!--                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
+<!---->
+<!--            </ul>-->
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div class="table-responsive">
-                <table class="table dataTable table-striped">
-                    <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Patient ID</th>
-                        <th>Name</th>
-                        <th>DOB</th>
-                        <th>Print Details</th>
-                    </tr>
-                    </thead>
-                    <tbody id="patientsTable">
-                    <tr>
-                        <td>1</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
-                        <td>
-                            <button class="btn btn-sm btn-default" userid="1" onclick="rapModal(this)">Manage</button>
-                        </td>
-                    </tr>
-                    </tbody>
-                </table>
+            <div class="row">
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Doctor 1</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">1st Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Doctor 2</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">1st Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Doctor 3</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">1st Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Doctor 4</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">1st Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Doctor 5</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">1st Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-4 col-md-3">
+                    <div class="panel panel-primary">
+                        <div class="panel-heading">
+                            <h2 class="panel-title">Doctor 6</h2>
+                        </div>
+                        <div class="panel-body">
+                            <ul class="list-group">
+                                <li class="list-group-item list-group-item-success">1st Patient</li>
+                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
