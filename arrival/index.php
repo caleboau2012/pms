@@ -126,13 +126,9 @@
                     </ul>
                 </div>
             </div>
-<!--            <ul class="nav nav-sidebar">-->
-<!--                <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>-->
-<!---->
-<!--            </ul>-->
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-            <div class="row">
+            <div id="masonry" class="row">
                 <div class="col-sm-4 col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -444,6 +440,7 @@
 <script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/constants.js"></script>
+<script src="../js/arrival/masonry.js"></script>
 <script src="../js/arrival/arrival.js"></script>
 </body>
 </html>
