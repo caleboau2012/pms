@@ -175,3 +175,7 @@ textarea{
     display: inline-block;
     border-radius: 50%;
 }
+
+.form-inline div{
+    margin-right: 10px;
+}
