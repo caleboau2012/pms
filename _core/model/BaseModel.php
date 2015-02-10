@@ -15,7 +15,5 @@ abstract class  BaseModel {
 
         $this->conn = new SqlClient($db_host, $db_name, $db_username, $db_password);
 
-
     }
-
 }
