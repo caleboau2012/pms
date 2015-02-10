@@ -23,7 +23,7 @@ if (isset($_REQUEST['intent'])) {
 
 if ($intent == 'getAllPatients') {
         $patientController = new PatientController();
-        $patient_list = $patientController->RetrieveAllPatientInfo();
+        $patient_list = $patientController->retrieveAllPatientInfo();
 
         if(is_array($patient_list)){
             echo JsonResponse::success($patient_list);
@@ -43,7 +43,7 @@ else if ($intent == 'getPatient') {
         echo JsonResponse::error("Patient Id not Set");
         exit();
     }
-    $patient_list = $patientController->RetrievePatientInfo($patient_id);
+    $patient_list = $patientController->retrievePatientInfo($patient_id);
 
     if(is_array($patient_list)){
         echo JsonResponse::success($patient_list);

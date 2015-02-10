@@ -25,7 +25,7 @@ class PatientController {
         $this->patient = new PatientModel();
     }
 
-    public function  AddPatient ($data ){
+    public function  addPatient ($data ){
 
         //$patient = new PatientModel();
         return $this->patient->InsertPatient($data);
@@ -47,13 +47,13 @@ class PatientController {
 
     }
 
-    public function  RetrievePatientInfo ($patient_id ){
+    public function  retrievePatientInfo ($patient_id ){
 
        return $this->patient->GetPatientDetails($patient_id);
 
     }
 
-    public function  RetrieveAllPatientInfo ( ){
+    public function  retrieveAllPatientInfo ( ){
 
         return $this->patient->GetAllPatientDetails();
 
