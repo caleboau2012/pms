@@ -53,7 +53,8 @@ Crave::requireAll(UTIL);
                     <img src="images/loading.gif">
                 </div>
                 <div class="row">
-                        <div class="center-block alert alert-danger hidden" id="form-error"></div>
+                        <div class="center-block alert alert-danger hidden " id="form-error"></div>
+                        <div class="center-block alert alert-success hidden" id="form-success"></div>
                 </div>
                 <form action="#" method="post" role="form"  id="profile-form">
                     <input type="hidden" name="<?php echo ProfileTable::table_name.'['.ProfileTable::userid.']'?>" value="<?php echo CxSessionHandler::getItem(UserAuthTable::userid)?>">
@@ -76,11 +77,11 @@ Crave::requireAll(UTIL);
                         <input name="<?php echo ProfileTable::table_name.'['.ProfileTable::birth_date.']'?>" class="date-picker form-control edit-read-only" readonly id="dob" type="text" data-date-format="yyyy-mm-dd"/>
                     </div>
                     <div class="form-group-lg col-md-4">
-                        <label for="height">Height</label>
+                        <label for="height">Height</label><span class="text-danger">&nbsp;(metre)</span>
                         <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::height.']'?>" id="height">
                     </div>
                     <div class="form-group-lg col-md-4">
-                        <label for="weight">Weight</label>
+                        <label for="weight">Weight</label><span class="text-danger">&nbsp;(kg)</span>
                         <input type="text" class="form-control" id="weight" name="<?php echo ProfileTable::table_name.'['.ProfileTable::weight.']'?>" >
                     </div>
                     <div class="form-group-lg col-md-3">
@@ -97,10 +98,14 @@ Crave::requireAll(UTIL);
                     <div class="form-group-lg col-md-6">
                         <label for="dept">Department</label>
                         <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::department_id.']'?>">
-                            <option value="1">Doctor</option>
-                            <option value="2">Pharmacy</option>
-                            <option value="3">Medical Records</option>
-                            <option value="4">Agent</option>
+                            <option value="<?php echo DOCTOR; ?>">Doctor</option>
+                            <option value="<?php echo PHARMACIST; ?>">Pharmacy</option>
+                            <option value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
+                            <option value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
+                            <option value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
+                            <option value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
+                            <option value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>
+                            <option value="<?php echo CHEMICAL_PATHOLOGY_CONDUCTOR; ?>">Chemical Pathology</option>
                         </select>
                     </div>
                     <div class="form-group-lg col-md-6">
@@ -115,6 +120,7 @@ Crave::requireAll(UTIL);
                       <button type="submit" class="btn btn-lg btn-primary">Submit</button>
                     </div>
                 </form>
+                <div class="clearfix"></div>
             </div>
         </div>
     </div>

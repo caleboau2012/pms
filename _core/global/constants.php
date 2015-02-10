@@ -26,6 +26,17 @@ define('AVAILABLE', 'available');
 define('ADMINISTRATOR', 1);
 define('DOCTOR', 2);
 define('PHARMACIST', 3);
+define('MEDICAL_RECORD', 4);
+define('PERMISSION_GRANTER', 5);
+define('URINE_CONDUCTOR', 6);
+define('VISUAL_CONDUCTOR', 7);
+define('XRAY_CONDUCTOR', 8);
+define('HEALTH_SCHEME', 9);
+define('PARASITOLOGY_CONDUCTOR', 10);
+define('CHEMICAL_PATHOLOGY_CONDUCTOR', 11);
+define('STAFF_ADDING_OFFICER', 12);
+define('STAFF_CLEARANCE_OFFICER', 13);
+define('TREATMENT_RECORD', 14);
 
 //ACTIVE STATUS CONSTANTS
 define('ACTIVE', 1);

@@ -6,7 +6,6 @@
  */
 
 $(function(){
-    //change password
     $('#profile-form').on('submit', function (e) {
         $('#form-loading').removeClass('hidden');
         var form_data = $(this).serialize();
@@ -20,10 +19,16 @@ $(function(){
                 console.log(response);
                 if(response.status == 2){
                     $('#form-loading').addClass('hidden');
+                    $('#form-success').addClass('hidden');
                     $('#form-error').removeClass('hidden');
                     $('#form-error').html(response.message);
                 }else if(response.status == 1){
-                    window.location.assign('dashboard.php');
+                    $('#form-loading').addClass('hidden');
+                    $('#form-error').addClass('hidden');
+                    $('#form-success').html(response.message);
+                    setTimeout(function(){
+                        window.location.assign('dashboard.php')
+                    }, 2500);
                 }
             }).fail(function(data){
                 console.log(data.responseText);
