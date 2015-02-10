@@ -67,3 +67,12 @@ class PermissionRoleTable {
   const modified_date = 'modified_date';
   const active_fg = 'active_fg';
 }
+
+class PatientQueueTable {
+  const patient_queue_id = 'patient_queue_id';
+  const patient_id = 'patient_id';
+  const userid = 'userid';
+  const active_fg = 'active_fg';
+  const create_date = 'create_date';
+  const modified_date = 'modified_date';
+}

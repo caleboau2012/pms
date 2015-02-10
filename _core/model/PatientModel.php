@@ -46,5 +46,15 @@ class PatientModel extends BaseModel {
         return $result;
     }
 
+    public function searchPatient($parameter) {
+        $stmt = PatientSqlStatement::SEARCH;
+        $data = array();
+        $data[PARAMETER] = $parameter;
+        $data[WILDCARD] = "%" . $parameter . "%";
 
+        //die(var_dump($data));
+        $result = $this->conn->fetchAll($stmt, $data);
+
+        return $result;
+    }
 }

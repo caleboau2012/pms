@@ -46,3 +46,7 @@ define('CLEARED', 4);
 define('PENDING', 5);
 define('PROCESSING', 6);
 define('COMPLETED', 7);
+
+//PATIENT ARRIVAL CONSTANTS
+define('PARAMETER', 'parameter');
+define('WILDCARD', 'wildcard');
