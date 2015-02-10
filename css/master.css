@@ -4,7 +4,7 @@ body {
     padding-top: 40px;
     padding-bottom: 40px;
     background-color: #eee;
-    font-family: "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
+    font-family: "Source Sans Pro", "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
 }
 textarea{
     resize: none;
@@ -58,7 +58,11 @@ textarea{
     font-size: 1.3em;
     color: #454242;
 }
-#form-error{
+.form-profile{
+    background: #E5E5E5;
+    border-radius: 0.5em;
+}
+#form-error, #form-success{
     width: 300px;
 }
 #dashboard{
@@ -68,6 +72,10 @@ textarea{
 }
 .dashboard-panels{
     margin: 2em 0;
+}
+a.dashboard-link:hover, a.dashboard-link:focus {
+    text-decoration: none !important;
+    font-weight: 500;
 }
 .dashboard-items{
     width: 90%;

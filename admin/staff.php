@@ -43,9 +43,9 @@
                 <li><a href="#">Config</a></li>
                 <li><a href="#">Help</a></li>
             </ul>
-<!--            <form class="navbar-form navbar-right">-->
-<!--                <input type="text" class="form-control" placeholder="Search...">-->
-<!--            </form>-->
+            <!--            <form class="navbar-form navbar-right">-->
+            <!--                <input type="text" class="form-control" placeholder="Search...">-->
+            <!--            </form>-->
         </div>
     </div>
 </nav>
@@ -195,7 +195,7 @@
                             </tr>
                             </tbody>
                         </table>
-<!--                        <button class="btn btn-info pull-right" data-dismiss="modal">Save Changes</button>-->
+                        <!--                        <button class="btn btn-info pull-right" data-dismiss="modal">Save Changes</button>-->
                     </div>
                 </div>
             </div>
