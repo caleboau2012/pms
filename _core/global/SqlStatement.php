@@ -65,8 +65,6 @@ class ProfileSqlStatement {
         const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
         const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department, p.work_address, p.home_address, p.telephone, p.sex,
                                         p.height, p.weight, p.birth_date, p.create_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
-
-
 }
 
 class PermissionRoleSqlStatement {
@@ -101,3 +99,34 @@ class PatientSqlStatement {
             OR regNo = :parameter";
 }
 
+class PatientQueueSqlStatement {
+    const ONLINE_DOCTORS = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
+        FROM user_auth AS ua
+            LEFT JOIN profile AS p
+                ON ua.userid = p.userid
+            LEFT JOIN permission_role AS pr
+                ON ua.userid = pr.userid
+        WHERE ua.online_status = 1
+        AND pr.staff_role_id = 2
+        AND pr.active_fg = 1
+        AND ua.active_fg = 1";
+
+    const OFFLINE_DOCTORS_WITH_QUEUE = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
+        FROM patient_queue AS pq
+            INNER JOIN profile AS p
+                ON pq.userid = p.userid
+            INNER JOIN user_auth AS ua
+                ON ua.userid = pq.userid
+        WHERE pq.active_fg = 1
+        AND ua.online_status != 1";
+
+    const DOCTOR_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex
+        FROM patient_queue AS pq
+            INNER JOIN patient AS p
+                ON pq.patient_id = p.patient_id
+        WHERE pq.active_fg = 1
+        AND p.active_fg = 1
+        AND pq.userid = :userid";
+
+    const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date) AS LMT FROM patient_queue";
+}

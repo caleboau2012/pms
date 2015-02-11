@@ -4,4 +4,9 @@ class ArrivalController {
         $patient_model = new PatientModel();
         return $patient_model->searchPatient($parameter);
     }
+
+    public function getQueue() {
+        $arrival = new ArrivalModel();
+        return $arrival->getQueue();
+    }
 }

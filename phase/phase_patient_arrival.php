@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
-Crave::requireFiles(MODEL, array('BaseModel'));
-Crave::requireFiles(CONTROLLER, array());
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ArrivalModel'));
+Crave::requireFiles(CONTROLLER, array('ArrivalController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -14,7 +14,7 @@ if (isset($_REQUEST['intent'])) {
 }
 
 if ($intent == 'search') {
-    //Search and retrieve patient details if patient is not already on queue
+    //Search and retrieve patient details
     if (isset($_REQUEST['parameter'])) {
         $usher = new ArrivalController();
         $patient_details = $usher->searchPatient($_REQUEST['parameter']);
@@ -27,6 +27,17 @@ if ($intent == 'search') {
         }
     } else {
         echo JsonResponse::error("Incomplete request parameters!");
+    }
+} elseif ($intent == 'loadQueue') {
+    //Load patient queue
+    $usher = new ArrivalController();
+    $queue = $usher->getQueue();
+    if (is_array($queue)) {
+        echo JsonResponse::success($queue);
+        exit();
+    } else {
+        echo JsonResponse::error("Queue is empty!");
+        exit();
     }
 } else {
     echo JsonResponse::error("Invalid intent");

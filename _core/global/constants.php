@@ -50,3 +50,5 @@ define('COMPLETED', 7);
 //PATIENT ARRIVAL CONSTANTS
 define('PARAMETER', 'parameter');
 define('WILDCARD', 'wildcard');
+define('QUEUE', 'queue');
+define('LMT', 'LMT');
