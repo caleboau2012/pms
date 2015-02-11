@@ -12,7 +12,7 @@
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -112,32 +112,32 @@
     </div>
 </script>
 
-<div class="container-fluid">
+<div class="container-fluid main">
     <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
+        <div class="col-sm-3 col-md-2">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">General Queue</h2>
                 </div>
-                <div class="panel-body">
+                <div class="panel-body patients">
                     <ul class="list-group">
-                        <li class="list-group-item list-group-item-success">1st Patient</li>
-                        <li class="list-group-item list-group-item-success">2nd Patient</li>
+                        <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                        <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                     </ul>
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+        <div class="col-sm-9 col-md-10">
             <div id="masonry" class="row">
                 <div class="col-sm-4 col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title">Doctor 1</h2>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body patients">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-success">1st Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                             </ul>
                         </div>
                     </div>
@@ -147,11 +147,11 @@
                         <div class="panel-heading">
                             <h2 class="panel-title">Doctor 2</h2>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body patients">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-success">1st Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                             </ul>
                         </div>
                     </div>
@@ -161,10 +161,10 @@
                         <div class="panel-heading">
                             <h2 class="panel-title">Doctor 3</h2>
                         </div>
-                        <div class="panel-body">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success">1st Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                        <div class="panel-body patients">
+                            <ul class="list-group doctor">
+                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                             </ul>
                         </div>
                     </div>
@@ -172,12 +172,12 @@
                 <div class="col-sm-4 col-md-3">
                     <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h2 class="panel-title">Doctor 4</h2>
+                            <h2 class="panel-title patients">Doctor 4</h2>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body patients">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-success">1st Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                             </ul>
                         </div>
                     </div>
@@ -187,10 +187,10 @@
                         <div class="panel-heading">
                             <h2 class="panel-title">Doctor 5</h2>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body patients">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-success">1st Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                             </ul>
                         </div>
                     </div>
@@ -200,10 +200,10 @@
                         <div class="panel-heading">
                             <h2 class="panel-title">Doctor 6</h2>
                         </div>
-                        <div class="panel-body">
+                        <div class="panel-body patients">
                             <ul class="list-group">
-                                <li class="list-group-item list-group-item-success">1st Patient</li>
-                                <li class="list-group-item list-group-item-success">2nd Patient</li>
+                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
+                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
                             </ul>
                         </div>
                     </div>
@@ -439,8 +439,9 @@
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
-<script src="../js/arrival/masonry.js"></script>
+<script src="../js/bootstrap/masonry.js"></script>
 <script src="../js/arrival/arrival.js"></script>
 </body>
 </html>
