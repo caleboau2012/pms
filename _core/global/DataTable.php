@@ -68,6 +68,29 @@ class PermissionRoleTable {
   const active_fg = 'active_fg';
 }
 
+class PatientTable{
+    const table_name        = 'patient';
+    const surname           = 'surname';
+    const firstname         = 'firstname';
+    const middlename        = 'middlename';
+    const regNo             = 'regNo';
+    const home_address      = 'home_address';
+    const telephone         = 'telephone';
+    const sex               = 'sex';
+    const height            = 'height';
+    const weight            = 'weight';
+    const birth_date        = 'birth_date';
+    const nok_firstname     = 'nok_firstname';
+    const nok_middlename    = 'nok_middlename';
+    const nok_surname       = 'nok_surname';
+    const nok_address       = 'nok_address';
+    const nok_telephone     = 'nok_telephone';
+    const nok_relationship  = 'nok_relationship';
+    const create_date       = 'create_date';
+    const modified_date     = 'modified_date';
+    const active_fg         = 'active_fg';
+}
+
 class PatientQueueTable {
   const patient_queue_id = 'patient_queue_id';
   const patient_id = 'patient_id';
