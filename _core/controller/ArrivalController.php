@@ -9,4 +9,30 @@ class ArrivalController {
         $arrival = new ArrivalModel();
         return $arrival->getQueue();
     }
+
+    public function addPatient($patient, $doctor) {
+        $arrival = new ArrivalModel();
+
+        $reponse = array();
+        //CHECK IF PATIENT IS NOT ALREADY ON A QUEUE
+        if ($arrival->patientOnQueue($patient)) {
+            $response[P_STATUS] = STATUS_ERROR;
+            $response[P_MESSAGE] = "Error!!! Patient already on queue";
+            return $response;
+        }
+
+        $arrival_data = array();
+        $arrival_data[PatientQueueTable::patient_id] = $patient;
+        $arrival_data[PatientQueueTable::doctor_id] = $doctor;
+
+        $feedback = $arrival->add($arrival_data);
+
+        return $feedback;
+    }
+
+    public function removePatient($patient) {
+        $arrival = new ArrivalModel();
+        $feedback = $arrival->remove($patient);
+        return $feedback;
+    }
 }

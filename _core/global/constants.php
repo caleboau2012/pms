@@ -52,3 +52,6 @@ define('PARAMETER', 'parameter');
 define('WILDCARD', 'wildcard');
 define('QUEUE', 'queue');
 define('LMT', 'LMT');
+
+//GENERAL CONSTANTS
+define('COUNT', 'count');

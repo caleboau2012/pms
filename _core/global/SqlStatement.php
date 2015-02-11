@@ -100,6 +100,10 @@ class PatientSqlStatement {
 }
 
 class PatientQueueSqlStatement {
+    const ADD = "INSERT INTO patient_queue (patient_id, doctor_id, active_fg, create_date, modified_date) VALUES (:patient_id, :doctor_id, 1, NOW(), NOW())";
+
+    const REMOVE = "UPDATE patient_queue SET active_fg = 0, modified_date = NOW() WHERE patient_id = :patient_id";
+
     const ONLINE_DOCTORS = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
         FROM user_auth AS ua
             LEFT JOIN profile AS p
@@ -114,9 +118,9 @@ class PatientQueueSqlStatement {
     const OFFLINE_DOCTORS_WITH_QUEUE = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
         FROM patient_queue AS pq
             INNER JOIN profile AS p
-                ON pq.userid = p.userid
+                ON pq.doctor_id = p.userid
             INNER JOIN user_auth AS ua
-                ON ua.userid = pq.userid
+                ON ua.userid = pq.doctor_id
         WHERE pq.active_fg = 1
         AND ua.online_status != 1";
 
@@ -126,9 +130,10 @@ class PatientQueueSqlStatement {
                 ON pq.patient_id = p.patient_id
         WHERE pq.active_fg = 1
         AND p.active_fg = 1
-        AND pq.userid = :userid";
+        AND pq.doctor_id = :doctor_id";
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date) AS LMT FROM patient_queue";
+    const PATIENT_ON_QUEUE = "SELECT COUNT(*) AS count FROM patient_queue WHERE patient_id = :patient_id AND active_fg = 1";
 }
 
 class RosterSqlStatement {
