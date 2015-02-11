@@ -92,11 +92,25 @@ class PatientTable{
 }
 
 class PatientQueueTable {
+  const table_name      = 'patient_queue';
   const patient_queue_id = 'patient_queue_id';
   const patient_id = 'patient_id';
   const doctor_id = 'doctor_id';
   const active_fg = 'active_fg';
   const create_date = 'create_date';
   const modified_date = 'modified_date';
+}
+
+class RosterTable {
+    const table_name        = 'roster';
+    const roster_id         = 'roster_id';
+    const doctor_id         = 'doctor_id';
+    const duty              = 'duty';
+    const begin_at          = 'begin_at';
+    const end_at            = 'end_at';
+    const created_date      = 'created_date';
+    const created_by        = 'created_by';
+    const modified_date     = 'modified_date';
+    const modified_by       = 'modified_by';
 }
 

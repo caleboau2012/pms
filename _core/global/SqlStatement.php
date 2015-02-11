@@ -130,3 +130,15 @@ class PatientQueueSqlStatement {
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date) AS LMT FROM patient_queue";
 }
+
+class RosterSqlStatement {
+    const ADD = 'INSERT INTO roster (doctor_id, duty, begin_at, end_at, created_date, created_by, modified_date, modified_by)
+                    VALUES (:doctor_id, :duty, :begin_at, :end_at, NOW(), :created_by, NOW(), :modified_by)';
+    const GET_BY_ID = 'SELECT doctor_id, duty, begin_at, end_at, created_date, created_by, modified_date, modified_by
+                FROM roster WHERE roster_id=:roster_id';
+    const GET_BY_DOCTOR = 'SELECT doctor_id, duty, begin_at, end_at, created_date, created_by, modified_date, modified_by
+                FROM roster WHERE doctor_id=:doctor_id';
+    const UPDATE = 'UPDATE roster SET duty=:duty, begin_at=:begin_at, end_at=:end_at, modified_date = :modified_date, modified_by = :modified_by
+                        WHERE roster_id = :roster_id';
+    const DELETE_ROSTER = 'UPDATE roster SET active_fg = 0, modified_date = :modified_date, modified_by = :modified_by';
+}
