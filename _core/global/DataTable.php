@@ -94,8 +94,9 @@ class PatientTable{
 class PatientQueueTable {
   const patient_queue_id = 'patient_queue_id';
   const patient_id = 'patient_id';
-  const userid = 'userid';
+  const doctor_id = 'doctor_id';
   const active_fg = 'active_fg';
   const create_date = 'create_date';
   const modified_date = 'modified_date';
 }
+
