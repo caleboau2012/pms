@@ -85,4 +85,11 @@ class ArrivalModel extends BaseModel {
 
         return $result[LMT];
     }
+
+    public function changeInQueue($poll_data) {
+        $stmt = PatientQueueSqlStatement::CHANGE_IN_QUEUE;
+        $result = $this->conn->fetch($stmt, $poll_data);
+
+        return $result[COUNT] > 0 ? true : false;
+    }
 }

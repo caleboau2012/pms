@@ -35,4 +35,14 @@ class ArrivalController {
         $feedback = $arrival->remove($patient);
         return $feedback;
     }
+
+    public function changeInQueue($lmt) {
+        $arrival = new ArrivalModel();
+
+        $poll_data = array();
+        $poll_data[PatientQueueTable::modified_date] = $lmt;
+
+        $feedback = $arrival->changeInQueue($poll_data);
+        return $feedback;
+    }
 }

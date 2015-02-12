@@ -138,7 +138,10 @@ class PatientQueueSqlStatement {
         AND pq.doctor_id = :doctor_id";
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date) AS LMT FROM patient_queue";
+
     const PATIENT_ON_QUEUE = "SELECT COUNT(*) AS count FROM patient_queue WHERE patient_id = :patient_id AND active_fg = 1";
+
+    const CHANGE_IN_QUEUE = "SELECT COUNT(*) AS count FROM patient_queue WHERE modified_date > :modified_date";
 }
 
 class RosterSqlStatement {

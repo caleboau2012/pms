@@ -102,6 +102,31 @@ if ($intent == 'search') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
+} elseif ($intent == 'pollQueue') {
+    if (isset($_REQUEST[LMT])) {
+        $lmt = $_REQUEST[LMT];
+        $usher = new ArrivalController();
+        $change = false;
+        for ($i=0; $i < MAX_NUM_POLL; $i++) {
+            $change = $usher->changeInQueue($lmt);
+            if ($change) {
+                echo JsonResponse::message(STATUS_OK, "Patient queue modified!");
+                exit();
+            }
+            sleep(POLLING_SLEEP_TIME);
+            $i += 1;
+        }
+        if ($usher->changeInQueue($lmt)) {
+            echo JsonResponse::message(STATUS_OK, "Patient queue modified!");
+            exit();
+        } else {
+            echo JsonResponse::error("No change in queue!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
 } else {
     echo JsonResponse::error("Invalid intent");
     exit();
