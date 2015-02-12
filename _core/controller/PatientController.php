@@ -25,10 +25,46 @@ class PatientController {
         $this->patient = new PatientModel();
     }
 
-    public function  addPatient ($data ){
+//VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, :nok_firstname,
+//:nok_middlename, :nok_surname, :nok_address, :nok_telephone, :nok_relationship, NOW(), NOW() )';
+
+    public function  addPatient (
+        $surname, $firstname, $middlename, $regNo,
+        $home_address, $telephone, $sex, $height, $weight,
+        $birth_date, $nok_firstname, $nok_middlename,
+        $nok_surname, $nok_address, $nok_telephone, $nok_relationship )
+    {
 
         //$patient = new PatientModel();
-        return $this->patient->InsertPatient($data);
+        $data = array(
+
+            PatientTable::surname => $surname,
+            PatientTable::firstname => $firstname,
+            PatientTable::middlename => $middlename,
+            PatientTable::regNo => $regNo,
+            PatientTable::home_address => $home_address,
+            PatientTable::telephone => $telephone,
+            PatientTable::sex => $sex,
+            PatientTable::height => $height,
+            PatientTable::weight => $weight,
+            PatientTable::birth_date => $birth_date,
+            PatientTable::nok_firstname => $nok_firstname,
+            PatientTable::nok_middlename => $nok_middlename,
+            PatientTable::nok_surname => $nok_surname,
+            PatientTable::nok_address => $nok_address,
+            PatientTable::nok_telephone => $nok_telephone,
+            PatientTable::nok_relationship => $nok_relationship
+
+
+        );
+
+        var_dump($data);
+
+        $result = $this->patient->InsertPatient($data);
+
+        var_dump($result);
+
+        return $result;
 
     }
 

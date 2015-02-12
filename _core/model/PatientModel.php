@@ -13,10 +13,11 @@ class PatientModel extends BaseModel {
     /*Insert Operations*/
 
     public function  InsertPatient ($PatientData){
-        $sql = ProfileSqlStatement::ADD;
-
+        $sql = PatientSqlStatement::ADD;
         $result = $this->conn->execute($sql, $PatientData);
+
         return $result;
+        //return $PatientData;
     }
 
     public function  UpdatePatientInfo ($newPatientData){

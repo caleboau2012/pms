@@ -53,6 +53,77 @@ else if ($intent == 'getPatient') {
         exit();
     }
 
+
+}
+
+else if ($intent == 'addPatient') {
+    $patientController = new PatientController();
+
+    $surname ="";
+    $firstname ="";
+    $middlename ="";
+    $regNo ="";
+    $home_address= "";
+    $telephone ="";
+    $sex ="";
+    $height ="";
+    $weight ="";
+    $birth_date = "";
+    $nok_firstname ="";
+    $nok_middlename = "";
+    $nok_surname = "";
+    $nok_address = "";
+    $nok_telephone = "";
+    $nok_relationship  ="";
+
+    if (isset($_REQUEST['surname'])){  // change surname to what you thin should be set.
+
+        $surname =$_REQUEST[PatientTable::surname];
+        $firstname =$_REQUEST[PatientTable::firstname];
+        $middlename =$_REQUEST[PatientTable::middlename];
+        $regNo =$_REQUEST[PatientTable::regNo];
+        $home_address= $_REQUEST[PatientTable::home_address];
+        $telephone =$_REQUEST[PatientTable::telephone];
+        $sex =$_REQUEST[PatientTable::sex];
+        $height =$_REQUEST[PatientTable::height];
+        $weight =$_REQUEST[PatientTable::weight];
+        $birth_date = $_REQUEST[PatientTable::birth_date];
+        $nok_firstname = $_REQUEST[PatientTable::nok_firstname];
+        $nok_middlename = $_REQUEST[PatientTable::nok_middlename];
+        $nok_surname = $_REQUEST[PatientTable::nok_surname];
+        $nok_address = $_REQUEST[PatientTable::nok_address];
+        $nok_telephone = $_REQUEST[PatientTable::nok_telephone];
+        $nok_relationship  = $_REQUEST[PatientTable::nok_relationship];
+
+    }
+    else {
+        echo JsonResponse::error(" Patient is not set");
+        exit();
+    }
+
+    $patientadd = null;
+
+    if (empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)|| empty($sex)|| empty($height)||
+        empty($weight)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
+        || empty($nok_relationship) ){
+
+        echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
+        exit();
+
+    }
+    else{
+        $patientadd = $patientController->addPatient ($surname, $firstname, $middlename, $regNo, $home_address, $telephone, $sex, $height, $weight,
+        $birth_date, $nok_firstname, $nok_middlename,$nok_surname, $nok_address, $nok_telephone, $nok_relationship );
+    }
+
+    if($patientadd){
+        echo JsonResponse::success("Patient info succesfully added");
+        exit();
+    } else {
+        echo JsonResponse::error("Error adding patient info");
+        exit();
+    }
+
 }
 
 else {
