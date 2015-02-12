@@ -58,11 +58,11 @@ class PatientController {
 
         );
 
-        var_dump($data);
+       // var_dump($data);
 
         $result = $this->patient->InsertPatient($data);
 
-        var_dump($result);
+        //var_dump($result);
 
         return $result;
 
