@@ -37,7 +37,7 @@ class PatientModel extends BaseModel {
 
     public function  GetPatientDetails ($patient_id){
         $sql = PatientSqlStatement::GET;
-        $result =$this->conn->fetch($sql, array('patient_id' => $patient_id));
+        $result =$this->conn->fetch($sql, array(PatientTable::patient_id => $patient_id));
         return $result;
     }
 

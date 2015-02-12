@@ -70,6 +70,7 @@ class PermissionRoleTable {
 
 class PatientTable{
     const table_name        = 'patient';
+    const patient_id        = 'patient_id';
     const surname           = 'surname';
     const firstname         = 'firstname';
     const middlename        = 'middlename';
