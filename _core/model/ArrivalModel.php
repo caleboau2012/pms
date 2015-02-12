@@ -1,5 +1,30 @@
 <?php
 class ArrivalModel extends BaseModel {
+    public function add($arrival_data) {
+        $stmt = PatientQueueSqlStatement::ADD;
+        $result = $this->conn->execute($stmt, $arrival_data, true);
+
+        return $result;
+    }
+
+    public function remove($patient) {
+        $stmt = PatientQueueSqlStatement::REMOVE;
+        $data = array();
+        $data[PatientQueueTable::patient_id] = $patient;
+
+        $result = $this->conn->execute($stmt, $data);
+        return $result;
+    }
+
+    public function patientOnQueue($patient_id) {
+        $stmt = PatientQueueSqlStatement::PATIENT_ON_QUEUE;
+        $data = array();
+        $data[PatientQueueTable::patient_id] = $patient_id;
+
+        $result = $this->conn->fetch($stmt, $data);
+        return $result[COUNT] > 0 ? true : false;
+    }
+
     public function getOnlineDoctors() {
         $stmt = PatientQueueSqlStatement::ONLINE_DOCTORS;
         $data = array();
@@ -29,7 +54,7 @@ class ArrivalModel extends BaseModel {
     public function getDoctorQueue($doctor_id) {
         $stmt = PatientQueueSqlStatement::DOCTOR_QUEUE;
         $data = array();
-        $data[PatientQueueTable::userid] = $doctor_id;
+        $data[PatientQueueTable::doctor_id] = $doctor_id;
         $result = $this->conn->fetchAll($stmt, $data);
 
         return $result;
@@ -59,5 +84,12 @@ class ArrivalModel extends BaseModel {
         $result = $this->conn->fetch($stmt, $data);
 
         return $result[LMT];
+    }
+
+    public function changeInQueue($poll_data) {
+        $stmt = PatientQueueSqlStatement::CHANGE_IN_QUEUE;
+        $result = $this->conn->fetch($stmt, $poll_data);
+
+        return $result[COUNT] > 0 ? true : false;
     }
 }

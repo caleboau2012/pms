@@ -52,3 +52,10 @@ define('PARAMETER', 'parameter');
 define('WILDCARD', 'wildcard');
 define('QUEUE', 'queue');
 define('LMT', 'LMT');
+
+//LONG POLLING CONSTANTS
+define('POLLING_SLEEP_TIME', 5);
+define('MAX_NUM_POLL', 4);
+
+//GENERAL CONSTANTS
+define('COUNT', 'count');

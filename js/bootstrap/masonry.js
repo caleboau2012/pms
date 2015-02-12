@@ -2721,8 +2721,7 @@
                 'doc-ready/doc-ready',
                 'eventEmitter/EventEmitter',
                 'get-size/get-size',
-                'matches-selector/matches-selector',
-                './item'
+                'matches-selector/matches-selector'
             ],
             outlayerDefinition );
     } else if ( typeof exports === 'object' ) {
