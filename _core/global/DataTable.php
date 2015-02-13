@@ -87,6 +87,13 @@ class PatientTable{
     const nok_address       = 'nok_address';
     const nok_telephone     = 'nok_telephone';
     const nok_relationship  = 'nok_relationship';
+    const citizenship        = 'citizenship';
+    const religion           = 'religion';
+    const family_position    = 'family_position';
+    const mother_status     = 'mother_status';
+    const father_status      = 'father_status';
+    const marital_status    = 'marital_status';
+    const no_of_children    = 'no_of_children';
     const create_date       = 'create_date';
     const modified_date     = 'modified_date';
     const active_fg         = 'active_fg';

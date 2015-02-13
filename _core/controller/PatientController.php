@@ -32,7 +32,8 @@ class PatientController {
         $surname, $firstname, $middlename, $regNo,
         $home_address, $telephone, $sex, $height, $weight,
         $birth_date, $nok_firstname, $nok_middlename,
-        $nok_surname, $nok_address, $nok_telephone, $nok_relationship )
+        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
+        $mother_status, $father_status, $marital_status, $no_of_children )
     {
 
         //$patient = new PatientModel();
@@ -53,7 +54,14 @@ class PatientController {
             PatientTable::nok_surname => $nok_surname,
             PatientTable::nok_address => $nok_address,
             PatientTable::nok_telephone => $nok_telephone,
-            PatientTable::nok_relationship => $nok_relationship
+            PatientTable::nok_relationship => $nok_relationship,
+            PatientTable::citizenship => $citizenship,
+            PatientTable::religion => $religion,
+            PatientTable::family_position => $family_position,
+            PatientTable::mother_status => $mother_status,
+            PatientTable::father_status=> $father_status,
+            PatientTable::marital_status => $marital_status,
+            PatientTable::no_of_children =>$no_of_children
 
 
         );

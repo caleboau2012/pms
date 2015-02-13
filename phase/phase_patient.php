@@ -75,8 +75,17 @@ else if ($intent == 'addPatient') {
     $nok_address = "";
     $nok_telephone = "";
     $nok_relationship  ="";
+    $citizenship ="";
+    $religion="";
+    $family_position="";
+    $mother_status="";
+    $father_status="";
+    $marital_status="";
+    $no_of_children="";
 
     if (isset($_REQUEST['surname'])){  // change surname to what you thin should be set.
+
+       // var_dump($_REQUEST);
 
         $surname =$_REQUEST[PatientTable::surname];
         $firstname =$_REQUEST[PatientTable::firstname];
@@ -94,6 +103,13 @@ else if ($intent == 'addPatient') {
         $nok_address = $_REQUEST[PatientTable::nok_address];
         $nok_telephone = $_REQUEST[PatientTable::nok_telephone];
         $nok_relationship  = $_REQUEST[PatientTable::nok_relationship];
+        $citizenship =$_REQUEST[PatientTable::citizenship];
+        $religion=$_REQUEST[PatientTable::religion];
+        $family_position=$_REQUEST[PatientTable::family_position];
+        $mother_status=$_REQUEST[PatientTable::mother_status];
+        $father_status=$_REQUEST[PatientTable::father_status];
+        $marital_status=$_REQUEST[PatientTable::marital_status];
+        $no_of_children=$_REQUEST[PatientTable::no_of_children];
 
     }
     else {
@@ -105,15 +121,21 @@ else if ($intent == 'addPatient') {
 
     if (empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)|| empty($sex)|| empty($height)||
         empty($weight)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
-        || empty($nok_relationship) ){
+        || empty($nok_relationship) ||empty($citizenship)||empty($religion)||empty($family_position)||empty($mother_status)||empty($father_status)||empty($marital_status)
+        || empty($no_of_children) ){
+
 
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
 
     }
     else{
-        $patientadd = $patientController->addPatient ($surname, $firstname, $middlename, $regNo, $home_address, $telephone, $sex, $height, $weight,
-        $birth_date, $nok_firstname, $nok_middlename,$nok_surname, $nok_address, $nok_telephone, $nok_relationship );
+        $patientadd = $patientController->addPatient (
+            $surname, $firstname, $middlename, $regNo,
+            $home_address, $telephone, $sex, $height, $weight,
+            $birth_date, $nok_firstname, $nok_middlename,
+            $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
+            $mother_status, $father_status, $marital_status, $no_of_children );
     }
 
     if($patientadd){
