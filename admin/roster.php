@@ -35,15 +35,11 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Patient Management System</a>
+            <a class="navbar-brand" href="../dashboard.php">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right">
-                <li><a href="patients.php">Patients</a></li>
-                <li><a href="#">Staff</a></li>
                 <li><a href="#" class="label-default">Roster</a></li>
-                <li><a href="#">Config</a></li>
-                <li><a href="#">Help</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search...">

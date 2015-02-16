@@ -178,7 +178,19 @@ $administrator = false;
         foreach (CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff) {
             ?>
             <?php
-            if ($staff[StaffRoleTable::staff_role_id] == ADMINISTRATOR) {
+            if ($staff[StaffRoleTable::staff_role_id] == ROASTER_CREATOR) {
+                $administrator = true;
+                ?>
+                <div class="col-xs-3 text-center">
+                    <a href="admin/roster.php" class="dashboard-link">
+                        <img src="images/roster.png" width="60" height="60">
+
+                        <div class="dashboard-desc">Roster</div>
+                    </a>
+                </div>
+
+            <?php
+            }else if($staff[StaffRoleTable::staff_role_id] == ADMINISTRATOR){
                 $administrator = true;
                 ?>
                 <div class="col-xs-3  text-center">
@@ -194,20 +206,7 @@ $administrator = false;
                         <div class="dashboard-desc">Report Creation</div>
                     </a>
                 </div>
-                <div class="col-xs-3 text-center">
-                    <a href="#" class="dashboard-link">
-                        <img src="images/student_access_code.png" width="60" height="60" alt="Student Access Code">
 
-                        <div class="dashboard-desc">Patient Access code</div>
-                    </a>
-                </div>
-                <div class="col-xs-3 text-center">
-                    <a href="#" class="dashboard-link">
-                        <img src="images/file-edit.png">
-
-                        <div class="dashboard-desc">Health Scheme</div>
-                    </a>
-                </div>
             <?php
             }else if($staff[StaffRoleTable::staff_role_id] == STAFF_ADDING_OFFICER){
                 $administrator = true;
