@@ -158,3 +158,7 @@ class RosterSqlStatement {
                         WHERE roster_id = :roster_id';
     const DELETE_ROSTER = 'UPDATE roster SET active_fg = 0, modified_date = :modified_date, modified_by = :modified_by';
 }
+
+class DepartmentSqlStatment{
+    const GET_ALL = 'SELECT department_id, department_name FROM department';
+}
