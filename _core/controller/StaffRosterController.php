@@ -17,9 +17,14 @@ class StaffRosterController{
         return $this->staffRoster->getDepartments();
     }
 
-    public function assignTask($userId, $deptId, $duty, $dutyDate, $createdBy){
+    public function assignTask($userId, $deptId, $duty, $dutyDate, $createdBy, $modifeiedBy){
         return $this->staffRoster->assignTask(array(RosterTable::user_id => $userId, RosterTable::dept_id => $deptId,
                                                     RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate,
-                                                    RosterTable::created_by => $createdBy));
+                                                    RosterTable::created_by => $createdBy,
+                                                    RosterTable::modified_by => $modifeiedBy));
+    }
+
+    public function getAllStaffsRoster(){
+        return $this->staffRoster->allStaffRoster();
     }
 }

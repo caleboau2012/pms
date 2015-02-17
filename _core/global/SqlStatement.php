@@ -149,9 +149,11 @@ class PatientQueueSqlStatement {
 
 class RosterSqlStatement {
     const ADD = 'INSERT INTO roster (user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by)
-                    VALUES (:user_id, :created_by, :dept_id, :duty, :duty_date, :created_date, :modified_date, :modified_by)';
+                    VALUES (:user_id, :created_by, :dept_id, :duty, :duty_date, now(), now(), :modified_by)';
     const GET_BY_ID = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE roster_id=:roster_id';
+    const GET_ALL = 'SELECT r.user_id, r.created_by, r.dept_id, r.duty, r.duty_date, r.created_date, r.modified_date, r.modified_by, p.surname, p.firstname, r.user_id, p.middlename
+                FROM roster AS r INNER JOIN PROFILE AS p ON p.userid = r.user_id ';
     const GET_BY_DOCTOR = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE user_id=:user_id';
     const UPDATE = 'UPDATE roster SET dept_id=:dept_id, duty=:duty, duty_date=:duty_date, modified_date=:modified_date, modified_by=:modified_date

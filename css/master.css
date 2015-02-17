@@ -199,6 +199,35 @@ a.dashboard-link:hover, a.dashboard-link:focus {
 /**
     ---ROSTER VIEW
 */
+.n-duty{
+    padding: 0.4em;
+    background: #3F3C3C;
+    border: none;
+    text-align: center;
+    box-shadow: 1px 2px 2px #908585;
+
+}
+.a-duty{
+    padding: 0.4em;
+    background: #4CA618;
+    border: none;
+    margin-right: 0.4em;
+    text-align: center;
+    box-shadow: 1px 2px 2px #908585;
+}
+.m-duty{
+    padding: 0.4em;
+    border: none;
+    margin-right: 0.4em;
+    text-align: center;
+    box-shadow: 1px 2px 2px #908585;
+
+    /*background: #aaa;*/
+}
+#rosterResponse{
+    width: 50%;
+    margin: 0 auto;
+}
 .roster{
 
 }
