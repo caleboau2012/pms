@@ -148,13 +148,13 @@ class PatientQueueSqlStatement {
 }
 
 class RosterSqlStatement {
-    const ADD = 'INSERT INTO roster (user_id, duty, begin_at, end_at, created_date, created_by, modified_date, modified_by)
-                    VALUES (:user_id, :duty, :begin_at, :end_at, NOW(), :created_by, NOW(), :modified_by)';
-    const GET_BY_ID = 'SELECT user_id, duty, begin_at, end_at, created_date, created_by, modified_date, modified_by
+    const ADD = 'INSERT INTO roster (user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by)
+                    VALUES (:user_id, :created_by, :dept_id, :duty, :duty_date, :created_date, :modified_date, :modified_by)';
+    const GET_BY_ID = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE roster_id=:roster_id';
-    const GET_BY_DOCTOR = 'SELECT user_id, duty, begin_at, end_at, created_date, created_by, modified_date, modified_by
+    const GET_BY_DOCTOR = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE user_id=:user_id';
-    const UPDATE = 'UPDATE roster SET duty=:duty, begin_at=:begin_at, end_at=:end_at, modified_date = :modified_date, modified_by = :modified_by
+    const UPDATE = 'UPDATE roster SET dept_id=:dept_id, duty=:duty, duty_date=:duty_date, modified_date=:modified_date, modified_by=:modified_date
                         WHERE roster_id = :roster_id';
     const DELETE_ROSTER = 'UPDATE roster SET active_fg = 0, modified_date = :modified_date, modified_by = :modified_by';
 }
