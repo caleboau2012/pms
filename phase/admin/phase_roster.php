@@ -3,7 +3,8 @@
 require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
+Crave::requireAll(UTIL);
+//Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'StaffRosterModel'));
 Crave::requireFiles(CONTROLLER, array('UserController', 'StaffRosterController'));
 
@@ -37,7 +38,7 @@ if ($intent == 'getDepartments') {
         exit();
     }
 } elseif($intent == 'assignTask') {
-    $createdBy = CxSessionHandler::getItem(CxSessionHandler::userid);
+    $createdBy = CxSessionHandler::getItem('userid');
 
     if (isset($_REQUEST['data'])) {
         $data = $_REQUEST['data'];

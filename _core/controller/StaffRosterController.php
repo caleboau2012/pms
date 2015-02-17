@@ -22,4 +22,8 @@ class StaffRosterController{
                                                     RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate,
                                                     RosterTable::created_by => $createdBy));
     }
+
+    public function modifyTask(){
+
+    }
 }

@@ -37,4 +37,8 @@ class CxSessionHandler{
         CxSessionHandler::clearItem(CxSessionHandler::VIEW_BAG);
         return $data;
     }
+
+    public static function getSession(){
+        return $_SESSION;
+    }
 }
