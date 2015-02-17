@@ -19,6 +19,6 @@ class StaffRoster extends BaseModel {
     }
 
     public function assignTask($data) {
-        return $this->conn->execute(RosterSqlStatement::SET, $data);
+        return $this->conn->execute(RosterSqlStatement::ADD, $data);
     }
 } 
