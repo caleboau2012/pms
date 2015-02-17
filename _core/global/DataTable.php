@@ -111,11 +111,12 @@ class PatientQueueTable {
 
 class RosterTable {
     const table_name        = 'roster';
+
     const roster_id         = 'roster_id';
-    const doctor_id         = 'doctor_id';
+    const user_id           = 'user_id';
+    const dept_id           = 'dept_id';
     const duty              = 'duty';
-    const begin_at          = 'begin_at';
-    const end_at            = 'end_at';
+    const duty_date         = 'duty_date';
     const created_date      = 'created_date';
     const created_by        = 'created_by';
     const modified_date     = 'modified_date';

@@ -18,7 +18,7 @@ class StaffRoster extends BaseModel {
         return $this->conn->fetchAll(DepartmentSqlStatment::GET_ALL, array());
     }
 
-    public function assignTask() {
-
+    public function assignTask($data) {
+        return $this->conn->execute(RosterSqlStatement::SET, $data);
     }
 } 

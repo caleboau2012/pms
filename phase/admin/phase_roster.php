@@ -25,24 +25,7 @@ if ($intent == 'getDepartments') {
         echo JsonResponse::error('No department found!');
         exit();
     }
-
-    /*if (isset($_REQUEST['userid'])) {
-        $userid = $_REQUEST['userid'];
-        $controller = new UserController();
-        $staff_details = $controller->getStaffDetails($userid);
-
-        if (is_array($staff_details)) {
-            echo JsonResponse::success($staff_details);
-            exit();
-        } else {
-            echo JsonResponse::error('No details found!');
-            exit();
-        }
-    }  else {
-        echo JsonResponse::error('User ID not set!');
-        exit();
-    }*/
-} elseif($intent == getUsers) {
+} elseif($intent == 'getUsers') {
     $userController = new UserController();
     $list_of_staff = $userController->getAllUsers();
 
@@ -53,6 +36,31 @@ if ($intent == 'getDepartments') {
         echo JsonResponse::error('No staff found!');
         exit();
     }
-} else {
+} elseif($intent == 'assignTask') {
+    $createdBy = CxSessionHandler::getItem(CxSessionHandler::userid);
+
+    if (isset($_REQUEST['data'])) {
+        $data = $_REQUEST['data'];
+
+        $userId = $data['user_id'];
+        $deptId = $data['dept_id'];
+        $duty   = $data['duty'];
+        $dutyDate = $data['duty_date'];
+
+        $controller = new StaffRosterController();
+        $result = $controller->assignTask($userId, $deptId, $duty, $dutyDate, $createdBy);
+
+        if ($result) {
+            echo JsonResponse::success("Task successfully assigned");
+            exit();
+        } else {
+            echo JsonResponse::error('Could not assign task, try again!');
+            exit();
+        }
+    }  else {
+        echo JsonResponse::error('Cannot fetch details of the staff to assign a task to');
+        exit();
+    }
+}else {
     echo JsonResponse::error("Invalid intent!");
 }
