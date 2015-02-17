@@ -182,7 +182,7 @@ $administrator = false;
                 $administrator = true;
                 ?>
                 <div class="col-xs-3 text-center">
-                    <a href="admin/roster.php" class="dashboard-link">
+                    <a href="roster.php" class="dashboard-link">
                         <img src="images/roster.png" width="60" height="60">
 
                         <div class="dashboard-desc">Roster</div>
