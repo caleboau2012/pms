@@ -2,3 +2,4 @@
 TestModel.php
 phase/test.php
 test.php
+_resource/communication_logs/*.msg

@@ -164,3 +164,41 @@ class RosterSqlStatement {
 class DepartmentSqlStatment{
     const GET_ALL = 'SELECT department_id, department_name FROM department';
 }
+
+class CommunicationSqlStatement {
+    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status 
+        FROM communication 
+            INNER JOIN profile 
+                ON communication.sender_id = profile.userid
+        WHERE recipient_id = :recipient_id";
+
+    const GET_SENT_MESSAGES = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, recipient_id, msg_subject, msg_body
+        FROM communication 
+            INNER JOIN profile 
+                ON communication.recipient_id = profile.userid
+        WHERE sender_id = :sender_id";
+
+    const SEND_MESSAGE = "INSERT INTO communication (sender_id, recipient_id, msg_subject, msg_body, msg_status, active_fg, created_date, modified_date) VALUES (:sender_id, :recipient_id, :msg_subject, :msg_body, 1, 1, NOW(), NOW())";
+
+    const CHECK_INBOX_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE msg_id = :msg_id AND recipient_id = :recipient_id";
+
+    const CHECK_SENT_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE msg_id = :msg_id AND sender_id = :sender_id";
+
+    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status 
+        FROM communication
+            INNER JOIN profile
+                ON communication.sender_id = profile.userid
+        WHERE recipient_id = :recipient_id
+        AND msg_id = :msg_id";
+
+    const GET_SENT_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS recipient_name, msg_id, recipient_id, msg_subject, msg_body
+        FROM communication
+            INNER JOIN profile
+                ON communication.recipient_id = profile.userid
+        WHERE sender_id = :sender_id
+        AND msg_id = msg_id";
+
+    const MARK_AS_READ = "UPDATE communication SET msg_status = 0, modified_date = NOW() WHERE msg_id = :msg_id AND recipient_id = :recipient_id";
+
+    const CHECK_NEW_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE created_date > :created_date AND recipient_id = :recipient_id";
+}
