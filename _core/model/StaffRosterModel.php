@@ -20,7 +20,12 @@ class StaffRoster extends BaseModel {
 
     public function assignTask($data) {
         return $this->conn->execute(RosterSqlStatement::ADD, $data);
-//        return $data;
+    }
+   public function updateTask($data) {
+        return $this->conn->execute(RosterSqlStatement::UPDATE, $data);
+    }
+    public function deleteTask($data) {
+        return $this->conn->execute(RosterSqlStatement::DELETE_ROSTER, $data);
     }
 
     public function allStaffRoster(){

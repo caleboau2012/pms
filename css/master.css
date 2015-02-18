@@ -224,12 +224,28 @@ a.dashboard-link:hover, a.dashboard-link:focus {
 
     /*background: #aaa;*/
 }
-#rosterResponse{
-    width: 50%;
-    margin: 0 auto;
+#external-events .fc-event {
+    cursor: pointer;
 }
-.roster{
-
+#calendar {
+    width: 95%;
+}
+#roster-wrap{
+    margin-top: 40px;
+}
+#rosterResponse{
+    text-align: center;
+    color: #4CA618;
+    line-height: 0.4;
+    font-size: 0.9em;
+    height: 0.7em;
+}
+#roster_loading{
+    text-align: center;
+    font-size: 4em;
+}
+#external-events{
+    padding: 0 1em;
 }
 .roster-list{
     /*background: #fff;*/
@@ -299,10 +315,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     border-radius: 0.3em;
     box-shadow: 1px 1px 1px #A0BCD5;
 }
-.staff:hover, li.staff-all:hover {
-    background: #428BCA;
-    color: #fff;
-}
+
 .staff, .staff-all{
     color: #000;
     text-transform: uppercase;

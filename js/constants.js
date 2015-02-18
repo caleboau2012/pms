@@ -21,6 +21,7 @@ function printElem(data){
     return true;
 }
 
+
 function makeTable(){
     $('.dataTable').dataTable();
 }
