@@ -396,3 +396,12 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 .page {
     padding: 20px;
 }
+
+.btn-compose {
+    margin-left: 70px;
+    margin-bottom: 10px;
+}
+
+.put-margin-top{
+    margin-top: 40px;
+}
