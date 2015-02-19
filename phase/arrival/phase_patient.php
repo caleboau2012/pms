@@ -123,7 +123,7 @@ else if ($intent == 'addPatient') {
         empty($weight)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
         || empty($nok_relationship) ||empty($citizenship)||empty($religion)||empty($family_position)||empty($mother_status)||empty($father_status)||empty($marital_status)){
 
-        print_r($_REQUEST);
+//        print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
 
@@ -141,7 +141,7 @@ else if ($intent == 'addPatient') {
         echo JsonResponse::success("Patient info succesfully added");
         exit();
     } else {
-        print_r($_REQUEST);
+//        print_r($_REQUEST);
         echo JsonResponse::error("Error adding patient info");
         exit();
     }

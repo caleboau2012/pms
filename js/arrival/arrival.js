@@ -44,15 +44,7 @@ function init(){
                     patientHTML = replaceAll('{{name}}', patientName, patientHTML);
                     patientHTML = replaceAll('{{sex}}', obj.queue[j].sex, patientHTML);
 
-
-
-                    //patientHTML += $('#tmplPatients').html().replace('{{userid}}', obj.userid)
-                    //    .replace('{{patientid}}', obj.queue[j].patient_id)
-                    //    .replace('{{regNo}}', obj.queue[j].regNo)
-                    //    .replace('{{name}}', patientName)
-                    //    .replace('{{sex}}', obj.queue[j].sex);
                 }
-                //console.log(patientHTML);
 
                 html = $.parseHTML(doctorHTML);
                 $(html).find('.patients').first().append(patientHTML);
@@ -101,6 +93,9 @@ function patientDrop(e, ui){
     var source = ui.draggable[0];
     var target = this;
 
+    console.log(source);
+    console.log(target);
+
     $(target).find('.drop').prepend(source);
     $('#masonry').masonry();
 }
@@ -119,14 +114,14 @@ $("#newPatientForm").on('submit', function(e){
     addPatient(this);
 });
 
-//$("#naija").on('change', function () {
-//   $('.non-naija').toggle();
-//});
+$("#naija").on('change', function () {
+   $('.non-naija').toggle();
+});
 
 function addPatient(form){
 
     var citizenship = $('#naija').is(':checked')?"Nigeria":form.citizenship;
-    console.log(citizenship);
+    //console.log(citizenship);
 
     $.post(host + "phase/arrival/phase_patient.php?intent=addPatient",
         {
@@ -155,11 +150,47 @@ function addPatient(form){
             no_of_children : form.no_of_children.value
         },
     function(data){
-        //data = JSON.parse(data);
+        data = JSON.parse(data);
         console.log(data);
+
+        var patientHTML = "";
+        patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+        patientHTML += $('#tmplPatients').html();
+        patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+        //patientHTML = replaceAll('{{patientid}}', obj.queue[j].patient_id, patientHTML);
+        patientHTML = replaceAll('{{regNo}}', form.regNo.value, patientHTML);
+        patientHTML = replaceAll('{{name}}', patientName, patientHTML);
+        patientHTML = replaceAll('{{sex}}', form.sex.value, patientHTML);
+
+        $(".general").find('.drop').prepend(patientHTML);
+        $('#newPatientModal').modal('hide');
+        draggableDropabble();
+
     }).fail(function(){
             console.log('shing');
         });
 
     return false;
+}
+
+function emergency(){
+    var id = randomID();
+
+    var patientHTML = "";
+    //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+    patientHTML += $('#tmplPatients').html();
+    patientHTML = patientHTML.replace('panel-success', 'panel-danger');
+    patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+    patientHTML = replaceAll('{{patientid}}', id, patientHTML);
+    patientHTML = replaceAll('{{regNo}}', 'EMER' + id, patientHTML);
+    patientHTML = replaceAll('{{name}}', 'EMER' + id, patientHTML);
+    patientHTML = replaceAll('{{sex}}', 'EMER' + id, patientHTML);
+
+    $(".general").find('.drop').prepend(patientHTML);
+    $('#newPatientModal').modal('hide');
+    draggableDropabble();
+}
+
+function randomID(){
+    return Math.floor((Math.random() * 1000));
 }

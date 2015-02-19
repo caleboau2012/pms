@@ -51,7 +51,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right nav-pills">
                 <li><a href="#" data-toggle="modal" data-target="#newPatientModal">New Patient</a></li>
-                <li><a href="#">Emergency</a></li>
+                <li><a href="#" onclick="emergency()">Emergency</a></li>
                 <li><a id="sign-out" href="#">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right">
@@ -75,6 +75,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <div class="panel-body">
                 <p>{{name}}</p>
                 <p>{{sex}}</p>
+                <span class="patientid" hidden>{{patientid}}</span>
+                <span class="doctorid" hidden>{{userid}}</span>
             </div>
         </div>
     </div>
@@ -97,12 +99,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div class="container-fluid page">
     <div class="row">
         <div class="col-sm-3 col-md-2">
-            <div class="panel panel-default doctor">
+            <div class="panel panel-default doctor general">
                 <div class="panel-heading">
                     <h2 class="panel-title">General Queue</h2>
                 </div>
                 <div class="panel-body patients">
-                    <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">
+                    <div class="panel-group drop" id="accordion0" role="tablist" aria-multiselectable="true">
                     </div>
                 </div>
             </div>
@@ -246,7 +248,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                             <label class="label label-success">Nigerian</label>
                                             <input id="naija" checked type="checkbox" class="form-control checkbox">
                                         </div>
-                                        <div class="pull-left non-naija">
+                                        <div class="pull-left non-naija" style="display: none;">
                                             <label class="label label-default">Others? Please specify:</label>
                                             <input name="<?php echo PatientTable::citizenship ;?>" class="form-control"/>
                                         </div>
