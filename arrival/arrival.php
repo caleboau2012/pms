@@ -1,4 +1,14 @@
-<?php require "../_core/global/DataTable.php" ?>
+<?php
+require_once '../_core/global/_require.php';
+
+Crave::requireAll(GLOBAL_VAR);
+Crave::requireAll(UTIL);
+
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: ../index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -42,6 +52,7 @@
             <ul class="nav navbar-nav navbar-right nav-pills">
                 <li><a href="#" data-toggle="modal" data-target="#newPatientModal">New Patient</a></li>
                 <li><a href="#">Emergency</a></li>
+                <li><a id="sign-out" href="#">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search Returning Patients...">

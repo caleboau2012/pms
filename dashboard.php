@@ -89,7 +89,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 }else if ($staff[StaffRoleTable::staff_role_id] == MEDICAL_RECORD) {
                     ?>
                     <div class="col-xs-3 text-center">
-                        <a href="arrival/index.php" class="dashboard-link">
+                        <a href="arrival/arrival.php" class="dashboard-link">
                             <img src="images/medical_records.png">
 
                             <div class="dashboard-desc">Medical Record</div>

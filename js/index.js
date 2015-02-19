@@ -3,8 +3,6 @@
  */
 
 $(function(){
-
-
     $('#login').on('submit', function (e) {
         e.preventDefault();
 
@@ -72,17 +70,6 @@ $(function(){
             $('#form-error').removeClass('hidden');
             $('#form-error').html('Password did not match');
         }
-
-    });
-
-    //Sign out
-    $('#sign-out').on('click', function () {
-        $.get( "phase/phase_auth.php?intent=logout", function( data ) {
-            var response = JSON.parse(data);
-            if(response.status == 1){
-                window.location.assign('index.php');
-            }
-        });
 
     });
 
