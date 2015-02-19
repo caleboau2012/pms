@@ -60,3 +60,9 @@ define('MAX_NUM_POLL', 4);
 
 //GENERAL CONSTANTS
 define('COUNT', 'count');
+
+//COMMUNICATION CONSTANTS
+define('MAX_BODY_LENGTH', 70);
+define('MSG_TYPE', 'msg_type');
+define('INBOX_MESSAGE', 1);
+define('SENT_MESSAGE', 2);

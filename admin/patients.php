@@ -42,6 +42,7 @@
                 <li><a href="staff.php">Staff</a></li>
                 <li><a href="#">Config</a></li>
                 <li><a href="#">Help</a></li>
+                <li><a id="sign-out" href="#">Logout</a></li>
             </ul>
 <!--            <form class="navbar-form navbar-right">-->
 <!--                <input type="text" class="form-control" placeholder="Search...">-->

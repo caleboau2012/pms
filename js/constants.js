@@ -21,6 +21,17 @@ function printElem(data){
     return true;
 }
 
+
 function makeTable(){
     $('.dataTable').dataTable();
 }
+
+//Sign out
+$('#sign-out').on('click', function () {
+    $.get(host + "phase/phase_auth.php?intent=logout", function( data ) {
+        var response = JSON.parse(data);
+        if(response.status == 1){
+            window.location.assign(host + 'index.php');
+        }
+    });
+});

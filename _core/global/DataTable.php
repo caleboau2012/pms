@@ -111,15 +111,26 @@ class PatientQueueTable {
 
 class RosterTable {
     const table_name        = 'roster';
-
     const roster_id         = 'roster_id';
     const user_id           = 'user_id';
+    const created_by        = 'created_by';
     const dept_id           = 'dept_id';
     const duty              = 'duty';
     const duty_date         = 'duty_date';
     const created_date      = 'created_date';
-    const created_by        = 'created_by';
     const modified_date     = 'modified_date';
     const modified_by       = 'modified_by';
 }
 
+class CommunicationTable {
+    const table_name = 'communication';
+    const msg_id = 'msg_id';
+    const sender_id = 'sender_id';
+    const recipient_id = 'recipient_id';
+    const msg_subject = 'msg_subject';
+    const msg_body = 'msg_body';
+    const msg_status = 'msg_status';
+    const active_fg = 'active_fg';
+    const created_date = 'created_date';
+    const modified_date = 'modified_date';
+}

@@ -199,6 +199,74 @@ a.dashboard-link:hover, a.dashboard-link:focus {
 /**
     ---ROSTER VIEW
 */
+.n-duty{
+    padding: 0.4em;
+    background: #3F3C3C;
+    border: none;
+    text-align: center;
+    box-shadow: 1px 2px 2px #908585;
+
+}
+.a-duty{
+    padding: 0.4em;
+    background: #4CA618;
+    border: none;
+    margin-right: 0.4em;
+    text-align: center;
+    box-shadow: 1px 2px 2px #908585;
+}
+.m-duty{
+    padding: 0.4em;
+    border: none;
+    margin-right: 0.4em;
+    text-align: center;
+    box-shadow: 1px 2px 2px #908585;
+
+    /*background: #aaa;*/
+}
+#external-events .fc-event {
+    cursor: pointer;
+}
+#calendar {
+    width: 95%;
+}
+#roster-wrap{
+    margin-top: 40px;
+}
+#rosterResponse{
+    text-align: center;
+    color: #4CA618;
+    line-height: 0.4;
+    font-size: 0.9em;
+    height: 0.7em;
+}
+#roster_loading{
+    text-align: center;
+    font-size: 4em;
+}
+#external-events{
+    padding: 0 1em;
+}
+.roster-list{
+    /*background: #fff;*/
+}
+.roster-list_heading{
+    border-radius: 0 0.6em 0 0em;
+    padding: 0.3em;
+    background: #428BCA;
+    color: #F5F5F5;
+    font-size: 1.3em;
+    box-shadow: 0 1px 3px #494747;
+    text-shadow: 0px 0px #FCFCFC;
+    letter-spacing: 2px;
+}
+#roster-list_names{
+    padding: 0.3em 1em;
+    background: #fff;
+}
+.fc-event.ui-draggable.ui-draggable-handle{
+
+}
 .accordion-group{
     margin: 0.4em;
     border-bottom: solid thin #E0E0E0;
@@ -247,16 +315,16 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     border-radius: 0.3em;
     box-shadow: 1px 1px 1px #A0BCD5;
 }
-li.staff:hover, li.staff-all:hover{
-    background: #428BCA;
-    color: #fff;
-}
+
 .staff, .staff-all{
     color: #000;
     text-transform: uppercase;
     border: solid thin #FFF;
     margin-bottom: 0.1em;
     box-shadow: 1px 1px 1px #7E7A7A;
+}
+.staff{
+    padding: 0.3em;
 }
 .staff:nth-of-type(even), .staff-all:nth-of-type(even){
     background: #A8C5CF;
@@ -340,4 +408,13 @@ li.staff:hover, li.staff-all:hover{
 
 .page {
     padding: 20px;
+}
+
+.btn-compose {
+    margin-left: 70px;
+    margin-bottom: 10px;
+}
+
+.put-margin-top{
+    margin-top: 40px;
 }

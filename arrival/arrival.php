@@ -1,3 +1,14 @@
+<?php
+require_once '../_core/global/_require.php';
+
+Crave::requireAll(GLOBAL_VAR);
+Crave::requireAll(UTIL);
+
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: ../index.php");
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -35,12 +46,13 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="#">Patient Management System</a>
+            <a class="navbar-brand" href="../dashboard.php">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right nav-pills">
                 <li><a href="#" data-toggle="modal" data-target="#newPatientModal">New Patient</a></li>
-                <li><a href="#">Emergency</a></li>
+                <li><a href="#" onclick="emergency()">Emergency</a></li>
+                <li><a id="sign-out" href="#">Logout</a></li>
             </ul>
             <form class="navbar-form navbar-right">
                 <input type="text" class="form-control" placeholder="Search Returning Patients...">
@@ -49,165 +61,56 @@
     </div>
 </nav>
 
-<script id="tmplTable" type="text/html">
-    <tr>
-        <td>{{sn}}</td>
-        <td>{{patientId}}</td>
-        <td>{{name}}</td>
-        <td>{{dob}}</td>
-        <td>
-            <button class="btn btn-sm btn-default" patientId="{{patient_id}}" onclick="printDetails(this)">Print
-            </button>
-        </td>
-    </tr>
+<script id="tmplPatients" type="text/html">
+    <div class="panel panel-success patient">
+        <div class="panel-heading" role="tab" id="heading{{patientid}}">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
+                   href="#collapse{{patientid}}" aria-expanded="true" aria-controls="collapse{{patientid}}">
+                    {{regNo}}
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{patientid}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{patientid}}">
+            <div class="panel-body">
+                <p>{{name}}</p>
+                <p>{{sex}}</p>
+                <span class="patientid" hidden>{{patientid}}</span>
+                <span class="doctorid" hidden>{{userid}}</span>
+            </div>
+        </div>
+    </div>
 </script>
 
-<script id="tmplPrint" type="text/html">
-    <div class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h1 class="panel-title">Patient Details</h1>
+<script id="tmplDoctor" type="text/html">
+    <div class="col-sm-4 col-md-3">
+        <div class="panel {{online_status}} doctor">
+            <div class="panel-heading" userid="{{userid}}">
+                <h2 class="panel-title">Dr. {{DoctorName}}</h2>
             </div>
-            <div class="panel-body">
-                <div class="row">
-                    <div class="pull-left" style="margin: 10px;">
-                        <label for="name" class="label label-primary">Name</label>
-                        <span name="name" class="btn btn-default">{{name}}</span>
-                    </div>
-                    <div class="pull-right" style="margin: 10px;">
-                        <label for="regNo" class="label label-primary">Registration No</label>
-                        <span name="regNo" class="btn btn-default">{{regNo}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="pull-left" style="margin: 10px;">
-                        <label for="addy" class="label label-info">Address</label>
-                        <span name="addy" class="btn btn-default">{{addy}}</span>
-                    </div>
-                    <div class="pull-left" style="margin: 10px;">
-                        <label for="phone" class="label label-info">Telephone</label>
-                        <span name="phone" class="btn btn-default">{{phone}}</span>
-                    </div>
-                    <div class="pull-right" style="margin: 10px;">
-                        <label for="sex" class="label label-info">Gender</label>
-                        <span name="sex" class="btn btn-default">{{sex}}</span>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="pull-left" style="margin: 10px;">
-                        <label for="height" class="label label-info">Height</label>
-                        <span name="height" class="btn btn-default">{{height}}</span>
-                    </div>
-                    <div class="pull-left" style="margin: 10px;">
-                        <label for="weight" class="label label-info">Weight</label>
-                        <span name="weight" class="btn btn-default">{{weight}}</span>
-                    </div>
-                    <div class="pull-right" style="margin: 10px;">
-                        <label for="birth" class="label label-info">Birth Date</label>
-                        <span name="birth" class="btn btn-default">{{birth}}</span>
-                    </div>
+            <div class="panel-body patients">
+                <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">
                 </div>
             </div>
         </div>
     </div>
 </script>
 
-<div class="container-fluid main">
+<div class="container-fluid page">
     <div class="row">
         <div class="col-sm-3 col-md-2">
-            <div class="panel panel-default">
+            <div class="panel panel-default doctor general">
                 <div class="panel-heading">
                     <h2 class="panel-title">General Queue</h2>
                 </div>
                 <div class="panel-body patients">
-                    <ul class="list-group">
-                        <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                        <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                    </ul>
+                    <div class="panel-group drop" id="accordion0" role="tablist" aria-multiselectable="true">
+                    </div>
                 </div>
             </div>
         </div>
         <div class="col-sm-9 col-md-10">
             <div id="masonry" class="row">
-                <div class="col-sm-4 col-md-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Doctor 1</h2>
-                        </div>
-                        <div class="panel-body patients">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Doctor 2</h2>
-                        </div>
-                        <div class="panel-body patients">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Doctor 3</h2>
-                        </div>
-                        <div class="panel-body patients">
-                            <ul class="list-group doctor">
-                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title patients">Doctor 4</h2>
-                        </div>
-                        <div class="panel-body patients">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Doctor 5</h2>
-                        </div>
-                        <div class="panel-body patients">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-4 col-md-3">
-                    <div class="panel panel-primary">
-                        <div class="panel-heading">
-                            <h2 class="panel-title">Doctor 6</h2>
-                        </div>
-                        <div class="panel-body patients">
-                            <ul class="list-group">
-                                <li class="list-group-item list-group-item-success patient">1st Patient</li>
-                                <li class="list-group-item list-group-item-success patient">2nd Patient</li>
-                            </ul>
-                        </div>
-                    </div>
-                </div>
             </div>
         </div>
     </div>
@@ -218,19 +121,19 @@
      aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                <h4 class="modal-title">New Patient</h4>
-            </div>
-            <div class="modal-body">
-                <div class="alert hidden alert-danger alert-dismissable" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                            aria-hidden="true">&times;</span></button>
-                    <span id="alertMSG"></span>
+            <form id="newPatientForm" class="form-group">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">New Patient</h4>
                 </div>
-                <form class="form-group">
+                <div class="modal-body">
+                    <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <span id="alertMSG"></span>
+                    </div>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title">Profile</h2>
@@ -241,41 +144,48 @@
                             <table class="table table-responsive">
                                 <tr>
                                     <td class="form-inline">Name <br/>
-                                        <input class="form-control" name="surname" placeholder="Surname" required/>
-                                        <input class="form-control" name="firstname" placeholder="Firstname" required/>
-                                        <input class="form-control" name="middlename" placeholder="Middlename"
-                                               required/>
+                                        <input class="form-control" name="<?php echo PatientTable::surname ?>" placeholder="Surname" required/>
+                                        <input class="form-control" name="<?php echo PatientTable::firstname ?>" placeholder="Firstname" required/>
+                                        <input class="form-control" name="<?php echo PatientTable::middlename ?>" placeholder="Middlename" required/>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Registration <br/>
+                                        <div class="input-group">
+                                            <input name="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
+                                            <span class="btn btn-info input-group-addon" id="verify" onclick="verifyRegNo()">Verify</span>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Local Address <br/>
-                                        <input name="local_address" class="form-control" required/>
+                                        <input name="<?php echo PatientTable::home_address ;?>" class="form-control" required/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">Telephone<br/>
-                                            <input class="form-control" name="telephone" required/>
+                                            <input class="form-control" name="<?php echo  PatientTable::telephone ;?>" required/>
                                         </div>
                                         <div class="pull-left">GENDER <br/>
-                                            <select class="form-control" name="sex" required>
+                                            <select class="form-control" name="<?php echo PatientTable::sex ;?>" required>
                                                 <option value="">Choose one...</option>
-                                                <option value="male">Male</option>
-                                                <option value="female">Female</option>
+                                                <option value="Male">Male</option>
+                                                <option value="Female">Female</option>
                                             </select>
                                         </div>
                                         <div class="pull-left">Date of Birth <br/>
-                                            <input type="date" name="birth_date" class="form-control" required/>
+                                            <input type="date" name="<?php echo PatientTable::birth_date ;?>" class="form-control" required/>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">Height(m) <br/>
-                                            <input name="height" class="form-control" required/>
+                                            <input name="<?php echo PatientTable::height ;?>" class="form-control" required/>
                                         </div>
                                         <div class="pull-left">Weight(Kg) <br/>
-                                            <input name="weight" class="form-control" required/>
+                                            <input name="<?php echo PatientTable::weight ;?>" class="form-control" required/>
                                         </div>
                                     </td>
                                 </tr>
@@ -291,31 +201,32 @@
                             <table class="table table-responsive">
                                 <tr>
                                     <td class="form-inline">Name <br/>
-                                        <input name="next_of_kin[surname]" placeholder="Surname" class="form-control"
-                                               required/>
-                                        <input name="next_of_kin[firstname]" class="form-control"
-                                               placeholder="othernames" required/>
+                                        <input name="<?php echo PatientTable::nok_surname ;?>" placeholder="Surname" class="form-control" required/>
+                                        <input name="<?php echo PatientTable::nok_firstname ;?>" class="form-control" placeholder="First Name" required/>
+                                        <input name="<?php echo PatientTable::nok_middlename ;?>" class="form-control" placeholder="Middle Name" required/>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>Contact address <br/>
-                                        <input name="next_of_kin[address]" class="form-control"/></td>
+                                        <input name="<?php echo PatientTable::nok_address ;?>" class="form-control" required/></td>
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">Phone number <br/>
-                                            <input value="" name="next_of_kin[telephone]" class="form-control"/>
+                                            <input name="<?php echo PatientTable::nok_telephone ;?>" class="form-control"/>
                                         </div>
                                         <div class="pull-left">Relationship <br/>
-                                            <select name="next_of_kin[relationship]" class="form-control" required>
+                                            <select name="<?php echo PatientTable::nok_relationship ;?>" class="form-control" required>
                                                 <option value="">Choose relation...</option>
-                                                <option value="Mother">Mother</option>
-                                                <option value="Father">Father</option>
-                                                <option value="Step-mother">Step-mother</option>
-                                                <option value="Step-father">Step-father</option>
-                                                <option value="Child">Child</option>
-                                                <option value="Brother">Brother</option>
-                                                <option value="Sister">Sister</option>
+                                                <option value="1">Father</option>
+                                                <option value="2">Mother</option>
+                                                <option value="3">Son</option>
+                                                <option value="4">Daughter</option>
+                                                <option value="5">Brother</option>
+                                                <option value="6">Sister</option>
+                                                <option value="7">Husband</option>
+                                                <option value="8">Wife</option>
+                                                <option value="9">Other</option>
                                             </select></div>
                                     </td>
                                 </tr>
@@ -335,18 +246,18 @@
                                         <div class="pull-left">
                                             Citizenship:
                                             <label class="label label-success">Nigerian</label>
-                                            <input value="Nigeria" type="checkbox" name="citizenship" class="form-control checkbox">
+                                            <input id="naija" checked type="checkbox" class="form-control checkbox">
                                         </div>
-                                        <div class="pull-left">
+                                        <div class="pull-left non-naija" style="display: none;">
                                             <label class="label label-default">Others? Please specify:</label>
-                                            <input name="citizenship" class="form-control"/>
+                                            <input name="<?php echo PatientTable::citizenship ;?>" class="form-control"/>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">Religion
-                                            <select name="religion" class="form-control">
+                                            <select name="<?php echo PatientTable::religion ;?>" class="form-control">
                                                 <option value="" selected="selected">Select One...</option>
                                                 <option value="ISLAM">ISLAM</option>
                                                 <option value="CHRISTAINITY">CHRISTAINITY</option>
@@ -355,7 +266,7 @@
                                         </div>
                                         <div class="pull-left">
                                             position in family:
-                                            <select name="position_in_family" required class="form-control">
+                                            <select name="<?php echo PatientTable::family_position ;?>" required class="form-control">
                                                 <option value="">Choose position...</option>
                                                 <option value="1">1st</option>
                                                 <option value="2">2nd</option>
@@ -375,7 +286,7 @@
                                     <td class="form-inline">
                                         <div class="pull-left">
                                             Mother is
-                                            <select name="is_mother_alive" required class="form-control">
+                                            <select name="<?php echo PatientTable::mother_status ;?>" required class="form-control">
                                                 <option value="" >Select One...</option>
                                                 <option value="ALIVE">Alive</option>
                                                 <option value="DEAD">Deceased</option>
@@ -383,7 +294,7 @@
                                         </div>
                                         <div class="pull-left">
                                             father is
-                                            <select name="is_father_alive" required class="form-control">
+                                            <select name="<?php echo PatientTable::father_status ;?>" required class="form-control">
                                                 <option value="">Select One...</option>
                                                 <option value="ALIVE">Alive</option>
                                                 <option value="DEAD">Deceased</option>
@@ -394,7 +305,7 @@
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">Marital Status
-                                            <select name="marital_status" required class="form-control">
+                                            <select name="<?php echo PatientTable::marital_status ;?>" required class="form-control">
                                                 <option value="">Choose martial status...</option>
                                                 <option value="SINGLE">SINGLE</option>
                                                 <option value="MARRIED">MARRIED</option>
@@ -404,7 +315,7 @@
                                             </select>
                                         </div>
                                         <div class="pull-left">No of children
-                                            <select name="no_of_children" class="form-control">
+                                            <select name="<?php echo PatientTable::no_of_children ;?>" class="form-control">
                                                 <option value="0">None</option>
                                                 <option value="1">1</option>
                                                 <option value="2">2</option>
@@ -423,11 +334,11 @@
                             </table>
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button class="btn btn-primary">Add Patient</button>
-            </div>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn btn-primary" type="submit">Add Patient</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>
