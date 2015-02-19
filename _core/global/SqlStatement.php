@@ -121,6 +121,7 @@ class PatientQueueSqlStatement {
         WHERE ua.online_status = 1
         AND pr.staff_role_id = 2
         AND pr.active_fg = 1
+        AND ua.status = 1
         AND ua.active_fg = 1";
 
     const OFFLINE_DOCTORS_WITH_QUEUE = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
