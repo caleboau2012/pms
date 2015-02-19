@@ -52,8 +52,6 @@
                    if(confirm("Are you sure yo want to delete the event")){
                        Roster.deleteRoster(event.roster_id);
                        $('#calendar').fullCalendar('removeEvents', event._id);
-                   }else{
-                       console.log('not deleted');
                    }
                 },
                 eventReceive: function(event, delta, revertFunc){
@@ -75,7 +73,6 @@
             $('.fc-toolbar').append(response);
         },
         sendRoster: function(user_id, dept_id, duty, date){
-            console.log(user_id);
             $.post(host + "phase/admin/phase_roster.php",
                 {
                     intent: 'assignTask',
@@ -85,7 +82,6 @@
                     duty_date: date
                 },
                 function(data){
-                    console.log(data);
                     $('#rosterResponse').html('Roster schedule saved');
                     setTimeout(function(){
                         $('#rosterResponse').empty();

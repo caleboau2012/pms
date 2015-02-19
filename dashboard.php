@@ -38,9 +38,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div id="dashboard">
 <div class="pull-right">
     <img src="images/profile.png">
-
-                <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
-                </span>
+        <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+        </span>
     <p class="text-right small">
         <a class="text-right" href="#" id="sign-out">Sign out</a>
     </p>
@@ -56,7 +55,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div class="col-xs-3 text-center">
             <a href="roster.php" class="dashboard-link">
                 <img src="images/roster.png" width="60" height="60">
-
                 <div class="dashboard-desc">Check Roster</div>
             </a>
         </div>
@@ -189,7 +187,6 @@ $administrator = false;
                 <div class="col-xs-3 text-center">
                     <a href="admin/roster.php" class="dashboard-link">
                         <img src="images/roster.png" width="60" height="60">
-
                         <div class="dashboard-desc">Roster</div>
                     </a>
                 </div>
