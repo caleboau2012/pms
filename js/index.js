@@ -35,7 +35,7 @@ $(function(){
             $('#form-error').removeClass('hidden');
             $('#form-error').html("Unexpected Error occur");
         });
-    })
+    });
 
     //change password
     $('#change-password').on('submit', function (e) {

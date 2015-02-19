@@ -38,7 +38,10 @@ class StaffRosterController{
             ));
     }
 
-    public function getAllStaffsRoster(){
-        return $this->staffRoster->allStaffRoster();
+    public function getAllRoster(){
+        return $this->staffRoster->allStaffsRoster();
+    }
+    public function getStaffRoster($staff_id){
+        return $this->staffRoster->allStaffRoster(array(RosterTable::user_id=>$staff_id));
     }
 }

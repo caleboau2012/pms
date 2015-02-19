@@ -28,7 +28,10 @@ class StaffRoster extends BaseModel {
         return $this->conn->execute(RosterSqlStatement::DELETE_ROSTER, $data);
     }
 
-    public function allStaffRoster(){
+    public function allStaffsRoster(){
         return $this->conn->fetchAll(RosterSqlStatement::GET_ALL, array());
+    }
+    public function allStaffRoster($params){
+        return $this->conn->fetchAll(RosterSqlStatement::GET_BY_STAFF_ID, $params);
     }
 } 

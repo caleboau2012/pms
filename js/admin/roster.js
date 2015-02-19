@@ -40,7 +40,7 @@
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar
                 events:{
-                    url: host + 'phase/admin/phase_roster.php?intent=getAllEvents'
+                    url: host + 'phase/admin/phase_roster.php?intent=getAllRoster'
                 },
                 loading: function(bool) {
                     $('#roster_loading').toggle(bool);
@@ -75,6 +75,7 @@
             $('.fc-toolbar').append(response);
         },
         sendRoster: function(user_id, dept_id, duty, date){
+            console.log(user_id);
             $.post(host + "phase/admin/phase_roster.php",
                 {
                     intent: 'assignTask',
@@ -84,6 +85,7 @@
                     duty_date: date
                 },
                 function(data){
+                    console.log(data);
                     $('#rosterResponse').html('Roster schedule saved');
                     setTimeout(function(){
                         $('#rosterResponse').empty();

@@ -24,8 +24,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <!-- Custom styles for this template -->
     <link href="css/master.css" rel="stylesheet">
 
-    <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
-    <script src="js/index.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -55,6 +53,13 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <h3 class="panel-title">Core Functions</h3>
     </div>
     <div class="panel-body">
+        <div class="col-xs-3 text-center">
+            <a href="roster.php" class="dashboard-link">
+                <img src="images/roster.png" width="60" height="60">
+
+                <div class="dashboard-desc">Check Roster</div>
+            </a>
+        </div>
         <?php
         if(sizeof(CxSessionHandler::getItem(StaffRoleTable::staff_role_id)) == 0){
             ?>
@@ -261,5 +266,8 @@ $administrator = false;
 </div>
 </div> <!-- /container -->
 
+<script src="js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/index.js"></script>
 </body>
 </html>

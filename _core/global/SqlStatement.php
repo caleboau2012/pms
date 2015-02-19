@@ -152,8 +152,11 @@ class RosterSqlStatement {
                     VALUES (:user_id, :created_by, :dept_id, :duty, :duty_date, now(), now())';
     const GET_BY_ID = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE roster_id=:roster_id';
+
     const GET_ALL = 'SELECT r.roster_id, r.user_id, r.created_by, r.dept_id, r.duty, r.duty_date, r.created_date, r.modified_date, r.modified_by, p.surname, p.firstname, r.user_id, p.middlename
                 FROM roster AS r INNER JOIN PROFILE AS p ON p.userid = r.user_id WHERE r.active_fg = 1';
+    const GET_BY_STAFF_ID = 'SELECT r.roster_id, r.user_id, r.created_by, r.dept_id, r.duty, r.duty_date, r.created_date, r.modified_date, r.modified_by, p.surname, p.firstname, r.user_id, p.middlename
+                FROM roster AS r INNER JOIN PROFILE AS p ON p.userid = r.user_id WHERE r.user_id = :user_id AND r.active_fg = 1';
     const GET_BY_DOCTOR = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE user_id=:user_id';
     const UPDATE = 'UPDATE roster SET  duty_date=:duty_date, modified_date= now(), modified_by=:modified_by
