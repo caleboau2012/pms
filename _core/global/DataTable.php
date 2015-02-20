@@ -111,6 +111,7 @@ class PatientQueueTable {
 
 class RosterTable {
     const table_name        = 'roster';
+
     const roster_id         = 'roster_id';
     const user_id           = 'user_id';
     const created_by        = 'created_by';
@@ -124,13 +125,93 @@ class RosterTable {
 
 class CommunicationTable {
     const table_name = 'communication';
-    const msg_id = 'msg_id';
-    const sender_id = 'sender_id';
-    const recipient_id = 'recipient_id';
-    const msg_subject = 'msg_subject';
-    const msg_body = 'msg_body';
-    const msg_status = 'msg_status';
-    const active_fg = 'active_fg';
-    const created_date = 'created_date';
+
+    const msg_id        = 'msg_id';
+    const sender_id     = 'sender_id';
+    const recipient_id  = 'recipient_id';
+    const msg_subject   = 'msg_subject';
+    const msg_body      = 'msg_body';
+    const msg_status    = 'msg_status';
+    const active_fg     = 'active_fg';
+    const created_date  = 'created_date';
     const modified_date = 'modified_date';
 }
+class UnitsRefTable{
+    const table_name = 'units_ref';
+
+    const unit_ref_id  = 'unit_ref_id';
+    const unit         = 'unit';
+    const created_date = 'created_date';
+    const active_fg    = 'active_fg';
+}
+
+class DrugRefTable{
+    const table_name = 'drug_name_ref';
+
+    const drug_ref_id  = 'drug_ref_id';
+    const name         = 'name';
+    const created_date = 'created_date';
+    const active_fg    = 'active_fg';
+}
+
+class OutgoingDrugsTable{
+    const table_name = 'outgoing_drugs_id';
+
+    const outgoing_drugs_id = 'outgoing_drugs_id';
+    const drug_id           = 'drug_id';
+    const quantity          = 'qty';
+    const unit_id           = 'unit_id';
+    const created_date      = 'created_date';
+    const modified_date     = 'modified_date';
+    const active_fg         = 'active_fg';
+}
+
+class PharmacistOutgoingDrugTable{
+    const table_name = 'pharmacist_outgoing_drug';
+
+    const pharmacist_outgoing_drug = 'pharmacist_outgoing_drug';
+    const pharmacist_id            = 'pharmacist_id';
+    const outgoing_drug_id         = 'prescription_id';
+    const created_date             = 'created_date';
+    const active_fg                = 'active_fg';
+}
+
+class TreatmentTable{
+    const table_name = 'drug_inventory';
+
+    const treatment_id      = 'treatment_id';
+    const doctor_id         = 'doctor_id';
+    const patient_id        = 'patient_id';
+    const consultation      = 'consultation';
+    const comments          = 'comments';
+    const symptoms          = 'symptoms';
+    const diagnosis         = 'diagnosis';
+    const created_date      = 'created_date';
+    const modified_date     = 'modified_date';
+    const active_fg         = 'active_fg';
+    const status_id         = 'status_id';          /*I think a status would be needed in this table.*/
+}
+
+class PrescriptionTable{
+    const table_name = 'prescription';
+
+    const prescription_id = 'prescription_id';
+    const prescription    = 'prescription';
+    const treatment_id    = 'treatment_id';
+    const status          = 'status';
+    const modified_by     = 'modified_by';
+    const created_date    = 'created_date';
+    const modified_date   = 'modified_date';
+    const active_fg       = 'active_fg';
+}
+
+class PrescriptionOutgoingDrugTable{
+    const table_name = 'prescription_outgoing_drug';
+
+    const prescription_outgoing_drug_id = 'prescription_outgoing_drug_id';
+    const prescription_id               = 'prescription_id';
+    const outgoing_drug_id              = 'outgoing_drug_id';
+    const created_date                  = 'created_date';
+    const active_fg                     = 'active_fg';
+}
+

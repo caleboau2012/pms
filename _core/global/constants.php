@@ -66,3 +66,8 @@ define('MAX_BODY_LENGTH', 70);
 define('MSG_TYPE', 'msg_type');
 define('INBOX_MESSAGE', 1);
 define('SENT_MESSAGE', 2);
+
+//PRESCRIPTION STATUS
+define('DRUG_UNCLEARED', 1);
+define('DRUG_CLEARED', 2);
+define('DRUG_UNAVAILABLE', 3);
