@@ -43,6 +43,17 @@ if ($intent == 'getPatientQueue') {
         echo JsonResponse::error("There was no treatment session with this patient");
         exit();
     }
+} elseif($intent == 'getDrugs'){
+
+    $drugs = (new PharmacistController())->getDrugs();
+
+    if(is_array($drugs) && !empty($drugs)){
+        echo JsonResponse::success($drugs);
+        exit();
+    } else {
+        echo JsonResponse::error("No drug");
+    }
+
 } elseif ($intent == 'clearPrescription') {
     if($data = isset($_REQUEST['data']) ? $_REQUEST['data'] : null){         // Please check if this works correctly
 

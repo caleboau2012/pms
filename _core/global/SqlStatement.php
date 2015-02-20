@@ -213,12 +213,12 @@ class PrescriptionSqlStatement{
     const GET_QUEUE = "SELECT t.treatment_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id";
-    const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status";
+    const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status WHERE prescription_id = :prescription_id";
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
 }
 
 class DrugSqlStatement{
-    const GET = "SELECT * FROM drug_ref as d WHERE d.name LIKE '%:name%'";
+    const GET = "SELECT drug_ref_id, name drug FROM drug_ref";
     const GET_DRUG_ID = "SELECT d.drug_ref_id FROM drug_ref AS d WHERE d.name = :name";
     const ADD_DRUG = "INSERT INTO drug_ref ('name', 'created_date') VALUES (:name, NOW())";
 }
