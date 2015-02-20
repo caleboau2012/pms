@@ -1,21 +1,45 @@
 <?php
 class CommunicationController {
-    public function getInbox($userid) {
+    public function getInbox($userid, $page) {
+        $page = intval($page) - 1;
+
         $comm_model = new CommunicationModel();
-        $feedback = $comm_model->getInbox($userid);
+        $messages = $comm_model->getInbox($userid, $page);
         
-        if ($feedback) {
+        if ($messages) {
+            $feedback = array();
+            $feedback[INBOX] = $messages;
+            $num_messages = sizeof($messages);
+
+            $feedback[MSG_TYPE] = INBOX;
+            $feedback[START_INDEX] = ($page * MAIL_PER_PAGE) + 1;
+            $feedback[END_INDEX] = $feedback[START_INDEX] + $num_messages - 1;
+            $feedback[TOTAL] = $comm_model->numberOfMesssages($userid, INBOX_MESSAGE);
+            $feedback[CURRENT_PAGE] = $page + 1;
+            
             return $feedback;
         } else {
             return false;
         }
     }
 
-    public function getSent($userid) {
-        $comm_model = new CommunicationModel();
-        $feedback = $comm_model->getSent($userid);
+    public function getSent($userid, $page) {
+        $page = intval($page) - 1;
 
-        if ($feedback) {
+        $comm_model = new CommunicationModel();
+        $messages = $comm_model->getSent($userid, $page);
+
+        if ($messages) {
+            $feedback = array();
+            $feedback[SENT] = $messages;            
+            $num_messages = sizeof($messages);
+
+            $feedback[MSG_TYPE] = SENT;
+            $feedback[START_INDEX] = ($page * MAIL_PER_PAGE) + 1;
+            $feedback[END_INDEX] = $feedback[START_INDEX] + $num_messages - 1;
+            $feedback[TOTAL] = $comm_model->numberOfMesssages($userid, SENT_MESSAGE);
+            $feedback[CURRENT_PAGE] = $page + 1;
+
             return $feedback;
         } else {
             return false;
@@ -61,6 +85,14 @@ class CommunicationController {
         $comm_model = new CommunicationModel();
 
         $feedback = $comm_model->markAsRead($userid, $msg_id);
+
+        return $feedback;
+    }
+
+    public function markAsUnread($userid, $msg_id) {
+        $comm_model = new CommunicationModel();
+
+        $feedback = $comm_model->markAsUnread($userid, $msg_id);
 
         return $feedback;
     }

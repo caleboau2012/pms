@@ -171,15 +171,31 @@ class DepartmentSqlStatment{
 }
 
 class CommunicationSqlStatement {
-    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status 
+    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date 
         FROM communication 
             INNER JOIN profile 
                 ON communication.sender_id = profile.userid
-        WHERE recipient_id = :recipient_id";
+        WHERE recipient_id = :recipient_id 
+        ORDER BY communication.created_date DESC
+        LIMIT @offset, @count";
 
-    const GET_SENT_MESSAGES = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, recipient_id, msg_subject, msg_body
+    const GET_SENT_MESSAGES = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, recipient_id, msg_subject, msg_body, communication.created_date
         FROM communication 
             INNER JOIN profile 
+                ON communication.recipient_id = profile.userid
+        WHERE sender_id = :sender_id 
+        ORDER BY communication.created_date DESC
+        LIMIT @offset, @count";
+
+    const COUNT_INBOX = "SELECT COUNT(*) AS count 
+        FROM communication 
+            INNER JOIN profile 
+                ON communication.sender_id = profile.userid 
+        WHERE recipient_id = :recipient_id";
+
+    const COUNT_SENT = "SELECT COUNT(*) AS count
+        FROM communication
+            INNER JOIN profile
                 ON communication.recipient_id = profile.userid
         WHERE sender_id = :sender_id";
 
@@ -201,9 +217,11 @@ class CommunicationSqlStatement {
             INNER JOIN profile
                 ON communication.recipient_id = profile.userid
         WHERE sender_id = :sender_id
-        AND msg_id = msg_id";
+        AND msg_id = :msg_id";
 
     const MARK_AS_READ = "UPDATE communication SET msg_status = 0, modified_date = NOW() WHERE msg_id = :msg_id AND recipient_id = :recipient_id";
+
+    const MARK_AS_UNREAD = "UPDATE communication SET msg_status = 1, modified_date = NOW() WHERE msg_id = :msg_id AND recipient_id = :recipient_id";
 
     const CHECK_NEW_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE created_date > :created_date AND recipient_id = :recipient_id";
 }
@@ -221,4 +239,9 @@ class DrugSqlStatement{
     const GET = "SELECT drug_ref_id, name drug FROM drug_ref";
     const GET_DRUG_ID = "SELECT d.drug_ref_id FROM drug_ref AS d WHERE d.name = :name";
     const ADD_DRUG = "INSERT INTO drug_ref ('name', 'created_date') VALUES (:name, NOW())";
+}
+
+class VitalsSqlStatement {
+    const ADD = "INSERT INTO vitals (patient_id, encounter_id, added_by, temp, pulse, respiratory_rate, blood_pressure, height, weight, bmi, active_fg, created_date) VALUES (:patient_id, :encounter_id, :added_by, :temp, :pulse, :respiratory_rate, :blood_pressure, :height, :weight, :bmi, 1, NOW())";
+    const GET_VITALS = "SELECT patient_id, encounter_id, added_by, temp, pulse, respiratory_rate, blood_pressure, height, weight, bmi, created_date FROM vitals WHERE patient_id = :patient_id";
 }

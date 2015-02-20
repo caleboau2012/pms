@@ -1,9 +1,10 @@
 <?php
 //DATABASE CONFIGURATION
-/*define('DB_HOST', '10.19.3.124');
+define('DB_HOST', '10.19.3.124');
+/*define('DB_HOST', 'localhost');*/
 define('DBNAME', 'pms');
 define('DB_USERNAME', 'pms');
-define('DB_PASSWORD', '__$pmsadmin)(--');*/
+define('DB_PASSWORD', '__$pmsadmin)(--');
 
 define('DB_HOST', 'localhost');
 define('DBNAME', 'pms');
