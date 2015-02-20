@@ -16,8 +16,7 @@ class PharmacistController{
     }
 
     public function getOutPatientQueue(){
-        /*return $this->pharmacy->getOutPatientQueue();*/
-        return $this->getPatientQueue();
+        return $this->pharmacy->getOutPatientQueue();
     }
 
     public function getPrescription($treatmentId){

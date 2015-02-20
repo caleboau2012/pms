@@ -32,7 +32,7 @@ if ($intent == 'getPatientQueue') {
         // Retrieve Patient Prescription
         $prescription = (new PharmacistController())->getPrescription($treatmentId);
 
-        if (!empty($prescription['data'])) {
+        if (is_array($prescription) && !empty($prescription)) {
             echo JsonResponse::success($prescription);
             exit();
         } else {

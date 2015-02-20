@@ -59,8 +59,9 @@ class PharmacyModel extends BaseModel{
     }
 
 
-    public function updatePrescriptionStatus($status){
-        return $this->conn->execute(PrescriptionSqlStatement::UPDATE_STATUS, array(PrescriptionTable::status => $status));
+    public function updatePrescriptionStatus($prescription_id, $status){
+        return $this->conn->execute(PrescriptionSqlStatement::UPDATE_STATUS,
+            array(PrescriptionTable::prescription_id => $prescription_id, PrescriptionTable::status => $status));
     }
 
 
