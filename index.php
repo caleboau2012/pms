@@ -65,7 +65,6 @@
             <div class="input-group">
                 <div class="input-group-addon">Password</div>
                 <input type="password" class="form-control" id="passcode" name="passcode" required>
-                <div class="input-group-addon"><span class="small pointer" id="show_hide">show</span> </div>
             </div>
         </div>
 

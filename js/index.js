@@ -74,17 +74,5 @@ $(function(){
         }
 
     });
-
-    //show/hide password
-    $("#show_hide").click(function() {
-        if($(this).html() == 'show'){
-            $('#passcode').attr('type', 'text');
-            $(this).html('hide');
-        }else if($(this).html() == 'hide'){
-            $('#passcode').attr('type', 'password');
-            $(this).html('show');
-        }
-    });
-
 });
 

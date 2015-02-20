@@ -78,7 +78,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <div class="input-group">
                 <div class="input-group-addon">New Password</div>
                 <input type="password" class="form-control" id="passcode" name="passcode" required>
-                <div class="input-group-addon"><span class="small pointer" id="show_hide">show</span> </div>
             </div>
         </div>
         <div class="form-group">
