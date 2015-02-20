@@ -70,6 +70,6 @@ $list_of_staff = $userController->getAllUsers();
 <script src='js/bootstrap/jquery-ui.custom.min.js'></script>
 <script src='js/libs/fullcalendar/fullcalendar.min.js'></script>
 <script src="js/constants.js"></script>
-<script src="js/admin/roster.js"></script>
+<script src="js/roster.js"></script>
 </body>
 </html>
