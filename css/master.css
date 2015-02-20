@@ -1,7 +1,7 @@
 @import "font-awesome.min.css";
 
 body {
-    padding-top: 40px;
+    padding-top: 54px;
     padding-bottom: 40px;
     background-color: #eee;
     font-family: "Source Sans Pro", "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
@@ -413,4 +413,28 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 .put-margin-top{
     margin-top: 40px;
+}
+
+/*
+    PHARMACY PAGE
+*/
+.patients-list_heading{
+    font-size: 1.3em;
+    background: #428BCA;
+    padding: 0.5em;
+    color: #FFFFFF;
+    margin-bottom: -3px;
+}
+.active_patient_heading{
+    padding: 0.4em;
+    background: #E7E4E4;
+}
+.patients-list_item > h4{
+    margin: 0;
+}
+.patient_prescription{
+    margin-top: 1em;
+}
+.patient_prescription:nth-of-type(even){
+    border-right: solid 2px #E7E4E4;
 }
