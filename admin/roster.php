@@ -7,7 +7,7 @@
  */
 require_once '../_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
+Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'StaffRosterModel'));
 Crave::requireFiles(CONTROLLER, array('UserController', 'StaffRosterController'));
 
@@ -25,12 +25,7 @@ $list_of_staff = $userController->getAllUsers();
     <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
     <link href="../css/master.css" rel="stylesheet">
 
-    <script src='../js/bootstrap/jquery.min.js'></script>
-    <script src='../js/libs/fullcalendar/moment.min.js'></script>
-    <script src='../js/bootstrap/jquery-ui.custom.min.js'></script>
-    <script src='../js/libs/fullcalendar/fullcalendar.min.js'></script>
-    <script src="../js/constants.js"></script>
-    <script src="../js/admin/roster.js"></script>
+
 
 </head>
 <body>
@@ -46,12 +41,18 @@ $list_of_staff = $userController->getAllUsers();
             <a class="navbar-brand" href="../dashboard.php">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="../dashboard.php" class="label-default">Dashboard</a></li>
-            </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
+            <div class="dropdown navbar-right navbar-right-text pointer">
+                <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    <img src="../images/profile.png">
+                    <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+                    </span>
+                    <span class="caret"></span>
+                 </span>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a href="../dashboard.php">Dashboard</a></li>
+                    <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -99,7 +100,14 @@ $list_of_staff = $userController->getAllUsers();
         <div id='calendar'></div>
     </div>
     <div  class="clearfix"></div>
-
 </div>
+
+<script src='../js/bootstrap/jquery.min.js'></script>
+<script src='../js/bootstrap/bootstrap.min.js'></script>
+<script src='../js/libs/fullcalendar/moment.min.js'></script>
+<script src='../js/bootstrap/jquery-ui.custom.min.js'></script>
+<script src='../js/libs/fullcalendar/fullcalendar.min.js'></script>
+<script src="../js/constants.js"></script>
+<script src="../js/admin/roster.js"></script>
 </body>
 </html>

@@ -212,6 +212,5 @@
 <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
 <script src="js/bootstrap/bootstrap-datepicker.min.js"></script>
-<script src="js/admin/roaster.js"></script>
 </body>
 </html>

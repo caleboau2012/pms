@@ -7,6 +7,8 @@ Crave::requireAll(UTIL);
 if(!isset($_SESSION[UserAuthTable::userid])){
     header("Location: index.php");
 }
+
+//var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -38,9 +40,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div id="dashboard">
 <div class="pull-right">
     <img src="images/profile.png">
-
-                <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
-                </span>
+        <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+        </span>
     <p class="text-right small">
         <a class="text-right" href="#" id="sign-out">Sign out</a>
     </p>
@@ -56,8 +57,13 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div class="col-xs-3 text-center">
             <a href="roster.php" class="dashboard-link">
                 <img src="images/roster.png" width="60" height="60">
-
                 <div class="dashboard-desc">Check Roster</div>
+            </a>
+        </div>
+        <div class="col-xs-3 text-center">
+            <a href="mails.php" class="dashboard-link">
+                <img src="images/message.gif" width="60" height="60">
+                <div class="dashboard-desc">Message</div>
             </a>
         </div>
         <?php
@@ -189,7 +195,6 @@ $administrator = false;
                 <div class="col-xs-3 text-center">
                     <a href="admin/roster.php" class="dashboard-link">
                         <img src="images/roster.png" width="60" height="60">
-
                         <div class="dashboard-desc">Roster</div>
                     </a>
                 </div>

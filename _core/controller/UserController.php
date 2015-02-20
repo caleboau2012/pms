@@ -57,8 +57,8 @@ class UserController {
     }
 
     public function addProfile($profileInfo){
-        /*$profile = $profileInfo;
-        $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);*/
+//        /*$profile = $profileInfo;
+//        $profile[UserAuthTable::userid] = $this->getUserId($profileInfo[UserAuthTable::regNo]);
         return $this->user->addProfile($profileInfo);
     }
 
