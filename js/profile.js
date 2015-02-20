@@ -25,9 +25,9 @@ $(function(){
                 }else if(response.status == 1){
                     $('#form-loading').addClass('hidden');
                     $('#form-error').addClass('hidden');
-                    $('#form-success').html(response.message);
+                    $('#form-success').removeClass('hidden').html(response.data);
                     setTimeout(function(){
-                        window.location.assign('dashboard.php')
+                        window.location.assign('dashboard.php');
                     }, 2500);
                 }
             }).fail(function(data){

@@ -50,7 +50,7 @@
         <h2 class="form-signin-heading text-center text-muted">PMS Signin</h2>
 
         <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
-        <div class=" center-block alert alert-danger hidden" id="form-error"></div>
+        <div class="text-center alert alert-danger hidden" id="form-error"></div>
 
         <input type="hidden" name="intent" value="login">
         <div class="form-group">

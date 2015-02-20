@@ -52,24 +52,22 @@ Crave::requireAll(UTIL);
                 <div class="hidden text-center" id="form-loading">
                     <img src="images/loading.gif">
                 </div>
-                <div class="row">
-                        <div class="center-block alert alert-danger hidden " id="form-error"></div>
-                        <div class="center-block alert alert-success hidden" id="form-success"></div>
-                </div>
+                        <div class="text-danger  text-center hidden " id="form-error"></div>
+                        <div class="text-success text-center hidden" id="form-success"></div>
                 <form action="#" method="post" role="form"  id="profile-form">
                     <input type="hidden" name="<?php echo ProfileTable::table_name.'['.ProfileTable::userid.']'?>" value="<?php echo CxSessionHandler::getItem(UserAuthTable::userid)?>">
                     <input type="hidden" name="intent" value="addProfile">
                     <div class="form-group-lg col-md-4">
                         <label for="first-name">First Name</label>
-                        <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" >
+                        <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" required >
                     </div>
                     <div class="form-group-lg col-md-4">
                         <label for="middle-name">Middle Name</label>
-                        <input type="text" class="form-control" id="middle-name"  name="<?php echo ProfileTable::table_name.'['.ProfileTable::middlename.']'?>" >
+                        <input type="text" class="form-control" id="middle-name"  name="<?php echo ProfileTable::table_name.'['.ProfileTable::middlename.']'?>" required >
                     </div>
                     <div class="form-group-lg col-md-4">
                         <label for="surname">Surname</label>
-                        <input type="text" class="form-control" id="surname" name="<?php echo ProfileTable::table_name.'['.ProfileTable::surname.']'?>" >
+                        <input type="text" class="form-control" id="surname" name="<?php echo ProfileTable::table_name.'['.ProfileTable::surname.']'?>" required >
                     </div>
 
                     <div class="form-group-lg col-md-4">

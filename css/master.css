@@ -17,8 +17,13 @@ textarea{
 .pointer{
     cursor: pointer;
 }
-
-#login{
+#profile-form{
+    margin-top: 0.4em;
+}
+.form-group-lg.col-md-4,.form-group-lg.col-md-3, .form-group-lg.col-md-6{
+    margin-bottom: 1.3em;
+}
+#login,#change-password{
     border: solid thin #CACACA;
     width: 50%;
     box-shadow:0px 2px 2px #A0A0A0;
@@ -46,6 +51,8 @@ textarea{
 .form-profile{
     background: #E5E5E5;
     border-radius: 0.5em;
+    padding: 2em;
+
 }
 
 /*

@@ -7,6 +7,8 @@ Crave::requireAll(UTIL);
 if(!isset($_SESSION[UserAuthTable::userid])){
     header("Location: index.php");
 }
+
+//var_dump($_SESSION);
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -56,6 +58,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <a href="roster.php" class="dashboard-link">
                 <img src="images/roster.png" width="60" height="60">
                 <div class="dashboard-desc">Check Roster</div>
+            </a>
+        </div>
+        <div class="col-xs-3 text-center">
+            <a href="mails.php" class="dashboard-link">
+                <img src="images/message.gif" width="60" height="60">
+                <div class="dashboard-desc">Message</div>
             </a>
         </div>
         <?php

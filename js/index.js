@@ -40,6 +40,8 @@ $(function(){
     //change password
     $('#change-password').on('submit', function (e) {
         $('#form-loading').removeClass('hidden');
+        $('#form-info').addClass('hidden');
+
         e.preventDefault();
         var form_data = $(this).serialize();
         if($('#passcode').val() == $('#confirm_passcode').val()){
