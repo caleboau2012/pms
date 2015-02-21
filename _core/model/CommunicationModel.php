@@ -1,20 +1,32 @@
 <?php
 class CommunicationModel extends BaseModel {
-    public function getInbox($userid) {
+    public function getInbox($userid, $page) {
+        $page = intval($page);
+
         $stmt = CommunicationSqlStatement::GET_INBOX;
+        $stmt = $this->prepareLimitStatement($stmt, $page);
+        
+        //die(var_dump($stmt));
+        
         $data = array();
         $data[CommunicationTable::recipient_id] = $userid;
 
         $result = $this->conn->fetchAll($stmt, $data);
+
         return $result;
     }
 
-    public function getSent($userid) {
+    public function getSent($userid, $page) {
+        $page = intval($page);
+
         $stmt = CommunicationSqlStatement::GET_SENT_MESSAGES;
+        $stmt = $this->prepareLimitStatement($stmt, $page);
+        
         $data = array();
         $data[CommunicationTable::sender_id] = $userid;
 
         $result = $this->conn->fetchAll($stmt, $data);
+        
         return $result;
     }
 
@@ -89,6 +101,18 @@ class CommunicationModel extends BaseModel {
         return $result;
     }
 
+    public function markAsUnread($userid, $msg_id) {
+        $stmt = CommunicationSqlStatement::MARK_AS_UNREAD;
+
+        $data = array();
+        $data[CommunicationTable::msg_id] = $msg_id;
+        $data[CommunicationTable::recipient_id] = $userid;
+
+        $result = $this->conn->execute($stmt, $data, true);
+
+        return $result;
+    }
+
     public function checkNewMessage($poll_data) {
         $stmt = CommunicationSqlStatement::CHECK_NEW_MESSAGE;
 
@@ -151,5 +175,36 @@ class CommunicationModel extends BaseModel {
         $body = file_get_contents($message_file_path);
 
         return $body;
+    }
+
+    private function prepareLimitStatement($stmt, $page) {
+        $offset = strval(intval($page) * intval(MAIL_PER_PAGE));
+        $records = strval(intval(MAIL_PER_PAGE));
+
+        $stmt = str_replace("@offset", $offset, $stmt);
+        $stmt = str_replace("@count", $records, $stmt);
+
+        return $stmt;
+    }
+
+    public function numberOfMesssages($userid, $msg_type) {
+        if ($msg_type == INBOX_MESSAGE) {
+            $stmt = CommunicationSqlStatement::COUNT_INBOX;
+            
+            $data = array();
+            $data[CommunicationTable::recipient_id] = $userid;
+        } elseif ($msg_type == SENT_MESSAGE) {
+            $stmt = CommunicationSqlStatement::COUNT_SENT;
+
+            $data = array();
+            $data[CommunicationTable::sender_id] = $userid;
+        } else {
+            return false;
+        }
+
+        $result = $this->conn->fetch($stmt, $data);
+
+        return $result[COUNT];
+
     }
 }

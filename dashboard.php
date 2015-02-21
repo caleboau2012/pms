@@ -90,7 +90,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 } else if ($staff[StaffRoleTable::staff_role_id] == PHARMACIST) {
                     ?>
                     <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
+                        <a href="views/pharmacy.php" class="dashboard-link">
                             <img src="images/pharmacy-icons.png" width="60">
 
                             <div class="dashboard-desc">Pharmacist</div>

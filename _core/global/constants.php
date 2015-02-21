@@ -1,4 +1,6 @@
 <?php
+$vitals_array = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi');
+
 //JSON RESPONSE CONSTANTS
 define('STATUS_OK', 1);
 define('STATUS_ERROR', 2);
@@ -62,10 +64,17 @@ define('MAX_NUM_POLL', 4);
 define('COUNT', 'count');
 
 //COMMUNICATION CONSTANTS
-define('MAX_BODY_LENGTH', 70);
+define('MAX_BODY_LENGTH', 200);
 define('MSG_TYPE', 'msg_type');
 define('INBOX_MESSAGE', 1);
 define('SENT_MESSAGE', 2);
+define('MAIL_PER_PAGE', 3);
+define('START_INDEX', 'start_index');
+define('END_INDEX', 'end_index');
+define('TOTAL', 'total');
+define('INBOX', 'inbox');
+define('SENT', 'sent');
+define('CURRENT_PAGE', 'current_page');
 
 //PRESCRIPTION STATUS
 define('DRUG_UNCLEARED', 1);

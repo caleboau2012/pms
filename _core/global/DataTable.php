@@ -136,6 +136,7 @@ class CommunicationTable {
     const created_date  = 'created_date';
     const modified_date = 'modified_date';
 }
+
 class UnitsRefTable{
     const table_name = 'units_ref';
 
@@ -215,3 +216,20 @@ class PrescriptionOutgoingDrugTable{
     const active_fg                     = 'active_fg';
 }
 
+class VitalsTable {
+    const table_name = 'vitals';
+    
+    const vitals_id = 'vitals_id';
+    const patient_id = 'patient_id';
+    const encounter_id = 'encounter_id';
+    const added_by = 'added_by';
+    const temp = 'temp';
+    const pulse = 'pulse';
+    const respiratory_rate = 'respiratory_rate';
+    const blood_pressure = 'blood_pressure';
+    const height = 'height';
+    const weight = 'weight';
+    const bmi = 'bmi';
+    const active_fg = 'active_fg';
+    const created_date = 'created_date';
+}

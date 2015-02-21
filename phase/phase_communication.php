@@ -1,6 +1,6 @@
 <?php
 
-require_once '../../_core/global/_require.php';
+require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
@@ -15,26 +15,40 @@ if (isset($_REQUEST['intent'])) {
 }
 
 if ($intent == 'getInbox') {
-    $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+    if (isset($_REQUEST['page'])) {
+        $page = $_REQUEST['page'];
+    } else {
+        $page = 1;
+    }
+
+    /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
+    $userid = 2;
     $announcer = new CommunicationController();
-    $response = $announcer->getInbox($userid);
+    $response = $announcer->getInbox($userid, $page);
     if (is_array($response)) {
         echo JsonResponse::success($response);
         exit();
     } else {
-        echo JsonResponse::error("Your message inbox is empty!");
+        echo JsonResponse::error("No messages to display on this page!");
         exit();
     }
 } elseif ($intent == 'getSent') {
-    $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+    if (isset($_REQUEST['page'])) {
+        $page = $_REQUEST['page'];
+    } else {
+        $page = 1;
+    }
+
+    /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
+    $userid = 1;
     $announcer = new CommunicationController();
-    $response = $announcer->getSent($userid);
+    $response = $announcer->getSent($userid, $page);
 
     if (is_array($response)) {
         echo JsonResponse::success($response);
         exit();
     } else {
-        echo JsonResponse::error("Your sent message list is empty!");
+        echo JsonResponse::error("No messages to display on this page!");
         exit();
     }
 } elseif ($intent == 'sendMessage') {
@@ -105,8 +119,8 @@ if ($intent == 'getInbox') {
     }
 } elseif ($intent == 'markAsRead') {
     if (isset($_REQUEST[CommunicationTable::msg_id])) {
-        /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
-        $userid = 2;
+        $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+        /*$userid = 2;*/
 
         $announcer = new CommunicationController();
         $response = $announcer->markAsRead($userid, $_REQUEST[CommunicationTable::msg_id]);
@@ -115,6 +129,25 @@ if ($intent == 'getInbox') {
             exit();
         } else {
             echo JsonResponse::error("Unable to mark message as read!");
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
+} elseif ($intent == 'markAsUnread') {
+    if (isset($_REQUEST[CommunicationTable::msg_id])) {
+        /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
+        $userid = 2;
+
+        $announcer = new CommunicationController();
+        $response = $announcer->markAsUnread($userid, $_REQUEST[CommunicationTable::msg_id]);
+
+        if ($response) {
+            echo JsonResponse::message(STATUS_OK, "Successfully marked as unread!");
+            exit();
+        } else {
+            echo JsonResponse::error("Unable to mark message as unread!");
+            exit();
         }
     } else {
         echo JsonResponse::error("Incomplete request parameters!");

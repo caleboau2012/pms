@@ -11,7 +11,7 @@ $(document).ready(function(){
 });
 
 function init(){
-    $.get(host + "phase/phase_patient.php?intent=getAllPatients", function(data){
+    $.get(host + "phase/arrival/phase_patient.php?intent=getAllPatients", function(data){
         data = JSON.parse(data);
 
         var  html = "";
@@ -42,7 +42,7 @@ function printDetails(e){
 }
 
 function prepareData(patientID){
-    $.get(host + "phase/phase_patient.php?intent=getPatient&patientId=" + patientID, function(data){
+    $.get(host + "phase/arrival/phase_patient.php?intent=getPatient&patientId=" + patientID, function(data){
         data = JSON.parse(data);
         console.log(data.data);
         name = data.data.surname + " " +
