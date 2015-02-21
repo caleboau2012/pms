@@ -65,8 +65,73 @@ class PharmacyModel extends BaseModel{
     }
 
 
-    public function matchPrescriptionToDrug($prescriptionId, $drugId){
+    public function mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId){
+        $data = array(PharmacistOutgoingDrugTable::pharmacist_id => $pharmacistId, PharmacistOutgoingDrugTable::outgoing_drug_id => $outgoingDrugId);
+        return $this->conn->execute(DrugSqlStatement::MAP_PHARMACIST_OUTGOING_DRUG, $data);
+    }
 
+
+    public function mapPrescriptionToOutgoingDrug($prescriptionId, $outgoingDrugId){
+
+    }
+
+
+    public function setOutgoingDrug($drugId, $qty, $unitId){
+        $data = array(OutgoingDrugsTable::drug_id => $drugId, OutgoingDrugsTable::quantity => $qty, OutgoingDrugsTable::unit_id => $unitId);
+        return $this->conn->execute(DrugSqlStatement::ADD_OUTGOING_DRUG, $data);
+    }
+
+
+    // Get the last id inserted into the outgoing_drugs table
+    // map pharmacist_id with outgoing_drug_id gotten from above on pharmacist_outgoing_drug table
+    /*Loop thro' all the prescriptions{
+    map the prescription_ids to outgoing_drug_id on prescription_outgoing_drug_id table
+    Change the status as appropriate
+    }*/
+    public function clearPrescription($pharmacistId, $data){
+        // Get the drug_id, qty and unit_id and insert it into the outgoing_drugs table
+        foreach($data as $prescriptionList){
+            $drugId = $prescriptionList['drugId'];
+            $drugName = $prescriptionList['drugName'];
+            $quantity = $prescriptionList['quantity'];
+            $unitId = $prescriptionList['unitId'];
+            $outgoingDrugId = null;
+
+            if($drugName){
+                if(!$drugId){
+                    try{
+                        $this->conn->beginTransaction();
+                        $this->addDrug($drugName);
+                        $drugId = $this->conn->getLastInsertedId();
+                        $this->conn->commit();
+                    } catch(Exception $e){
+                        return false;
+                    }
+                }
+
+                if($quantity && $unitId && $drugId){
+                    try{
+                        $this->conn->beginTransaction();
+                        $this->setOutgoingDrug($drugId, $quantity, $unitId);
+                        $outgoingDrugId = $this->conn->getLastInsertedId();
+                        $this->conn->commit();
+                    } catch(Exception $e){
+                        return false;
+                    }
+                }
+
+                if(!$this->mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId)) return false;
+            }
+
+            foreach($prescriptionList as $prescription){
+                $id = $prescription['prescription_id'];
+                if(!$this->mapPrescriptionToOutgoingDrug($id, $outgoingDrugId)) return false;
+                if(!$this->updatePrescriptionStatus($id, $prescription['status'])) return false;
+            }
+
+        }
+
+        return true;
     }
 
 
@@ -78,4 +143,7 @@ class PharmacyModel extends BaseModel{
         return true;
     }
 
+    public function getUnits(){
+        return $this->conn->fetchAll(UnitsSqlStatement::GET, array());
+    }
 }

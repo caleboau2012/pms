@@ -54,20 +54,37 @@ if ($intent == 'getPatientQueue') {
         echo JsonResponse::error("No drug");
     }
 
-} elseif ($intent == 'clearPrescription') {
-    if($data = isset($_REQUEST['data']) ? $_REQUEST['data'] : null){         // Please check if this works correctly
+} elseif($intent == 'getUnits'){
 
-        $isCleared = (new PharmacistController())->clearPrescription($data);
+    $units = (new PharmacistController())->getUnits();
+
+    if(is_array($units) && !empty($units)){
+        echo JsonResponse::success($drugs);
+        exit();
+    } else {
+        echo JsonResponse::error("No unit available");
+    }
+
+} elseif ($intent == 'clearPrescription') {
+    $pharmacist_id = isset($_REQUEST['userId']) ? $_REQUEST['userid'] : null;
+    $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
+
+    if($pharmacist_id && $data){
+
+        $isCleared = (new PharmacistController())->clearPrescription($pharmacist_id, $data);
 
         if ($isCleared){
             echo JsonResponse::success("Successfully cleared!");
             exit();
         } else {
-            echo JsonResponse::error("Clearing Unsuccessful. Try again Later.");
+            echo JsonResponse::error("Clearing Unsuccessful. Retry.");
             exit();
         }
-    } else {
+    } elseif(!$data) {
         echo JsonResponse::error("There are no prescriptions to clear");
+        exit();
+    } else {
+        echo JsonResponse::accessDenied();
         exit();
     }
 } else {

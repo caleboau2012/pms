@@ -23,31 +23,8 @@ class PharmacistController{
         return $this->pharmacy->getPrescription($treatmentId);
     }
 
-    public function clearPrescription($data){
-        /* This function loops through the prescriptions sent in
-           the dataArray and updates their prescription appropriately
-           and also sets their treatment status to cleared.
-        */
-        $drugIdStore = array();
-
-        foreach($data as $dataItem){
-            $drugId = $dataItem['drugId'];
-            if(!$drugId){
-                $drug = $dataItem['drug'];
-
-                if(!in_array($drug, $drugIdStore)){
-                    $drugIdStore[$drug] = $this->pharmacy->getDrugId($drug);
-                }
-
-                $drugId = $drugIdStore[$drug];
-            }
-
-            $this->pharmacy->matchPrescriptionToDrug($dataItem['prescriptionId'], $drugId);
-
-            $this->pharmacy->updatePrescription($dataItem['prescriptionId'], CLEARED);
-        }
-
-        return true;
+    public function clearPrescription($pharmacist_id, $data){
+        return $this->pharmacy->clearPrescription($pharmacist_id, $data);
     }
 
     public function addDrug($drug){
@@ -66,4 +43,7 @@ class PharmacistController{
         return $this->pharmacy->isOutPatient($patientId);
     }
 
+    public function getUnits(){
+        return $this->pharmacy->getUnits();
+    }
 }
