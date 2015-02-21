@@ -239,9 +239,17 @@ class DrugSqlStatement{
     const GET = "SELECT drug_ref_id, name drug FROM drug_ref";
     const GET_DRUG_ID = "SELECT d.drug_ref_id FROM drug_ref AS d WHERE d.name = :name";
     const ADD_DRUG = "INSERT INTO drug_ref ('name', 'created_date') VALUES (:name, NOW())";
+    const ADD_OUTGOING_DRUG = "INSERT INTO outgoing_drugs ('drug_id', 'qty', 'unit_id', 'created_date', 'modified_date')
+                              VALUES (:drug_id, :qty, :unit_id, NOW(), NOW())";
+    const MAP_PHARMACIST_OUTGOING_DRUG = "INSERT INTO pharmacist_outgoing_drug ('pharmacist_id', 'outgoing_drug_id', 'created_date')
+                              VALUES (:pharmacist_id, :outgoing_drug_id, NOW())";
 }
 
 class VitalsSqlStatement {
     const ADD = "INSERT INTO vitals (patient_id, encounter_id, added_by, temp, pulse, respiratory_rate, blood_pressure, height, weight, bmi, active_fg, created_date) VALUES (:patient_id, :encounter_id, :added_by, :temp, :pulse, :respiratory_rate, :blood_pressure, :height, :weight, :bmi, 1, NOW())";
     const GET_VITALS = "SELECT patient_id, encounter_id, added_by, temp, pulse, respiratory_rate, blood_pressure, height, weight, bmi, created_date FROM vitals WHERE patient_id = :patient_id";
+}
+
+class UnitsSqlStatement{
+    const GET = "SELECT unit_ref_id, unit FROM unit_ref";
 }
