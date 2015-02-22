@@ -4,8 +4,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
-Crave::requireFiles(MODEL, array('BaseModel', 'CommunicationModel'));
-Crave::requireFiles(CONTROLLER, array('CommunicationController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'CommunicationModel', 'UserModel'));
+Crave::requireFiles(CONTROLLER, array('CommunicationController', 'UserController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -21,8 +21,7 @@ if ($intent == 'getInbox') {
         $page = 1;
     }
 
-    /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
-    $userid = 2;
+    $userid = CxSessionHandler::getItem(UserAuthTable::userid);
     $announcer = new CommunicationController();
     $response = $announcer->getInbox($userid, $page);
     if (is_array($response)) {
@@ -39,8 +38,7 @@ if ($intent == 'getInbox') {
         $page = 1;
     }
 
-    /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
-    $userid = 1;
+    $userid = CxSessionHandler::getItem(UserAuthTable::userid);
     $announcer = new CommunicationController();
     $response = $announcer->getSent($userid, $page);
 
@@ -91,8 +89,7 @@ if ($intent == 'getInbox') {
 } elseif ($intent == 'pollInbox') {
     if (isset($_REQUEST[LMT])) {
         $lmt = $_REQUEST[LMT];
-        /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
-        $userid = 2;
+        $userid = CxSessionHandler::getItem(UserAuthTable::userid);
         
         $announcer = new CommunicationController();
         
@@ -129,6 +126,7 @@ if ($intent == 'getInbox') {
             exit();
         } else {
             echo JsonResponse::error("Unable to mark message as read!");
+            exit();
         }
     } else {
         echo JsonResponse::error("Incomplete request parameters!");
@@ -136,8 +134,8 @@ if ($intent == 'getInbox') {
     }
 } elseif ($intent == 'markAsUnread') {
     if (isset($_REQUEST[CommunicationTable::msg_id])) {
-        /*$userid = CxSessionHandler::getItem(UserAuthTable::userid);*/
-        $userid = 2;
+        $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+        /*$userid = 2;*/
 
         $announcer = new CommunicationController();
         $response = $announcer->markAsUnread($userid, $_REQUEST[CommunicationTable::msg_id]);
@@ -147,6 +145,31 @@ if ($intent == 'getInbox') {
             exit();
         } else {
             echo JsonResponse::error("Unable to mark message as unread!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
+} elseif ($intent == 'searchContact') {
+    if (isset($_REQUEST['term'])) {
+        $name = $_REQUEST["term"];
+        $controller = new UserController();
+        $response = $controller->searchByName($name);
+        if (is_array($response)) {
+            $autocomplete_array = array();
+            foreach ($response as $row) {
+                $row_array = array();
+                $row_array["value"] = $row[NAME];
+                $row_array[ProfileTable::userid] = $row[ProfileTable::userid];
+
+                array_push($autocomplete_array, $row_array);
+            }
+            echo json_encode($autocomplete_array);
+            //echo JsonResponse::success($response);
+            exit();
+        } else {
+            echo JsonResponse::error("User not found!");
             exit();
         }
     } else {

@@ -453,12 +453,16 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     cursor: not-allowed;
 }
 
-.msg_name, .msg_date {
-    width: 14%;
+.msg-name, .msg-date {
+    width: 9%;
 }
 
-.msg_message {
-    width : 70%;
+.msg-actions {
+    width : 4%;
+}
+
+.msg-message {
+    width : 75%;
 }
 
 .truncate {
@@ -467,5 +471,13 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     text-overflow: ellipsis;
 }
 
+.msg-status-indicator {
+    margin: 0% 45%;
+    cursor: default;
+}
+
+.message-pane table {
+    table-layout: fixed;
+}
 
 /* END -------------------MESSAGE PAGE STYLES ------------------- END*/

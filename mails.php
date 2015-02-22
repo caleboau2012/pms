@@ -1,3 +1,13 @@
+<?php
+require_once '_core/global/_require.php';
+Crave::requireAll(GLOBAL_VAR);
+Crave::requireAll(UTIL);
+
+if(!CxSessionHandler::getItem(UserAuthTable::userid)){
+    header("Location: index.php");
+}
+
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -8,7 +18,7 @@
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
 
-    <title>Admin Dashboard</title>
+    <title>PMS Mail</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -16,6 +26,7 @@
     <!-- Custom styles for this template -->
     <link href="css/master.css" rel="stylesheet">
     <link href="css/bootstrap/datepicker.css" rel="stylesheet">
+    <link href="css/bootstrap/jquery-ui.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -38,12 +49,18 @@
             <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
-                <li><a href="#" class="label-default">Roster</a></li>
-            </ul>
-            <form class="navbar-form navbar-right">
-                <input type="text" class="form-control" placeholder="Search...">
-            </form>
+            <div class="dropdown navbar-right navbar-right-text pointer">
+            <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                <img src="images/profile.png">
+                <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+                </span>
+                <span class="caret"></span>
+             </span>
+                <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                    <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
+                    <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
+                </ul>
+            </div>
         </div>
     </div>
 </nav>
@@ -54,7 +71,7 @@
             <a href="#myModal" class="btn btn-primary btn-compose" data-toggle="modal">Compose</a>
             <ul class="list-group nav nav-tabs">
                 <a id="inbox_tab" href="#inbox" class="list-group-item active" data-toggle="tab">
-                    Inbox <span class="badge">0</span>
+                    Inbox <span class="badge unread-count"></span>
                 </a>
                 <a id="sentmail_tab" href="#sentmails" class="list-group-item" data-toggle="tab">
                    Sent Mails
@@ -64,7 +81,15 @@
         <div class="col-sm-9 col-md-10 pull-right put-margin-top">
             <div class="tab-content">
                 <div id="inbox" class="tab-pane fade in active">
-                    <div class="container-fluid">
+                    <div class="container-fluid empty-box-message hidden">
+                        <h1>No messages to display!</h1>
+                    </div>
+                    <div class="container-fluid view-message hidden">
+                        <ul class="pager">
+                            <li class="previous back-button"><a href="#">&larr; Back</a></li>
+                        </ul>
+                    </div>
+                    <div class="container-fluid message-pane">
                         <div class="row mail-action-panel">
                             <div class="container">
                                 <div class="row pull-right">
@@ -87,19 +112,21 @@
                         <div class="row table-responsive">
                             <table class="table table-hover message_list">
                                 <tbody>
-                                    <tr class="">
-                                        <td>Name</td>
-                                        <td>Subject</td>
-                                        <td>Body</td>
-                                        <td>Date</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div>
                     </div>                
                 </div>
                 <div id="sentmails" class="tab-pane fade">
-                    <div class="container-fluid">
+                    <div class="container-fluid empty-box-message hidden">
+                        <h1>No messages to display!</h1>
+                    </div>
+                    <div class="container-fluid view-message hidden">
+                        <ul class="pager">
+                            <li class="previous back-button"><a href="#">&larr; Back</a></li>
+                        </ul>
+                    </div>
+                    <div class="container-fluid message-pane">
                         <div class="row mail-action-panel">
                             <div class="container">
                                 <div class="row pull-right">
@@ -122,12 +149,6 @@
                         <div class="row table-responsive">
                             <table class="table table-hover message_list">
                                 <tbody>
-                                    <tr>
-                                        <td>Name</td>
-                                        <td>Subject</td>
-                                        <td>Body</td>
-                                        <td>Date</td>
-                                    </tr>
                                 </tbody>
                             </table>
                         </div> 
@@ -142,20 +163,20 @@
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
                         <h4 class="modal-title">New Message</h4>
                     </div>
-                    <div class="modal-body">
+                    <div class="modal-body message-modal-body">
                         <form method="post">
-                            <div class="form-group ">
+                            <div class="form-group ui-front">
                                 <input type="text" class="form-control" name="recipient" placeholder="Recipient">
                             </div>
                             <div class="form-group">
                                 <input type="text" name="subject" class="form-control" placeholder="Subject">
                             </div>
                             <div class="form-group">
-                                <textarea rows="12" name="message" class="form-control" placeholder="Message"></textarea>
+                                <textarea rows="12" name="body" class="form-control" placeholder="Message"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                                <input type="submit" class="btn btn-primary" name="Send" value="Send">
+                                <input type="submit" class="btn btn-primary send-mail" name="Send" value="Send">
                             </div>
                         </form>
                     </div>
@@ -173,6 +194,7 @@
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap/jquery-ui.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
 <script src="js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="js/mail.js" type="text/javascript"></script>
@@ -181,11 +203,14 @@
         Mail.loadMessages();
 
         $("a[data-toggle='tab']").on('shown.bs.tab', function(event){
+            Mail.removeMessagePane();
+            
             var active_tab_link = $(event.target);
             var previous_tab_link = $(event.relatedTarget);
             
             active_tab_link.addClass("active");
             previous_tab_link.removeClass("active");
+
             
             var active_tab_id = active_tab_link.attr("href");
             var active_tab = $(active_tab_id);
@@ -213,6 +238,21 @@
                 Mail.resource.current_page = Mail.resource.current_page - 1;
                 Mail.loadMessages();                
             }
+        });
+
+        $("input[name='recipient']").autocomplete({
+            source : "phase/phase_communication.php?intent=searchContact",
+            minLength : 1,
+            select : function(event, ui) {
+                $(this).attr("id", "user-" + ui.item.userid);
+                $(this).val(ui.item.value);
+                return false;
+            }
+        });
+
+        $("input.send-mail").unbind('click').bind('click', function(event){
+            event.preventDefault();
+            Mail.sendMail();
         });
     })(jQuery);
 </script>

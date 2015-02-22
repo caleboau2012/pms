@@ -62,19 +62,24 @@ define('MAX_NUM_POLL', 4);
 
 //GENERAL CONSTANTS
 define('COUNT', 'count');
+define('NAME', 'name');
 
 //COMMUNICATION CONSTANTS
 define('MAX_BODY_LENGTH', 200);
 define('MSG_TYPE', 'msg_type');
 define('INBOX_MESSAGE', 1);
 define('SENT_MESSAGE', 2);
-define('MAIL_PER_PAGE', 3);
+define('MAIL_PER_PAGE', 30);
 define('START_INDEX', 'start_index');
 define('END_INDEX', 'end_index');
 define('TOTAL', 'total');
 define('INBOX', 'inbox');
 define('SENT', 'sent');
 define('CURRENT_PAGE', 'current_page');
+define('UNREAD', 1);
+define('READ', 0);
+define('UNREAD_MESSAGE', 'unread');
+define('READ_MESSAGE', 'read');
 
 //PRESCRIPTION STATUS
 define('DRUG_UNCLEARED', 1);

@@ -75,4 +75,11 @@ class UserController {
         return $this->user->updateStatus($userid, $status);
     }
 
+    public function searchByName($name) {
+        $name_array = explode(" ", $name);
+        $feedback = $this->user->searchByName($name_array[0]);
+
+        return $feedback;
+    }
+
 }

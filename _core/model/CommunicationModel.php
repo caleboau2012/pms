@@ -6,7 +6,6 @@ class CommunicationModel extends BaseModel {
         $stmt = CommunicationSqlStatement::GET_INBOX;
         $stmt = $this->prepareLimitStatement($stmt, $page);
         
-        //die(var_dump($stmt));
         
         $data = array();
         $data[CommunicationTable::recipient_id] = $userid;
@@ -86,31 +85,55 @@ class CommunicationModel extends BaseModel {
         $result[MSG_TYPE] = $msg_type;
         $result[CommunicationTable::msg_body] = $this->getMessageBody($msg_id);
 
+        if ($msg_type == INBOX_MESSAGE) {
+            $this->markAsRead($userid, $msg_id);
+        }
+
         return $result;
     }
 
     public function markAsRead($userid, $msg_id) {
-        $stmt = CommunicationSqlStatement::MARK_AS_READ;
-        
         $data = array();
         $data[CommunicationTable::msg_id] = $msg_id;
         $data[CommunicationTable::recipient_id] = $userid;
+
+        $msg_status = $this->checkMessageStatus($data);
+
+        if ($msg_status == READ) {
+            return true;
+        }
+        
+        $stmt = CommunicationSqlStatement::MARK_AS_READ;
+        
+
+        $result = $this->conn->execute($stmt, $data, true);
+        return $result;
+    }
+
+    public function markAsUnread($userid, $msg_id) {
+        $data = array();
+        $data[CommunicationTable::msg_id] = $msg_id;
+        $data[CommunicationTable::recipient_id] = $userid;
+
+        $msg_status = $this->checkMessageStatus($data);
+
+        if ($msg_status == UNREAD) {
+            return true;
+        }
+
+        $stmt = CommunicationSqlStatement::MARK_AS_UNREAD;
 
         $result = $this->conn->execute($stmt, $data, true);
 
         return $result;
     }
 
-    public function markAsUnread($userid, $msg_id) {
-        $stmt = CommunicationSqlStatement::MARK_AS_UNREAD;
+    private function checkMessageStatus($msg_data) {
+        $stmt = CommunicationSqlStatement::CHECK_MSG_STATUS;
 
-        $data = array();
-        $data[CommunicationTable::msg_id] = $msg_id;
-        $data[CommunicationTable::recipient_id] = $userid;
+        $result = $this->conn->fetch($stmt, $msg_data);
 
-        $result = $this->conn->execute($stmt, $data, true);
-
-        return $result;
+        return isset($result[CommunicationTable::msg_status]) ? $result[CommunicationTable::msg_status] : false;
     }
 
     public function checkNewMessage($poll_data) {
@@ -135,6 +158,7 @@ class CommunicationModel extends BaseModel {
             return INBOX_MESSAGE;
         }
 
+
         // CHECK FOR SENT MESSAGE
         $stmt = CommunicationSqlStatement::CHECK_SENT_MESSAGE;
 
@@ -142,7 +166,7 @@ class CommunicationModel extends BaseModel {
         $data[CommunicationTable::msg_id] = $msg_id;
         $data[CommunicationTable::sender_id] = $userid;
 
-        $result = $this->conn->execute($stmt, $data);
+        $result = $this->conn->fetch($stmt, $data);
 
         if ($result[COUNT] > 0) {
             return SENT_MESSAGE;
@@ -204,7 +228,7 @@ class CommunicationModel extends BaseModel {
 
         $result = $this->conn->fetch($stmt, $data);
 
-        return $result[COUNT];
+        return $result;
 
     }
 }

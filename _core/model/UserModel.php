@@ -108,4 +108,16 @@ class UserModel extends BaseModel {
 
         return $this->conn->execute(UserAuthSqlStatement::UPDATE_STATUS, $data);
     }
+
+    public function searchByName($name) {
+        $stmt = ProfileSqlStatement::SEARCH_BY_NAME;
+
+        $name = "%" . $name . "%";
+        $data = array();
+        $data[NAME] = $name;
+
+        $result = $this->conn->fetchAll($stmt, $data);
+
+        return $result;
+    }
 }

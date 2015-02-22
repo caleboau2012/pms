@@ -11,10 +11,13 @@ class CommunicationController {
             $feedback[INBOX] = $messages;
             $num_messages = sizeof($messages);
 
+            $total_message_count = $comm_model->numberOfMesssages($userid, INBOX_MESSAGE);
+
             $feedback[MSG_TYPE] = INBOX;
             $feedback[START_INDEX] = ($page * MAIL_PER_PAGE) + 1;
             $feedback[END_INDEX] = $feedback[START_INDEX] + $num_messages - 1;
-            $feedback[TOTAL] = $comm_model->numberOfMesssages($userid, INBOX_MESSAGE);
+            $feedback[TOTAL] = $total_message_count[COUNT];
+            $feedback[UNREAD_MESSAGE] = $total_message_count[UNREAD_MESSAGE];
             $feedback[CURRENT_PAGE] = $page + 1;
             
             return $feedback;
@@ -33,11 +36,12 @@ class CommunicationController {
             $feedback = array();
             $feedback[SENT] = $messages;            
             $num_messages = sizeof($messages);
+            $total_message_count = $comm_model->numberOfMesssages($userid, SENT_MESSAGE);
 
             $feedback[MSG_TYPE] = SENT;
             $feedback[START_INDEX] = ($page * MAIL_PER_PAGE) + 1;
             $feedback[END_INDEX] = $feedback[START_INDEX] + $num_messages - 1;
-            $feedback[TOTAL] = $comm_model->numberOfMesssages($userid, SENT_MESSAGE);
+            $feedback[TOTAL] = $total_message_count[COUNT];
             $feedback[CURRENT_PAGE] = $page + 1;
 
             return $feedback;
@@ -50,7 +54,7 @@ class CommunicationController {
         $msg_data = array();
         $msg_data[CommunicationTable::sender_id] = $sender_id;
         $msg_data[CommunicationTable::recipient_id] = $recipient_id;
-        $msg_data[CommunicationTable::msg_subject] = $msg_subject;
+        $msg_data[CommunicationTable::msg_subject] = ($msg_subject == "") ? "(no subject)" : $msg_subject;
         $msg_data[CommunicationTable::msg_body] = $msg_body;
 
         //die(var_dump($msg_data));

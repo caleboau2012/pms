@@ -32,13 +32,13 @@ class UserAuthSqlStatement {
         const UPDATE_STATUS = 'UPDATE user_auth SET status = :status WHERE userid = :userid LIMIT 1';
         const GET_USER_BY_CREDENTIALS = "SELECT u.userid, u.regNo, u.status, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
             FROM user_auth AS u
-                LEFT JOIN PROFILE AS p
+                LEFT JOIN profile AS p
                     ON(u.userid=p.userid)
             WHERE regNo=:regNo AND passcode=SHA1(:passcode)";
 
         const GET_USER_BY_ID = 'SELECT u.userid, u.regNo, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
         FROM user_auth AS u
-            LEFT JOIN PROFILE AS p
+            LEFT JOIN profile AS p
                 ON(u.userid=p.userid)
         WHERE u.userid=:userid';
 
@@ -65,11 +65,20 @@ class ProfileSqlStatement {
         const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
         const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department, p.work_address, p.home_address, p.telephone, p.sex,
                                         p.height, p.weight, p.birth_date, p.create_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
-        const GET_USER_AND_DEPT = 'SELECT dept.department_name, p.firstname, p.middlename, p.surname, FROM PROFILE AS p
+        const GET_USER_AND_DEPT = 'SELECT dept.department_name, p.firstname, p.middlename, p.surname, FROM profile AS p
                                    LEFT JOIN department AS dept
                                     ON p.department_id = dept.department_id
                                     WHERE p.active_fg = 1
                                     GROUP BY department_name';
+
+        const SEARCH_BY_NAME = "SELECT userid, CONCAT_WS(' ' , surname, firstname, middlename) AS name
+            FROM profile
+            WHERE surname LIKE  :name
+            OR middlename LIKE  :name
+            OR firstname LIKE  :name
+            LIMIT 0 , 30";
+
+        const BUILD_CONTACT_LIST = "SELECT userid, surname, firstname, middlename FROM profile";
 }
 
 class PermissionRoleSqlStatement {
@@ -155,9 +164,9 @@ class RosterSqlStatement {
                 FROM roster WHERE roster_id=:roster_id';
 
     const GET_ALL = 'SELECT r.roster_id, r.user_id, r.created_by, r.dept_id, r.duty, r.duty_date, r.created_date, r.modified_date, r.modified_by, p.surname, p.firstname, r.user_id, p.middlename
-                FROM roster AS r INNER JOIN PROFILE AS p ON p.userid = r.user_id WHERE r.active_fg = 1';
+                FROM roster AS r INNER JOIN profile AS p ON p.userid = r.user_id WHERE r.active_fg = 1';
     const GET_BY_STAFF_ID = 'SELECT r.roster_id, r.user_id, r.created_by, r.dept_id, r.duty, r.duty_date, r.created_date, r.modified_date, r.modified_by, p.surname, p.firstname, r.user_id, p.middlename
-                FROM roster AS r INNER JOIN PROFILE AS p ON p.userid = r.user_id WHERE r.user_id = :user_id AND r.active_fg = 1';
+                FROM roster AS r INNER JOIN profile AS p ON p.userid = r.user_id WHERE r.user_id = :user_id AND r.active_fg = 1';
     const GET_BY_DOCTOR = 'SELECT user_id, created_by, dept_id, duty, duty_date, created_date, modified_date, modified_by
                 FROM roster WHERE user_id=:user_id';
     const UPDATE = 'UPDATE roster SET  duty_date=:duty_date, modified_date= now(), modified_by=:modified_by
@@ -187,17 +196,11 @@ class CommunicationSqlStatement {
         ORDER BY communication.created_date DESC
         LIMIT @offset, @count";
 
-    const COUNT_INBOX = "SELECT COUNT(*) AS count 
-        FROM communication 
-            INNER JOIN profile 
-                ON communication.sender_id = profile.userid 
-        WHERE recipient_id = :recipient_id";
+    const COUNT_INBOX = "SELECT 
+        (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id) AS count, 
+        (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id AND msg_status = 1) AS unread";
 
-    const COUNT_SENT = "SELECT COUNT(*) AS count
-        FROM communication
-            INNER JOIN profile
-                ON communication.recipient_id = profile.userid
-        WHERE sender_id = :sender_id";
+    const COUNT_SENT = "SELECT COUNT(*) AS count FROM communication WHERE sender_id = :sender_id";
 
     const SEND_MESSAGE = "INSERT INTO communication (sender_id, recipient_id, msg_subject, msg_body, msg_status, active_fg, created_date, modified_date) VALUES (:sender_id, :recipient_id, :msg_subject, :msg_body, 1, 1, NOW(), NOW())";
 
@@ -205,14 +208,14 @@ class CommunicationSqlStatement {
 
     const CHECK_SENT_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE msg_id = :msg_id AND sender_id = :sender_id";
 
-    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status 
+    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, created_date 
         FROM communication
             INNER JOIN profile
                 ON communication.sender_id = profile.userid
         WHERE recipient_id = :recipient_id
         AND msg_id = :msg_id";
 
-    const GET_SENT_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS recipient_name, msg_id, recipient_id, msg_subject, msg_body
+    const GET_SENT_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS recipient_name, msg_id, recipient_id, msg_subject, msg_body, created_date
         FROM communication
             INNER JOIN profile
                 ON communication.recipient_id = profile.userid
@@ -224,6 +227,8 @@ class CommunicationSqlStatement {
     const MARK_AS_UNREAD = "UPDATE communication SET msg_status = 1, modified_date = NOW() WHERE msg_id = :msg_id AND recipient_id = :recipient_id";
 
     const CHECK_NEW_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE created_date > :created_date AND recipient_id = :recipient_id";
+
+    const CHECK_MSG_STATUS = "SELECT msg_status FROM communication WHERE msg_id = :msg_id AND recipient_id = :recipient_id";
 }
 
 class PrescriptionSqlStatement{
