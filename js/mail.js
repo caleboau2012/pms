@@ -59,18 +59,26 @@ Mail.Template = {
         };
 
         var participant_id = (typeof msg.sender_id == 'undefined') ? msg.recipient_id : msg.sender_id;
-        var participant_name = (typeof msg.sender_name == 'undefined') ? msg.recipient_name : msg.sender_name;
+        var participant_name = toTitleCase((typeof msg.sender_name == 'undefined') ? msg.recipient_name : msg.sender_name);
         
         var pronoun = (typeof msg.sender_id == 'undefined') ? "recipient" : "sender";
-        var preposition = (pronoun == "sender") ? "From: " : "To: ";
+        var preposition;
+        if(pronoun == "sender"){
+            preposition = "<span class='label label-default'>From </span>";
+        }
+        else{
+            preposition = "<span class='label label-default'>To </span>";
+        }
         
         var subject = (typeof msg.msg_subject == 'undefined' || msg.msg_subject == "") ? "(no subject)" : msg.msg_subject;
 
-        html = "<div class='panel panel-default message-panel' id='" + msg.msg_id + "'>\
-                    <div class='panel-heading'><h3 class='panel-title'>" + msg_status_indicator + subject + "</h3></div>\
+        html = "<div class='panel panel-info message-panel' id='" + msg.msg_id + "'>\
+                    <div class='panel-heading'>\
+                        <h3 class='panel-title'>" + msg_status_indicator + subject + "</h3>\
+                    </div>\
                     <div class='panel-body'>\
                         <h4 class='msg-participant' id='" + participant_id + "'>"
-                            + preposition + participant_name + "\
+                            + preposition + "&nbsp; " +  participant_name + "\
                             <small> " + msg.created_date + "</small>\
                         </h4>\
                         <p class='msg-body'>" + msg.msg_body + "</p>\

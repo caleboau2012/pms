@@ -68,13 +68,13 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-3 col-md-2 roster-sidebar">
-            <a href="#myModal" class="btn btn-primary btn-compose" data-toggle="modal">Compose</a>
+            <a href="#myModal" class="btn btn-success btn-compose btn-block" data-toggle="modal">Compose</a>
             <ul class="list-group nav nav-tabs">
                 <a id="inbox_tab" href="#inbox" class="list-group-item active" data-toggle="tab">
                     Inbox <span class="badge unread-count"></span>
                 </a>
                 <a id="sentmail_tab" href="#sentmails" class="list-group-item" data-toggle="tab">
-                   Sent Mails
+                    Sent Mails
                 </a>
             </ul>
         </div>
@@ -85,14 +85,15 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                         <h1>No messages to display!</h1>
                     </div>
                     <div class="container-fluid view-message hidden">
-                        <ul class="pager">
+                        <ul class="pager messages-back">
                             <li class="previous back-button"><a href="#">&larr; Back</a></li>
                         </ul>
                     </div>
                     <div class="container-fluid message-pane">
-                        <div class="row mail-action-panel">
-                            <div class="container">
-                                <div class="row pull-right">
+                        <div class="panel panel-info">
+                            <div class="panel-heading message-panel">
+                                <h4 class="pull-left">Inbox</h4>
+                                <span class="pull-right">
                                     <span class="start_index"></span>
                                     <span class="fa fa-minus"></span>
                                     <span class="end_index"></span>
@@ -106,33 +107,36 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                                         <span class="fa fa-square fa-stack-2x"></span>
                                         <span class="fa fa-angle-right fa-stack-1x fa-inverse"></span>
                                     </span>
-                                </div>                            
+                                </span>
+                                <div class="clearfix"></div>
                             </div>
+                            <div class="panel-body">
+                                <table class="table table-hover table-responsive message-list">
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-                        <div class="row table-responsive">
-                            <table class="table table-hover message-list">
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>                
+                    </div>
                 </div>
                 <div id="sentmails" class="tab-pane fade">
                     <div class="container-fluid empty-box-message hidden">
                         <h1>No messages to display!</h1>
                     </div>
                     <div class="container-fluid view-message hidden">
-                        <ul class="pager">
+                        <ul class="pager messages-back">
                             <li class="previous back-button"><a href="#">&larr; Back</a></li>
                         </ul>
                     </div>
                     <div class="container-fluid message-pane">
-                        <div class="row mail-action-panel">
-                            <div class="container">
-                                <div class="row pull-right">
+                        <div class="panel panel-info">
+                            <div class="panel-heading message-panel">
+                                <h4 class="pull-left">Inbox</h4>
+                                <span class="pull-right">
                                     <span class="start_index"></span>
                                     <span class="fa fa-minus"></span>
-                                    <span class="end_index" id='holla!'></span>
+                                    <span class="end_index"></span>
                                     <span> of </span>
                                     <span class="total"></span>
                                     <span class="fa-stack fa-lg newer">
@@ -143,15 +147,17 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                                         <span class="fa fa-square fa-stack-2x"></span>
                                         <span class="fa fa-angle-right fa-stack-1x fa-inverse"></span>
                                     </span>
-                                </div>                            
+                                </span>
+                                <div class="clearfix"></div>
                             </div>
+                            <div class="panel-body">
+                                <table class="table table-hover table-responsive message-list">
+                                    <tbody>
+                                    </tbody>
+                                </table>
+                            </div>
+
                         </div>
-                        <div class="row table-responsive">
-                            <table class="table table-hover message-list">
-                                <tbody>
-                                </tbody>
-                            </table>
-                        </div> 
                     </div>
                 </div>
             </div>
@@ -197,6 +203,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 <script src="js/bootstrap/jquery-ui.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
 <script src="js/bootstrap/bootstrap-datepicker.min.js"></script>
+<script src="js/constants.js"></script>
 <script src="js/mail.js" type="text/javascript"></script>
 <script type="text/javascript">
     (function($) {
@@ -204,19 +211,19 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 
         $("a[data-toggle='tab']").on('shown.bs.tab', function(event){
             Mail.removeMessagePane();
-            
+
             var active_tab_link = $(event.target);
             var previous_tab_link = $(event.relatedTarget);
-            
+
             active_tab_link.addClass("active");
             previous_tab_link.removeClass("active");
 
-            
+
             var active_tab_id = active_tab_link.attr("href");
             var active_tab = $(active_tab_id);
 
             Mail.resource.current_page = 1;
-            
+
             Mail.loadMessages(active_tab);
         });
 
@@ -236,7 +243,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                 return;
             } else {
                 Mail.resource.current_page = Mail.resource.current_page - 1;
-                Mail.loadMessages();                
+                Mail.loadMessages();
             }
         });
 

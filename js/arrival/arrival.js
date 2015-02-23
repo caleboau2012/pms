@@ -8,6 +8,29 @@ $(document).ready(function(){
 });
 
 function init(){
+
+    $("input[name='search']").autocomplete({
+        source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
+        minLength : 3,
+        select : function(event, ui) {
+            //$(this).attr("id", "user-" + ui.item.userid);
+            $(this).val(ui.item.value);
+            searchResult(ui.item);
+            return false;
+        }
+    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+        //console.log(item);
+        return $( "<li>" )
+            .append( "<div class='panel-success'>" +
+            "<div class='panel panel-heading' style='margin: 1px'>" +
+            "<p class='panel-title'>" + toTitleCase(item.value) + "</p>" +
+            "<p class='label label-info' style='margin-right: 10px;'> " + item.regNo + "</p>" +
+            "<p class='label label-default'>" + item.sex + "</p>" +
+            "</div>" +
+            "</div>" )
+            .appendTo( ul );
+    };
+
     $.get(host + "phase/arrival/phase_patient_arrival.php?intent=loadQueue", function(data){
         data = JSON.parse(data);
 
@@ -90,28 +113,6 @@ function init(){
         $(".general").find('.drop').html(patientHTML);
         draggableDropabble();
     });
-
-    $("input[name='search']").autocomplete({
-        source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
-        minLength : 3,
-        select : function(event, ui) {
-            //$(this).attr("id", "user-" + ui.item.userid);
-            $(this).val(ui.item.value);
-            searchResult(ui.item);
-            return false;
-        }
-    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-        //console.log(item);
-        return $( "<li>" )
-            .append( "<div class='panel-success'>" +
-                "<div class='panel panel-heading' style='margin: 1px'>" +
-                    "<p class='panel-title'>" + toTitleCase(item.value) + "</p>" +
-                    "<p class='label label-info' style='margin-right: 10px;'> " + item.regNo + "</p>" +
-                    "<p class='label label-default'>" + item.sex + "</p>" +
-                "</div>" +
-            "</div>" )
-            .appendTo( ul );
-    };;
 }
 
 function draggableDropabble(){
@@ -185,10 +186,6 @@ function removeFromQueue(patient){
 function switchQueue(patient, fromDoctor, toDoctor){
     //console.log('switching queues');
     addToDoctor(patient, toDoctor);
-}
-
-function toTitleCase(str) {
-    return str.replace(/\w\S*/g, function(txt){return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();});
 }
 
 function replaceAll(find, replace, str) {

@@ -46,32 +46,63 @@
     <!--        <button class="btn btn-sm btn-primary btn-block" type="submit">Sign in</button>-->
     <!--        </form>-->
     <!--<br/>-->
-    <form class="form-signin" id="login">
-        <h2 class="form-signin-heading text-center text-muted">PMS Signin</h2>
+    <form class="" id="login">
+        <div class="panel panel-primary form-signin">
+            <div class="panel-heading">
+                <h2 class="panel-title">PMS Signin</h2>
+            </div>
+            <div class="panel-body">
+                <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
+                <div class="text-center alert alert-danger hidden" id="form-error"></div>
 
-        <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
-        <div class="text-center alert alert-danger hidden" id="form-error"></div>
-
-        <input type="hidden" name="intent" value="login">
-        <div class="form-group">
-            <label class="sr-only" for="exampleInputAmount">Username</label>
-            <div class="input-group">
-                <div class="input-group-addon">Username</div>
-                <input type="text" class="form-control" name="regNo" required>
+                <input type="hidden" name="intent" value="login">
+                <div class="form-group">
+                    <label class="sr-only" for="exampleInputAmount">Username</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">Username</div>
+                        <input type="text" class="form-control" name="regNo" required>
+                    </div>
+                </div>
+                <div>
+                    <label class="sr-only" for="exampleInputAmount">Password</label>
+                    <div class="input-group">
+                        <div class="input-group-addon">Password&nbsp;</div>
+                        <input type="password" class="form-control" id="passcode" name="passcode" required>
+                    </div>
+                </div>
+            </div>
+            <div class="panel-footer">
+                <button type="submit" class="btn btn-primary pull-right">Sign in</button>
+                <div class="clearfix"></div>
             </div>
         </div>
-        <div class="form-group">
-            <label class="sr-only" for="exampleInputAmount">Password</label>
-            <div class="input-group">
-                <div class="input-group-addon">Password</div>
-                <input type="password" class="form-control" id="passcode" name="passcode" required>
-            </div>
-        </div>
-
-        <button type="submit" class="btn btn-primary">Sign in</button>
-
-
     </form>
+<!--    <form class="" id="login">-->
+<!--        -->
+<!---->
+<!--        <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>-->
+<!--        <div class="text-center alert alert-danger hidden" id="form-error"></div>-->
+<!---->
+<!--        <input type="hidden" name="intent" value="login">-->
+<!--        <div class="form-group">-->
+<!--            <label class="sr-only" for="exampleInputAmount">Username</label>-->
+<!--            <div class="input-group">-->
+<!--                <div class="input-group-addon">Username</div>-->
+<!--                <input type="text" class="form-control" name="regNo" required>-->
+<!--            </div>-->
+<!--        </div>-->
+<!--        <div class="form-group">-->
+<!--            <label class="sr-only" for="exampleInputAmount">Password</label>-->
+<!--            <div class="input-group">-->
+<!--                <div class="input-group-addon">Password</div>-->
+<!--                <input type="password" class="form-control" id="passcode" name="passcode" required>-->
+<!--            </div>-->
+<!--        </div>-->
+<!---->
+<!--        <button type="submit" class="btn btn-primary">Sign in</button>-->
+<!---->
+<!---->
+<!--    </form>-->
 
 
 
