@@ -118,6 +118,9 @@ class PatientSqlStatement {
 
 class PatientQueueSqlStatement {
     const ADD = "INSERT INTO patient_queue (patient_id, doctor_id, active_fg, create_date, modified_date) VALUES (:patient_id, :doctor_id, 1, NOW(), NOW())";
+    const RETURNTOGENERALQUEUE = "UPDATE patient_queue SET active_fg = 2, doctor_id = NULL, modified_date = NOW() WHERE patient_id = :patient_id";
+    const ADDTOGENERALQUEUE = "INSERT INTO patient_queue (patient_id, active_fg, create_date, modified_date) VALUES (:patient_id, 2, NOW(), NOW())";
+    const ADDTODOCTOR = "UPDATE patient_queue SET doctor_id = :doctor_id, active_fg = 1, modified_date = NOW() WHERE patient_id = :patient_id";
 
     const REMOVE = "UPDATE patient_queue SET active_fg = 0, modified_date = NOW() WHERE patient_id = :patient_id";
 
@@ -141,6 +144,11 @@ class PatientQueueSqlStatement {
                 ON ua.userid = pq.doctor_id
         WHERE pq.active_fg = 1
         AND ua.online_status != 1";
+
+    const GENERAL_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex
+      FROM patient_queue AS pq
+        INNER JOIN patient AS p ON pq.patient_id = p.patient_id
+          WHERE pq.active_fg = 2 AND pq.doctor_id IS NULL";
 
     const DOCTOR_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex
         FROM patient_queue AS pq

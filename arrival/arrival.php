@@ -62,16 +62,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 </nav>
 
 <script id="tmplPatients" type="text/html">
-    <div class="panel panel-success patient">
+    <div class="panel {{status}} patient">
         <div class="panel-heading" role="tab" id="heading{{patientid}}">
             <h4 class="panel-title">
                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
-                   href="#collapse{{patientid}}" aria-expanded="true" aria-controls="collapse{{patientid}}">
+                   href="#collapse{{patientid}}" aria-expanded="false" aria-controls="collapse{{patientid}}">
                     {{regNo}}
                 </a>
             </h4>
         </div>
-        <div id="collapse{{patientid}}" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="heading{{patientid}}">
+        <div id="collapse{{patientid}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{patientid}}">
             <div class="panel-body">
                 <p>{{name}}</p>
                 <p>{{sex}}</p>
@@ -89,6 +89,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <h2 class="panel-title">Dr. {{DoctorName}}</h2>
             </div>
             <div class="panel-body patients">
+                <span class="to_doctor" hidden>{{userid}}</span>
                 <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">
                 </div>
             </div>
@@ -104,6 +105,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     <h2 class="panel-title">General Queue</h2>
                 </div>
                 <div class="panel-body patients">
+                    <span class="to_doctor" hidden>0</span>
                     <div class="panel-group drop" id="accordion0" role="tablist" aria-multiselectable="true">
                     </div>
                 </div>

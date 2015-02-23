@@ -53,7 +53,9 @@ class SqlClient {
 
     public function execute($sql, $params, $zero_allowed=false){
         //handles INSERT, UPDATE and DELETE
+//        var_dump($params);
         $pds = $this->pdo->prepare($sql);
+//        var_dump($pds);
         $check = $pds->execute($params);
         if (!$check){
             return false;

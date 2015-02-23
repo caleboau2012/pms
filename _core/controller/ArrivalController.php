@@ -10,10 +10,15 @@ class ArrivalController {
         return $arrival->getQueue();
     }
 
+    public function getGenQueue() {
+        $arrival = new ArrivalModel();
+        return $arrival->getGenQueue();
+    }
+
     public function addPatient($patient, $doctor) {
         $arrival = new ArrivalModel();
 
-        $reponse = array();
+        $response = array();
         //CHECK IF PATIENT IS NOT ALREADY ON A QUEUE
         if ($arrival->patientOnQueue($patient)) {
             $response[P_STATUS] = STATUS_ERROR;
@@ -27,6 +32,43 @@ class ArrivalController {
 
         $feedback = $arrival->add($arrival_data);
 
+        return $feedback;
+    }
+
+    public function addPatientToGeneralQueue($patient) {
+        $arrival = new ArrivalModel();
+
+        $response = array();
+        //CHECK IF PATIENT IS NOT ALREADY ON A QUEUE
+        if ($arrival->patientOnQueue($patient)) {
+            $response[P_STATUS] = STATUS_ERROR;
+            $response[P_MESSAGE] = "Error!!! Patient already on queue";
+            return $response;
+        }
+
+        $arrival_data = array();
+        $arrival_data[PatientQueueTable::patient_id] = $patient;
+
+        $feedback = $arrival->addToGenQueue($arrival_data);
+
+        return $feedback;
+    }
+
+    public function addToDoctor($patient, $doctor) {
+        $arrival = new ArrivalModel();
+
+        $arrival_data = array();
+        $arrival_data[PatientQueueTable::patient_id] = $patient;
+        $arrival_data[PatientQueueTable::doctor_id] = $doctor;
+
+        $feedback = $arrival->addToDoctor($arrival_data);
+
+        return $feedback;
+    }
+
+    public function returnToGenQueue($patient) {
+        $arrival = new ArrivalModel();
+        $feedback = $arrival->returnToGenQueue($patient);
         return $feedback;
     }
 
