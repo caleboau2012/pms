@@ -4,7 +4,7 @@ class PharmacistController{
     private $pharmacy;
 
     public function __construct(){
-        $this->pharmacy = new PharmacyModel();
+        $this->pharmacy = new PharmacistModel();
     }
 
     public function getPatientQueue(){

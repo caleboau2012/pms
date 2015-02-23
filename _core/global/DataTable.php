@@ -172,7 +172,7 @@ class PharmacistOutgoingDrugTable{
 
     const pharmacist_outgoing_drug = 'pharmacist_outgoing_drug';
     const pharmacist_id            = 'pharmacist_id';
-    const outgoing_drug_id         = 'prescription_id';
+    const outgoing_drug_id         = 'outgoing_drug_id';
     const created_date             = 'created_date';
     const active_fg                = 'active_fg';
 }

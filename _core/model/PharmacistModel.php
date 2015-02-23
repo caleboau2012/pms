@@ -1,6 +1,6 @@
 <?php
 
-class PharmacyModel extends BaseModel{
+class PharmacistModel extends BaseModel{
 
     public function getPatientQueue($status){
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_QUEUE, array(PrescriptionTable::status => $status));
@@ -35,7 +35,9 @@ class PharmacyModel extends BaseModel{
      * This method adds a drug to the drug_name_ref if does not already exist.
      */
     public function addDrug($drug){
-        return $this->conn->execute(DrugSqlStatement::ADD_DRUG, array(DrugNameRefTable::description => $drug));
+        if(!$this->conn->execute(DrugSqlStatement::ADD_DRUG, array(DrugRefTable::name => strtolower($drug) ) ) )
+            throw new Exception("Could not add drug to table");
+        return true;
     }
 
 
@@ -60,25 +62,34 @@ class PharmacyModel extends BaseModel{
 
 
     public function updatePrescriptionStatus($prescription_id, $status){
-        return $this->conn->execute(PrescriptionSqlStatement::UPDATE_STATUS,
-            array(PrescriptionTable::prescription_id => $prescription_id, PrescriptionTable::status => $status));
+        if(!$this->conn->execute(PrescriptionSqlStatement::UPDATE_STATUS,
+            array(PrescriptionTable::prescription_id => $prescription_id, PrescriptionTable::status => $status)))
+            throw new Exception("Could not update prescription status");
+        return true;
     }
 
 
     public function mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId){
         $data = array(PharmacistOutgoingDrugTable::pharmacist_id => $pharmacistId, PharmacistOutgoingDrugTable::outgoing_drug_id => $outgoingDrugId);
-        return $this->conn->execute(DrugSqlStatement::MAP_PHARMACIST_OUTGOING_DRUG, $data);
+        if(!$this->conn->execute(DrugSqlStatement::MAP_PHARMACIST_OUTGOING_DRUG, $data))
+            throw new Exception("Could not map pharmacist to outgoing drug");
+        return true;
     }
 
 
     public function mapPrescriptionToOutgoingDrug($prescriptionId, $outgoingDrugId){
-
+        $data = array(PrescriptionOutgoingDrugTable::prescription_id => $prescriptionId, PrescriptionOutgoingDrugTable::outgoing_drug_id => $outgoingDrugId);
+        if(!$this->conn->execute(DrugSqlStatement::MAP_PRESCRIPTION_TO_OUTGOING_DRUG, $data))
+            throw new Exception("Could not map prescription to outgoing drug");
+        return true;
     }
 
 
     public function setOutgoingDrug($drugId, $qty, $unitId){
         $data = array(OutgoingDrugsTable::drug_id => $drugId, OutgoingDrugsTable::quantity => $qty, OutgoingDrugsTable::unit_id => $unitId);
-        return $this->conn->execute(DrugSqlStatement::ADD_OUTGOING_DRUG, $data);
+        if(!$this->conn->execute(DrugSqlStatement::ADD_OUTGOING_DRUG, $data))
+            throw new Exception("Could not add outgoing drug to outgoing_drug table");
+        return true;
     }
 
 
@@ -88,7 +99,7 @@ class PharmacyModel extends BaseModel{
     map the prescription_ids to outgoing_drug_id on prescription_outgoing_drug_id table
     Change the status as appropriate
     }*/
-    public function clearPrescription($pharmacistId, $data){
+    /*public function clearPrescription($pharmacistId, $data){
         // Get the drug_id, qty and unit_id and insert it into the outgoing_drugs table
         foreach($data as $prescriptionList){
             $drugId = $prescriptionList['drugId'];
@@ -97,6 +108,8 @@ class PharmacyModel extends BaseModel{
             $unitId = $prescriptionList['unitId'];
             $outgoingDrugId = null;
 
+            echo "Initialising successful!<br/>";
+
             if($drugName){
                 if(!$drugId){
                     try{
@@ -104,11 +117,15 @@ class PharmacyModel extends BaseModel{
                         $this->addDrug($drugName);
                         $drugId = $this->conn->getLastInsertedId();
                         $this->conn->commit();
+                        echo "Drug id is: ".$drugId."<br/>";
+                        echo "Getting drugId successful!<br/>";
+
                     } catch(Exception $e){
                         $this->conn->rollBack();
                         return false;
                     }
                 }
+
 
                 if($quantity && $unitId && $drugId){
                     try{
@@ -116,22 +133,81 @@ class PharmacyModel extends BaseModel{
                         $this->setOutgoingDrug($drugId, $quantity, $unitId);
                         $outgoingDrugId = $this->conn->getLastInsertedId();
                         $this->conn->commit();
+                        echo "Adding outgoing drugs successful!<br/>";
+                        echo "Outgoing Drug id is: ".$outgoingDrugId."<br/>";
                     } catch(Exception $e){
                         $this->conn->rollBack();
                         return false;
                     }
                 }
+                echo "Adding outgoing drugs successful!<br/>";
+                echo "outgoing_drug_id is: " ;
+                echo $outgoingDrugId;
+                echo "\n\n";
 
                 if(!$this->mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId)) return false;
+                echo "mapping pharmacist to drug successful!<br/>";
             }
 
-            foreach($prescriptionList as $prescription){
+            foreach($prescriptionList["prescription"] as $prescription){
                 $id = $prescription['prescription_id'];
                 if(!$this->mapPrescriptionToOutgoingDrug($id, $outgoingDrugId)) return false;
                 if(!$this->updatePrescriptionStatus($id, $prescription['status'])) return false;
             }
+            echo "Updating of statuses of prescriptions successful!<br/>";
 
         }
+
+        return true;
+    }*/
+
+
+    public function clearPrescription($pharmacistId, $data){
+        try{
+            $this->conn->beginTransaction();
+
+            // Get the drug_id, qty and unit_id and insert it into the outgoing_drugs table
+            foreach($data as $prescriptionList){
+                $drugId = $prescriptionList['drugId'];
+                $drugName = $prescriptionList['drugName'];
+                $quantity = $prescriptionList['quantity'];
+                $unitId = $prescriptionList['unitId'];
+                $outgoingDrugId = null;
+
+                if($drugName){
+
+                    if(!$drugId){
+                            $this->addDrug($drugName);
+                            $drugId = $this->conn->getLastInsertedId();
+                    }
+
+                    if($quantity && $unitId && $drugId){
+                            $this->setOutgoingDrug($drugId, $quantity, $unitId);
+                            $outgoingDrugId = $this->conn->getLastInsertedId();
+                    }
+
+                    $this->mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId);
+
+                    foreach($prescriptionList["prescription"] as $id){
+                        $this->mapPrescriptionToOutgoingDrug($id, $outgoingDrugId);
+                        $this->updatePrescriptionStatus($id, DRUG_CLEARED);
+                    }
+
+                } else {
+
+                    foreach($prescriptionList["prescription"] as $id){
+                        $this->updatePrescriptionStatus($id, DRUG_UNAVAILABLE);
+                    }
+                }
+            }
+
+            $this->conn->commit();
+        }catch(Exception $e){
+            $this->conn->rollBack();
+
+            return $e->getMessage();
+        }
+
 
         return true;
     }
