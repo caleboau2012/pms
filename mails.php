@@ -110,7 +110,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                             </div>
                         </div>
                         <div class="row table-responsive">
-                            <table class="table table-hover message_list">
+                            <table class="table table-hover message-list">
                                 <tbody>
                                 </tbody>
                             </table>
@@ -147,7 +147,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                             </div>
                         </div>
                         <div class="row table-responsive">
-                            <table class="table table-hover message_list">
+                            <table class="table table-hover message-list">
                                 <tbody>
                                 </tbody>
                             </table>
@@ -172,7 +172,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                                 <input type="text" name="subject" class="form-control" placeholder="Subject">
                             </div>
                             <div class="form-group">
-                                <textarea rows="12" name="body" class="form-control" placeholder="Message"></textarea>
+                                <textarea rows="12" name="body" class="msg-body form-control" placeholder="Message"></textarea>
                             </div>
                             <div class="modal-footer">
                                 <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
@@ -242,7 +242,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 
         $("input[name='recipient']").autocomplete({
             source : "phase/phase_communication.php?intent=searchContact",
-            minLength : 1,
+            minLength : 0,
             select : function(event, ui) {
                 $(this).attr("id", "user-" + ui.item.userid);
                 $(this).val(ui.item.value);
@@ -254,6 +254,10 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
             event.preventDefault();
             Mail.sendMail();
         });
+
+        $(".new-message-modal").on('hidden.bs.modal', function () {
+            Mail.clearModal();
+        })
     })(jQuery);
 </script>
 </body>

@@ -119,14 +119,12 @@ else if ($intent == 'addPatient') {
 
     $patientadd = null;
 
-    if (empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)|| empty($sex)|| empty($height)||
-        empty($weight)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
-        || empty($nok_relationship) ||empty($citizenship)||empty($religion)||empty($family_position)||empty($mother_status)||empty($father_status)||empty($marital_status)){
+    if (empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
+        ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status)){
 
-//        print_r($_REQUEST);
+        print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
-
     }
     else{
         $patientadd = $patientController->addPatient (
@@ -138,7 +136,7 @@ else if ($intent == 'addPatient') {
     }
 
     if($patientadd){
-        echo JsonResponse::success("Patient info succesfully added");
+        echo JsonResponse::success($patientadd);
         exit();
     } else {
 //        print_r($_REQUEST);

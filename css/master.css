@@ -444,7 +444,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     font-weight: bold;
 }
 
-.message_list tr {
+.message-list tr {
     cursor: pointer;
 }
 
@@ -454,15 +454,15 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 
 .msg-name, .msg-date {
-    width: 9%;
+    width: 14%;
 }
 
 .msg-actions {
-    width : 4%;
+    width : 5%;
 }
 
 .msg-message {
-    width : 75%;
+    width : 65%;
 }
 
 .truncate {
@@ -472,12 +472,20 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 
 .msg-status-indicator {
-    margin: 0% 45%;
+    margin-right: 1%;
     cursor: default;
+}
+
+.message-list .msg-status-indicator {
+    margin: 0% 45%;
 }
 
 .message-pane table {
     table-layout: fixed;
+}
+
+.msg-body {
+    line-height: 30px;
 }
 
 /* END -------------------MESSAGE PAGE STYLES ------------------- END*/

@@ -73,7 +73,7 @@ Mail.Template = {
                             + preposition + participant_name + "\
                             <small> " + msg.created_date + "</small>\
                         </h4>\
-                        <p class='msg_body'>" + msg.msg_body + "</p>\
+                        <p class='msg-body'>" + msg.msg_body + "</p>\
                     </div>\
                 </div>";
         return html;
@@ -323,7 +323,7 @@ Mail.displayMessages = function(data, active_tab) {
 
     Mail.setMailNavigation(active_tab, start_index, end_index, total, page);
 
-    var message_list = active_tab.find("table.message_list > tbody");
+    var message_list = active_tab.find("table.message-list > tbody");
     message_list.html("");
     
     var msg_type = data.msg_type;
@@ -387,7 +387,7 @@ Mail.removeMessagePane = function(active_tab){
 }
 
 Mail.regDOM = function(){
-    $(".message_list tr").unbind('click').bind('click', function(event){
+    $(".message-list tr").unbind('click').bind('click', function(event){
         if ($(event.target).hasClass("msg-status-indicator")) {
             event.preventDefault();
             return;
@@ -426,13 +426,19 @@ Mail.alertMessage = function(message, alert_type, display_pane) {
 }
 
 Mail.dismissModal = function(){
-    $("input[name='recipient']").removeAttr("id");
-    $("input[name='recipient']").val("");
-    $("input[name='subject']").val("");
-    $("textarea[name='body']").val("");
+    Mail.clearModal();
     $(".modal-backdrop").trigger('click');
 }
 
 Mail.dismissAlerts = function(){
     $("div.alert").remove();
+}
+
+Mail.clearModal = function() {
+    $("input[name='recipient']").removeAttr("id");
+    $("input[name='recipient']").val("");
+    $("input[name='subject']").val("");
+    $("textarea[name='body']").val("");
+
+    console.log("clear modal complete!");
 }
