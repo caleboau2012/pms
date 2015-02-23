@@ -105,6 +105,7 @@ class PharmacyModel extends BaseModel{
                         $drugId = $this->conn->getLastInsertedId();
                         $this->conn->commit();
                     } catch(Exception $e){
+                        $this->conn->rollBack();
                         return false;
                     }
                 }
@@ -116,6 +117,7 @@ class PharmacyModel extends BaseModel{
                         $outgoingDrugId = $this->conn->getLastInsertedId();
                         $this->conn->commit();
                     } catch(Exception $e){
+                        $this->conn->rollBack();
                         return false;
                     }
                 }

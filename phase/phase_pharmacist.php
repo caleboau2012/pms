@@ -66,7 +66,7 @@ if ($intent == 'getPatientQueue') {
     }
 
 } elseif ($intent == 'clearPrescription') {
-    $pharmacist_id = isset($_REQUEST['userId']) ? $_REQUEST['userid'] : null;
+    $pharmacist_id = isset($_REQUEST['userId']) ? $_REQUEST['userId'] : null;
     $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
 
     if($pharmacist_id && $data){
