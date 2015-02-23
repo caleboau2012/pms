@@ -268,3 +268,63 @@ class VitalsSqlStatement {
 class UnitsSqlStatement{
     const GET = "SELECT unit_ref_id, unit FROM unit_ref";
 }
+
+class HaematologySqlStatement {
+
+    const ADD = 'INSERT INTO haematology(clinical_diagnosis_details,doctor_id,lab_attendant_id,laboratory_report,laboratory_ref,create_date, modified_date,treatment_id)
+                                        VALUES(:clinical_diagnosis_details, :doctor_id, :lab_attendant_id, :laboratory_report, :laboratory_ref, now(), now(), :treatment_id)';
+    const DELETE = 'DELETE FROM haematology WHERE treatment_id = :treatment_id';
+    const GET = 'SELECT * FROM haematology WHERE treatment_id = :treatment_id ORDER BY create_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT * FROM haematology WHERE haematology_id = :haematology_id LIMIT 1';
+    const GET_HISTORY = 'SELECT p.patient_id AS patient_id,
+    p.regNo AS regNo,
+    h.haematology_id AS testid,
+    h.clinical_diagnosis_details AS diagnosis,
+    h.create_date AS created_date
+FROM
+    haematology h
+    LEFT JOIN treatment t ON (t.treatment_id = h.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id = t.patient_id)
+    WHERE h.treatment_id = :treatment_id
+    ORDER BY h.modified_date DESC';
+
+    const UPDATE = 'UPDATE haematology
+                    SET laboratory_report = :laboratory_report, laboratory_ref = :laboratory_ref, status_id=:status_id, modified_date = now()
+                    WHERE treatment_id=:treatment_id AND haematology_id=:haematology_id';
+
+    const GET_ALL_TEST = 'SELECT h.haematology_id, p.surname, p.middlename, p.firstname, p.regNo, h.status_id, h.treatment_id, h.modified_date FROM haematology h
+    LEFT JOIN treatment t ON (h.treatment_id=t.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+    ORDER BY h.modified_date DESC';
+
+    const GET_EACH_TEST = "SELECT h.*, fa.*, dc.*, bt.* FROM haematology h
+ LEFT JOIN film_appearance fa ON (fa.haematology_id=h.haematology_id)
+ LEFT JOIN blood_test bt ON (bt.haematology_id= h.haematology_id)
+ LEFT JOIN differential_count dc ON (dc.haematology_id=h.haematology_id)
+ WHERE h.haematology_id=:haematolgy_id AND h.active_fg= 1";
+
+    const GET_STATUS = "SELECT h.active_fg FROM treatment t
+      LEFT JOIN haematology h ON (t.treatment_id=h.treatment_id)
+      WHERE h.treatment_id=:treatment_id";
+
+    const GET_TEST_BY_REGNO = 'SELECT h.haematology_id, i.surname, i.middlename, i.firstname, ua.regNo, h.status_id, h.userid FROM haematology h
+    LEFT JOIN user_auth ua ON (ua.userid=h.userid)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE h.userid=:userid
+    ORDER BY h.modified_date DESC';
+
+    const GET_TEST_BY_SEARCHQUERY = 'SELECT i.surname, i.middlename, i.firstname, ua.regNo, h.status_id, h.userid, h.modified_date FROM haematology h
+    LEFT JOIN user_auth ua ON (ua.userid=h.userid)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE ua.regNo LIKE "%":search_query"%"
+    ORDER BY h.modified_date DESC';
+
+    const PENDING_TEST = 'SELECT h.haematology_id AS test_id, i.surname, i.firstname, i.middlename, h.userid, h.status_id, h.modified_date FROM haematology h
+    LEFT JOIN user_auth ua ON (ua.userid=h.userid)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE h.status_id=5
+    ORDER BY h.modified_date DESC';
+
+    const CHANGE_IN_QUEUE = 'SELECT COUNT(modified_date) AS counter FROM haematology WHERE modified_date > :change_time';
+    const LAST_MODIFIED_DATE = 'SELECT MAX(modified_date) AS maxim FROM haematology WHERE status_id=5';
+}

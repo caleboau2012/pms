@@ -233,3 +233,335 @@ class VitalsTable {
     const active_fg = 'active_fg';
     const created_date = 'created_date';
 }
+
+class HaematologyTable {
+
+    const table_name                 = 'haematology';
+    const haematology_id             = 'haematology_id';
+    const clinical_diagnosis_details = 'clinical_diagnosis_details';
+    const doctor                     = 'doctor_id';
+    const lab_attendant_id           = 'lab_attendant_id';
+    const laboratory_report          = 'laboratory_report';
+    const laboratory_ref             = 'laboratory_ref';
+    const create_date                = 'create_date';
+    const modified_date              = 'modified_date';
+    const treatment_id               = 'treatment_id';
+    const active_fg                  = 'active_fg';
+    const status_id                  = 'status_id';
+}
+
+class UrineTable {
+
+    const table_name                 = 'urine';
+    const urine_d                    = 'urine_id';
+    const treatment_id               = 'treatment_id';
+    const lab_attendant_id           = 'lab_attendant_id';
+    const clinical_diagnosis_details = 'clinical_diagnosis_details';
+    const investigation_required     = 'investigation_required';
+    const doctor                     = 'doctor_id';
+    const laboratory_report          = 'laboratory_report';
+    const laboratory_ref             = 'laboratory_ref';
+    const culture_value              = 'culture_value';
+    const create_date                = 'create_date';
+    const modified_date              = 'modified_date';
+    const status_id                  = 'status_id';
+    const active_fg                  = 'active_fg';
+}
+
+class ParasitologyRequestTable {
+
+    const table_name = 'parasitology_req';
+    const preq_id                = 'preq_id';
+    const treatment_id           = 'treatment_id';
+    const nature_of_specimen     = 'nature_of_specimen';
+    const investigation_required = 'investigation_req';
+    const diagnosis              = 'diagnosis';
+    const date_reported          = 'date_reported';
+    const created_date           = 'created_date';
+    const modified_date          = 'modified_date';
+    const active_fg              = 'active_fg';
+    const doctor_id              = 'doctor_id';
+    const lab_number            = 'lab_num';
+    const lab_comment             = 'lab_comment';
+    const lab_attendant_id       = 'lab_attendant_id';
+    const status_id              = 'status_id';
+    const pref_id = 'pref_id';
+}
+
+class ParasitologyDetailsTable {
+
+    const table_name = 'parasitology_details';
+    const pdetail_id    = 'pdetail_id';
+    const preq_id       = 'preq_id';
+    const pref_id       = 'pref_id';
+    const created_date  = 'created_date';
+    const modified_date = 'modified_date';
+    const active_fg     = 'active_fg';
+}
+
+class UrinaryTable {
+
+    const table_name = 'urinary';
+
+    const patient_id        = 'patient_id';
+    const urinaryproblem = 'urinaryproblem';
+    const create_date    = 'create_date';
+    const modified_date  = 'modified_date';
+    const active_fg      = 'active_fg';
+
+}
+
+class BloodTestTable {
+
+    const table_name        = 'blood_test';
+    const bloodtest_id      = 'bloodtest_id';
+    const haematology_id    = 'haematology_id';
+    const pcv               = 'pcv';
+    const hb                = 'hb';
+    const hchc              = 'hchc';
+    const wbc               = 'wbc';
+    const eosinophils       = 'eosinophils';
+    const platelets         = 'platelets';
+    const rectis            = 'rectis';
+    const rectis_index      = 'rectis_index';
+    const e_s_r             = 'e_s_r';
+    const microfilaria      = 'microfilaria';
+    const malaria_parasites = 'malaria_parasites';
+    const create_date       = 'create_date';
+    const modified_date     = 'modified_date';
+    const active_fg         = 'active_fg';
+}
+
+class VisualSkillsProfileTable {
+
+    const table_name                = 'visual_skills_profile';
+    const id                        = 'visual_profile_id';
+    const treatment_id              = 'treatment_id';
+    const distance_re               = 'distance_re';
+    const distance_le               = 'distance_le';
+    const distance_be               = 'distance_be';
+    const near_re                   = 'near_re';
+    const near_le                   = 'near_le';
+    const near_be                   = 'near_be';
+    const pinhole_acuity_re         = 'pinhole_acuity_re';
+    const pinhole_acuity_le         = 'pinhole_acuity_le';
+    const pinhole_acuity_be         = 'pinhole_acuity_be';
+    const colour_vision             = 'colour_vision';
+    const stereopsis                = 'stereopsis';
+    const amplitude_of_accomodation = 'amplitude_of_accomodation';
+    const create_date               = 'create_date';
+    const modified_date             = 'modified_date';
+    const active_fg                 = 'active_fg';
+    const doctor_id                 = 'doctor_id';
+    const lab_attendant_id          = 'lab_attendant_id';
+    const status_id                 = 'status_id';
+}
+
+class ChemicalPathologyDetailsTable {
+    const table_name    = 'chemical_pathology_details';
+    const cpdetails_id  = 'cpdetails_id';
+    const cpreq_id      = 'cpreq_id';
+    const cpref_id      = 'cpref_id';
+    const result        = 'result';
+    const created_date  = 'created_date';
+    const modified_date = 'modified_date';
+    const active_fg     = 'active_fg';
+}
+
+class UrinalysisTable {
+
+    const table_name    = 'Urinalysis';
+    const id            = 'urinalysis_id';
+    const urine_id      = 'urine_id';
+    const appearance    = 'appearance';
+    const ph            = 'ph';
+    const glucose       = 'glucose';
+    const protein       = 'protein';
+    const bilirubin     = 'bilirubin';
+    const urobillinogen = 'urobillinogen';
+    const create_date   = 'create_date';
+    const modified_date = 'modified_date';
+    const active_fg     = 'active_fg';
+}
+
+class MicroscopyTable {
+
+    const table_name       = 'microscopy';
+    const microscopy_id    = 'microscopy_id';
+    const urine_id         = 'urine_id';
+    const pus_cells        = 'pus_cells';
+    const red_cells        = 'red_cells';
+    const epithelial_cells = 'epithelial_cells';
+    const casts            = 'casts';
+    const crystals         = 'crystals';
+    const others           = 'others';
+    const create_date      = 'create_date';
+    const modified_date    = 'modified_date';
+    const active_fg        = 'active_fg';
+}
+
+class UrineSensitivityTable {
+
+    const table_name            = 'urine_sensitivity';
+    const urine_sensitivity_id  = 'urine_sensitivity_id';
+    const urine_id              = 'urine_id';
+    const isolates              = 'isolates';
+    const isolates_degree       = 'isolates_degree';
+    const create_date           = 'create_date';
+    const active_fg             = 'active_fg';
+}
+
+class FilmAppearanceTable {
+
+    const table_name         = 'film_appearance';
+    const film_appearance_id = 'film_appearance_id';
+    const haematology_id     = 'haematology_id';
+    const aniscocytosis      = 'aniscocytosis';
+    const poikilocytosis     = 'poikilocytosis';
+    const polychromasia      = 'polychromasia';
+    const macrocytosis       = 'macrocytosis';
+    const microcytosis       = 'microcytosis';
+    const hypochromia        = 'hypochromia';
+    const sickle_cells       = 'sickle_cells';
+    const target_cells       = 'target_cells';
+    const spherocytes        = 'spherocytes';
+    const nucleated_rbc      = 'nucleated_rbc';
+    const sickling_test      = 'sickling_test';
+    const create_date        = 'create_date';
+    const modified_date      = 'modified_date';
+    const active_fg          = 'active_fg';
+}
+
+class DifferentialCountTable {
+
+    const table_name             = 'differential_count';
+    const differential_count_id  = 'differential_count_id';
+    const haematology_id         = 'haematology_id';
+    const polymorphs_neutrophils = 'polymorphs_neutrophils';
+    const lymphocytes            = 'lymphocytes';
+    const monocytes              = 'monocytes';
+    const eosinophils            = 'eosinophils';
+    const basophils              = 'basophils';
+    const widals_test            = 'widals_test';
+    const blood_group            = 'blood_group';
+    const rhesus_factor          = 'rhesus_factor';
+    const genotype               = 'genotype';
+    const create_date            = 'create_date';
+    const active_fg              = 'active_fg';
+}
+
+class XrayNoTable {
+
+    const table_name    = 'xray_no';
+    const xray_id       = 'xray_id';
+    const radiology_id  = 'radiology_id';
+    const xray_number   = 'xray_number';
+    const casual_no     = 'casual_no';
+    const gp_no         = 'gp_no';
+    const ante_natal_no = 'ante_natal_no';
+    const create_date   = 'create_date';
+    const modified_date = 'modified_date';
+    const active_fg     = 'active_fg';
+}
+
+class XrayCaseTable {
+
+    const table_name = 'xray_case_no';
+    const lmp        = 'options';
+    const active_fg  = 'active_fg';
+
+}
+
+class ExaminationRequestedTable {
+
+    const table_name                 = 'examination_requested';
+    const examination_requested_id   = 'examination_requested_id';
+    const radiology_id               = 'radiology_id';
+    const clinical_diagnosis_details = 'clinical_diagnosis_details';
+    const previous_operation         = 'previous_operation';
+    const any_known_allergies        = 'any_known_allergies';
+    const previous_xray              = 'previous_xray';
+    const xray_number                = 'xray_number';
+    const create_date                = 'create_date';
+    const modified_date              = 'modified_date';
+    const active_fg                  = 'active_fg';
+}
+
+class ChemicalPathologyRefTable {
+    const table_name = 'chemical_pathology_ref';
+
+    const cpref_id    = 'cpref_id';
+    const status_name = 'status_name';
+    const status_type = 'status_type';
+    const active_fg   = 'active_fg';
+}
+
+class ParasitologyRefTable {
+    const table_name = 'parasitology_ref';
+
+    const pref_id       = 'pref_id';
+    const parasite_name = 'parasite_name';
+    const parasite_type = 'parasite_type';
+    const active_fg     = 'active_fg';
+}
+class ParasitologyReqTable{
+    const table_name = 'parasitology_req';
+
+    const preq_id = 'preq_id';
+    const user_id = 'user_id';
+    const treatment_id = 'treatment_id';
+    const nature_of_specimen = 'nature_of_specimen';
+    const investigation_req = 'investigation_req';
+    const diagnosis = 'diagnosis';
+    const date_reported = 'date_reported';
+    const created_date = 'created_date';
+    const modified_date = 'modified_date';
+    const doctor_id = 'doctor_id';
+    const lab_attendant_id = 'lab_attendant_id';
+    const lab_num = 'lab_num';
+    const lab_comment = 'lab_comment';
+    const status_id = 'status_id';
+    const pref_id = 'pref_id';
+    const active_fg = 'active_fg';
+
+}
+
+class RadiologyTable {
+    const table_name           = 'radiology';
+    const radiology_id         = 'radiology_id';
+    const userid               = 'userid';
+    const doctor_id            = 'doctor_id';
+    const lab_attendant_id     = 'lab_attendant_id';
+    const ward_clinic_id       = 'ward_clinic_id';
+    const xray_case_id         = 'xray_case_id';
+    const xray_size_id         = 'xray_size_id';
+    const treatment_id         = 'treatment_id';
+    const consultant_in_charge = 'consultant_in_charge';
+    const checked_by           = 'checked_by';
+    const radiographers_note   = 'radiographers_note';
+    const radiologists_report  = 'radiologists_report';
+    const create_date          = 'create_date';
+    const modified_date        = 'modified_date';
+    const lmp                  = 'lmp';
+    const active_fg            = 'active_fg';
+    const status_id            = 'status_id';
+}
+
+class ChemicalPathologyRequestTable {
+    const table_name         = 'chemical_pathology_request';
+
+    const cpreq_id           = 'cpreq_id';
+    const patient_id         = 'patient_id';
+    const treatment_id       = 'treatment_id';
+    const laboratory_ref     = 'laboratory_ref';
+    const laboratory_comment = 'laboratory_comment';
+    const clinical_diagnosis = 'clinical_diagnosis';
+    const created_date       = 'created_date';
+    const modified_date      = 'modified_date';
+    const active_fg          = 'active_fg';
+    const doctor_id          = 'doctor_id';
+    const lab_attendant_id   = 'lab_attendant_id';
+    const status_id          = 'status_id';
+    const cp_ref_id          = 'cp_ref_id';
+
+}
