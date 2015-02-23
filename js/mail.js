@@ -175,11 +175,16 @@ Mail.sendMail = function() {
         msg_body : msg_body
     }
 
-    console.log(payload);
+    /*console.log(payload);*/
     Mail.serverReq(Mail.resource.URL.communication, payload, function(data){
         if (data.status == 1) {
             Mail.dismissModal();
-            Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.SUCCESS);
+            /*console.log("send message success...");*/
+            Mail.loadMessages(null, function(loadMessageData){
+                /*console.log("Load message complete!");*/
+                Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.SUCCESS);
+                /*console.log("alert displayed..." + data.message);*/
+            });
         } else {
             Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.DANGER, message_modal);
         }
@@ -262,7 +267,7 @@ Mail.markAsUnread = function(msg_id) {
 
     Mail.serverReq(Mail.resource.URL.communication, payload, function(data){
         if(data.status == 1){
-            console.log($("tr#msg-" + msg_id));
+            /*console.log($("tr#msg-" + msg_id));*/
             $("tr#msg-" + msg_id).addClass("unread");
             Mail.resource.unread_count += 1;
             Mail.displayUnreadCount();
@@ -277,11 +282,11 @@ Mail.markAsUnread = function(msg_id) {
 }
 
 
-Mail.loadMessages = function(active_tab){
+Mail.loadMessages = function(active_tab, callback){
     var active_tab = (active_tab == null) ? $(".tab-pane.active") : active_tab;
     var active_tab_id = $(active_tab).attr("id");
 
-    console.log(active_tab_id);
+    /*console.log(active_tab_id);*/
     
     var payload = {};
 
@@ -296,11 +301,16 @@ Mail.loadMessages = function(active_tab){
     Mail.serverReq(Mail.resource.URL.communication, payload, function(data){
         Mail.dismissAlerts();
         if (data.status == 1) {
-            console.log(data.data);
+            /*console.log(data.data);*/
             Mail.displayMessages(data.data);
         } else {
             Mail.renderEmptyMessagePane();
         }
+
+        if (typeof callback == 'function') {
+            /*console.log("making callback...");*/
+            callback(data);
+        };
     })
 }
 
@@ -422,6 +432,8 @@ Mail.alertMessage = function(message, alert_type, display_pane) {
         var display_pane = $(".tab-pane.active");
     }
 
+    /*console.log(display_pane);*/
+
     display_pane.prepend(Mail.Template.alertMessage(message, alert_type));
 }
 
@@ -440,5 +452,5 @@ Mail.clearModal = function() {
     $("input[name='subject']").val("");
     $("textarea[name='body']").val("");
 
-    console.log("clear modal complete!");
+    /*console.log("clear modal complete!");*/
 }
