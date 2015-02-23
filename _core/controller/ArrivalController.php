@@ -2,7 +2,23 @@
 class ArrivalController {
     public function searchPatient($parameter){
         $patient_model = new PatientModel();
-        return $patient_model->searchPatient($parameter);
+        $search_result = array();
+        $feedback = $patient_model->searchPatient($parameter);
+//        die(var_dump($feedback));
+
+        foreach($feedback as $patient){
+            $patient_array = array();
+            $patient_array[PatientTable::patient_id] = $patient[PatientTable::patient_id];
+            $patient_array['value'] = $patient[PatientTable::surname] . " " . $patient[PatientTable::firstname] . " " . $patient[PatientTable::middlename];
+            $patient_array[PatientTable::firstname] = $patient[PatientTable::firstname];
+            $patient_array[PatientTable::surname] = $patient[PatientTable::surname];
+            $patient_array[PatientTable::middlename] = $patient[PatientTable::middlename];
+            $patient_array[PatientTable::regNo] = $patient[PatientTable::regNo];
+            $patient_array[PatientTable::sex] = $patient[PatientTable::sex];
+            array_push($search_result, $patient_array);
+        }
+
+        return $search_result;
     }
 
     public function getQueue() {

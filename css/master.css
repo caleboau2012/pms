@@ -488,4 +488,19 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     line-height: 30px;
 }
 
+.navbar-form .form-control {
+    display: block;
+    width: 40%;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
+@media (max-width: 1024px) {
+    .navbar-form .form-control {
+        display: block;
+        width: 70%;
+        vertical-align: middle;
+    }
+}
+
 /* END -------------------MESSAGE PAGE STYLES ------------------- END*/

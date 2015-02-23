@@ -15,11 +15,11 @@ if (isset($_REQUEST['intent'])) {
 
 if ($intent == 'search') {
     //Search and retrieve patient details
-    if (isset($_REQUEST['parameter'])) {
+    if (isset($_REQUEST['term'])) {
         $usher = new ArrivalController();
-        $patient_details = $usher->searchPatient($_REQUEST['parameter']);
+        $patient_details = $usher->searchPatient($_REQUEST['term']);
         if (is_array($patient_details)) {
-            echo JsonResponse::success($patient_details);
+            echo json_encode($patient_details);
             exit();
         } else {
             echo JsonResponse::error("No patient matches your search request!");

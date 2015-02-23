@@ -90,6 +90,28 @@ function init(){
         $(".general").find('.drop').html(patientHTML);
         draggableDropabble();
     });
+
+    $("input[name='search']").autocomplete({
+        source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
+        minLength : 3,
+        select : function(event, ui) {
+            //$(this).attr("id", "user-" + ui.item.userid);
+            $(this).val(ui.item.value);
+            searchResult(ui.item);
+            return false;
+        }
+    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+        //console.log(item);
+        return $( "<li>" )
+            .append( "<div class='panel-success'>" +
+                "<div class='panel panel-heading' style='margin: 1px'>" +
+                    "<p class='panel-title'>" + toTitleCase(item.value) + "</p>" +
+                    "<p class='label label-info' style='margin-right: 10px;'> " + item.regNo + "</p>" +
+                    "<p class='label label-default'>" + item.sex + "</p>" +
+                "</div>" +
+            "</div>" )
+            .appendTo( ul );
+    };;
 }
 
 function draggableDropabble(){
@@ -106,23 +128,6 @@ function draggableDropabble(){
         drop: patientDrop
     });
 }
-
-//function getDraggedPatient(e, ui){
-//    patient = verifyEvent(e);
-//
-//    //console.log($(data).html());
-//}
-//
-//function verifyEvent(e){
-//    if (!e)
-//        var e = window.event;
-//    if (e.target)
-//        data = e.target;
-//    else if(e.srcElement)
-//        data = e.srcElement;
-//
-//    return data;
-//}
 
 function patientDrop(e, ui){
     var source = ui.draggable[0];
@@ -144,50 +149,41 @@ function patientDrop(e, ui){
     else if(toDoctor == 0)
         returnToGenQueue(patient);;
 
-    //if((fromDoctor == 0))
-    //    addToDoctor(patient, toDoctor);
-    //else if(toDoctor == 0)
-    //    returnToGenQueue(patient);
-    //else if((fromDoctor != 0) && (toDoctor != 0))
-    //    switchQueue(patient, toDoctor, fromDoctor);
-    //else
-    //    return;
-
     $(target).find('.drop').prepend(source);
     $('#masonry').masonry();
 }
 
 function addToGenQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToGeneralQueue&patient_id=' + patient), function(data){
-        console.log('Adding to Gen Queue');
-        console.log(data);
+        //console.log('Adding to Gen Queue');
+        //console.log(data);
     });
 }
 
 function addToDoctor(patient, doctor){
-    console.log(patient, doctor);
+    //console.log(patient, doctor);
 
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToDoctor&patient_id=' + patient + '&doctor_id=' + doctor), function(data){
-        console.log('Adding to Doctor Queue');
-        console.log(data);
+        //console.log('Adding to Doctor Queue');
+        //console.log(data);
     });
 }
 
 function returnToGenQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=returnToGenQueue&patient_id=' + patient), function(data){
-        console.log('Returning to Gen Queue');
-        console.log(data);
+        //console.log('Returning to Gen Queue');
+        //console.log(data);
     });
 }
 
 function removeFromQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id=' + patient), function(data){
-        console.log(data);
+        //console.log(data);
     });
 }
 
 function switchQueue(patient, fromDoctor, toDoctor){
-    console.log('switching queues');
+    //console.log('switching queues');
     addToDoctor(patient, toDoctor);
 }
 
@@ -315,6 +311,24 @@ function emergency(){
             $(".general").find('.drop').prepend(patientHTML);
             draggableDropabble();
         });
+}
+
+function searchResult(patientDetails){
+    var patientHTML = "";
+    //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+    patientHTML += $('#tmplPatients').html();
+    patientHTML = patientHTML.replace('{{status}}', 'panel-success');
+    patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+    patientHTML = replaceAll('{{patientid}}', patientDetails.patient_id, patientHTML);
+    patientHTML = replaceAll('{{regNo}}', patientDetails.regNo, patientHTML);
+    patientHTML = replaceAll('{{name}}', patientDetails.value, patientHTML);
+    patientHTML = replaceAll('{{sex}}', patientDetails.sex, patientHTML);
+    addToGenQueue(patientDetails.patient_id);
+
+    console.log(patientHTML);
+
+    $(".general").find('.drop').prepend(patientHTML);
+    draggableDropabble();
 }
 
 //function randomID(){
