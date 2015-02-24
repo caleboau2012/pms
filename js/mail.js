@@ -244,6 +244,7 @@ Mail.markAsRead = function(msg_id, indicator) {
     if (typeof indicator != 'undefined') {
         indicator.removeClass("fa-circle msg-unread");
         indicator.addClass("fa-circle-o msg-read");
+        indicator.attr("title", "Mark as Unread");
     };
 
     var payload = {
@@ -281,7 +282,8 @@ Mail.markAsUnread = function(msg_id) {
             Mail.displayUnreadCount();
             if (typeof indicator != 'undefined') {
                 indicator.removeClass("fa-circle-o msg-read");
-                indicator.addClass("fa-circle msg-unread");                
+                indicator.addClass("fa-circle msg-unread");
+                indicator.attr("title", "Mark as Read");
             };
         } else {
             alert(data.message);
