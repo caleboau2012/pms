@@ -99,69 +99,6 @@ class PharmacistModel extends BaseModel{
     map the prescription_ids to outgoing_drug_id on prescription_outgoing_drug_id table
     Change the status as appropriate
     }*/
-    /*public function clearPrescription($pharmacistId, $data){
-        // Get the drug_id, qty and unit_id and insert it into the outgoing_drugs table
-        foreach($data as $prescriptionList){
-            $drugId = $prescriptionList['drugId'];
-            $drugName = $prescriptionList['drugName'];
-            $quantity = $prescriptionList['quantity'];
-            $unitId = $prescriptionList['unitId'];
-            $outgoingDrugId = null;
-
-            echo "Initialising successful!<br/>";
-
-            if($drugName){
-                if(!$drugId){
-                    try{
-                        $this->conn->beginTransaction();
-                        $this->addDrug($drugName);
-                        $drugId = $this->conn->getLastInsertedId();
-                        $this->conn->commit();
-                        echo "Drug id is: ".$drugId."<br/>";
-                        echo "Getting drugId successful!<br/>";
-
-                    } catch(Exception $e){
-                        $this->conn->rollBack();
-                        return false;
-                    }
-                }
-
-
-                if($quantity && $unitId && $drugId){
-                    try{
-                        $this->conn->beginTransaction();
-                        $this->setOutgoingDrug($drugId, $quantity, $unitId);
-                        $outgoingDrugId = $this->conn->getLastInsertedId();
-                        $this->conn->commit();
-                        echo "Adding outgoing drugs successful!<br/>";
-                        echo "Outgoing Drug id is: ".$outgoingDrugId."<br/>";
-                    } catch(Exception $e){
-                        $this->conn->rollBack();
-                        return false;
-                    }
-                }
-                echo "Adding outgoing drugs successful!<br/>";
-                echo "outgoing_drug_id is: " ;
-                echo $outgoingDrugId;
-                echo "\n\n";
-
-                if(!$this->mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId)) return false;
-                echo "mapping pharmacist to drug successful!<br/>";
-            }
-
-            foreach($prescriptionList["prescription"] as $prescription){
-                $id = $prescription['prescription_id'];
-                if(!$this->mapPrescriptionToOutgoingDrug($id, $outgoingDrugId)) return false;
-                if(!$this->updatePrescriptionStatus($id, $prescription['status'])) return false;
-            }
-            echo "Updating of statuses of prescriptions successful!<br/>";
-
-        }
-
-        return true;
-    }*/
-
-
     public function clearPrescription($pharmacistId, $data){
         try{
             $this->conn->beginTransaction();
@@ -204,8 +141,8 @@ class PharmacistModel extends BaseModel{
             $this->conn->commit();
         }catch(Exception $e){
             $this->conn->rollBack();
-
-            return $e->getMessage();
+            return false;
+            //return $e->getMessage();
         }
 
 

@@ -34,7 +34,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
 </head>
 
-<body>
+<body class="dashboard">
 <div class="container">
 <div class="row">
 <div id="dashboard">
@@ -62,7 +62,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         </div>
         <div class="col-xs-3 text-center">
             <a href="mails.php" class="dashboard-link">
-                <img src="images/message.gif" width="60" height="60">
+                <img src="images/messages.png" width="60" height="60">
                 <div class="dashboard-desc">Message</div>
             </a>
         </div>
@@ -90,7 +90,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 } else if ($staff[StaffRoleTable::staff_role_id] == PHARMACIST) {
                     ?>
                     <div class="col-xs-3 text-center">
-                        <a href="views/pharmacy.php" class="dashboard-link">
+                        <a href="pharmacy/pharmacy.php" class="dashboard-link">
                             <img src="images/pharmacy-icons.png" width="60">
 
                             <div class="dashboard-desc">Pharmacist</div>
@@ -101,9 +101,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="arrival/arrival.php" class="dashboard-link">
-                            <img src="images/medical_records.png">
+                            <img src="images/arrival.png">
 
-                            <div class="dashboard-desc">Medical Record</div>
+                            <div class="dashboard-desc">Patient Arrival</div>
                         </a>
                     </div>
                 <?php
