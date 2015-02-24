@@ -309,24 +309,290 @@ FROM
       LEFT JOIN haematology h ON (t.treatment_id=h.treatment_id)
       WHERE h.treatment_id=:treatment_id";
 
-    const GET_TEST_BY_REGNO = 'SELECT h.haematology_id, i.surname, i.middlename, i.firstname, ua.regNo, h.status_id, h.userid FROM haematology h
-    LEFT JOIN user_auth ua ON (ua.userid=h.userid)
-    LEFT JOIN identification i ON (i.userid=ua.userid)
-    WHERE h.userid=:userid
+    const GET_TEST_BY_REGNO = 'SELECT h.haematology_id, p.surname, p.middlename, p.firstname, p.regNo, h.status_id, h.treatment_id FROM haematology h
+    LEFT JOIN treatment t ON (t.treatment_id=h.treatment_id)
+    LEFT JOIN patient p (p.patient_id=t.patient_id)
+    WHERE h.treatment_id=:treatment_id
     ORDER BY h.modified_date DESC';
 
-    const GET_TEST_BY_SEARCHQUERY = 'SELECT i.surname, i.middlename, i.firstname, ua.regNo, h.status_id, h.userid, h.modified_date FROM haematology h
-    LEFT JOIN user_auth ua ON (ua.userid=h.userid)
-    LEFT JOIN identification i ON (i.userid=ua.userid)
-    WHERE ua.regNo LIKE "%":search_query"%"
+    const GET_TEST_BY_SEARCHQUERY = 'SELECT p.surname, p.middlename, p.firstname, p.regNo, h.status_id, h.treatment_id, h.modified_date FROM haematology h
+    LEFT JOIN treatment t ON (t.treatment_id=h.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.treatment_id)
+    WHERE p.regNo LIKE "%":search_query"%"
     ORDER BY h.modified_date DESC';
 
-    const PENDING_TEST = 'SELECT h.haematology_id AS test_id, i.surname, i.firstname, i.middlename, h.userid, h.status_id, h.modified_date FROM haematology h
-    LEFT JOIN user_auth ua ON (ua.userid=h.userid)
-    LEFT JOIN identification i ON (i.userid=ua.userid)
+    const PENDING_TEST = 'SELECT h.haematology_id AS testid, p.surname, p.firstname, p.middlename, h.treatment_id, h.status_id, h.modified_date FROM haematology h
+    LEFT JOIN treatment t ON (t.treatment_id=h.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
     WHERE h.status_id=5
     ORDER BY h.modified_date DESC';
 
     const CHANGE_IN_QUEUE = 'SELECT COUNT(modified_date) AS counter FROM haematology WHERE modified_date > :change_time';
     const LAST_MODIFIED_DATE = 'SELECT MAX(modified_date) AS maxim FROM haematology WHERE status_id=5';
+}
+
+class FilmAppearanceSqlStatement {
+
+    const ADD = 'INSERT INTO film_appearance(haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,create_date,modified_date)
+                                        VALUES(:haematology_id,:aniscocytosis,:poikilocytosis,:polychromasia,:macrocytosis,:microcytosis,:hypochromia,:sickle_cells,:target_cells,:spherocytes,:nucleated_rbc,:sickling_test,now(), now())';
+    const DELETE = 'DELETE FROM film_appearance WHERE haematology_id= :haematology_id';
+    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,create_date,modified_date FROM haematology h,film_appearance f WHERE h.haematology_id = f.haematology_id and h.treatment_id = :treatment_id ORDER BY f.create_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT f.haematology_id,f.aniscocytosis,f.poikilocytosis,f.polychromasia,f.macrocytosis,f.microcytosis,f.hypochromia,f.sickle_cells,f.target_cells,f.spherocytes,f.nucleated_rbc,f.sickling_test,f.create_date,f.modified_date, h.haematology_id FROM haematology h, film_appearance f WHERE f.haematology_id=:haematology_id AND h.haematology_id=f.haematology_id LIMIT 1';
+    const UPDATE = 'UPDATE film_appearance SET aniscocytosis = :aniscocytosis,poikilocytosis = :poikilocytosis,polychromasia = :polychromasia,macrocytosis = :macrocytosis,microcytosis = :microcytosis,hypochromia = :hypochromia,sickle_cells =:sickle_cells,target_cells = :target_cells,spherocytes = :spherocytes,nucleated_rbc = :nucleated_rbc,sickling_test = :sickling_test, modified_date = now() WHERE haematology_id IN (SELECT haematology_id FROM haematology WHERE treatment_id = :treatment_id AND haematology_id=:haematology_id)';
+}
+
+class BloodTestSqlStatement {
+
+    const ADD = 'INSERT INTO blood_test(haematology_id,pcv,hb,hchc,wbc,eosinophils,platelets,rectis,rectis_index,e_s_r,microfilaria,malaria_parasites,create_date,modified_date)
+                                        VALUES(:haematology_id,:pcv,:hb,:hchc,:wbc,:eosinophils,:platelets,:rectis,:rectis_index,:e_s_r,:microfilaria,:malaria_parasites,now(), now())';
+    const DELETE = 'DELETE FROM blood_test WHERE haematology_id = :haematology_id';
+    const GET_TEST = 'SELECT h.haematology_id,bt.pcv,bt.hb,bt.hchc,bt.wbc,bt.eosinophils,bt.platelets,bt.rectis,bt.rectis_index,bt.e_s_r,bt.microfilaria,bt.malaria_parasites,bt.create_date,bt.modified_date FROM blood_test bt
+                        LEFT JOIN haematology h ON (h.haematology_id=bt.haematology_id)
+                        WHERE bt.haematology_id=:haematology_id AND h.haematology_id=bt.haematology_id LIMIT 1';
+    const UPDATE = 'UPDATE blood_test SET pcv = :pcv,hb = :hb, hchc = :hchc,wbc = :wbc,eosinophils = :eosinophils,platelets = :platelets,rectis = :rectis ,rectis_index = :rectis_index,e_s_r = :e_s_r,microfilaria = :microfilaria,malaria_parasites = :malaria_parasites, modified_date = now() WHERE haematology_id in (SELECT haematology_id FROM haematology WHERE haematology_id = :haematology_id AND treatment_id=:treatment_id)';
+    const GET    = 'SELECT haematology_id,pcv,hb,hchc,wbc,eosinophils,platelets,rectis,rectis_index,e_s_r,microfilaria,malaria_parasites,create_date,modified_date
+                    FROM blood_test
+                    WHERE haematology_id = :haematology_id
+                    ORDER BY create_date DESC LIMIT 1';
+
+}
+
+class DifferentialCountSqlStatement {
+
+    const ADD = 'INSERT INTO differential_count(haematology_id, polymorphs_neutrophils,lymphocytes,monocytes,eosinophils,basophils,widals_test,blood_group,rhesus_factor,genotype, create_date,modified_date)
+                                        VALUES(:haematology_id, :polymorphs_neutrophils,:lymphocytes,:monocytes,:eosinophils,:basophils,:widals_test,:blood_group,:rhesus_factor,:genotype, now(),now())';
+    const DELETE = 'DELETE FROM differential_count WHERE haematology_id = :haematology_id';
+    const GET    = 'SELECT * FROM haematology h,differential_count f WHERE h.haematology_id = f.haematology_id ORDER BY f.create_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT dc.polymorphs_neutrophils,dc.lymphocytes,dc.monocytes,dc.eosinophils,dc.basophils,dc.widals_test,dc.blood_group,dc.rhesus_factor,dc.genotype, dc.modified_date, h.haematology_id FROM haematology h, differential_count dc WHERE dc.haematology_id=:haematology_id AND h.haematology_id=dc.haematology_id LIMIT 1';
+    const UPDATE = 'UPDATE differential_count SET polymorphs_neutrophils = :polymorphs_neutrophils,lymphocytes = :lymphocytes,monocytes = :monocytes,eosinophils = :eosinophils,basophils = :basophils,widals_test = :widals_test,blood_group = :blood_group,rhesus_factor = :rhesus_factor,genotype = :genotype, modified_date = now() WHERE haematology_id IN (SELECT haematology_id FROM haematology WHERE userid = :userid AND haematology_id=:haematology_id)';
+
+}
+
+class UrineSqlStatement {
+
+    const ADD = 'INSERT INTO urine(treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date)
+                                        VALUES(:treatment_id, :lab_attendant_id, :clinical_diagnosis_details,:investigation_required,:doctor_id,:laboratory_report,:laboratory_ref,:culture_value, now(), now())';
+    const DELETE = 'DELETE FROM urine WHERE userid = :userid';
+    const GET = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date FROM urine WHERE userid = :userid ORDER BY create_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date FROM urine WHERE urine_id=:urine_id LIMIT 1';
+    const GET_HISTORY = 'SELECT p.patient_id, p.regNo, u.urine_id AS testid, u.clinical_diagnosis_details AS diagnosis, u.create_date
+        FROM urine u
+        LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
+        LEFT JOIN patient p ON (p.patient_id=t.treatment_id)
+        WHERE u.treatment_id= :treatment_id
+        ORDER BY u.modified_date DESC';
+
+    const UPDATE = 'UPDATE urine SET clinical_diagnosis_details = :clinical_diagnosis_details ,
+    investigation_required = :investigation_required,laboratory_report = :laboratory_report,
+    laboratory_ref = :laboratory_ref,culture_value =:culture_value,
+    modified_date = NOW(), status_id =:status_id
+    WHERE treatment_id = :treatment_id AND urine_id=:urine_id';
+    const GET_URINE_ID = 'SELECT urine_id from urine where treatment_id = :treatment_id';
+    const GET_TEST_BY_REG_NUM = 'SELECT p.surname, p.middlename, p.firstname, p.regNo FROM urine u
+LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
+LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+WHERE (u.status_id=1) AND (p.regNo=:regNo)
+ORDER BY u.modified_date DESC';
+
+    const GET_ALL_TEST = 'SELECT u.urine_id, p.surname, p.middlename, p.firstname, p.regNo, u.status_id, u.treatment_id, u.modified_date FROM urine u
+    LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+    ORDER BY u.modified_date DESC';
+
+    const GET_TEST_BY_REGNO = 'SELECT p.surname, p.middlename, p.firstname, p.regNo, u.status_id, u.treatment_id FROM urine u
+    LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+    WHERE u.treatment_id=:treatment_id
+    ORDER BY u.modified_date DESC';
+
+    const GET_TEST_BY_SEARCHQUERY= 'SELECT p.surname, p.middlename, p.firstname, p.regNo, u.status_id, u.treatment_id, u.modified_date FROM urine u
+    LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+    WHERE p.regNo = LIKE "%":search_query"%"
+    ORDER BY u.modified_date DESC';
+
+    const PENDING_TEST = 'SELECT u.urine_id AS test_id, p.surname, p.firstname, p.middlename, u.treatment_id, u.status_id, u.modified_date FROM urine u
+    LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
+    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+    WHERE u.status_id=5
+    ORDER BY u.modified_date DESC';
+    const CHANGE_IN_QUEUE = 'SELECT COUNT(modified_date) AS counter FROM urine WHERE modified_date > :change_time';
+    const LAST_MODIFIED_DATE = 'SELECT MAX(modified_date) AS maxim FROM urine WHERE status_id=5';
+
+}
+
+class UrinalysisSqlStatement {
+
+    const ADD    = 'INSERT INTO urinalysis(urine_id,appearance,ph,glucose,protein,bilirubin ,urobillinogen, create_date, modified_date) VALUES(:urine_id, :appearance,:ph,:glucose,:protein,:bilirubin ,:urobillinogen, now(), now())';
+    const DELETE = 'DELETE FROM urinalysis WHERE treatment_id = :treatment_id';
+    const GET    = 'SELECT * FROM urine u,urinalysis ur WHERE u.urine_id = ur.urine_id and treatment_id = :treatment_id ORDER BY ur.create_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT ur.*, u.urine_id FROM urine u, urinalysis ur WHERE ur.urine_id=:urine_id AND u.urine_id=ur.urine_id LIMIT 1';
+    const UPDATE = 'UPDATE urinalysis SET appearance = :appearance ,ph = :ph,glucose = :glucose,protein = :protein,bilirubin = :bilirubin ,urobillinogen = :urobillinogen, modified_date = now() WHERE urine_id IN (SELECT urine_id from urine where treatment_id = :treatment_id AND urine_id=:urine_id)';
+
+}
+
+class UrineSensitivitySqlStatement {
+
+    const ADD    = 'INSERT INTO urine_sensitivity(urine_id,isolates,isolates_degree, create_date, modified_date) VALUES(:urine_id,:isolates,:isolates_degree, now(), now())';
+    const GET    = 'SELECT ur.urine_sensitivity_id, ur.urine_id, ur.isolates, ur.isolates_degree,ur.create_date,ur.modified_date
+                        FROM urine u,urine_sensitivity ur
+                        WHERE u.urine_id = ur.urine_id AND u.treatment_id= :treatment_id
+                        ORDER BY ur.create_date';
+    const GET_TEST = 'SELECT us.isolates, us.isolates_degree, us.modified_date, u.urine_id
+                        FROM urine u, urine_sensitivity us
+                        WHERE us.urine_id=:urine_id AND u.urine_id=us.urine_id LIMIT 1';
+    // const UPDATE = 'UPDATE urine_sensitivity SET isolates = :isolates,isolates_degree = :isolates_degree, modified_date = now() WHERE urine_id IN (SELECT urine_id from urine where userid = :userid)';
+    const UPDATE = 'UPDATE urine_sensitivity SET isolates_degree = :isolates_degree, modified_date = NOW() WHERE isolates = :isolates AND urine_id IN (SELECT urine_id FROM urine WHERE userid = :userid AND urine_id=:urine_id)';
+    const GET_URINE_ID = 'SELECT urine_id FROM urine WHERE treatment_id = :treatment_id';
+
+}
+
+class UrineSensitivityRefSqlStatement {
+
+    const GET = 'SELECT * FROM urine_sensitivity_ref';
+
+}
+
+class MicroscopySqlStatement {
+
+    const ADD = 'INSERT INTO microscopy(urine_id,pus_cells,red_cells,epithelial_cells,casts,crystals,others, create_date, modified_date)
+                                        VALUES(:urine_id,:pus_cells,:red_cells,:epithelial_cells,:casts,:crystals,:others, now(), now())';
+    const DELETE = 'DELETE FROM microscopy WHERE urine_id = :urine_id';
+    const GET    = 'SELECT m.urine_id,m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.create_date, m.modified_date
+                        FROM urine u,microscopy m
+                        WHERE u.urine_id = m.urine_id AND u.treatment_id = :treatment_id
+                        ORDER BY m.modified_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.modified_date, u.urine_id FROM urine u, microscopy m
+                            WHERE m.urine_id=:urine_id AND u.urine_id=m.urine_id LIMIT 1';
+    const UPDATE = 'UPDATE microscopy SET pus_cells = :pus_cells,red_cells = :red_cells,epithelial_cells = :epithelial_cells,casts = :casts,crystals = :crystals,others = :others, modified_date = now() WHERE urine_id IN (SELECT urine_id from urine where treatment_id= :treatment_id AND urine_id=:urine_id)';
+
+}
+
+class ChemicalPathologyRequestSqlStatement {
+    const ADD    = 'INSERT INTO chemical_pathology_request(treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis,created_date,modified_date,doctor_id,lab_attendant_id) VALUES(:treatment_id, :laboratory_ref, :laboratory_comment, :clinical_diagnosis,now(),now(),:doctor_id,:lab_attendant_id)';
+    const DELETE = 'DELETE FROM chemical_pathology_request where cpreg_id = :cpreg_id';
+    const GET    = 'SELECT treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis,modified_date,doctor_id,lab_attendant_id
+                        FROM chemical_pathology_request WHERE cpreg_id = :cpreg_id';
+    const GET_TEST = 'SELECT treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis,modified_date,doctor_id,lab_attendant_id FROM chemical_pathology_request WHERE cpreq_id = :cpreq_id LIMIT 1';
+
+    const GET_CHEMICAL_PATH_REQ_ID = 'SELECT preq_id from parasitology_reg where preq_id = :preq_id ';
+
+    const UPDATE = 'UPDATE chemical_pathology_request
+        SET laboratory_comment = :laboratory_comment, laboratory_ref = :laboratory_ref, status_id=:status_id, modified_date = NOW()
+        WHERE patient_id=:patient_id AND cpreq_id=:cpreq_id';
+
+    const GET_ALL_TEST = 'SELECT p.surname, p.middlename, p.firstname, p.regNo, cpr.status_id, cpr.treatment_id AS testid, cpr.modified_date, cpr.cpreq_id
+                            FROM chemical_pathology_request cpr
+                            LEFT JOIN treatment t ON (t.treatment_id=cpr.treatment_id)
+                            LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+                            ORDER BY cpr.modified_date DESC';
+
+    const GET_TEST_BY_REGNO = 'SELECT p.surname, p.middlename, p.firstname, p.regNo, cpr.status_id, cpr.treatment_id AS testid, cpr.modified_date
+                                    FROM chemical_pathology_request cpr
+                                    LEFT JOIN treatment t ON (t.treatment_id=cpr.treatment_id)
+                                    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+                                    WHERE cpr.treatment_id=:treatment_id
+                                    ORDER BY cpr.modified_date DESC';
+
+    const GET_TEST_BY_SEARCHQUERY = 'SELECT p.surname, p.middlename, p.firstname, p.regNo, cpr.status_id, cpr.treatment_id AS testid, cpr.modified_date
+	FROM chemical_pathology_request cpr
+	LEFT JOIN treatment t ON (t.treatment_id=cpr.treatment_id)
+	LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+	WHERE p.regNo LIKE "%":search_query"%"
+	ORDER BY cpr.modified_date DESC';
+
+    const PENDING_TEST = 'SELECT  cpr.cpreq_id AS test_id, i.surname, i.firstname, i.middlename, ua.regNo, cpr.status_id, cpr.patient_id AS userid FROM chemical_pathology_request cpr
+    LEFT JOIN user_auth ua ON (ua.userid=cpr.patient_id)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE cpr.status_id=5
+    ORDER BY cpr.modified_date DESC';
+
+    const GET_HISTORY = 'SELECT user_auth.userid AS userid
+    , user_auth.regNo AS regNo
+    , chemical_pathology_request.cpreq_id AS testid
+    , chemical_pathology_request.clinical_diagnosis AS diagnosis
+        , chemical_pathology_request.created_date AS `date`
+        FROM
+            user_auth
+            INNER JOIN chemical_pathology_request
+                ON (user_auth.userid = chemical_pathology_request.patient_id)
+            WHERE chemical_pathology_request.patient_id = :userid
+        ORDER BY chemical_pathology_request.modified_date DESC;
+    ';
+    const CHANGE_IN_QUEUE = 'SELECT COUNT(modified_date) AS counter FROM chemical_pathology_request WHERE modified_date > :change_time';
+    const LAST_MODIFIED_DATE = 'SELECT MAX(modified_date) AS maxim FROM chemical_pathology_request WHERE status_id=5';
+}
+
+
+class ParasitologyRefSqlStatement {
+    const ADD    = 'INSERT INTO parasitology_ref(pref_id, parasite_name, parasite_type, activ_fg) VALUES(:pref_id, :parasite_name, :parasite_type, :activ_fg)';
+    const DELETE = 'DELETE FROM parasitology_ref where pref_id = :pref_id';
+    const GET    = 'SELECT * FROM parasitology_ref where pref_id = :pref_id';
+}
+
+class ParasitologyRequestSqlStatement {
+    const ADD    = 'INSERT INTO parasitology_req(user_id, treatment_id, nature_of_specimen, investigation_req, diagnosis, date_reported, created_date, modified_date, doctor_id, lab_attendant_id) VALUES(:user_id, :treatment_id, :nature_of_specimen, :investigation_req, :diagnosis, now(), now(), now(),:doctor_id,:lab_attendant_id)';
+    const DELETE = 'DELETE FROM parasitology_req where preg_id = :preg_id';
+    const GET    = 'SELECT * FROM parasitology_req where preq_id = :preq_id';
+    const UPDATE = 'UPDATE parasitology_req
+                    SET
+                    nature_of_specimen = :nature_of_specimen,
+                    investigation_req = :investigation_req,
+                    lab_num = :lab_num,
+                    lab_comment = :lab_comment,
+                    status_id =:status_id,
+                    modified_date = NOW()
+                    WHERE preq_id = :preq_id ;
+';
+    const GET_PARASITOLOGY_REQ_ID = 'SELECT preq_id from parasitology_req where preq_id = :preq_id ';
+
+    const GET_ALL_TEST = 'SELECT pr.preq_id, i.surname, i.middlename, i.firstname, u.regNo, pr.status_id, pr.user_id AS userid, pr.modified_date FROM parasitology_req pr
+    LEFT JOIN user_auth u ON (pr.user_id=u.userid)
+    LEFT JOIN identification i ON (i.userid=u.userid)
+    ORDER BY pr.modified_date DESC';
+
+    const GET_BY_REGNO = 'SELECT i.surname, i.middlename, i.firstname, ua.regNo, pr.status_id, pr.user_id FROM parasitology_req pr
+    LEFT JOIN user_auth ua ON (ua.userid=pr.user_id)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE pr.user_id=:userid
+    ORDER BY pr.modified_date DESC';
+
+    const PENDING_TEST = 'SELECT pr.preq_id AS test_id, i.surname, i.firstname, i.middlename, ua.regNo, pr.status_id, pr.user_id AS userid, pr.modified_date FROM parasitology_req pr
+    LEFT JOIN user_auth ua ON (ua.userid=pr.user_id)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE pr.status_id=5
+    ORDER BY pr.modified_date DESC';
+
+    const GET_TEST_BY_SEARCHQUERY = 'SELECT i.surname, i.middlename, i.firstname, ua.regNo, pr.status_id, pr.user_id AS userid, pr.modified_date FROM parasitology_req pr
+    LEFT JOIN user_auth ua ON (ua.userid=pr.user_id)
+    LEFT JOIN identification i ON (i.userid=ua.userid)
+    WHERE ua.regNo LIKE "%":search_query"%"
+    ORDER BY pr.modified_date DESC';
+    const GET_HISTORY = 'SELECT user_auth.userid AS userid
+    , user_auth.regNo AS regNo
+    , parasitology_req.preq_id AS testid
+    , parasitology_req.diagnosis AS diagnosis
+        , parasitology_req.created_date AS `date`
+        FROM
+            user_auth
+            INNER JOIN parasitology_req
+                ON (user_auth.userid = parasitology_req.user_id)
+            WHERE parasitology_req.user_id = :userid
+        ORDER BY parasitology_req.modified_date DESC;
+    ';
+    const CHANGE_IN_QUEUE = 'SELECT COUNT(modified_date) AS counter FROM parasitology_req WHERE modified_date > :change_time';
+    const LAST_MODIFIED_DATE = 'SELECT MAX(modified_date) AS maxim FROM parasitology_req WHERE status_id=5';
+
+}
+
+class ParasitologyDetailsSqlStatement {
+    const ADD    = 'INSERT INTO parasitology_details(preq_id, pref_id, created_date, modified_date) VALUES(:preq_id, :pref_id, now(), now())';
+    const DELETE = 'DELETE FROM parasitology_details where preq_id = :preq_id and pref_id = :pref_id';
+    const GET    = 'SELECT * FROM parasitology_details where preq_id = :preq_id';
+    const UPDATE = 'UPDATE parasitology_details
+                    SET
+                    modified_date = NOW()
+                    WHERE preq_id = :preq_id AND  pref_id = :pref_id';
+    const RECORD_CHECK = 'SELECT COUNT(*) as num  FROM parasitology_details
+                    WHERE preq_id = :preq_id AND  pref_id = :pref_id';
 }
