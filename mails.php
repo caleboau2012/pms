@@ -95,7 +95,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                                 <h4 class="pull-left">Inbox</h4>
                                 <span class="pull-right">
                                     <span class="start_index"></span>
-                                    <span class="fa fa-minus"></span>
+                                    <span> &ndash; </span>
                                     <span class="end_index"></span>
                                     <span> of </span>
                                     <span class="total"></span>
@@ -135,7 +135,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                                 <h4 class="pull-left">Inbox</h4>
                                 <span class="pull-right">
                                     <span class="start_index"></span>
-                                    <span class="fa fa-minus"></span>
+                                    <span> &ndash; </span>
                                     <span class="end_index"></span>
                                     <span> of </span>
                                     <span class="total"></span>
