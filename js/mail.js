@@ -1,3 +1,29 @@
+/*BEGIN---jQuery code snippets to set cursor position in textarea field---BEGIN*/
+jQuery.fn.setSelection = function(selectionStart, selectionEnd) {
+    if(this.lengh == 0) return this;
+    input = this[0];
+ 
+    if (input.createTextRange) {
+        var range = input.createTextRange();
+        range.collapse(true);
+        range.moveEnd('character', selectionEnd);
+        range.moveStart('character', selectionStart);
+        range.select();
+    } else if (input.setSelectionRange) {
+        input.focus();
+        input.setSelectionRange(selectionStart, selectionEnd);
+    }
+ 
+    return this;
+}
+
+jQuery.fn.setCursorPosition = function(position){
+    if(this.length == 0) return this;
+    return $(this).setSelection(position, position);
+};
+
+/*END----jQuery code snippets to set cursor position in textarea field----END*/
+
 var Mail = {};
 
 Mail.CONSTANTS = {
@@ -18,6 +44,12 @@ Mail.CONSTANTS = {
         INFO : 1,
         WARNING : 2,
         DANGER : 3,
+    },
+
+    ACTION : {
+        COMPOSE : 'compose',
+        FORWARD : 'forward',
+        REPLY : 'reply'
     }
 };
 
@@ -27,9 +59,19 @@ Mail.resource = {
     },
     current_page : 1,
     unread_count : 0,
+    send_mail_action : 'compose',
 
     getCurrentPage: function(){
         return Mail.resource.current_page;
+    },
+
+    nl2br : function(string){
+        var breakTag = '<br />';
+        return (string + '').replace(/([^>\r\n]?)(\r\n|\n\r|\r|\n)/g, '$1' + breakTag + '$2');
+    },
+
+    setUsername : function(username) {
+        Mail.resource.username = username;
     }
 }
 
@@ -39,6 +81,8 @@ Mail.Template = {
         var msg_status = get_status.msg_status;
         var msg_status_indicator = get_status.msg_status_indicator;
 
+        var display_date = Mail.Template.formatDate(msg.created_date);
+
         subject = (typeof msg.msg_subject == 'undefined' || msg.msg_subject == "") ? "(no subject)" : msg.msg_subject;
         var html = "<tr id='msg-" + msg.msg_id + "' class= '" + msg_status + "'>\
             <td class='msg-name truncate'>" + msg.name + "</td>\
@@ -46,17 +90,26 @@ Mail.Template = {
             <td class='msg-message truncate'>\
                 " + subject + ' - ' + msg.msg_body + "\
             </td>\
-            <td class='msg_date truncate'>" + msg.created_date + "</td>\
+            <td class='msg_date'><span class='pull-right'>" + display_date + "</span></td>\
         </tr>";
 
         return html;
     },
 
     viewMessage : function(msg){
+        var msg_actions = "";
         var msg_status_indicator = "";
         if (msg.msg_type == Mail.CONSTANTS.MSG_TYPE.INBOX_MESSAGE) {
-            msg_status_indicator = "<span class='fa fa-circle-o fa-1x msg-status-indicator msg-read' title='Mark as Unread' data='" + msg.msg_id + "'></span>";
-        };
+            msg_status_indicator = "<span class='fa fa-circle-o fa-1x msg-action msg-status-indicator msg-read' title='Mark as Unread' data='" + msg.msg_id + "'></span>";
+            msg_reply_action = "<span class='fa fa-reply fa-1x msg-action msg-action-reply' title='Reply' data=' " + JSON.stringify(msg) + "'></span>";
+            msg_forward_action = "<span class='fa fa-share fa-1x msg-action msg-action-forward' title='Forward' data=' " + JSON.stringify(msg) + "'></span>";
+            msg_actions = msg_status_indicator + msg_reply_action + msg_forward_action;
+        } else if (msg.msg_type == Mail.CONSTANTS.MSG_TYPE.SENT_MESSAGE) {
+            msg_forward_action = "<span class='fa fa-share fa-1x msg-action msg-action-forward' title='Forward' data=' " + JSON.stringify(msg) + "'></span>";
+            msg_actions = msg_forward_action;
+        }
+
+        /*console.log(msg);*/
 
         var participant_id = (typeof msg.sender_id == 'undefined') ? msg.recipient_id : msg.sender_id;
         var participant_name = toTitleCase((typeof msg.sender_name == 'undefined') ? msg.recipient_name : msg.sender_name);
@@ -72,16 +125,18 @@ Mail.Template = {
         
         var subject = (typeof msg.msg_subject == 'undefined' || msg.msg_subject == "") ? "(no subject)" : msg.msg_subject;
 
+        var display_date = Mail.Template.formatDate(msg.created_date);
+
         html = "<div class='panel panel-info message-panel' id='" + msg.msg_id + "'>\
                     <div class='panel-heading'>\
-                        <h3 class='panel-title'>" + msg_status_indicator + subject + "</h3>\
+                        <h3 class='panel-title'>" + msg_actions + subject + "</h3>\
                     </div>\
                     <div class='panel-body'>\
                         <h4 class='msg-participant' id='" + participant_id + "'>"
                             + preposition + "&nbsp; " +  participant_name + "\
-                            <small> " + msg.created_date + "</small>\
+                            <small> " + display_date + "</small>\
                         </h4>\
-                        <p class='msg-body'>" + msg.msg_body + "</p>\
+                        <p class='msg-body'>" + Mail.resource.nl2br(msg.msg_body) + "</p>\
                     </div>\
                 </div>";
         return html;
@@ -146,20 +201,82 @@ Mail.Template = {
                     </div>';
 
         return html;
+    },
+
+    replySuffix : function(msg_data) {
+        var date_obj = new Date(msg_data.created_date);
+        var date = date_obj.toDateString();
+        var time = date_obj.toLocaleTimeString();
+        var text = "On " + date + " at " + time + ", " + msg_data.sender_name + " wrote: " + "\n";
+
+        return text;
+    },
+
+    forwardSuffix : function(msg_data) {
+        var from, to;
+        var date_obj = new Date(msg_data.created_date);
+        var date = date_obj.toDateString();
+        var time = date_obj.toLocaleTimeString();
+        if (msg_data.msg_type == Mail.CONSTANTS.MSG_TYPE.INBOX_MESSAGE) {
+            from = msg_data.sender_name;
+            to = Mail.resource.username;
+        } else if (msg_data.msg_type == Mail.CONSTANTS.MSG_TYPE.SENT_MESSAGE) {
+            from = Mail.resource.username;
+            to = msg_data.recipient_name;
+        }
+
+        var text = "\n---------- Forwarded message ----------\nFrom: " + from + "\nDate: " + date + " at " + time + "\nSubject: " + msg_data.msg_subject + "\nTo: " + to + "\n\n" + msg_data.msg_body + "\n-------------------------------------------------------------------------------";
+
+        return text;
+    },
+
+    formatDate : function(date_string) {
+        var date_obj = new Date(date_string);
+        
+        var now_date_obj = new Date();
+        var now_date = now_date_obj.getDate();
+        var now_month = now_date_obj.getMonth();
+        var now_year = now_date_obj.getFullYear();
+        
+        if (date_obj.getFullYear() == now_year) {
+            if (date_obj.getMonth() == now_month && date_obj.getDate() == now_date) {
+                var split_arr = date_obj.toLocaleTimeString().split(" ")
+                return split_arr[0].substr(0, split_arr[0].lastIndexOf(":")) + " " +split_arr[1];
+            } else {
+                return date_obj.toDateString().split(" " + date_obj.getFullYear())[0].substr(4);
+            }
+        } else {
+            return date_obj.toDateString().split(" " + date_obj.toTimeString())[0].substr(4);
+        }
+        if (date_obj.getDate() == now_date && date_obj.getMonth() == now_month && date_obj.getFullYear() == now_year) {
+            return date_obj.toDateString().split(" " + b.toTimeString())[0];
+        } 
     }
 }
 
-Mail.serverReq = function(url, param, callback) {
-    $.getJSON(url, param, function(data){
-        if (typeof callback == 'function') {
-            callback(data);
-        };
-    }).done(function(){
-        window.dispatchEvent(new Event('ServerRequestComplete'));
-    });
+Mail.serverReq = function(url, param, callback, request_type) {
+    if (request_type == 'POST') {
+        /*console.log("Request..." + request_type);*/
+        $.post(url, param, function(data){
+            if (typeof callback == 'function') {
+                callback(JSON.parse(data));
+            };
+        }).done(function(){
+            window.dispatchEvent(new Event('PostComplete!'));
+        })
+    } else {
+        $.getJSON(url, param, function(data){
+            if (typeof callback == 'function') {
+                callback(data);
+            };
+        }).done(function(){
+            window.dispatchEvent(new Event('ServerRequestComplete'));
+        });        
+    }
 }
 
 Mail.sendMail = function() {
+    var action = $("input[name='send_mail_action']").val();
     var message_modal = $(".message-modal-body");
 
     var recipient_field = $("input[name='recipient']");
@@ -188,15 +305,49 @@ Mail.sendMail = function() {
         if (data.status == 1) {
             Mail.dismissModal();
             /*console.log("send message success...");*/
-            Mail.loadMessages(null, function(loadMessageData){
-                /*console.log("Load message complete!");*/
+            if (typeof action == 'undefined' || action == Mail.CONSTANTS.ACTION.COMPOSE) {
+                Mail.loadMessages(null, function(loadMessageData){
+                    /*console.log("Load message complete!");*/
+                    Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.SUCCESS);
+                    /*console.log("alert displayed..." + data.message);*/
+                });                
+            } else {
                 Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.SUCCESS);
-                /*console.log("alert displayed..." + data.message);*/
-            });
+            }
         } else {
             Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.DANGER, message_modal);
         }
-    })
+    }, 'POST');
+}
+
+Mail.replyMail = function(msg_data) {
+    /*console.log("Replying...");*/
+    var recipient_id = msg_data.sender_id;
+    var recipient_name = msg_data.sender_name;
+    var recipient_field = $("input[name='recipient']");
+
+    recipient_field.val(recipient_name);
+    recipient_field.attr("id", recipient_id);
+    recipient_field.attr("disabled", "disabled");
+
+    var subject = "Re: " + msg_data.msg_subject;
+    $("input[name='subject']").val(subject);
+
+    Mail.resource.send_mail_action = Mail.CONSTANTS.ACTION.REPLY;
+    Mail.displayModal();
+}
+
+Mail.forwardMail = function(msg_data) {
+    /*console.log("Forwarding...");*/
+
+    var subject = "Fwd: " + msg_data.msg_subject;
+    $("input[name='subject']").val(subject);
+
+    var msg_container = $("textarea.msg-body");
+    msg_container.val(Mail.Template.forwardSuffix(msg_data));
+
+    Mail.resource.send_mail_action = Mail.CONSTANTS.ACTION.FORWARD;
+    Mail.displayModal();
 }
 
 Mail.getMessage = function(msg_id) {
@@ -413,13 +564,23 @@ Mail.regDOM = function(){
             return;
         } else {
             var msg_id = $(this).attr("id").split("-")[1];
-
             Mail.getMessage(msg_id);
         }
     });
 
     $(".back-button").unbind('click').bind('click', function(event){
         Mail.removeMessagePane();
+    })
+    
+    $('.msg-action').unbind('click').bind('click', function(event){
+        var clicked = $(this);
+        if (clicked.hasClass("msg-action-reply")) {
+            Mail.replyMail(JSON.parse(clicked.attr("data")));
+        } else if (clicked.hasClass("msg-action-forward")) {
+            Mail.forwardMail(JSON.parse(clicked.attr("data")));
+        } else {
+            return;
+        }
     })
 
     $(".msg-status-indicator").unbind('click').bind('click', function(event){
@@ -435,6 +596,17 @@ Mail.regDOM = function(){
             return;
         }
     })
+
+
+    /*$(".msg-action-reply").unbind('click').bind('click', function(event){
+        var msg_data = $(this).attr("data");
+        Mail.replyMail(msg_data);
+    })
+
+    $(".msg-action-forward").unbind('click').bind('click', function(event) {
+        var msg_data = $(this).attr("data");
+        Mail.forwardMail(msg_data);
+    })*/
 }
 
 Mail.alertMessage = function(message, alert_type, display_pane) {
@@ -447,20 +619,25 @@ Mail.alertMessage = function(message, alert_type, display_pane) {
     display_pane.prepend(Mail.Template.alertMessage(message, alert_type));
 }
 
+Mail.dismissAlerts = function(){
+    $("div.alert").remove();
+}
+
+Mail.displayModal = function() {
+    var modal = $("#myModal");
+    modal.modal('show');
+}
+
 Mail.dismissModal = function(){
     Mail.clearModal();
     $(".modal-backdrop").trigger('click');
 }
 
-Mail.dismissAlerts = function(){
-    $("div.alert").remove();
-}
-
 Mail.clearModal = function() {
     $("input[name='recipient']").removeAttr("id");
+    $("input[name='recipient']").removeAttr("disabled");
     $("input[name='recipient']").val("");
     $("input[name='subject']").val("");
     $("textarea[name='body']").val("");
-
     /*console.log("clear modal complete!");*/
 }

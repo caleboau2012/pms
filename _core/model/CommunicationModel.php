@@ -83,7 +83,10 @@ class CommunicationModel extends BaseModel {
 
         $result = $this->conn->fetch($stmt, $data);
         $result[MSG_TYPE] = $msg_type;
-        $result[CommunicationTable::msg_body] = $this->getMessageBody($msg_id);
+        $body = $this->getMessageBody($msg_id);
+        if ($body) {
+            $result[CommunicationTable::msg_body] = $body;
+        }
 
         if ($msg_type == INBOX_MESSAGE) {
             $this->markAsRead($userid, $msg_id);

@@ -153,9 +153,10 @@ if ($intent == 'getInbox') {
     }
 } elseif ($intent == 'searchContact') {
     if (isset($_REQUEST['term'])) {
+        $userid = CxSessionHandler::getItem(UserAuthTable::userid);
         $name = $_REQUEST["term"];
         $controller = new UserController();
-        $response = $controller->searchByName($name);
+        $response = $controller->searchByName($userid, $name);
         if (is_array($response)) {
             $autocomplete_array = array();
             foreach ($response as $row) {

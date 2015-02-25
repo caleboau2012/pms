@@ -472,8 +472,13 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     text-overflow: ellipsis;
 }
 
-.msg-status-indicator {
+
+.msg-action {
     margin-right: 1%;
+    cursor: pointer;
+}
+
+.msg-status-indicator {
     cursor: default;
 }
 

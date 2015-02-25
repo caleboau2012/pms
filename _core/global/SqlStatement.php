@@ -73,9 +73,10 @@ class ProfileSqlStatement {
 
         const SEARCH_BY_NAME = "SELECT userid, CONCAT_WS(' ' , surname, firstname, middlename) AS name
             FROM profile
-            WHERE surname LIKE  :name
+            WHERE (surname LIKE  :name
             OR middlename LIKE  :name
-            OR firstname LIKE  :name
+            OR firstname LIKE  :name)
+            AND userid != :userid
             LIMIT 0 , 30";
 
         const BUILD_CONTACT_LIST = "SELECT userid, surname, firstname, middlename FROM profile";

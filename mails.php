@@ -5,6 +5,8 @@ Crave::requireAll(UTIL);
 
 if(!CxSessionHandler::getItem(UserAuthTable::userid)){
     header("Location: index.php");
+} else {
+    $name = CxSessionHandler::getItem(ProfileTable::surname) . " " . CxSessionHandler::getItem(ProfileTable::middlename) . " " . CxSessionHandler::getItem(ProfileTable::firstname);
 }
 
 ?>
@@ -171,6 +173,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                     </div>
                     <div class="modal-body message-modal-body">
                         <form method="post">
+                            <input name="send_mail_action" type="text" value="compose" hidden>
                             <div class="form-group ui-front">
                                 <input type="text" class="form-control" name="recipient" placeholder="Recipient">
                             </div>
@@ -208,6 +211,8 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 <script type="text/javascript">
     (function($) {
         Mail.loadMessages();
+
+        Mail.resource.setUsername("<?php echo $name; ?>");
 
         $("a[data-toggle='tab']").on('shown.bs.tab', function(event){
             Mail.removeMessagePane();
@@ -253,9 +258,19 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
             select : function(event, ui) {
                 $(this).attr("id", "user-" + ui.item.userid);
                 $(this).val(ui.item.value);
+                $(this).parent().removeClass("has-error");
+                $(this).parent().addClass("has-success");
                 return false;
             }
         });
+
+        $("input[name='recipient']").on('keydown', function(key){
+            if (key.which == 8 || key.which == 46) {
+                $(this).removeAttr("id");
+                $(this).parent().removeClass("has-success");
+                $(this).parent().addClass("has-error");
+            };
+        })
 
         $("input.send-mail").unbind('click').bind('click', function(event){
             event.preventDefault();
@@ -264,6 +279,21 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 
         $(".new-message-modal").on('hidden.bs.modal', function () {
             Mail.clearModal();
+        })
+
+        $("textarea.msg-body").on('focus', function(){
+            $("textarea.msg-body").setCursorPosition(1)
+        });
+
+        $("#myModal").on('shown.bs.modal', function(){
+            $("input[name='recipient']").parent().removeClass("has-error");
+            $("input[name='recipient']").parent().removeClass("has-success");
+            $("input[name='send_mail_action']").val(Mail.resource.send_mail_action);
+            console.log("Changing action to..." + Mail.resource.send_mail_action);
+        })
+
+        $("#myModal").on('hidden.bs.modal', function(){
+            Mail.resource.send_mail_action = Mail.CONSTANTS.ACTION.COMPOSE;
         })
     })(jQuery);
 </script>
