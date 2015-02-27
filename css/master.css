@@ -528,15 +528,22 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 /* END -------------------MESSAGE PAGE STYLES ------------------- END*/
 
 /* Search bar at top of patient */
-.navbar-form .form-control {
+.patient-arrival .form-control{
     display: block;
     width: 40%;
     margin: 0 auto;
     vertical-align: middle;
 }
 
+.treatment .form-control{
+    display: block;
+    width: 50%;
+    margin: 0 auto;
+    vertical-align: middle;
+}
+
 @media (max-width: 1024px) {
-    .navbar-form .form-control {
+    .patient-arrival .form-control {
         display: block;
         width: 70%;
         vertical-align: middle;

@@ -29,24 +29,6 @@
 <body>
 
 <div class="container">
-
-    <!--    <form class="form-signin" id="login">-->
-    <!--        <h2 class="form-signin-heading text-center text-muted">PMS Signin</h2>-->
-    <!--        <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>-->
-    <!--        <div class=" center-block alert alert-danger hidden" id="form-error"></div>-->
-    <!--        <label for="inputEmail" class="sr-only">Email address</label>-->
-    <!--        <input type="hidden" name="intent" value="login">-->
-    <!--        <input type="text" id="inputUsername" class="form-control" placeholder="Username" required autofocus name="regNo">-->
-    <!--        <label for="inputPassword" class="sr-only">Password</label>-->
-    <!--        <input type="password" id="inputPassword" class="form-control" placeholder="Password" required name="passcode">-->
-    <!--        <div class="checkbox text-muted text-right">-->
-    <!--            <label>-->
-    <!--                <input type="checkbox" value="remember-me"> Remember me-->
-    <!--            </label>-->
-    <!--        </div>-->
-    <!--        <button class="btn btn-sm btn-primary btn-block" type="submit">Sign in</button>-->
-    <!--        </form>-->
-    <!--<br/>-->
     <form class="" id="login">
         <div class="panel panel-primary form-signin">
             <div class="panel-heading">
