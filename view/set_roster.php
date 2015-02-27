@@ -38,7 +38,7 @@ $list_of_staff = $userController->getAllUsers();
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../dashboard.php">Patient Management System</a>
+            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <div class="dropdown navbar-right navbar-right-text pointer">
@@ -49,7 +49,7 @@ $list_of_staff = $userController->getAllUsers();
                     <span class="caret"></span>
                  </span>
                 <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                    <li role="presentation"><a href="../dashboard.php">Dashboard</a></li>
+                    <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
                     <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                 </ul>
             </div>

@@ -46,7 +46,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../dashboard.php">Patient Management System</a>
+            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right nav-pills">
@@ -367,7 +367,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
-<script src="../js/bootstrap/masonry.js"></script>
-<script src="../js/arrival/arrival.js"></script>
+<script src="../js/libs/masonry.js"></script>
+<script src="../js/arrival.js"></script>
 </body>
 </html>

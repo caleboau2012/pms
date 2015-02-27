@@ -55,7 +55,7 @@ Mail.CONSTANTS = {
 
 Mail.resource = {
     URL : {
-        communication : "phase/phase_communication.php"
+        communication : host + "phase/phase_communication.php"
     },
     current_page : 1,
     unread_count : 0,

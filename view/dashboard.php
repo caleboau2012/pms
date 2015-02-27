@@ -1,5 +1,5 @@
 <?php
-require_once '_core/global/_require.php';
+require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
@@ -21,10 +21,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
     <title>PMS</title>
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/master.css" rel="stylesheet">
+    <link href="../css/master.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -39,7 +39,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div class="row">
 <div id="dashboard">
 <div class="pull-right">
-    <img src="images/profile.png">
+    <img src="../images/profile.png">
         <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
         </span>
     <p class="text-right small">
@@ -55,14 +55,14 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
     <div class="panel-body">
         <div class="col-xs-3 text-center">
-            <a href="roster.php" class="dashboard-link">
-                <img src="images/roster.png" width="60" height="60">
+            <a href="get_roster.php" class="dashboard-link">
+                <img src="../images/roster.png" width="60" height="60">
                 <div class="dashboard-desc">Check Roster</div>
             </a>
         </div>
         <div class="col-xs-3 text-center">
             <a href="mails.php" class="dashboard-link">
-                <img src="images/messages.png" width="60" height="60">
+                <img src="../images/messages.png" width="60" height="60">
                 <div class="dashboard-desc">Message</div>
             </a>
         </div>
@@ -81,7 +81,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3  text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/medical_consultants.png" width="60">
+                            <img src="../images/medical_consultants.png" width="60">
 
                             <div class="dashboard-desc">Doctor</div>
                         </a>
@@ -90,8 +90,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 } else if ($staff[StaffRoleTable::staff_role_id] == PHARMACIST) {
                     ?>
                     <div class="col-xs-3 text-center">
-                        <a href="pharmacy/pharmacy.php" class="dashboard-link">
-                            <img src="images/pharmacy-icons.png" width="60">
+                        <a href="pharmacy.php" class="dashboard-link">
+                            <img src="../images/pharmacy-icons.png" width="60">
 
                             <div class="dashboard-desc">Pharmacist</div>
                         </a>
@@ -100,8 +100,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 }else if ($staff[StaffRoleTable::staff_role_id] == MEDICAL_RECORD) {
                     ?>
                     <div class="col-xs-3 text-center">
-                        <a href="arrival/arrival.php" class="dashboard-link">
-                            <img src="images/arrival.png">
+                        <a href="arrival.php" class="dashboard-link">
+                            <img src="../images/arrival.png">
 
                             <div class="dashboard-desc">Patient Arrival</div>
                         </a>
@@ -111,7 +111,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/lab_registration.png">
+                            <img src="../images/lab_registration.png">
 
                             <div class="dashboard-desc">Urine</div>
                         </a>
@@ -121,7 +121,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/lab_registration.png">
+                            <img src="../images/lab_registration.png">
 
                             <div class="dashboard-desc">Visual</div>
                         </a>
@@ -131,7 +131,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/lab_registration.png">
+                            <img src="../images/lab_registration.png">
 
                             <div class="dashboard-desc">Xray</div>
                         </a>
@@ -141,7 +141,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/lab_registration.png">
+                            <img src="../images/lab_registration.png">
 
                             <div class="dashboard-desc">Parasitology</div>
                         </a>
@@ -151,7 +151,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/lab_registration.png">
+                            <img src="../images/lab_registration.png">
 
                             <div class="dashboard-desc">Chemical Pathology</div>
                         </a>
@@ -161,7 +161,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     ?>
                     <div class="col-xs-3 text-center">
                         <a href="#" class="dashboard-link">
-                            <img src="images/dash-icons.png">
+                            <img src="../images/dash-icons.png">
 
                             <div class="dashboard-desc">Treatment Record</div>
                         </a>
@@ -193,8 +193,8 @@ $administrator = false;
                 $administrator = true;
                 ?>
                 <div class="col-xs-3 text-center">
-                    <a href="admin/roster.php" class="dashboard-link">
-                        <img src="images/roster.png" width="60" height="60">
+                    <a href="set_roster.php" class="dashboard-link">
+                        <img src="../images/roster.png" width="60" height="60">
                         <div class="dashboard-desc">Roster</div>
                     </a>
                 </div>
@@ -204,15 +204,15 @@ $administrator = false;
                 $administrator = true;
                 ?>
                 <div class="col-xs-3  text-center">
-                    <a href="admin/staff.php" class="dashboard-link">
-                        <img src="images/file-edit.png">
+                    <a href="staff.php" class="dashboard-link">
+                        <img src="../images/file-edit.png">
 
                         <div class="dashboard-desc">Admin Access</div>
                     </a>
                 </div>
                 <div class="col-xs-3 text-center">
                     <a href="#" class="dashboard-link">
-                        <img src="images/reports.png" width="60" height="60">
+                        <img src="../images/reports.png" width="60" height="60">
                         <div class="dashboard-desc">Report Creation</div>
                     </a>
                 </div>
@@ -223,7 +223,7 @@ $administrator = false;
                 ?>
                 <div class="col-xs-3 text-center">
                     <a href="#" class="dashboard-link">
-                        <img src="images/file-edit.png">
+                        <img src="../images/file-edit.png">
 
                         <div class="dashboard-desc">Staff Adding Officer</div>
                     </a>
@@ -234,7 +234,7 @@ $administrator = false;
                 ?>
                 <div class="col-xs-3 text-center">
                     <a href="#" class="dashboard-link">
-                        <img src="images/file-edit.png">
+                        <img src="../images/file-edit.png">
 
                         <div class="dashboard-desc">Staff Clearance Officer</div>
                     </a>
@@ -245,7 +245,7 @@ $administrator = false;
                 ?>
                 <div class="col-xs-3 text-center">
                     <a href="#" class="dashboard-link">
-                        <img src="images/file-edit.png">
+                        <img src="../images/file-edit.png">
 
                         <div class="dashboard-desc">Health Scheme</div>
                     </a>
@@ -271,8 +271,8 @@ $administrator = false;
 </div>
 </div> <!-- /container -->
 
-<script src="js/bootstrap/jquery-1.10.2.min.js"></script>
-<script src="js/constants.js"></script>
-<script src="js/index.js"></script>
+<script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../js/constants.js"></script>
+<script src="../js/index.js"></script>
 </body>
 </html>

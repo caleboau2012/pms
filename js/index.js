@@ -21,13 +21,13 @@ $(function(){
             }else if(response.status == 1){
                 if(response.data.status == 2){
                     //inactive users
-                    window.location.assign('change_password.php');
+                    window.location.assign(host + 'view/change_password.php');
                 }else if(response.data.status == 6){
                     //user on processing stage
-                    window.location.assign('setup-profile.php');
+                    window.location.assign(host + 'view/setup-profile.php');
                 }else if(response.data.status == 1){
                     //active user
-                    window.location.assign('dashboard.php');
+                    window.location.assign(host + 'view/dashboard.php');
                 }
             }
         }).fail(function(data){

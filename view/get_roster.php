@@ -5,7 +5,7 @@
  * Date: 2/16/2015
  * Time: 1:10 PM
  */
-require_once '_core/global/_require.php';
+require_once '../_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'StaffRosterModel'));
@@ -19,11 +19,11 @@ $list_of_staff = $userController->getAllUsers();
 <head>
     <meta charset='utf-8' />
     <title>Admin Dashboard</title>
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <link href='css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
-    <link href='css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
-    <link href="css/master.css" rel="stylesheet">
+    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
+    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+    <link href="../css/master.css" rel="stylesheet">
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -40,7 +40,7 @@ $list_of_staff = $userController->getAllUsers();
         <div id="navbar" class="navbar-collapse collapse">
             <div class="dropdown navbar-right navbar-right-text pointer">
             <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                <img src="images/profile.png">
+                <img src="../images/profile.png">
                 <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
                 </span>
                 <span class="caret"></span>
@@ -64,12 +64,12 @@ $list_of_staff = $userController->getAllUsers();
     <div  class="clearfix"></div>
 
 </div>
-<script src='js/bootstrap/jquery.min.js'></script>
-<script src='js/bootstrap/bootstrap.min.js'></script>
-<script src='js/libs/fullcalendar/moment.min.js'></script>
-<script src='js/bootstrap/jquery-ui.custom.min.js'></script>
-<script src='js/libs/fullcalendar/fullcalendar.min.js'></script>
-<script src="js/constants.js"></script>
-<script src="js/roster.js"></script>
+<script src='../js/bootstrap/jquery.min.js'></script>
+<script src='../js/bootstrap/bootstrap.min.js'></script>
+<script src='../js/libs/fullcalendar/moment.min.js'></script>
+<script src='../js/bootstrap/jquery-ui.custom.min.js'></script>
+<script src='../js/libs/fullcalendar/fullcalendar.min.js'></script>
+<script src="../js/constants.js"></script>
+<script src="../js/roster.js"></script>
 </body>
 </html>

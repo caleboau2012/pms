@@ -20,14 +20,14 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <title>PMS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/master.css" rel="stylesheet">
+    <link href="../css/master.css" rel="stylesheet">
 
-    <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
-    <script src="js/bootstrap/bootstrap-datepicker.min.js"></script>
-    <script src="js/index.js"></script>
+    <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
+    <script src="../js/index.js"></script>
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -66,7 +66,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 Welcome! you need to change your password
         </div>
 
-        <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
+        <div class="hidden text-center" id="form-loading"><img src="../images/loading.gif"></div>
         <div class=" alert alert-danger hidden text-center" id="form-error"></div>
         <div class=" alert alert-success hidden text-center" id="form-success"></div>
 

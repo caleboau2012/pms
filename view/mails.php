@@ -1,5 +1,5 @@
 <?php
-require_once '_core/global/_require.php';
+require_once '../_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 
@@ -23,12 +23,12 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
     <title>PMS Mail</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/master.css" rel="stylesheet">
-    <link href="css/bootstrap/datepicker.css" rel="stylesheet">
-    <link href="css/bootstrap/jquery-ui.css" rel="stylesheet">
+    <link href="../css/master.css" rel="stylesheet">
+    <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -53,7 +53,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
         <div id="navbar" class="navbar-collapse collapse">
             <div class="dropdown navbar-right navbar-right-text pointer">
             <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                <img src="images/profile.png">
+                <img src="../images/profile.png">
                 <span><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
                 </span>
                 <span class="caret"></span>
@@ -202,12 +202,12 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="js/bootstrap/jquery-1.10.2.min.js"></script>
-<script src="js/bootstrap/jquery-ui.min.js"></script>
-<script src="js/bootstrap/bootstrap.min.js"></script>
-<script src="js/bootstrap/bootstrap-datepicker.min.js"></script>
-<script src="js/constants.js"></script>
-<script src="js/mail.js" type="text/javascript"></script>
+<script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap/jquery-ui.min.js"></script>
+<script src="../js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
+<script src="../js/constants.js"></script>
+<script src="../js/mail.js" type="text/javascript"></script>
 <script type="text/javascript">
     (function($) {
         Mail.loadMessages();

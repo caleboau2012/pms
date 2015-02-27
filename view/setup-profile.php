@@ -22,15 +22,15 @@ Crave::requireAll(UTIL);
     <title>PMS</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="css/master.css" rel="stylesheet">
-    <link href="css/bootstrap/datepicker.css" rel="stylesheet">
+    <link href="../css/master.css" rel="stylesheet">
+    <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
 
-    <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
-    <script src="js/bootstrap/bootstrap-datepicker.min.js"></script>
-    <script src="js/profile.js"></script>
+    <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+    <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
+    <script src="../js/profile.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -50,7 +50,7 @@ Crave::requireAll(UTIL);
             </div>
             <div class="form-profile">
                 <div class="hidden text-center" id="form-loading">
-                    <img src="images/loading.gif">
+                    <img src="../images/loading.gif">
                 </div>
                         <div class="text-danger  text-center hidden " id="form-error"></div>
                         <div class="text-success text-center hidden" id="form-success"></div>
