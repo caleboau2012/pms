@@ -142,7 +142,7 @@ class PharmacistModel extends BaseModel{
         }catch(Exception $e){
             $this->conn->rollBack();
             return false;
-            //return $e->getMessage();
+//            return $e->getMessage();
         }
 
 
