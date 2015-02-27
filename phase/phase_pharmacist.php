@@ -3,7 +3,7 @@
 require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
+Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'PharmacistModel'));
 Crave::requireFiles(CONTROLLER, array('PharmacistController'));
 
@@ -66,8 +66,12 @@ if ($intent == 'getPatientQueue') {
     }
 
 } elseif ($intent == 'clearPrescription') {
-    $pharmacist_id = isset($_REQUEST['userId']) ? $_REQUEST['userId'] : null;
+    $pharmacist_id = CxSessionHandler::getItem(UserAuthTable::userid);
     $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : null;
+
+    /*$data = array(array("drugId" => 1, "drugName" => "Paracetamol", "quantity" => 20, "unitId" => 1, "prescription" => array(5, 6)),
+        array("drugId" => 3, "drugName" => "ampiclox", "quantity" => 20, "unitId" => 1, "prescription" => array(7)),
+        array("drugId" => null, "drugName" => null, "quantity" => 20, "unitId" => 1, "prescription" => array(8)));*/
 
     if($pharmacist_id && $data){
 
