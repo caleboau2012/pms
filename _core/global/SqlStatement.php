@@ -117,6 +117,8 @@ class PatientSqlStatement {
             OR regNo = :parameter)
             AND(pq.active_fg IS NULL
             OR pq.active_fg = 0)";
+        const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
+            FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
 }
 
 class PatientQueueSqlStatement {
@@ -243,7 +245,7 @@ class CommunicationSqlStatement {
 }
 
 class PrescriptionSqlStatement{
-    const GET_PRESCRIPTION = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id";
+    const GET_PRESCRIPTION = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id AND status = 1";
     const GET_QUEUE = "SELECT t.treatment_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id";
@@ -469,7 +471,7 @@ class MicroscopySqlStatement {
 
 }
 
-class ChemicalPathologyRequestSqlStatement {
+class ChemicalPathologyRequestSqlStatement2 {
     const ADD    = 'INSERT INTO chemical_pathology_request(treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis,created_date,modified_date,doctor_id,lab_attendant_id) VALUES(:treatment_id, :laboratory_ref, :laboratory_comment, :clinical_diagnosis,now(),now(),:doctor_id,:lab_attendant_id)';
     const DELETE = 'DELETE FROM chemical_pathology_request where cpreg_id = :cpreg_id';
     const GET    = 'SELECT treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis,modified_date,doctor_id,lab_attendant_id
@@ -532,6 +534,8 @@ class ParasitologyRefSqlStatement {
 }
 
 class ParasitologyRequestSqlStatement {
+    const ADD_REQ_INFO = "INSERT INTO parasitology_req (doctor_id, treatment_id, diagnosis, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, ::diagnosis, NOW(), NOW())";
     const ADD    = 'INSERT INTO parasitology_req(user_id, treatment_id, nature_of_specimen, investigation_req, diagnosis, date_reported, created_date, modified_date, doctor_id, lab_attendant_id) VALUES(:user_id, :treatment_id, :nature_of_specimen, :investigation_req, :diagnosis, now(), now(), now(),:doctor_id,:lab_attendant_id)';
     const DELETE = 'DELETE FROM parasitology_req where preg_id = :preg_id';
     const GET    = 'SELECT * FROM parasitology_req where preq_id = :preq_id';
@@ -597,3 +601,35 @@ class ParasitologyDetailsSqlStatement {
     const RECORD_CHECK = 'SELECT COUNT(*) as num  FROM parasitology_details
                     WHERE preq_id = :preq_id AND  pref_id = :pref_id';
 }
+
+class EncounterSqlStatement{
+    const GET_HISTORY = 'SELECT * FROM encounter AS e WHERE admission_id = :admission_id ORDER BY e.created_date DESC';
+    const ADD = 'INSERT INTO encounter (personnel_id, patient_id, admission_id, comments, created_date) VALUES(:personnel_id, :patient_id, :admission_id, :comments, NOW())';
+}
+
+class RadiologyRequestSqlStatement{
+    const ADD_RAD_INFO = "INSERT INTO radiology (doctor_id, treatment_id, created_date, modified_date) VALUES (:doctor_id, :treatment_id, NOW(), NOW())";
+    const ADD_RAD_REQ_INFO = "INSERT INTO radiology_request (radiology_id, clinical_diagnosis_details, created_date, modified_date)
+                              VALUES (:radiology_id, :clinical_diagnosis_details, NOW(), NOW())";
+}
+
+class HaematologyRequestSqlStatement{
+    const ADD_REQ_INFO = "INSERT INTO haematology (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
+}
+
+class MicroscopyRequestSqlStatment{
+    const ADD_REQ_INFO = "INSERT INTO urine (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
+}
+
+class VisualRequestSqlStatement{
+    const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, NOW(), NOW())";
+}
+
+class ChemicalPathologyRequestSqlStatement{
+    const ADD_REQ_INFO = "INSERT INTO chemical_pathology_request (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
+}
+

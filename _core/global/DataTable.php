@@ -472,10 +472,10 @@ class XrayCaseTable {
 
 }
 
-class ExaminationRequestedTable {
+class RadiologyRequestTable {
+    const table_name                 = 'radiology_request';
 
-    const table_name                 = 'examination_requested';
-    const examination_requested_id   = 'examination_requested_id';
+    const radiology_request_id       = 'radiology_request_id';
     const radiology_id               = 'radiology_id';
     const clinical_diagnosis_details = 'clinical_diagnosis_details';
     const previous_operation         = 'previous_operation';
@@ -528,8 +528,8 @@ class ParasitologyReqTable{
 
 class RadiologyTable {
     const table_name           = 'radiology';
+
     const radiology_id         = 'radiology_id';
-    const userid               = 'userid';
     const doctor_id            = 'doctor_id';
     const lab_attendant_id     = 'lab_attendant_id';
     const ward_clinic_id       = 'ward_clinic_id';
@@ -564,4 +564,42 @@ class ChemicalPathologyRequestTable {
     const status_id          = 'status_id';
     const cp_ref_id          = 'cp_ref_id';
 
+}
+
+class EncounterTable{
+    const table_name = 'encounter';
+
+    const encounter_id = 'encounter_id';
+    const personnel_id = 'personnel_id';
+    const patient_id   = 'patient_id';
+    const admission_id = 'admission_id';
+    const comments     = 'comments';
+    const created_date = 'created_date';
+    const active_fg    = 'active_fg';
+}
+
+class AdmissionReqTable{
+    const table_name = 'admission_req';
+
+    const admission_req_id = 'admission_req_id';
+    const treatment_id     = 'treatment_id';
+    const created_date     = 'created_date';
+    const modified_date    = 'modified_date';
+    const active_fg        = 'active_fg';
+}
+
+class AdmissionTable{
+    const table_name = 'admission';
+
+    const admission_id  = 'admission_id';
+    const bed_id        = 'bed_id';
+    const admitted_by   = 'admitted_by';
+    const patient_id    = 'patient_id';
+    const entry_date    = 'entry_date';
+    const exit_date     = 'exit_date';
+    const comments      = 'comments';
+    const created_date  = 'created_date';
+    const modified_date = 'modified_date';
+    const active_fg     = 'active_fg';
+    const treatment_id  = 'treatment_id';
 }

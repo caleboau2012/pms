@@ -34,15 +34,25 @@ class TreatmentController{
         return $this->treatmentModel->getTreatmentHistory($patientId);
     }
 
-    public function requestLabTest($patientId, $type, $comment){
-
+    public function requestLabTest($doctorId, $treatmentId, $labTestType, $comment){
+        return $this->treatmentModel->requestLabTest($doctorId, $treatmentId, $labTestType, $comment);
     }
 
-    public function getLabHistory($patientId, $type){
-        return $this->treatmentModel->getLabHistory($patientId, $type);
+    public function getLabHistory($patientId, $labTestType){
+        return $this->treatmentModel->getLabHistory($patientId, $labTestType);
     }
 
-    public function getPatient($patientName){
+    public function searchPatient($patientName){
         return $this->treatmentModel->searchPatient($patientName);
+    }
+
+    public function getEncounterHistory($admissionId){
+        return $this->treatmentModel->getEncounterHistory($admissionId);
+    }
+
+    public function logEncounter($doctorId, $patientId, $admissionId, $comments){
+        $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
+                      EncounterTable::admission_id => $admissionId, EncounterTable::comments => $comments);
+        return $this->treatmentModel->logEncounter($data);
     }
 }
