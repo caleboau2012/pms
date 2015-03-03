@@ -117,12 +117,12 @@ $units = $pharmacist->getUnits();
                                 <button class="btn btn-sm btn-warning">ADD TO CLEAR</button>
                             </div>
                             <div class="clearfix"></div>
-                            <div id="clearPrescriptions">
+                            <div class="col-md-12" id="clearPrescriptions">
 
                             </div>
                         </form>
                         <button class="btn btn-sm btn-primary hidden" id="clrPrescription">CLEAR PRESCRIPTIONS</button>
-                        <div class="alert" id="response_msg"></div>
+                        <div class="alert col-md-12" id="response_msg"></div>
                     </div>
                 </div>
             </div>

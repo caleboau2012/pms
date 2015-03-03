@@ -454,8 +454,11 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 .clearDrug h5{
     margin: 0em;
 }
+#response_msg{
+    margin-top: 0.4em;
+}
 #clrPrescription{
-    margin-bottom: 0.4em;
+    margin-left: 1.2em;
 }
 
 /* BEGIN _-----------------MESSAGE PAGE STYLES ------------------ BEGIN*/

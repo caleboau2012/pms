@@ -67,6 +67,8 @@ Pharmacy = {
         $('.active_patient').removeClass('hidden');
     },
     transferPrescription: function(prescription){
+        //remove previous error message encountered if any
+        $('#response_msg').empty().removeClass('alert-danger').removeClass('alert-success');
         if(!Pharmacy.deactivate){
             if($(prescription).hasClass('text-cancel')){
                 $(prescription).removeClass('text-cancel');
@@ -86,41 +88,44 @@ Pharmacy = {
         });
     },
     addToClear: function(){
-        drugName = $('#drugName').val();
-        drugQuantity = $('#drugQuantity').val();
-        var drugId = null;
-        $('#drugNames option').filter(function(){
-            if(this.value == drugName){
-                drugId = $(this).attr('data-drug-id');
-            }
-        });
-        //console.log(drugId);
-        drugUnit = $('#drugUnit').val();
-        if(drugName !== ''){
-            content = "<div class='clearDrug'>" +
-            "<span class='cancelClear small pull-right'>cancel</span>" +
-            "<h5 data-drug-id="+ drugId +">" + drugName.toUpperCase() + "</h5>" +
-            "<span class='small'>(" + drugQuantity + " " + drugUnit+ ")</span>" +
-            "<ul>";
-
-            $('.selected_prescription li').each(function(){
-                content += "<li data-prescription-id=" + $(this).attr('data-prescription-id') +">" + $(this).html() + "</li>";
-                Pharmacy.removePrescription(this);
+        if($('.selected_prescription').children('li').length != 0){
+            drugName = $('#drugName').val();
+            drugQuantity = $('#drugQuantity').val();
+            var drugId = null;
+            $('#drugNames option').filter(function(){
+                if(this.value == drugName){
+                    drugId = $(this).attr('data-drug-id');
+                }
             });
-            content += "</ul></div>";
-            $('#clearPrescriptions').append(content);
-            //clear form
-            //clear formadd
-            $('#addToClear').trigger('reset');
-            $('.selected_prescription').empty();
-            //show clear button
-            Pharmacy.showClearButton();
-            //$('#clrPrescription').removeClass('hidden');
-        }
-        $('.cancelClear').click(function(){
-            Pharmacy.unClearPrescription($(this).parent());
-        });
+            //console.log(drugId);
+            drugUnit = $('#drugUnit').val();
+            if(drugName !== ''){
+                content = "<div class='clearDrug'>" +
+                "<span class='cancelClear small pull-right'>cancel</span>" +
+                "<h5 data-drug-id="+ drugId +">" + drugName.toUpperCase() + "</h5>" +
+                "<span class='small'>(" + drugQuantity + " " + drugUnit+ ")</span>" +
+                "<ul>";
 
+                $('.selected_prescription li').each(function(){
+                    content += "<li data-prescription-id=" + $(this).attr('data-prescription-id') +">" + $(this).html() + "</li>";
+                    Pharmacy.removePrescription(this);
+                });
+                content += "</ul></div>";
+                $('#clearPrescriptions').append(content);
+                //clear form
+                //clear formadd
+                $('#addToClear').trigger('reset');
+                $('.selected_prescription').empty();
+                //show clear button
+                Pharmacy.showClearButton();
+                //$('#clrPrescription').removeClass('hidden');
+            }
+            $('.cancelClear').click(function(){
+                Pharmacy.unClearPrescription($(this).parent());
+            });
+            $('#response_msg').empty().removeClass('alert-danger').removeClass('alert-success');
+
+        }
     },
     showClearButton: function(){
         //console.log($('#clearPrescriptions').children('div'));
