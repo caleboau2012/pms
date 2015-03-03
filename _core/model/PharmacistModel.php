@@ -105,7 +105,7 @@ class PharmacistModel extends BaseModel{
 
             // Get the drug_id, qty and unit_id and insert it into the outgoing_drugs table
             foreach($data as $prescriptionList){
-                $drugId = $prescriptionList['drugId'];
+                $drugId = intval($prescriptionList['drugId']);
                 $drugName = $prescriptionList['drugName'];
                 $quantity = $prescriptionList['quantity'];
                 $unitId = $prescriptionList['unitId'];

@@ -419,12 +419,8 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 /*
     PHARMACY PAGE
 */
-.patients-list_heading{
-    font-size: 1.3em;
-    background: #428BCA;
-    padding: 0.5em;
-    color: #FFFFFF;
-    margin-bottom: -3px;
+.clearing_panel{
+    border-left:solid 2px #E7E4E4;
 }
 .active_patient_heading{
     padding: 0.4em;
@@ -432,11 +428,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 .patients-list_item{
     cursor: pointer;
-    background: #EEE;
-    color: #564F4F;
-    border: 1px solid #DDD;
     padding: 0.3em 0.6em;
-    margin-bottom: -1px;
 }
 .patients-list_item:hover{
     color: #428BCA;
@@ -445,15 +437,10 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     margin: 0;
 }
 .active_selected_patient{
-    background: #fff;
-    border-left: none;
     color: #428BCA;
 }
 .patient_prescription{
     margin-top: 1em;
-}
-.patient_prescription:nth-of-type(even){
-    border-right: solid 2px #E7E4E4;
 }
 .text-cancel{
     text-decoration: line-through;
@@ -466,6 +453,9 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 .clearDrug h5{
     margin: 0em;
+}
+#clrPrescription{
+    margin-bottom: 0.4em;
 }
 
 /* BEGIN _-----------------MESSAGE PAGE STYLES ------------------ BEGIN*/

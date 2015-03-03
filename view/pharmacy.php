@@ -63,45 +63,51 @@ $units = $pharmacist->getUnits();
             <div class="col-md-12">
                 <div class="active_patient hidden">
                     <div class="active_patient_heading">
-                        <h2 id="patient_name">Patient Name</h2>
-                        <p class="small text-primary" id="patient_reg">PMS001</p>
+                        <h2 id="patient_name"></h2>
+                        <p class="small text-primary" id="patient_reg"></p>
                     </div>
                     <div class="col-md-6 patient_prescription">
                         <h4>UNCLEARED</h4>
                         <ol class="patientPrescriptions">
-                            <!--                            <li class="prescription-item">Prescription name 1</li>-->
-                            <!--                            <li class="prescription-item">Prescription name 2</li>-->
-                            <!--                            <li class="prescription-item">Prescription name 3</li>-->
-                            <!--                            <li class="prescription-item">Prescription name 6</li>-->
-                            <!--                            <li class="prescription-item">Prescription name 7</li>-->
                         </ol>
                     </div>
-                    <div class="col-md-6 patient_prescription">
-                        <h4>CLEARING PANEL</h4>
+                    <div class="col-md-6 clearing_panel">
+                        <div class="col-md-12">
+                            <h4>CLEARING PANEL</h4>
+                        </div>
                         <form id="addToClear">
-                            <div class="form-group">
-                                <div class="col-md-12">
+                            <div class="col-md-12">
+                                <div class="form-group">
                                     <input list="drugNames" type="text" class="form-control" id="drugName" placeholder="Drug name" required>
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <input type="text" class="form-control" id="drugQuantity" placeholder="Drug quantity" required>
                                 </div>
-                                <div class="col-md-6">
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
                                     <select id="drugUnit" class="form-control">
-                                        <option>Ml</option>
-                                        <option>Lit.</option>
+                                        <?php
+                                        foreach($units as $unit){
+                                            ?>
+                                            <option value="<?php echo $unit['unit_ref_id']; ?>"><?php  echo $unit['unit']?></option>
+                                        <?php
+                                        }
+                                        ?>
                                     </select>
                                 </div>
-                                <datalist id="drugNames">
-                                    <?php
-                                    foreach($drugs as $drug){
-                                        ?>
-                                        <option value="<?php echo$drug['drug']; ?>" data-drug-id="<?php echo $drug['drug_ref_id'] ?>"></option>
-                                    <?php
-                                    }
-                                    ?>
-                                </datalist>
                             </div>
+                            <datalist id="drugNames">
+                                <?php
+                                foreach($drugs as $drug){
+                                    ?>
+                                    <option value="<?php echo$drug['drug']; ?>" data-drug-id="<?php echo $drug['drug_ref_id'] ?>"></option>
+                                <?php
+                                }
+                                ?>
+                            </datalist>
                             <div class="clearfix"></div>
                             <ol class="selected_prescription">
 
@@ -116,56 +122,44 @@ $units = $pharmacist->getUnits();
                             </div>
                         </form>
                         <button class="btn btn-sm btn-primary hidden" id="clrPrescription">CLEAR PRESCRIPTIONS</button>
-
+                        <div class="alert" id="response_msg"></div>
                     </div>
                 </div>
             </div>
         </div>
         <div class="col-md-3">
-            <div class="patients-list_heading">
-                REQUESTS
-            </div>
-            <?php
-            if(sizeof($pharmacist_queue) !== 0){
-                ?>
-                <ul class="list-unstyled patients-list_body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    REQUESTS
+                </div>
+                <div class="panel_body">
                     <?php
-                    foreach($pharmacist_queue as $patient){
+                    if(sizeof($pharmacist_queue) !== 0){
                         ?>
-                        <li class="patients-list_item" data-patient-id="<?php echo $patient['patient_id'] ?>" data-treatment-id="<?php echo $patient['treatment_id'] ?>">
-                            <h4><?php echo ucwords($patient['surname'].' '.$patient['middlename'].' '. $patient['firstname']); ?></h4>
-                            <p class="small"><?php echo $patient['regNo'] ?></p>
-                        </li>
+                        <ul class="list-unstyled patients-list">
+                            <?php
+                            foreach($pharmacist_queue as $patient){
+                                $patient_name = ucwords($patient['surname'].' '.$patient['middlename'].' '. $patient['firstname']);
+                                ?>
+                                <li class="patients-list_item" data-patient-id="<?php echo $patient['patient_id'] ?>" data-treatment-id="<?php echo $patient['treatment_id'] ?>" data-name = "<?php echo $patient_name ?>" data-reg = "<?php echo $patient['regNo']; ?>">
+                                    <h4><?php echo $patient_name ?></h4>
+                                    <p class="small"><?php echo $patient['regNo'] ?></p>
+                                </li>
+                            <?php
+                            }
+                            ?>
+                        </ul>
+                    <?php
+                    }else{
+                        ?>
+                        <div class="text-muted text-center">
+                            <h3>No pending request</h3>
+                        </div>
                     <?php
                     }
                     ?>
-                    <!--                    <li class="patients-list_item" data-name="Patient Name 1" data-reg="PMS001">-->
-                    <!--                        <h4>Patient Name 1</h4>-->
-                    <!--                        <p class="small">Patient identification</p>-->
-                    <!--                    </li>-->
-                    <!--                    <li class="patients-list_item " data-name="Patient Name 2" data-reg="PMS002">-->
-                    <!--                        <h4>Patient Name 2</h4>-->
-                    <!--                        <p class="small">Patient identification</p>-->
-                    <!--                    </li>-->
-                    <!--                    <li class="patients-list_item" data-name="Patient Name 3" data-reg="PMS003">-->
-                    <!--                        <h4>Patient Name 3</h4>-->
-                    <!--                        <p class="small">Patient identification</p>-->
-                    <!--                    </li>-->
-                    <!--                    <li class="patients-list_item" data-name="Patient Name 4" data-reg="PMS004">-->
-                    <!--                        <h4>Patient Name 4</h4>-->
-                    <!--                        <p class="small">Patient identification</p>-->
-                    <!--                    </li>-->
-                </ul>
-
-            <?php
-            }else{
-                ?>
-            <div class="text-muted text-center">
-                <h5>No Pending requests</h5>
+                </div>
             </div>
-            <?php
-            }
-            ?>
         </div>
     </div>
 </div>

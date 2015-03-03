@@ -2,6 +2,8 @@
  * Created by olajuwon on 2/20/2015.
  */
 Pharmacy = {
+    selectedPatient : null,
+    deactivate : false,
     CONSTANTS: {
         REQUEST_SUCCESS: 1,
         REQUEST_ERROR: 2
@@ -28,14 +30,16 @@ Pharmacy = {
         });
     },
     checkQueue: function(){
-        if($('ul.patients-list_body li').length == 0){
-            $('.patients-list_body').html("<h3 class='text-muted'>No Pending patient</h3>");
+        if($('ul.patients-list li').length == 0){
+            $('.patients-list').html("<h3 class='text-muted text-center'>No Pending patient</h3>");
         }
     },
     removeFromQueue: function(patient){
         $(patient).remove();
     },
     transferPatient: function(patient){
+        //active patient selected
+        Pharmacy.selectedPatient = patient;
         $('#empty_active').hide();
         $('#patient_name').html($(patient).attr("data-name"));
         $('#patient_reg').html($(patient).attr("data-reg"));
@@ -60,17 +64,18 @@ Pharmacy = {
         $('.patients-list_item').removeClass('active_selected_patient');
         $(patient).addClass('active_selected_patient');
         Pharmacy.checkQueue();
-
         $('.active_patient').removeClass('hidden');
     },
     transferPrescription: function(prescription){
-        if($(prescription).hasClass('text-cancel')){
-            $(prescription).removeClass('text-cancel');
-            Pharmacy.returnPrescription(prescription);
-        }else{
-            $(prescription).addClass('text-cancel');
-            selected = "<li data-prescription-id="+ $(prescription).attr('data-prescription-id') +">" + $(prescription).html() + "</li>";
-            $('.selected_prescription').append(selected);
+        if(!Pharmacy.deactivate){
+            if($(prescription).hasClass('text-cancel')){
+                $(prescription).removeClass('text-cancel');
+                Pharmacy.returnPrescription(prescription);
+            }else{
+                $(prescription).addClass('text-cancel');
+                selected = "<li data-prescription-id="+ $(prescription).attr('data-prescription-id') +">" + $(prescription).html() + "</li>";
+                $('.selected_prescription').append(selected);
+            }
         }
     },
     returnPrescription: function(prescription){
@@ -92,14 +97,14 @@ Pharmacy = {
         //console.log(drugId);
         drugUnit = $('#drugUnit').val();
         if(drugName !== ''){
-
             content = "<div class='clearDrug'>" +
             "<span class='cancelClear small pull-right'>cancel</span>" +
-            "<h5 data-drug-id="+  drugId +">" + drugName.toUpperCase() + "</h5>" +
+            "<h5 data-drug-id="+ drugId +">" + drugName.toUpperCase() + "</h5>" +
+            "<span class='small'>(" + drugQuantity + " " + drugUnit+ ")</span>" +
             "<ul>";
 
             $('.selected_prescription li').each(function(){
-                content += "<li data-prescription-id='2'>" + $(this).html() + "</li>" + "<span>" + drugQuantity + " " + drugUnit+ "</span>";
+                content += "<li data-prescription-id=" + $(this).attr('data-prescription-id') +">" + $(this).html() + "</li>";
                 Pharmacy.removePrescription(this);
             });
             content += "</ul></div>";
@@ -139,12 +144,34 @@ Pharmacy = {
         Pharmacy.showClearButton();
     },
     clearPrescription: function(){
+        //deactivate page
+        Pharmacy.deactivate = true;
+
         var info = [];
+        //check for uncleared prescriptions
+        if($('.patientPrescriptions').children('li').length !== 0){
+            var drugName = null;
+            var temp = {};
+            temp.drugId = null;
+            temp.drugName = null;
+            temp.quantity = null;
+            temp.unitId = null;
+            temp.prescription = [];
+            var prescriptions = [];
+            $('.prescription-item').each(function(){
+                temp.prescription.push($(this).attr('data-prescription-id'));
+            });
+            info.push(temp);
+        }
+
+        //prescriptions with drug
       $('.clearDrug').each(function(){
           var drugName = $(this).children('h5').html();
           var temp = {};
           temp.drugId = $(this).children('h5').attr('data-drug-id');
           temp.drugName = $(this).children('h5').html();
+          temp.quantity = 2;
+          temp.unitId = 1;
           temp.prescription = [];
           var prescriptions = [];
           $(this).find('li').each(function() {
@@ -156,8 +183,16 @@ Pharmacy = {
             intent : 'clearPrescription',
             data : info
         };
+        //console.log(info);
         Pharmacy.serverReq(host + 'phase/phase_pharmacist.php', payload, function(data){
-            console.log(data);
+            if(data.status == Pharmacy.CONSTANTS.REQUEST_SUCCESS){
+                //remove from queue
+                Pharmacy.removeFromQueue(Pharmacy.selectedPatient);
+                Pharmacy.checkQueue();
+                $('#response_msg').empty().removeClass('alert-danger').addClass('alert-success').html(data.data);
+            }else if(data.status == Pharmacy.CONSTANTS.REQUEST_ERROR){
+                $('#response_msg').empty().removeClass('alert-success').addClass('alert-danger').html(data.data);
+            }
         });
     },
     removePrescription: function(prescription){
