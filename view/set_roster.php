@@ -71,16 +71,16 @@ $list_of_staff = $userController->getAllUsers();
                     foreach($list_of_staff as $staff){
                         ?>
                         <div class='fc-event2 staff' id="<?php echo $staff['userid'] ?>" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty = "am">
-                            <div class="col-md-5">
+                            <div class="col-xs-5">
                                 <?php echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname'] ?>
                             </div>
-                            <div data-id="<?php echo $staff['userid'] ?>" class="col-md-2 staff-duty fc-event m-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=8 >
+                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event m-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=8 >
                                 M
                             </div>
-                            <div data-id="<?php echo $staff['userid'] ?>" class="col-md-2 staff-duty fc-event a-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=9 >
+                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event a-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=9 >
                                 A
                             </div>
-                            <div data-id="<?php echo $staff['userid'] ?>" class="col-md-2 staff-duty fc-event n-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=10 >
+                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event n-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=10 >
                                 N
                             </div>
                             <div class="clearfix"></div>

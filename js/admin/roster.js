@@ -4,6 +4,11 @@
 (function ($){
 
     Roster = {
+        CONSTANTS: {
+          MORNING_DUTY : '#3A87AD',
+          AFTERNOON_DUTY : '#4CA618',
+          NIGHT_DUTY : '#3F3C3C'
+        },
         init: function(){
             /* initialize the external events
              -----------------------------------------------------------------*/
@@ -49,7 +54,9 @@
                     Roster.updateRoster(event.roster_id, event.start.format())
                 },
                 eventClick: function(event, element){
-                   if(confirm("Are you sure yo want to delete the event")){
+                    //console.log(event);
+                    info = event.title + "schedule on " + event.start.format() + " for " + Roster.getDuty(event.color) + " duty";
+                    if(confirm("Are you sure yo want to delete " + info)){
                        Roster.deleteRoster(event.roster_id);
                        $('#calendar').fullCalendar('removeEvents', event._id);
                    }
@@ -71,6 +78,24 @@
             });
             var response = '<div id="rosterResponse"></div>';
             $('.fc-toolbar').append(response);
+        },
+        getDuty : function(colorCode){
+            duty = '';
+            switch (colorCode){
+                case  Roster.CONSTANTS.MORNING_DUTY:
+                    duty = 'Morning';
+                    break;
+                case  Roster.CONSTANTS.AFTERNOON_DUTY:
+                    duty = 'Afternoon';
+                    break;
+                case Roster.CONSTANTS.NIGHT_DUTY:
+                    duty = 'Night';
+                    break;
+                default :
+                    duty = 'Unknown';
+                    break
+            }
+            return duty;
         },
         sendRoster: function(user_id, dept_id, duty, date){
             $.post(host + "phase/admin/phase_roster.php",
