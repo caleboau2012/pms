@@ -144,9 +144,54 @@ class TreatmentModel extends BaseModel{
         }
     }
 
-    public function getLabHistory($patientId, $labTestType){
-        $data = array(PatientTable::patient_id => $patientId);
+    private function getRadiologyLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_HISTORY, $data);
+    }
 
+    private function getHaematologyLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_HISTORY, $data);
+    }
+
+    private function getMicroscopyLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_HISTORY, $data);
+    }
+
+    private function getChemicalPathologyLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_HISTORY, $data);
+    }
+
+    private function getParasitologyLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_HISTORY, $data);
+    }
+
+    public function getLabHistory($patientId, $labTestType){
+        switch($labTestType){
+            case 'radiology':
+                return $this->getRadiologyLabHistory($patientId);
+
+            case 'haematology':
+                return $this->getHaematologyLabHistory($patientId);
+
+            case 'microscopy':
+                return $this->getMicroscopyLabHistory($patientId);
+
+            case 'visual':
+                return $this->getVisualLabHistory($patientId);
+
+            case 'chemical':
+                return $this->getChemicalPathologyLabHistory($patientId);
+
+            case 'parasitology':
+                return $this->getParasitologyLabHistory($patientId);
+
+            default:
+                return array();
+        }
     }
 
     public function searchPatient($patientNameOrRegNo){
