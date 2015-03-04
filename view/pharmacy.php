@@ -58,8 +58,44 @@ $units = $pharmacist->getUnits();
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-9">
-            <h1 class="text-muted text-center" id="empty_active"><br/><br/>Select patient &rarr;</h1>
+        <div class="col-md-3">
+            <div class="p-sidebar">
+                <div class="p-panel">
+                    <div class=" p-heading">
+                        REQUESTS
+                    </div>
+                    <div class="p_body">
+                        <?php
+                        if(sizeof($pharmacist_queue) !== 0){
+                            ?>
+                            <ul class="list-unstyled patients-list">
+                                <?php
+                                foreach($pharmacist_queue as $patient){
+                                    $patient_name = ucwords($patient['surname'].' '.$patient['middlename'].' '. $patient['firstname']);
+                                    ?>
+                                    <li class="patients-list_item" data-patient-id="<?php echo $patient['patient_id'] ?>" data-treatment-id="<?php echo $patient['treatment_id'] ?>" data-name = "<?php echo $patient_name ?>" data-reg = "<?php echo $patient['regNo']; ?>">
+                                        <h4><?php echo $patient_name ?></h4>
+                                        <p class="small"><?php echo $patient['regNo'] ?></p>
+                                    </li>
+                                <?php
+                                }
+                                ?>
+                            </ul>
+                        <?php
+                        }else{
+                            ?>
+                            <div class="text-muted text-center">
+                                <h3>No pending request</h3>
+                            </div>
+                        <?php
+                        }
+                        ?>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-9 p-content">
+            <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
             <div class="col-md-12">
                 <div class="active_patient hidden">
                     <div class="active_patient_heading">
@@ -67,11 +103,21 @@ $units = $pharmacist->getUnits();
                         <p class="small text-primary" id="patient_reg"></p>
                     </div>
                     <div class="col-md-6 patient_prescription">
-                        <h4>UNCLEARED</h4>
-                        <ol class="patientPrescriptions">
-                        </ol>
+                        <div class="panel panel-primary">
+                            <div class="panel-heading">
+                                PRESCRIPTIONS
+                            </div>
+                            <div class="panel-body">
+                                <p class="small text-info text-center">
+                                    Click on a prescription to select/de-select it
+                                </p>
+                                <ol class="list-group patientPrescriptions">
+                                    <li class="list-group-item"></li>
+                                </ol>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-md-6 clearing_panel">
+                    <div class="col-md-6  clearing_panel">
                         <div class="col-md-12">
                             <h4>CLEARING PANEL</h4>
                         </div>
@@ -121,43 +167,9 @@ $units = $pharmacist->getUnits();
 
                             </div>
                         </form>
-                        <button class="btn btn-sm btn-primary hidden" id="clrPrescription">CLEAR PRESCRIPTIONS</button>
+                        <button class="btn btn-sm btn-primary hidden" id="clrPrescription">CLEAR PRESCRIPTION</button>
                         <div class="alert col-md-12" id="response_msg"></div>
                     </div>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    REQUESTS
-                </div>
-                <div class="panel_body">
-                    <?php
-                    if(sizeof($pharmacist_queue) !== 0){
-                        ?>
-                        <ul class="list-unstyled patients-list">
-                            <?php
-                            foreach($pharmacist_queue as $patient){
-                                $patient_name = ucwords($patient['surname'].' '.$patient['middlename'].' '. $patient['firstname']);
-                                ?>
-                                <li class="patients-list_item" data-patient-id="<?php echo $patient['patient_id'] ?>" data-treatment-id="<?php echo $patient['treatment_id'] ?>" data-name = "<?php echo $patient_name ?>" data-reg = "<?php echo $patient['regNo']; ?>">
-                                    <h4><?php echo $patient_name ?></h4>
-                                    <p class="small"><?php echo $patient['regNo'] ?></p>
-                                </li>
-                            <?php
-                            }
-                            ?>
-                        </ul>
-                    <?php
-                    }else{
-                        ?>
-                        <div class="text-muted text-center">
-                            <h3>No pending request</h3>
-                        </div>
-                    <?php
-                    }
-                    ?>
                 </div>
             </div>
         </div>

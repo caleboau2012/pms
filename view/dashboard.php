@@ -5,7 +5,7 @@ Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 
 if(!isset($_SESSION[UserAuthTable::userid])){
-    header("Location: index.php");
+    header("Location: ../index.php");
 }
 
 //var_dump($_SESSION);

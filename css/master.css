@@ -359,6 +359,12 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
     }
+    .p_body{
+        min-height: 60em;
+        max-height: 80em;
+        margin-top: 0;
+        overflow-y: auto;
+    }
 }
 
 /* Sidebar navigation */
@@ -419,28 +425,70 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 /*
     PHARMACY PAGE
 */
+.p-sidebar{
+    background: #dddddd;
+
+
+}
+.p_body{
+    max-height: 15em;
+    overflow-y: auto;
+}
+.p-panel{
+    background: #FFFFFF;
+}
+.p-heading{
+    background: #428BCA;
+    padding: 0.6em;
+    color: #FFFFFF;
+    box-shadow: 0px 1px 2px #BEC0BE;
+}
 .clearing_panel{
-    border-left:solid 2px #E7E4E4;
+    /*border-left: solid thin #EDEDED;*/
+}
+.p-content{
+    background: #FFFFFF;
+    min-height: 60em;
+
 }
 .active_patient_heading{
-    padding: 0.4em;
-    background: #E7E4E4;
+    border-bottom: solid thin #EDEDED;
+    margin-bottom: 0.9em;
 }
 .patients-list_item{
     cursor: pointer;
     padding: 0.3em 0.6em;
+    margin: 0.2em 0;
+    background: #FFFFFF;
+    box-shadow: 0px 1px 2px #BEC0BE;
+}
+.patients-list_item:first-of-type{
+    margin-top: 0;
+}
+.patients-list_item:last-of-type{
+    margin-bottom: 0;
 }
 .patients-list_item:hover{
     color: #428BCA;
 }
 .patients-list_item > h4{
     margin: 0;
+    font-weight: 400;
 }
 .active_selected_patient{
     color: #428BCA;
+    background: #D9EDF7;
 }
-.patient_prescription{
-    margin-top: 1em;
+
+.prescription-item{
+    cursor: pointer;
+}
+.prescription-item:nth-of-type(2n){
+    /*background: #F6FCFF;*/
+}
+.prescription-item.text-cancel{
+    background: #EFEFEF;
+    color: #797777;
 }
 .text-cancel{
     text-decoration: line-through;
@@ -544,5 +592,8 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
     .page {
         padding: 50px;
+    }
+    .p-sidebar{
+
     }
 }
