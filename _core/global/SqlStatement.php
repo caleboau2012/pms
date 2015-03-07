@@ -11,8 +11,8 @@
 
 class UserAuthSqlStatement {
         const VERIFY_USER = "SELECT COUNT(*) AS count FROM user_auth WHERE regNo = :regNo AND passcode = :passcode";
-        const ADD = 'INSERT INTO user_auth (regNo, passcode, create_date, modified_date, status) VALUES (:regNo, SHA1(:passcode), NOW(), NOW(), :status)';
-        const GET = 'SELECT userid, regNo, create_date, modified_date, status, online_status
+        const ADD = 'INSERT INTO user_auth (regNo, passcode, created_date, modified_date, status) VALUES (:regNo, SHA1(:passcode), NOW(), NOW(), :status)';
+        const GET = 'SELECT userid, regNo, created_date, modified_date, status, online_status
                                 FROM user_auth
                                 WHERE regNo = :regNo AND userid = :userid';
         const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid)';
@@ -53,7 +53,7 @@ class UserAuthSqlStatement {
 
 class ProfileSqlStatement {
         const ADD = 'INSERT INTO profile (userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex,
-                                        height, weight, birth_date, create_date, modified_date)
+                                        height, weight, birth_date, created_date, modified_date)
                                  VALUES (:userid, LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :department_id, LOWER(:work_address), LOWER(:home_address), :telephone, :sex,
                                                         :height, :weight, :birth_date, NOW(), NOW()) ';
         const GET = 'SELECT ua.regNo, p.userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex, height, weight, birth_date
@@ -64,7 +64,7 @@ class ProfileSqlStatement {
         const UPDATE = 'UPDATE profile SET surname = :surname, firstname = :firstname, middlename = :middlename, work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight,department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
         const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
         const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department, p.work_address, p.home_address, p.telephone, p.sex,
-                                        p.height, p.weight, p.birth_date, p.create_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
+                                        p.height, p.weight, p.birth_date, p.created_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
         const GET_USER_AND_DEPT = 'SELECT dept.department_name, p.firstname, p.middlename, p.surname, FROM profile AS p
                                    LEFT JOIN department AS dept
                                     ON p.department_id = dept.department_id
@@ -85,7 +85,7 @@ class ProfileSqlStatement {
 class PermissionRoleSqlStatement {
         const DELETE_STAFF_ROLE = 'UPDATE permission_role SET active_fg = 0, modified_date = NOW() WHERE permission_role_id = :permission_role_id';
         const UPDATE_ROLE_PERMISSION = 'UPDATE permission_role SET staff_permission_id = :staff_permission_id, modified_date = NOW() WHERE permission_role_id = :permission_role_id';
-        const ADD_STAFF_ROLE = 'INSERT INTO permission_role (userid, staff_permission_id, staff_role_id, create_date, modified_date, active_fg)
+        const ADD_STAFF_ROLE = 'INSERT INTO permission_role (userid, staff_permission_id, staff_role_id, created_date, modified_date, active_fg)
                                                         VALUES (:userid, :staff_permission_id, :staff_role_id, NOW(), NOW(), 1)';
         const GET_STAFF_ROLE = "SELECT pr.permission_role_id, pr.staff_role_id, pr.staff_permission_id, pr.userid, sr.role_label, sp.staff_permission FROM permission_role AS pr INNER JOIN staff_role AS sr on pr.staff_role_id = sr.staff_role_id INNER JOIN staff_permission AS sp ON pr.staff_permission_id = sp.staff_permission_id WHERE pr.userid = :userid AND pr.active_fg = 1";
         const GET_ALL_ROLES = "SELECT staff_role_id, role_label FROM staff_role";
@@ -96,15 +96,15 @@ class PermissionRoleSqlStatement {
 
 class PatientSqlStatement {
         const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship,
-                                          citizenship,  religion,  family_position,  mother_status,  father_status,    marital_status,  no_of_children, create_date, modified_date)
+                                          citizenship,  religion,  family_position,  mother_status,  father_status,    marital_status,  no_of_children, created_date, modified_date)
                                  VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, :nok_firstname, :nok_middlename, :nok_surname, :nok_address, :nok_telephone, :nok_relationship,
                                           :citizenship,  :religion,  :family_position,  :mother_status,  :father_status,    :marital_status,  :no_of_children, NOW(), NOW() )';
 
-        const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, create_date, modified_date
+        const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient WHERE patient_id = :patient_id';
         const UPDATE = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
 
-        const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, create_date, modified_date
+        const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
 
         const SEARCH = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
@@ -117,14 +117,12 @@ class PatientSqlStatement {
             OR regNo = :parameter)
             AND(pq.active_fg IS NULL
             OR pq.active_fg = 0)";
-        const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
-            FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
 }
 
 class PatientQueueSqlStatement {
-    const ADD = "INSERT INTO patient_queue (patient_id, doctor_id, active_fg, create_date, modified_date) VALUES (:patient_id, :doctor_id, 1, NOW(), NOW())";
+    const ADD = "INSERT INTO patient_queue (patient_id, doctor_id, active_fg, created_date, modified_date) VALUES (:patient_id, :doctor_id, 1, NOW(), NOW())";
     const RETURNTOGENERALQUEUE = "UPDATE patient_queue SET active_fg = 2, doctor_id = NULL, modified_date = NOW() WHERE patient_id = :patient_id";
-    const ADDTOGENERALQUEUE = "INSERT INTO patient_queue (patient_id, active_fg, create_date, modified_date) VALUES (:patient_id, 2, NOW(), NOW())";
+    const ADDTOGENERALQUEUE = "INSERT INTO patient_queue (patient_id, active_fg, created_date, modified_date) VALUES (:patient_id, 2, NOW(), NOW())";
     const ADDTODOCTOR = "UPDATE patient_queue SET doctor_id = :doctor_id, active_fg = 1, modified_date = NOW() WHERE patient_id = :patient_id";
 
     const REMOVE = "UPDATE patient_queue SET active_fg = 0, modified_date = NOW() WHERE patient_id = :patient_id";
@@ -276,16 +274,16 @@ class UnitsSqlStatement{
 
 class HaematologySqlStatement {
 
-    const ADD = 'INSERT INTO haematology(clinical_diagnosis_details,doctor_id,lab_attendant_id,laboratory_report,laboratory_ref,create_date, modified_date,treatment_id)
+    const ADD = 'INSERT INTO haematology(clinical_diagnosis_details,doctor_id,lab_attendant_id,laboratory_report,laboratory_ref,created_date, modified_date,treatment_id)
                                         VALUES(:clinical_diagnosis_details, :doctor_id, :lab_attendant_id, :laboratory_report, :laboratory_ref, now(), now(), :treatment_id)';
     const DELETE = 'DELETE FROM haematology WHERE treatment_id = :treatment_id';
-    const GET = 'SELECT * FROM haematology WHERE treatment_id = :treatment_id ORDER BY create_date DESC LIMIT 1';
+    const GET = 'SELECT * FROM haematology WHERE treatment_id = :treatment_id ORDER BY created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT * FROM haematology WHERE haematology_id = :haematology_id LIMIT 1';
     const GET_HISTORY = 'SELECT p.patient_id AS patient_id,
     p.regNo AS regNo,
     h.haematology_id AS testid,
     h.clinical_diagnosis_details AS diagnosis,
-    h.create_date AS created_date
+    h.created_date AS created_date
 FROM
     haematology h
     LEFT JOIN treatment t ON (t.treatment_id = h.treatment_id)
@@ -336,36 +334,36 @@ FROM
 
 class FilmAppearanceSqlStatement {
 
-    const ADD = 'INSERT INTO film_appearance(haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,create_date,modified_date)
+    const ADD = 'INSERT INTO film_appearance(haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,created_date,modified_date)
                                         VALUES(:haematology_id,:aniscocytosis,:poikilocytosis,:polychromasia,:macrocytosis,:microcytosis,:hypochromia,:sickle_cells,:target_cells,:spherocytes,:nucleated_rbc,:sickling_test,now(), now())';
     const DELETE = 'DELETE FROM film_appearance WHERE haematology_id= :haematology_id';
-    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,create_date,modified_date FROM haematology h,film_appearance f WHERE h.haematology_id = f.haematology_id and h.treatment_id = :treatment_id ORDER BY f.create_date DESC LIMIT 1';
-    const GET_TEST = 'SELECT f.haematology_id,f.aniscocytosis,f.poikilocytosis,f.polychromasia,f.macrocytosis,f.microcytosis,f.hypochromia,f.sickle_cells,f.target_cells,f.spherocytes,f.nucleated_rbc,f.sickling_test,f.create_date,f.modified_date, h.haematology_id FROM haematology h, film_appearance f WHERE f.haematology_id=:haematology_id AND h.haematology_id=f.haematology_id LIMIT 1';
+    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,created_date,modified_date FROM haematology h,film_appearance f WHERE h.haematology_id = f.haematology_id and h.treatment_id = :treatment_id ORDER BY f.created_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT f.haematology_id,f.aniscocytosis,f.poikilocytosis,f.polychromasia,f.macrocytosis,f.microcytosis,f.hypochromia,f.sickle_cells,f.target_cells,f.spherocytes,f.nucleated_rbc,f.sickling_test,f.created_date,f.modified_date, h.haematology_id FROM haematology h, film_appearance f WHERE f.haematology_id=:haematology_id AND h.haematology_id=f.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE film_appearance SET aniscocytosis = :aniscocytosis,poikilocytosis = :poikilocytosis,polychromasia = :polychromasia,macrocytosis = :macrocytosis,microcytosis = :microcytosis,hypochromia = :hypochromia,sickle_cells =:sickle_cells,target_cells = :target_cells,spherocytes = :spherocytes,nucleated_rbc = :nucleated_rbc,sickling_test = :sickling_test, modified_date = now() WHERE haematology_id IN (SELECT haematology_id FROM haematology WHERE treatment_id = :treatment_id AND haematology_id=:haematology_id)';
 }
 
 class BloodTestSqlStatement {
 
-    const ADD = 'INSERT INTO blood_test(haematology_id,pcv,hb,hchc,wbc,eosinophils,platelets,rectis,rectis_index,e_s_r,microfilaria,malaria_parasites,create_date,modified_date)
+    const ADD = 'INSERT INTO blood_test(haematology_id,pcv,hb,hchc,wbc,eosinophils,platelets,rectis,rectis_index,e_s_r,microfilaria,malaria_parasites,created_date,modified_date)
                                         VALUES(:haematology_id,:pcv,:hb,:hchc,:wbc,:eosinophils,:platelets,:rectis,:rectis_index,:e_s_r,:microfilaria,:malaria_parasites,now(), now())';
     const DELETE = 'DELETE FROM blood_test WHERE haematology_id = :haematology_id';
-    const GET_TEST = 'SELECT h.haematology_id,bt.pcv,bt.hb,bt.hchc,bt.wbc,bt.eosinophils,bt.platelets,bt.rectis,bt.rectis_index,bt.e_s_r,bt.microfilaria,bt.malaria_parasites,bt.create_date,bt.modified_date FROM blood_test bt
+    const GET_TEST = 'SELECT h.haematology_id,bt.pcv,bt.hb,bt.hchc,bt.wbc,bt.eosinophils,bt.platelets,bt.rectis,bt.rectis_index,bt.e_s_r,bt.microfilaria,bt.malaria_parasites,bt.created_date,bt.modified_date FROM blood_test bt
                         LEFT JOIN haematology h ON (h.haematology_id=bt.haematology_id)
                         WHERE bt.haematology_id=:haematology_id AND h.haematology_id=bt.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE blood_test SET pcv = :pcv,hb = :hb, hchc = :hchc,wbc = :wbc,eosinophils = :eosinophils,platelets = :platelets,rectis = :rectis ,rectis_index = :rectis_index,e_s_r = :e_s_r,microfilaria = :microfilaria,malaria_parasites = :malaria_parasites, modified_date = now() WHERE haematology_id in (SELECT haematology_id FROM haematology WHERE haematology_id = :haematology_id AND treatment_id=:treatment_id)';
-    const GET    = 'SELECT haematology_id,pcv,hb,hchc,wbc,eosinophils,platelets,rectis,rectis_index,e_s_r,microfilaria,malaria_parasites,create_date,modified_date
+    const GET    = 'SELECT haematology_id,pcv,hb,hchc,wbc,eosinophils,platelets,rectis,rectis_index,e_s_r,microfilaria,malaria_parasites,created_date,modified_date
                     FROM blood_test
                     WHERE haematology_id = :haematology_id
-                    ORDER BY create_date DESC LIMIT 1';
+                    ORDER BY created_date DESC LIMIT 1';
 
 }
 
 class DifferentialCountSqlStatement {
 
-    const ADD = 'INSERT INTO differential_count(haematology_id, polymorphs_neutrophils,lymphocytes,monocytes,eosinophils,basophils,widals_test,blood_group,rhesus_factor,genotype, create_date,modified_date)
+    const ADD = 'INSERT INTO differential_count(haematology_id, polymorphs_neutrophils,lymphocytes,monocytes,eosinophils,basophils,widals_test,blood_group,rhesus_factor,genotype, created_date,modified_date)
                                         VALUES(:haematology_id, :polymorphs_neutrophils,:lymphocytes,:monocytes,:eosinophils,:basophils,:widals_test,:blood_group,:rhesus_factor,:genotype, now(),now())';
     const DELETE = 'DELETE FROM differential_count WHERE haematology_id = :haematology_id';
-    const GET    = 'SELECT * FROM haematology h,differential_count f WHERE h.haematology_id = f.haematology_id ORDER BY f.create_date DESC LIMIT 1';
+    const GET    = 'SELECT * FROM haematology h,differential_count f WHERE h.haematology_id = f.haematology_id ORDER BY f.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT dc.polymorphs_neutrophils,dc.lymphocytes,dc.monocytes,dc.eosinophils,dc.basophils,dc.widals_test,dc.blood_group,dc.rhesus_factor,dc.genotype, dc.modified_date, h.haematology_id FROM haematology h, differential_count dc WHERE dc.haematology_id=:haematology_id AND h.haematology_id=dc.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE differential_count SET polymorphs_neutrophils = :polymorphs_neutrophils,lymphocytes = :lymphocytes,monocytes = :monocytes,eosinophils = :eosinophils,basophils = :basophils,widals_test = :widals_test,blood_group = :blood_group,rhesus_factor = :rhesus_factor,genotype = :genotype, modified_date = now() WHERE haematology_id IN (SELECT haematology_id FROM haematology WHERE userid = :userid AND haematology_id=:haematology_id)';
 
@@ -373,12 +371,12 @@ class DifferentialCountSqlStatement {
 
 class UrineSqlStatement {
 
-    const ADD = 'INSERT INTO urine(treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date)
+    const ADD = 'INSERT INTO urine(treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,created_date,modified_date)
                                         VALUES(:treatment_id, :lab_attendant_id, :clinical_diagnosis_details,:investigation_required,:doctor_id,:laboratory_report,:laboratory_ref,:culture_value, now(), now())';
     const DELETE = 'DELETE FROM urine WHERE userid = :userid';
-    const GET = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date FROM urine WHERE userid = :userid ORDER BY create_date DESC LIMIT 1';
-    const GET_TEST = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date FROM urine WHERE urine_id=:urine_id LIMIT 1';
-    const GET_HISTORY = 'SELECT p.patient_id, p.regNo, u.urine_id AS testid, u.clinical_diagnosis_details AS diagnosis, u.create_date
+    const GET = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,created_date,modified_date FROM urine WHERE userid = :userid ORDER BY created_date DESC LIMIT 1';
+    const GET_TEST = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,created_date,modified_date FROM urine WHERE urine_id=:urine_id LIMIT 1';
+    const GET_HISTORY = 'SELECT p.patient_id, p.regNo, u.urine_id AS testid, u.clinical_diagnosis_details AS diagnosis, u.created_date
         FROM urine u
         LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
         LEFT JOIN patient p ON (p.patient_id=t.treatment_id)
@@ -426,9 +424,9 @@ ORDER BY u.modified_date DESC';
 
 class UrinalysisSqlStatement {
 
-    const ADD    = 'INSERT INTO urinalysis(urine_id,appearance,ph,glucose,protein,bilirubin ,urobillinogen, create_date, modified_date) VALUES(:urine_id, :appearance,:ph,:glucose,:protein,:bilirubin ,:urobillinogen, now(), now())';
+    const ADD    = 'INSERT INTO urinalysis(urine_id,appearance,ph,glucose,protein,bilirubin ,urobillinogen, created_date, modified_date) VALUES(:urine_id, :appearance,:ph,:glucose,:protein,:bilirubin ,:urobillinogen, now(), now())';
     const DELETE = 'DELETE FROM urinalysis WHERE treatment_id = :treatment_id';
-    const GET    = 'SELECT * FROM urine u,urinalysis ur WHERE u.urine_id = ur.urine_id and treatment_id = :treatment_id ORDER BY ur.create_date DESC LIMIT 1';
+    const GET    = 'SELECT * FROM urine u,urinalysis ur WHERE u.urine_id = ur.urine_id and treatment_id = :treatment_id ORDER BY ur.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT ur.*, u.urine_id FROM urine u, urinalysis ur WHERE ur.urine_id=:urine_id AND u.urine_id=ur.urine_id LIMIT 1';
     const UPDATE = 'UPDATE urinalysis SET appearance = :appearance ,ph = :ph,glucose = :glucose,protein = :protein,bilirubin = :bilirubin ,urobillinogen = :urobillinogen, modified_date = now() WHERE urine_id IN (SELECT urine_id from urine where treatment_id = :treatment_id AND urine_id=:urine_id)';
 
@@ -436,11 +434,11 @@ class UrinalysisSqlStatement {
 
 class UrineSensitivitySqlStatement {
 
-    const ADD    = 'INSERT INTO urine_sensitivity(urine_id,isolates,isolates_degree, create_date, modified_date) VALUES(:urine_id,:isolates,:isolates_degree, now(), now())';
-    const GET    = 'SELECT ur.urine_sensitivity_id, ur.urine_id, ur.isolates, ur.isolates_degree,ur.create_date,ur.modified_date
+    const ADD    = 'INSERT INTO urine_sensitivity(urine_id,isolates,isolates_degree, created_date, modified_date) VALUES(:urine_id,:isolates,:isolates_degree, now(), now())';
+    const GET    = 'SELECT ur.urine_sensitivity_id, ur.urine_id, ur.isolates, ur.isolates_degree,ur.created_date,ur.modified_date
                         FROM urine u,urine_sensitivity ur
                         WHERE u.urine_id = ur.urine_id AND u.treatment_id= :treatment_id
-                        ORDER BY ur.create_date';
+                        ORDER BY ur.created_date';
     const GET_TEST = 'SELECT us.isolates, us.isolates_degree, us.modified_date, u.urine_id
                         FROM urine u, urine_sensitivity us
                         WHERE us.urine_id=:urine_id AND u.urine_id=us.urine_id LIMIT 1';
@@ -458,10 +456,10 @@ class UrineSensitivityRefSqlStatement {
 
 class MicroscopySqlStatement {
 
-    const ADD = 'INSERT INTO microscopy(urine_id,pus_cells,red_cells,epithelial_cells,casts,crystals,others, create_date, modified_date)
+    const ADD = 'INSERT INTO microscopy(urine_id,pus_cells,red_cells,epithelial_cells,casts,crystals,others, created_date, modified_date)
                                         VALUES(:urine_id,:pus_cells,:red_cells,:epithelial_cells,:casts,:crystals,:others, now(), now())';
     const DELETE = 'DELETE FROM microscopy WHERE urine_id = :urine_id';
-    const GET    = 'SELECT m.urine_id,m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.create_date, m.modified_date
+    const GET    = 'SELECT m.urine_id,m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.created_date, m.modified_date
                         FROM urine u,microscopy m
                         WHERE u.urine_id = m.urine_id AND u.treatment_id = :treatment_id
                         ORDER BY m.modified_date DESC LIMIT 1';
@@ -534,8 +532,6 @@ class ParasitologyRefSqlStatement {
 }
 
 class ParasitologyRequestSqlStatement {
-    const ADD_REQ_INFO = "INSERT INTO parasitology_req (doctor_id, treatment_id, diagnosis, created_date, modified_date)
-                          VALUES (:doctor_id, :treatment_id, ::diagnosis, NOW(), NOW())";
     const ADD    = 'INSERT INTO parasitology_req(user_id, treatment_id, nature_of_specimen, investigation_req, diagnosis, date_reported, created_date, modified_date, doctor_id, lab_attendant_id) VALUES(:user_id, :treatment_id, :nature_of_specimen, :investigation_req, :diagnosis, now(), now(), now(),:doctor_id,:lab_attendant_id)';
     const DELETE = 'DELETE FROM parasitology_req where preg_id = :preg_id';
     const GET    = 'SELECT * FROM parasitology_req where preq_id = :preq_id';

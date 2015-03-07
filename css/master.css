@@ -597,3 +597,94 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
     }
 }
+
+.haematology {background-color: #F5DADF;}
+
+.barX {
+    margin: 0px 0px 20px 0;
+    padding: 10px;
+    border-radius:3px;
+    border:1px #ccc solid;
+    text-transform: capitalize;
+    /*    font-weight: bold;*/
+       box-shadow: 0 3px 5px #eee;
+}
+
+.grelet{
+    background-color:rgb(233, 233, 233);
+    border-radius: 2px;
+    margin-top: 10px;
+    font-size: 13px;
+}
+.pad5 {
+    padding: 5px;
+    margin-left: 60px;
+}
+
+.mask{display: none !important;}
+
+.page-header .page-header__title {
+    font-family: inherit;
+    font-weight: 500;
+    line-height: 1.1;
+    color: #333333;
+    font-size: 2.15em;
+    margin-top: 0.6644518274418605em;
+    margin-bottom: 0.33222591372093024em;
+}
+
+.form-margin {
+    margin-top: 5px;
+    background-image: none;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+#field .tablet{
+    width: 100%;
+    font-size: .8em;
+    color: #333;
+    text-transform: uppercase;
+    font-weight: normal;
+    margin:0px;
+    border: 0;
+    padding: 0;
+}
+
+.test-label {
+    font-weight: normal;
+    color: #0088cc;
+    text-transform: capitalize;
+}
+
+.haematology, .parasitology{
+    min-height:20px;
+    padding:19px;
+    margin-bottom:20px;
+    background-color:#ffffff;
+    border:1px solid #e3e3e3;border-radius:4px;
+    -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.05);
+    box-shadow:inset 0 1px 1px rgba(0,0,0,.05)
+}
+
+.title {
+    width: 100%;
+    font-weight: 500;
+    border-bottom-left-radius: 20px;
+    color: #337AB7;
+    padding: 10px;
+    border-bottom: 1px solid #CCCCFF;
+    text-transform: uppercase;
+}
+
+.submit-test {
+    border-top: 1px solid #CCCCFF;
+    margin-top: 20px;
+}
+.submit-test input[type=submit] {
+    margin-top: 5px;
+}
+
+.pad {
+    margin-left: 7px;
+}

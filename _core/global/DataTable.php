@@ -4,7 +4,7 @@ class UserAuthTable {
   const userid        = 'userid';
   const regNo         = 'regNo';
   const passcode      = 'passcode';
-  const create_date   = 'create_date';
+  const create_date   = 'created_date';
   const modified_date = 'modified_date';
   const status        = 'status';
   const active_fg     = 'active_fg';
@@ -21,7 +21,7 @@ class StatusTable {
 class StaffRoleTable {
   const table_name = 'staff_role';
   const staff_role_id = 'staff_role_id';
-  const create_date = 'create_date';
+  const create_date = 'created_date';
   const modified_date = 'modified_date';
   const staff_role = 'staff_role';
   const role_label = 'role_label';
@@ -32,7 +32,7 @@ class StaffPermissionTable {
   const table_name = 'staff_permission';
   const staff_permission_id = 'staff_permission_id';
   const staff_permission = 'staff_permission';
-  const create_date = 'create_date';
+  const create_date = 'created_date';
   const modified_date = 'modified_date';
   const active_fg = 'active_fg';
 }
@@ -52,7 +52,7 @@ class ProfileTable {
   const height = 'height';
   const weight = 'weight';
   const birth_date = 'birth_date';
-  const create_date = 'create_date';
+  const create_date = 'created_date';
   const modified_date = 'modified_date';
   const active_fg = 'active_fg';
 }
@@ -63,7 +63,7 @@ class PermissionRoleTable {
   const userid = 'userid';
   const staff_permission_id = 'staff_permission_id';
   const staff_role_id = 'staff_role_id';
-  const create_date = 'create_date';
+  const create_date = 'created_date';
   const modified_date = 'modified_date';
   const active_fg = 'active_fg';
 }
@@ -94,7 +94,7 @@ class PatientTable{
     const father_status      = 'father_status';
     const marital_status    = 'marital_status';
     const no_of_children    = 'no_of_children';
-    const create_date       = 'create_date';
+    const create_date       = 'created_date';
     const modified_date     = 'modified_date';
     const active_fg         = 'active_fg';
 }
@@ -105,7 +105,7 @@ class PatientQueueTable {
   const patient_id = 'patient_id';
   const doctor_id = 'doctor_id';
   const active_fg = 'active_fg';
-  const create_date = 'create_date';
+  const create_date = 'created_date';
   const modified_date = 'modified_date';
 }
 
@@ -243,7 +243,7 @@ class HaematologyTable {
     const lab_attendant_id           = 'lab_attendant_id';
     const laboratory_report          = 'laboratory_report';
     const laboratory_ref             = 'laboratory_ref';
-    const create_date                = 'create_date';
+    const create_date                = 'created_date';
     const modified_date              = 'modified_date';
     const treatment_id               = 'treatment_id';
     const active_fg                  = 'active_fg';
@@ -262,7 +262,7 @@ class UrineTable {
     const laboratory_report          = 'laboratory_report';
     const laboratory_ref             = 'laboratory_ref';
     const culture_value              = 'culture_value';
-    const create_date                = 'create_date';
+    const create_date                = 'created_date';
     const modified_date              = 'modified_date';
     const status_id                  = 'status_id';
     const active_fg                  = 'active_fg';
@@ -305,7 +305,7 @@ class UrinaryTable {
 
     const patient_id        = 'patient_id';
     const urinaryproblem = 'urinaryproblem';
-    const create_date    = 'create_date';
+    const create_date    = 'created_date';
     const modified_date  = 'modified_date';
     const active_fg      = 'active_fg';
 
@@ -327,7 +327,7 @@ class BloodTestTable {
     const e_s_r             = 'e_s_r';
     const microfilaria      = 'microfilaria';
     const malaria_parasites = 'malaria_parasites';
-    const create_date       = 'create_date';
+    const create_date       = 'created_date';
     const modified_date     = 'modified_date';
     const active_fg         = 'active_fg';
 }
@@ -349,7 +349,7 @@ class VisualSkillsProfileTable {
     const colour_vision             = 'colour_vision';
     const stereopsis                = 'stereopsis';
     const amplitude_of_accomodation = 'amplitude_of_accomodation';
-    const create_date               = 'create_date';
+    const create_date               = 'created_date';
     const modified_date             = 'modified_date';
     const active_fg                 = 'active_fg';
     const doctor_id                 = 'doctor_id';
@@ -379,7 +379,7 @@ class UrinalysisTable {
     const protein       = 'protein';
     const bilirubin     = 'bilirubin';
     const urobillinogen = 'urobillinogen';
-    const create_date   = 'create_date';
+    const create_date   = 'created_date';
     const modified_date = 'modified_date';
     const active_fg     = 'active_fg';
 }
@@ -395,7 +395,7 @@ class MicroscopyTable {
     const casts            = 'casts';
     const crystals         = 'crystals';
     const others           = 'others';
-    const create_date      = 'create_date';
+    const create_date      = 'created_date';
     const modified_date    = 'modified_date';
     const active_fg        = 'active_fg';
 }
@@ -407,7 +407,7 @@ class UrineSensitivityTable {
     const urine_id              = 'urine_id';
     const isolates              = 'isolates';
     const isolates_degree       = 'isolates_degree';
-    const create_date           = 'create_date';
+    const create_date           = 'created_date';
     const active_fg             = 'active_fg';
 }
 
@@ -427,7 +427,7 @@ class FilmAppearanceTable {
     const spherocytes        = 'spherocytes';
     const nucleated_rbc      = 'nucleated_rbc';
     const sickling_test      = 'sickling_test';
-    const create_date        = 'create_date';
+    const create_date        = 'created_date';
     const modified_date      = 'modified_date';
     const active_fg          = 'active_fg';
 }
@@ -446,7 +446,7 @@ class DifferentialCountTable {
     const blood_group            = 'blood_group';
     const rhesus_factor          = 'rhesus_factor';
     const genotype               = 'genotype';
-    const create_date            = 'create_date';
+    const create_date            = 'created_date';
     const active_fg              = 'active_fg';
 }
 
@@ -459,7 +459,7 @@ class XrayNoTable {
     const casual_no     = 'casual_no';
     const gp_no         = 'gp_no';
     const ante_natal_no = 'ante_natal_no';
-    const create_date   = 'create_date';
+    const create_date   = 'created_date';
     const modified_date = 'modified_date';
     const active_fg     = 'active_fg';
 }
@@ -482,7 +482,7 @@ class RadiologyRequestTable {
     const any_known_allergies        = 'any_known_allergies';
     const previous_xray              = 'previous_xray';
     const xray_number                = 'xray_number';
-    const create_date                = 'create_date';
+    const create_date                = 'created_date';
     const modified_date              = 'modified_date';
     const active_fg                  = 'active_fg';
 }
@@ -540,7 +540,7 @@ class RadiologyTable {
     const checked_by           = 'checked_by';
     const radiographers_note   = 'radiographers_note';
     const radiologists_report  = 'radiologists_report';
-    const create_date          = 'create_date';
+    const create_date          = 'created_date';
     const modified_date        = 'modified_date';
     const lmp                  = 'lmp';
     const active_fg            = 'active_fg';
