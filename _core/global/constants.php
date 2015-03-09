@@ -85,3 +85,11 @@ define('READ_MESSAGE', 'read');
 define('DRUG_UNCLEARED', 1);
 define('DRUG_CLEARED', 2);
 define('DRUG_UNAVAILABLE', 3);
+
+//LABORATORY TEST TYPES
+define('CHEMICAL_PATHOLOGY', 'chemical_pathology');
+define('HAEMATOLOGY', 'haematology');
+define('PARASITOLOGY', 'parasitology');
+define('MICROSCOPY', 'microscopy');
+define('VISUAL', 'visual');
+define('RADIOLOGY', 'radiology');

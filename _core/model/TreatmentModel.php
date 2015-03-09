@@ -23,6 +23,10 @@ class TreatmentModel extends BaseModel{
 
     }
 
+    public function updateTreatment($treatmentInfo){
+
+    }
+
     public function getTreatmentHistory($patientId){
 
     }
@@ -171,22 +175,22 @@ class TreatmentModel extends BaseModel{
 
     public function getLabHistory($patientId, $labTestType){
         switch($labTestType){
-            case 'radiology':
+            case RADIOLOGY:
                 return $this->getRadiologyLabHistory($patientId);
 
-            case 'haematology':
+            case HAEMATOLOGY:
                 return $this->getHaematologyLabHistory($patientId);
 
-            case 'microscopy':
+            case MICROSCOPY:
                 return $this->getMicroscopyLabHistory($patientId);
 
-            case 'visual':
+            case VISUAL:
                 return $this->getVisualLabHistory($patientId);
 
-            case 'chemical':
+            case CHEMICAL_PATHOLOGY:
                 return $this->getChemicalPathologyLabHistory($patientId);
 
-            case 'parasitology':
+            case PARASITOLOGY:
                 return $this->getParasitologyLabHistory($patientId);
 
             default:
