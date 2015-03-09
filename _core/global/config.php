@@ -2,10 +2,10 @@
 //DATABASE CONFIGURATION
 define('DB_HOST', 'localhost');
 define('DBNAME', 'pms');
-define('DB_USERNAME', 'root');
-define('DB_PASSWORD', 'admin');
-/*define('DB_USERNAME', 'pms');
-define('DB_PASSWORD', '__$pmsadmin)(--');*/
+/*define('DB_USERNAME', 'root');
+define('DB_PASSWORD', '');*/
+define('DB_USERNAME', 'pms');
+define('DB_PASSWORD', '__$pmsadmin)(--');
 
 //PROJECT CONFIG
 define('PROJECT_NAME', 'pms'); //Change project name here, and in global/_require.php

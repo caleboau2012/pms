@@ -253,7 +253,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
         });
 
         $("input[name='recipient']").autocomplete({
-            source : "phase/phase_communication.php?intent=searchContact",
+            source : host + "phase/phase_communication.php?intent=searchContact",
             minLength : 0,
             select : function(event, ui) {
                 $(this).attr("id", "user-" + ui.item.userid);
