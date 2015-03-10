@@ -681,3 +681,39 @@ class VisualRequestSqlStatement{
     const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE treatment_id = :treatment_id";
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET ... WHERE treatment_id = :treatment_id";
 }
+
+class AdmissionReqSqlStatement {
+    const REQUEST_ADMISSION = "INSERT INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
+
+    const GET_ALL_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
+        FROM admission_req AS ar 
+            INNER JOIN treatment AS t 
+                ON t.treatment_id = ar.treatment_id 
+            INNER JOIN profile AS p 
+                ON p.userid = t.doctor_id 
+            INNER JOIN patient AS pt 
+                ON pt.patient_id = t.patient_id 
+        WHERE ar.active_fg = 1
+        AND t.active_fg = 1 
+        AND p.active_fg = 1 
+        AND pt.active_fg = 1";
+
+    const SEARCH_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
+        FROM admission_req AS ar 
+            INNER JOIN treatment AS t 
+                ON t.treatment_id = ar.treatment_id 
+            INNER JOIN profile AS p 
+                ON p.userid = t.doctor_id 
+            INNER JOIN patient AS pt 
+                ON pt.patient_id = t.patient_id 
+        WHERE ar.active_fg = 1 
+        AND t.active_fg = 1 
+        AND p.active_fg = 1 
+        AND pt.active_fg = 1 
+        AND (
+            pt.surname LIKE :wildcard 
+            OR pt.surname LIKE :wildcard 
+            OR pt.middlename LIKE :wildcard 
+            OR pt.regNo = :parameter
+        )";
+}
