@@ -92,6 +92,7 @@ class PermissionRoleSqlStatement {
         const GET_ALL_PERMISSIONS = "SELECT staff_permission_id, staff_permission FROM staff_permission";
         const CHECK_PERMISSION = "SELECT COUNT(*) AS count FROM staff_permission WHERE staff_permission_id = :staff_permission_id";
         const CHECK_ROLE = "SELECT COUNT(*) AS count FROM staff_role WHERE staff_role_id = :staff_role_id";
+        const HAS_ROLE = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid AND staff_role_id = :staff_role_id AND active_fg = 1";
 }
 
 class PatientSqlStatement {

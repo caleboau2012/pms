@@ -56,4 +56,12 @@ Class RoleModel extends BaseModel {
 
         return $result['count'] == 1 ? true : false;
     }
+
+    public function hasRole($role_data) {
+        $stmt = PermissionRoleSqlStatement::HAS_ROLE;
+
+        $result = $this->conn->fetch($stmt, $role_data);
+        
+        return $result[COUNT] > 0 ? true : false;
+    }
 }

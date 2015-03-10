@@ -91,4 +91,16 @@ Class RoleController {
 
         return $response;
     }
+
+    public function hasRole($userid, $role_id) {
+        $role_model = new RoleModel();
+        
+        $data = array();
+        $data[PermissionRoleTable::userid] = $userid;
+        $data[PermissionRoleTable::staff_role_id] = $role_id;
+        
+        $feedback = $role_model->hasRole($data);
+
+        return $feedback;
+    }
 }
