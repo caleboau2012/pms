@@ -92,7 +92,7 @@ Class RoleController {
         return $response;
     }
 
-    public function hasRole($userid, $role_id) {
+    public static function hasRole($userid, $role_id) {
         $role_model = new RoleModel();
         
         $data = array();
