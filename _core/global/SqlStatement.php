@@ -694,9 +694,10 @@ class AdmissionReqSqlStatement {
             INNER JOIN patient AS pt 
                 ON pt.patient_id = t.patient_id 
         WHERE ar.active_fg = 1
-        AND t.active_fg = 1 
-        AND p.active_fg = 1 
-        AND pt.active_fg = 1";
+            AND t.active_fg = 1 
+            AND p.active_fg = 1 
+            AND pt.active_fg = 1
+        ORDER BY ar.created_date DESC";
 
     const SEARCH_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
         FROM admission_req AS ar 
@@ -707,13 +708,14 @@ class AdmissionReqSqlStatement {
             INNER JOIN patient AS pt 
                 ON pt.patient_id = t.patient_id 
         WHERE ar.active_fg = 1 
-        AND t.active_fg = 1 
-        AND p.active_fg = 1 
-        AND pt.active_fg = 1 
-        AND (
-            pt.surname LIKE :wildcard 
-            OR pt.surname LIKE :wildcard 
-            OR pt.middlename LIKE :wildcard 
-            OR pt.regNo = :parameter
-        )";
+            AND t.active_fg = 1 
+            AND p.active_fg = 1 
+            AND pt.active_fg = 1 
+            AND (
+                pt.surname LIKE :wildcard 
+                OR pt.surname LIKE :wildcard 
+                OR pt.middlename LIKE :wildcard 
+                OR pt.regNo = :parameter
+            )
+        ORDER BY ar.created_date DESC";
 }
