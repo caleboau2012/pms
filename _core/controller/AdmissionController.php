@@ -20,4 +20,75 @@ class AdmissionController {
 
         return $feedback;
     }
+
+    public function loadWards() {
+        $feedback = WardModel::getAll();
+
+        return $feedback;
+    }
+
+    public function getWardBeds($ward_id) {
+        $ward_model = new WardModel($ward_id);
+
+        $feedback = $ward_model->getWardBeds();
+
+        return $feedback;
+    }
+
+    public function admitPatient($patient_id, $treatment_id, $admitted_by, $bed_id, $comments) {
+        
+        $feedback = array();
+        
+        $admitted = AdmissionController::isAdmitted($patient_id);
+        if ($admitted) {
+            $feedback[P_STATUS] = STATUS_ERROR;
+            $feedback[P_MESSAGE] = "Patient already admitted!";
+
+            return $feedback;
+        }
+
+        $occupied = AdmissionController::isOccupied($bed_id);
+        if ($occupied) {
+            $feedback[P_STATUS] = STATUS_ERROR;
+            $feedback[P_MESSAGE] = "Bed already occupied!";
+
+            return $feedback;
+        }
+
+        $admission_model = new AdmissionModel();
+
+        $admission_data = array();
+        $admission_data[AdmissionTable::patient_id] = $patient_id;
+        $admission_data[AdmissionTable::treatment_id] = $treatment_id;
+        $admission_data[AdmissionTable::admitted_by] = $admitted_by;
+        $admission_data[AdmissionTable::bed_id] = $bed_id;
+        $admission_data[AdmissionTable::comments] = $comments;
+
+        $response = $admission_model->admitPatient($admission_data);
+
+        if ($response) {
+            $feedback[P_STATUS] = STATUS_OK;
+            $feedback[P_MESSAGE] = "Patient admission successful!";
+        } else {
+            $feedback[P_STATUS] = STATUS_ERROR;
+            $feedback[P_MESSAGE] = "Unable to complete patient admission!";
+        }
+
+        return $feedback;
+    }
+
+    public static function isAdmitted($patient_id) {
+        $admission_model = new AdmissionModel();
+
+        $feedback = $admission_model->isAdmitted($patient_id);
+
+        return $feedback;
+    }
+
+    public static function isOccupied($bed_id) {
+        $bed_model = new BedModel($bed_id);
+        $feedback = $bed_model->getStatus();
+
+        return ($feedback == OCCUPIED);
+    }
 }

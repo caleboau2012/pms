@@ -719,3 +719,21 @@ class AdmissionReqSqlStatement {
             )
         ORDER BY ar.created_date DESC";
 }
+
+class AdmissionSqlStatement {
+    const ADMIT = "INSERT INTO admission(treatment_id, bed_id, admitted_by, patient_id, entry_date, exit_date, comments, created_date, modified_date, active_fg) VALUES(:treatment_id, :bed_id, :admitted_by, :patient_id, NOW(), NULL, :comments, NOW(), NOW(), 1)";
+
+    const IS_ADMITTED = "SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND active_fg = 1";
+}
+
+class BedSqlStatement {
+    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id";
+
+    const BED_STATUS = "SELECT bed_status FROM bed WHERE bed_id = :bed_id";
+}
+
+class WardRefSqlStatement {
+    const GET_ALL = "SELECT ward_ref_id, description FROM ward_ref";
+
+    const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id";
+}

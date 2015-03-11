@@ -578,7 +578,7 @@ class EncounterTable{
     const active_fg    = 'active_fg';
 }
 
-class AdmissionReqTable{
+class AdmissionReqTable {
     const table_name = 'admission_req';
 
     const admission_req_id = 'admission_req_id';
@@ -588,7 +588,7 @@ class AdmissionReqTable{
     const active_fg        = 'active_fg';
 }
 
-class AdmissionTable{
+class AdmissionTable {
     const table_name = 'admission';
 
     const admission_id  = 'admission_id';
@@ -602,4 +602,26 @@ class AdmissionTable{
     const modified_date = 'modified_date';
     const active_fg     = 'active_fg';
     const treatment_id  = 'treatment_id';
+}
+
+class BedTable {
+    const table_name = 'bed';
+
+    const bed_id = 'bed_id';
+    const bed_description = 'bed_description';
+    const bed_status = 'bed_status';
+    const ward_id = 'ward_id';
+    const created_date = 'created_date';
+    const modified_date = 'modified_date';
+    const active_fg = 'active_fg';
+}
+
+class WardRefTable {
+    const table_name = 'ward_ref';
+
+    const ward_ref_id = 'ward_ref_id';
+    const description = 'description';
+    const created_date = 'created_date';
+    const modified_date = 'modified_date';
+    const active_fg = 'active_fg';
 }
