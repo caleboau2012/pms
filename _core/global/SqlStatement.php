@@ -222,14 +222,14 @@ class CommunicationSqlStatement {
 
     const CHECK_SENT_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE msg_id = :msg_id AND sender_id = :sender_id";
 
-    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, created_date 
+    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date 
         FROM communication
             INNER JOIN profile
                 ON communication.sender_id = profile.userid
         WHERE recipient_id = :recipient_id
         AND msg_id = :msg_id";
 
-    const GET_SENT_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS recipient_name, msg_id, recipient_id, msg_subject, msg_body, created_date
+    const GET_SENT_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS recipient_name, msg_id, recipient_id, msg_subject, msg_body, communication.created_date
         FROM communication
             INNER JOIN profile
                 ON communication.recipient_id = profile.userid
