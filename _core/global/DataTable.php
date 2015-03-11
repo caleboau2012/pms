@@ -594,6 +594,7 @@ class AdmissionTable {
     const admission_id  = 'admission_id';
     const bed_id        = 'bed_id';
     const admitted_by   = 'admitted_by';
+    const discharged_by = 'discharged_by';
     const patient_id    = 'patient_id';
     const entry_date    = 'entry_date';
     const exit_date     = 'exit_date';
@@ -614,6 +615,17 @@ class BedTable {
     const created_date = 'created_date';
     const modified_date = 'modified_date';
     const active_fg = 'active_fg';
+}
+
+class AdmissionBedTable {
+    const table_name = 'admission_bed';
+
+    const admission_bed_id = 'admission_bed_id';
+    const admission_id = 'admission_id';
+    const bed_id = 'bed_id';
+    const active_fg = 'active_fg';
+    const created_date = 'created_date';
+    const modified_date = 'modified_date';
 }
 
 class WardRefTable {

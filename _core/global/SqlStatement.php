@@ -721,15 +721,67 @@ class AdmissionReqSqlStatement {
 }
 
 class AdmissionSqlStatement {
-    const ADMIT = "INSERT INTO admission(treatment_id, bed_id, admitted_by, patient_id, entry_date, exit_date, comments, created_date, modified_date, active_fg) VALUES(:treatment_id, :bed_id, :admitted_by, :patient_id, NOW(), NULL, :comments, NOW(), NOW(), 1)";
+    const ADMIT = "INSERT INTO admission(treatment_id, admitted_by, patient_id, entry_date, exit_date, comments, created_date, modified_date, active_fg) VALUES(:treatment_id, :admitted_by, :patient_id, NOW(), NULL, :comments, NOW(), NOW(), 1)";
+
+    const ASSIGN_BED = "INSERT INTO admission_bed(admission_id, bed_id, active_fg
+        , created_date, modified_date) VALUES (:admission_id, :bed_id, 1, NOW(), NOW())";
+
+    const REMOVE_FROM_BED = "UPDATE admission_bed SET active_fg = 0 WHERE admission_id = :admission_id AND bed_id = :bed_id AND active_fg = 1";
+
+    const GET_ADMISSION_DETAILS = "SELECT ad.admission_id, adb.bed_id 
+        FROM admission AS ad 
+            INNER JOIN admission_bed AS adb 
+                ON ad.admission_id = adb.admission_id 
+        WHERE adb.active_fg = 1 
+            AND ad.patient_id = :patient_id
+            AND ad.active_fg = 1";
+
+    const DISCHARGE = "UPDATE admission SET active_fg = 0, discharged_by = :discharged_by, modified_date = NOW() WHERE admission_id = :admission_id AND active_fg = 1";
 
     const IS_ADMITTED = "SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND active_fg = 1";
+
+    const SEARCH_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
+        FROM admission AS ad 
+            INNER JOIN treatment AS t 
+                ON t.treatment_id = ad.treatment_id 
+            INNER JOIN profile AS p 
+                ON p.userid = t.doctor_id 
+            INNER JOIN patient AS pt 
+                ON pt.patient_id = t.patient_id 
+        WHERE ad.active_fg = 1 
+            AND t.active_fg = 1 
+            AND p.active_fg = 1 
+            AND pt.active_fg = 1 
+            AND (
+                pt.surname LIKE :wildcard
+                OR pt.surname LIKE :wildcard 
+                OR pt.middlename LIKE :wildcard 
+                OR pt.regNo = :parameter
+            )
+        ORDER BY ad.created_date DESC";
+
+    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
+        FROM admission AS ad 
+            INNER JOIN treatment AS t 
+                ON t.treatment_id = ad.treatment_id 
+            INNER JOIN profile AS p 
+                ON p.userid = t.doctor_id 
+            INNER JOIN patient AS pt 
+                ON pt.patient_id = t.patient_id 
+        WHERE ad.active_fg = 1 
+            AND t.active_fg = 1 
+            AND p.active_fg = 1 
+            AND pt.active_fg = 1
+        ORDER BY ad.created_date DESC";
 }
 
 class BedSqlStatement {
-    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id";
+    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id AND bed_status = 0";
+
+    const VACATE = "UPDATE bed SET bed_status = 0 WHERE bed_id = :bed_id AND bed_status = 1";
 
     const BED_STATUS = "SELECT bed_status FROM bed WHERE bed_id = :bed_id";
+
 }
 
 class WardRefSqlStatement {

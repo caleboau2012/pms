@@ -21,7 +21,7 @@ if ($intent == 'admitPatient') {
         $warden = new AdmissionController();
         $response = $warden->admitPatient($_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::treatment_id], $admitted_by, $_REQUEST[AdmissionTable::bed_id], $comments);
         if ($response[P_STATUS] == STATUS_OK) {
-            echo JsonResponse::message($response[STATUS_OK], $response[P_MESSAGE]);
+            echo JsonResponse::message(STATUS_OK, $response[P_MESSAGE]);
             exit();
         } else {
             echo JsonResponse::error($response[P_MESSAGE]);
@@ -50,6 +50,51 @@ if ($intent == 'admitPatient') {
             exit();
         } else {
             echo JsonResponse::error("No beds in this ward!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
+} elseif ($intent == 'searchPatients') {
+    if (isset($_REQUEST[TERM])) {
+        $warden = new AdmissionController();
+        $patient_details = $warden->searchPatients($_REQUEST[TERM]);
+        if (is_array($patient_details)) {
+            echo json_encode($patient_details);
+            exit();
+        } else {
+            echo JsonResponse::error("No admitted patients match the search parameter!");
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
+} elseif ($intent == 'getPatients') {
+    $response = AdmissionController::getPatients();
+    if (is_array($response)) {
+        echo JsonResponse::success($response);
+        exit();
+    } else {
+        echo JsonResponse::error("No admitted patients!");
+        exit();
+    }
+} elseif ($intent == 'dischargePatient') {
+    if (isset($_REQUEST[AdmissionTable::patient_id])) {
+        $patient_id = $_REQUEST[AdmissionTable::patient_id];
+        if (!AdmissionController::isAdmitted($patient_id)) {
+            echo JsonResponse::error("Cannot discharge a patient that is not admitted!");
+            exit();
+        }
+
+        $discharged_by = CxSessionHandler::getItem(UserAuthTable::userid);
+        $warden = new AdmissionController();
+        $response = $warden->dischargePatient($patient_id, $discharged_by);
+        if ($response) {
+            echo JsonResponse::message(STATUS_OK, "Patient successfully discharged!");
+            exit();
+        } else {
+            echo JsonResponse::error("Unable to discharge patient!");
             exit();
         }
     } else {

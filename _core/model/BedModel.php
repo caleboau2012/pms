@@ -17,6 +17,17 @@ class BedModel extends BaseModel {
         return $result;
     }
 
+    public function vacate() {
+        $stmt = BedSqlStatement::VACATE;
+
+        $data = array();
+        $data[BedTable::bed_id] = $this->bed_id;
+
+        $result = $this->conn->execute($stmt, $data, true);
+
+        return $result;
+    }
+
     public function getStatus() {
         $stmt = BedSqlStatement::BED_STATUS;
 
