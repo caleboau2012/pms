@@ -21,6 +21,17 @@ class AdmissionModel extends BaseModel {
         return sizeof($result) > 0 ? $result : false;
     }
 
+    public function dismissRequest($treatment_id) {
+        $stmt = AdmissionReqSqlStatement::DISMISS_REQUEST;
+        
+        $data = array();
+        $data[AdmissionReqTable::treatment_id] = $treatment_id;
+
+        $dismissed = $this->conn->execute($stmt, $data, true);
+
+        return $dismissed;
+    }
+
     public function searchAdmissionRequests($parameter) {
         $stmt = AdmissionReqSqlStatement::SEARCH_REQUESTS;
 
@@ -36,8 +47,6 @@ class AdmissionModel extends BaseModel {
     public function admitPatient($admission_data) {
 
         $begin = $this->conn->beginTransaction();
-
-
 
         if ($begin) {
             // Admit patient (Insert patient details in admission table)
@@ -66,8 +75,16 @@ class AdmissionModel extends BaseModel {
                     $occupied = $bed_model->occupy();
 
                     if ($occupied) {
-                        $this->conn->commit();
-                        return true;
+                        //Dismiss admission request
+                        $request_dismissed = $this->dismissRequest($admission_data[AdmissionTable::treatment_id]);
+                        if ($request_dismissed) {
+                            # code...
+                            $this->conn->commit();
+                            return true;
+                        } else {
+                            $this->conn->rollBack();
+                            return false;
+                        }
                     } else {
                         $this->conn->rollBack();
                         return false;
