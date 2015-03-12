@@ -581,7 +581,7 @@ class ParasitologyDetailsSqlStatement {
 
 class EncounterSqlStatement{
     const GET_HISTORY = 'SELECT * FROM encounter AS e WHERE admission_id = :admission_id ORDER BY e.created_date DESC';
-    const ADD = 'INSERT INTO encounter (personnel_id, patient_id, admission_id, comments, created_date) VALUES(:personnel_id, :patient_id, :admission_id, :comments, NOW())';
+    const ADD = "INSERT INTO encounter(personnel_id, patient_id, admission_id, comments, created_date, active_fg) VALUES(:personnel_id, :patient_id, :admission_id, :comments, NOW(), 1)";
 }
 
 class RadiologyRequestSqlStatement{

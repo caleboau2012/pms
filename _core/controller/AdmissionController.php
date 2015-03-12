@@ -77,6 +77,24 @@ class AdmissionController {
         return $feedback;
     }
 
+    public function logEncounter($personnel_id, $patient_id, $admission_id, $comments, $vitals_data) {
+        $admission_model = new AdmissionModel();
+
+        $encounter_data = array();
+        $encounter_data[EncounterTable::personnel_id] = $personnel_id;
+        $encounter_data[EncounterTable::patient_id] = $patient_id;
+        $encounter_data[EncounterTable::admission_id] = $admission_id;
+        $encounter_data[EncounterTable::comments] = $comments;
+
+        if ($vitals_data) {
+            $encounter_data[VITALS] = $vitals_data;
+        }
+
+        $feedback = $admission_model->logEncounter($encounter_data);
+
+        return $feedback;
+    }
+
     
     public function dischargePatient($patient_id, $discharged_by) {
         $admission_model = new AdmissionModel();

@@ -6,7 +6,7 @@ class Crave {
         foreach ($file_array as $file) {
             $file_path = $root_path . '/' . $directory . $file . '.php';
             if (file_exists($file_path)) {
-                require_once $file_path;
+                include_once $file_path;
             }
         }
     }
@@ -15,7 +15,7 @@ class Crave {
         $root_path = Crave::getRootPath();
         $file_array = glob($root_path . '/' . $directory . '*.php');
         foreach ($file_array as $file_path) {
-            require_once $file_path;
+            include_once $file_path;
         }
     }
 

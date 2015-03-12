@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'AdmissionModel', 'RoleModel', 'BedModel', 'WardModel'));
-Crave::requireFiles(CONTROLLER, array('AdmissionController', 'RoleController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'AdmissionModel', 'RoleModel', 'BedModel', 'WardModel', 'VitalsModel'));
+Crave::requireFiles(CONTROLLER, array('AdmissionController', 'RoleController', 'VitalsController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -101,4 +101,39 @@ if ($intent == 'admitPatient') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
+} elseif ($intent == 'logEncounter') {
+    if (isset($_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $_REQUEST[AdmissionTable::patient_id])) {
+        $personnel_id = CxSessionHandler::getItem(UserAuthTable::userid);
+        
+        if (isset($_REQUEST[VITALS])) {
+            $vitals_data = $_REQUEST[VITALS];
+            $valid_vitals = VitalsController::validateVitals($vitals_data);
+
+            if (is_array($valid_vitals)) {
+                $vitals_data = $valid_vitals;
+            } else {
+                echo JsonResponse::error("Invalid vitals data!");
+                exit();                
+            }
+        } else {
+            $vitals_data = null;
+        }
+
+        $warden = new AdmissionController();
+        $response = $warden->logEncounter($personnel_id, $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $vitals_data);
+
+        if ($response) {
+            echo JsonResponse::message(STATUS_OK, "Encounter logged successfully!");
+            exit();
+        } else {
+            echo JsonResponse::error("Unable to log encounter!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
+} else {
+    echo JsonResponse::error("Invalid intent!");
+    exit();
 }

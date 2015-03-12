@@ -27,21 +27,28 @@ class VitalsController {
     }
 
     public static function validateVitals($vitals_data) {
+        if (!is_array($vitals_data)) {
+            return false;
+        }
+
         $vitals_label = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi');
 
         $is_empty = true;
-        foreach ($vitals_data as $key => $value) {
-            if (!in_array($key, $vitals_label)) {
-                return false;
-            } elseif ($value != null || $value != '') {
+        $valid_vitals = array();
+        
+        foreach ($vitals_label as $label) {
+            if (isset($vitals_data[$label])) {
                 $is_empty = false;
+                $valid_vitals[$label] = $vitals_data[$label];
+            } else {
+                $valid_vitals[$label] = null;
             }
         }
 
         if ($is_empty) {
             return false;
         } else {
-            return true;
+            return $valid_vitals;
         }
     }
 }
