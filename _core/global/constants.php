@@ -101,6 +101,3 @@ define('TERM', 'term'); //jQuery Autocomplete request parameter
 //BED CONSTANTS
 define('OCCUPIED', 1);
 define('VACANT', 0);
-
-$i = 10;
-//$vitals_array = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi');
