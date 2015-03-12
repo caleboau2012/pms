@@ -8,12 +8,13 @@ class VitalsController {
         //OR IF NEEDED!!!
         //---------------------------------------------------------------------
 
-        $vitalsModel = new VitalsModel();
         
         $vitals_data[VitalsTable::added_by] = $added_by;
         $vitals_data[VitalsTable::encounter_id] = $encounter_id;
         
-        $feedback = $vitalsModel->add($vitals_data);
+        $vitalsModel = new VitalsModel($vitals_data);
+        
+        $feedback = $vitalsModel->add();
 
         return $feedback;
     }
