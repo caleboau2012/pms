@@ -19,11 +19,14 @@ if ($intent == 'addVitals') {
         $added_by = CxSessionHandler::getItem(UserAuthTable::userid);
 
         $vitals_data = $_REQUEST[VITALS];
-        $is_valid_vitals = VitalsController::validateVitals($vitals_data);
+        $valid_vitals = VitalsController::validateVitals($vitals_data);
 
-        if (!$is_valid_vitals) {
+        
+        if (is_array($valid_vitals)) {
+            $vitals_data = $valid_vitals;
+        } else {
             echo JsonResponse::error("Invalid vitals data!");
-            exit();
+            exit();                
         }
 
         $vitals_data[VitalsTable::patient_id] = $_REQUEST[VitalsTable::patient_id];
