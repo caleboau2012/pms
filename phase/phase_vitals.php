@@ -15,22 +15,14 @@ if (isset($_REQUEST['intent'])) {
 }
 
 if ($intent == 'addVitals') {
-    if (isset($_REQUEST[VitalsTable::patient_id])) {
+    if (isset($_REQUEST[VitalsTable::patient_id], $_REQUEST[VITALS])) {
         $added_by = CxSessionHandler::getItem(UserAuthTable::userid);
 
-        $vitals_data = array();
-        $empty = true;
-        foreach ($vitals_array as $vital) {
-            if (isset($_REQUEST[$vital])) {
-                $vitals_data[$vital] = $_REQUEST[$vital];
-                $empty = false;
-            } else {
-                $vitals_data[$vital] = null;
-            }
-        }
+        $vitals_data = $_REQUEST[VITALS];
+        $is_valid_vitals = VitalsController::validateVitals($vitals_data);
 
-        if ($empty) {
-            echo JsonResponse::error("Cannot add empty vitals data!");
+        if (!$is_valid_vitals) {
+            echo JsonResponse::error("Invalid vitals data!");
             exit();
         }
 

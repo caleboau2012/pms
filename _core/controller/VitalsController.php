@@ -25,4 +25,23 @@ class VitalsController {
 
         return $feedback;
     }
+
+    public static function validateVitals($vitals_data) {
+        $vitals_label = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi');
+
+        $is_empty = true;
+        foreach ($vitals_data as $key => $value) {
+            if (!in_array($key, $vitals_label)) {
+                return false;
+            } elseif ($value != null || $value != '') {
+                $is_empty = false;
+            }
+        }
+
+        if ($is_empty) {
+            return false;
+        } else {
+            return true;
+        }
+    }
 }

@@ -1,5 +1,4 @@
 <?php
-$vitals_array = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi');
 
 //JSON RESPONSE CONSTANTS
 define('STATUS_OK', 1);
@@ -63,6 +62,7 @@ define('MAX_NUM_POLL', 4);
 //GENERAL CONSTANTS
 define('COUNT', 'count');
 define('NAME', 'name');
+define('VITALS', 'vitals');
 
 //COMMUNICATION CONSTANTS
 define('MAX_BODY_LENGTH', 200);
