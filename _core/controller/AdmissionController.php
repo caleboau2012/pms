@@ -11,7 +11,22 @@ class AdmissionController {
         $admission_model = new AdmissionModel();
         $feedback = $admission_model->getAdmissionRequests();
 
-        return $feedback;
+        if (!is_array($feedback)) {
+            return false;
+        } else {
+            $response = array();
+
+            $response[P_STATUS] = STATUS_OK;
+            
+            if (sizeof($feedback) > 0) {
+                $response[P_DATA] = $feedback;
+            } else {
+                $response[P_MESSAGE] = "No pending admission requests!";
+            }
+
+            return $response;
+        }
+
     }
 
     public function searchAdmissionRequests($parameter) {

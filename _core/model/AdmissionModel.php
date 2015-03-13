@@ -29,7 +29,7 @@ class AdmissionModel extends BaseModel {
 
         $result = $this->conn->fetchAll($stmt, $data);
 
-        return sizeof($result) > 0 ? $result : false;
+        return (is_array($result)) ? $result : false;
     }
 
     public function searchAdmissionRequests($parameter) {

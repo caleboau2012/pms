@@ -35,9 +35,15 @@ if ($intent == 'requestAdmission') {
     }
 } elseif ($intent == 'getAdmissionRequests') {
     $response = AdmissionController::admissionRequests();
+    
     if (is_array($response)) {
-        echo JsonResponse::success($response);
-        exit();
+        if (isset($response[P_MESSAGE])) {
+            echo JsonResponse::message($response[P_STATUS], $response[P_MESSAGE]);
+            exit();
+        } else {
+            echo JsonResponse::success($response[P_DATA]);
+            exit();            
+        }
     } else {
         echo JsonResponse::error("Unable to get pending admission requests!");
         exit();
