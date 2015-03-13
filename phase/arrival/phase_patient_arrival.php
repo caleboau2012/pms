@@ -69,57 +69,13 @@ if ($intent == 'search') {
         exit();
     }
 } elseif ($intent == 'addToQueue') {
-    if (isset($_REQUEST[PatientQueueTable::patient_id], $_REQUEST[PatientQueueTable::doctor_id])) {
-        $usher = new ArrivalController();
-        $response = $usher->addPatient($_REQUEST[PatientQueueTable::patient_id], $_REQUEST[PatientQueueTable::doctor_id]);
-
-        if (is_array($response)) {
-            echo JsonResponse::error($response[P_MESSAGE]);
-            exit();
-        } else {
-            echo ($response) ? JsonResponse::message(STATUS_OK, "Patient succesfully added to queue!") : JsonResponse::error("Error adding patient to queue!");
-            exit();
-        }
-    } else {
-        echo JsonResponse::error("Incomplete request parameters!");
-        exit();
-    }
-} elseif ($intent == 'addToGeneralQueue') {
     if (isset($_REQUEST[PatientQueueTable::patient_id])) {
         $usher = new ArrivalController();
-        $response = $usher->addPatientToGeneralQueue($_REQUEST[PatientQueueTable::patient_id]);
 
-        if (is_array($response)) {
-            echo JsonResponse::error($response[P_MESSAGE]);
-            exit();
-        } else {
-            echo ($response) ? JsonResponse::message(STATUS_OK, "Patient succesfully added to queue!") : JsonResponse::error("Error adding patient to queue!");
-            exit();
-        }
-    } else {
-        echo JsonResponse::error("Incomplete request parameters!");
-        exit();
-    }
-} elseif ($intent == 'addToDoctor') {
-    if (isset($_REQUEST[PatientQueueTable::patient_id]) && isset($_REQUEST[PatientQueueTable::doctor_id])) {
-        $usher = new ArrivalController();
-        $response = $usher->addToDoctor($_REQUEST[PatientQueueTable::patient_id], $_REQUEST[PatientQueueTable::doctor_id]);
-
-        if (is_array($response)) {
-            echo JsonResponse::error($response[P_MESSAGE]);
-            exit();
-        } else {
-            echo ($response) ? JsonResponse::message(STATUS_OK, "Patient succesfully added to queue!") : JsonResponse::error("Error adding patient to queue!");
-            exit();
-        }
-    } else {
-        echo JsonResponse::error("Incomplete request parameters!");
-        exit();
-    }
-} elseif ($intent == 'returnToGenQueue') {
-    if (isset($_REQUEST[PatientQueueTable::patient_id])) {
-        $usher = new ArrivalController();
-        $response = $usher->returnToGenQueue($_REQUEST[PatientQueueTable::patient_id]);
+        $patient_id = $_REQUEST[PatientQueueTable::patient_id];
+        $doctor_id = (isset($_REQUEST[PatientQueueTable::doctor_id])) ? $_REQUEST[PatientQueueTable::doctor_id] : GENERAL_QUEUE;
+        
+        $response = $usher->addPatient($patient_id, $doctor_id);
 
         if (is_array($response)) {
             echo JsonResponse::error($response[P_MESSAGE]);
@@ -162,7 +118,7 @@ if ($intent == 'search') {
         }
 
         //switch patient to doctor queue
-        $response = $usher->addToDoctor($patient, $to_doctor);
+        $response = $usher->switchQueue($patient, $to_doctor);
 
         if (is_array($response)) {
             echo JsonResponse::error($response[P_MESSAGE]);

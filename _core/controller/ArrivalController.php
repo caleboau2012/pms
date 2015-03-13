@@ -4,7 +4,6 @@ class ArrivalController {
         $patient_model = new PatientModel();
         $search_result = array();
         $feedback = $patient_model->searchPatient($parameter);
-//        die(var_dump($feedback));
 
         foreach($feedback as $patient){
             $patient_array = array();
@@ -28,7 +27,9 @@ class ArrivalController {
 
     public function getGenQueue() {
         $arrival = new ArrivalModel();
-        return $arrival->getGenQueue();
+        $feedback = $arrival->getDoctorQueue(GENERAL_QUEUE);
+
+        return $feedback;
     }
 
     public function getDoctorQueue($doctor_id) {
@@ -41,6 +42,14 @@ class ArrivalController {
         $arrival = new ArrivalModel();
 
         $response = array();
+        
+        $is_doctor = RoleController::hasRole($doctor, DOCTOR);
+        if (!$is_doctor) {
+            $response[P_STATUS] = STATUS_ERROR;
+            $response[P_MESSAGE] = "Error!!! Invalid doctor!";
+            return $response;
+        }
+
         //CHECK IF PATIENT IS NOT ALREADY ON A QUEUE
         if ($arrival->patientOnQueue($patient)) {
             $response[P_STATUS] = STATUS_ERROR;
@@ -57,41 +66,13 @@ class ArrivalController {
         return $feedback;
     }
 
-    public function addPatientToGeneralQueue($patient) {
-        $arrival = new ArrivalModel();
+    public function switchQueue($patient, $to_doctor) {
+        //Remove patient from "from_doctor" queue
+        $this->removePatient($patient);
 
-        $response = array();
-        //CHECK IF PATIENT IS NOT ALREADY ON A QUEUE
-        if ($arrival->patientOnQueue($patient)) {
-            $response[P_STATUS] = STATUS_ERROR;
-            $response[P_MESSAGE] = "Error!!! Patient already on queue";
-            return $response;
-        }
+        $result = $this->addPatient($patient, $to_doctor);
 
-        $arrival_data = array();
-        $arrival_data[PatientQueueTable::patient_id] = $patient;
-
-        $feedback = $arrival->addToGenQueue($arrival_data);
-
-        return $feedback;
-    }
-
-    public function addToDoctor($patient, $doctor) {
-        $arrival = new ArrivalModel();
-
-        $arrival_data = array();
-        $arrival_data[PatientQueueTable::patient_id] = $patient;
-        $arrival_data[PatientQueueTable::doctor_id] = $doctor;
-
-        $feedback = $arrival->addToDoctor($arrival_data);
-
-        return $feedback;
-    }
-
-    public function returnToGenQueue($patient) {
-        $arrival = new ArrivalModel();
-        $feedback = $arrival->returnToGenQueue($patient);
-        return $feedback;
+        return $result;
     }
 
     public function removePatient($patient) {

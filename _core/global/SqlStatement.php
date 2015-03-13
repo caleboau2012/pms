@@ -124,11 +124,10 @@ class PatientSqlStatement {
 
 class PatientQueueSqlStatement {
     const ADD = "INSERT INTO patient_queue (patient_id, doctor_id, active_fg, created_date, modified_date) VALUES (:patient_id, :doctor_id, 1, NOW(), NOW())";
-    const RETURNTOGENERALQUEUE = "UPDATE patient_queue SET active_fg = 2, doctor_id = NULL, modified_date = NOW() WHERE patient_id = :patient_id";
-    const ADDTOGENERALQUEUE = "INSERT INTO patient_queue (patient_id, active_fg, created_date, modified_date) VALUES (:patient_id, 2, NOW(), NOW())";
-    const ADDTODOCTOR = "UPDATE patient_queue SET doctor_id = :doctor_id, active_fg = 1, modified_date = NOW() WHERE patient_id = :patient_id";
 
-    const REMOVE = "UPDATE patient_queue SET active_fg = 0, modified_date = NOW() WHERE patient_id = :patient_id";
+    const ADD_TO_GENERAL_QUEUE = "INSERT INTO patient_queue (patient_id, doctor_id, active_fg, created_date, modified_date) VALUES (:patient_id, NULL, 1, NOW(), NOW())";
+
+    const REMOVE = "UPDATE patient_queue SET active_fg = 0, modified_date = NOW() WHERE patient_id = :patient_id AND active_fg != 0";
 
     const ONLINE_DOCTORS = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
         FROM user_auth AS ua
@@ -137,10 +136,10 @@ class PatientQueueSqlStatement {
             LEFT JOIN permission_role AS pr
                 ON ua.userid = pr.userid
         WHERE ua.online_status = 1
-        AND pr.staff_role_id = 2
-        AND pr.active_fg = 1
-        AND ua.status = 1
-        AND ua.active_fg = 1";
+            AND pr.staff_role_id = 2
+            AND pr.active_fg = 1
+            AND ua.status = 1
+            AND ua.active_fg = 1";
 
     const OFFLINE_DOCTORS_WITH_QUEUE = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
         FROM patient_queue AS pq
@@ -149,20 +148,15 @@ class PatientQueueSqlStatement {
             INNER JOIN user_auth AS ua
                 ON ua.userid = pq.doctor_id
         WHERE pq.active_fg = 1
-        AND ua.online_status != 1";
-
-    const GENERAL_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex
-      FROM patient_queue AS pq
-        INNER JOIN patient AS p ON pq.patient_id = p.patient_id
-          WHERE pq.active_fg = 2 AND pq.doctor_id IS NULL";
+            AND ua.online_status != 1";
 
     const DOCTOR_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex
         FROM patient_queue AS pq
             INNER JOIN patient AS p
                 ON pq.patient_id = p.patient_id
         WHERE pq.active_fg = 1
-        AND p.active_fg = 1
-        AND pq.doctor_id = :doctor_id";
+            AND p.active_fg = 1
+            AND pq.doctor_id = :doctor_id";
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date) AS LMT FROM patient_queue";
 

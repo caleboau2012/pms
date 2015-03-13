@@ -7,29 +7,6 @@ class ArrivalModel extends BaseModel {
         return $result;
     }
 
-    public function addToGenQueue($arrival_data) {
-        $stmt = PatientQueueSqlStatement::ADDTOGENERALQUEUE;
-        $result = $this->conn->execute($stmt, $arrival_data, true);
-
-        return $result;
-    }
-
-    public function addToDoctor($arrival_data) {
-        $stmt = PatientQueueSqlStatement::ADDTODOCTOR;
-        $result = $this->conn->execute($stmt, $arrival_data, true);
-
-        return $result;
-    }
-
-    public function returnToGenQueue($patient) {
-        $stmt = PatientQueueSqlStatement::RETURNTOGENERALQUEUE;
-        $data = array();
-        $data[PatientQueueTable::patient_id] = $patient;
-
-        $result = $this->conn->execute($stmt, $data);
-        return $result;
-    }
-
     public function remove($patient) {
         $stmt = PatientQueueSqlStatement::REMOVE;
         $data = array();
@@ -99,14 +76,6 @@ class ArrivalModel extends BaseModel {
         $queue[QUEUE] = $doctors;
 
         return $queue;
-    }
-
-    public function getGenQueue() {
-        $stmt = PatientQueueSqlStatement::GENERAL_QUEUE;
-        $data = array();
-        $result = $this->conn->fetchAll($stmt, $data);
-
-        return $result;
     }
 
     public function getLastModifiedTime() {
