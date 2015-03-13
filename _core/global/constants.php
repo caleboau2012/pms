@@ -54,6 +54,10 @@ define('PARAMETER', 'parameter');
 define('WILDCARD', 'wildcard');
 define('QUEUE', 'queue');
 define('LMT', 'LMT');
+//PATIENT QUEUE FLAGS
+define('QUEUE_EXIT', 0); //Patient has left queue
+define('ON_DOCTOR_QUEUE', 1); //Patient is assigned to a doctor
+define('ON_GENERAL_QUEUE', 2); //Patient is on general queue
 
 //LONG POLLING CONSTANTS
 define('POLLING_SLEEP_TIME', 5);

@@ -2,9 +2,9 @@
 require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ArrivalModel'));
-Crave::requireFiles(CONTROLLER, array('ArrivalController'));
+Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ArrivalModel', 'RoleModel'));
+Crave::requireFiles(CONTROLLER, array('ArrivalController', 'RoleController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -49,6 +49,23 @@ if ($intent == 'search') {
         exit();
     } else {
         echo JsonResponse::error("Queue is empty!");
+        exit();
+    }
+} elseif ($intent == 'loadDoctorQueue') {
+    $doctor_id = CxSessionHandler::getItem(UserAuthTable::userid);
+    $is_doctor = RoleController::hasRole($doctor_id, DOCTOR);
+    if ($is_doctor) {
+        $usher = new ArrivalController();
+        $response = $usher->getDoctorQueue($doctor_id);
+        if (is_array($response)) {
+            echo JsonResponse::success($response);
+            exit();
+        } else {
+            echo JsonResponse::error("Doctorr queue is empty!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Logged in user is not a doctor!");
         exit();
     }
 } elseif ($intent == 'addToQueue') {
@@ -115,8 +132,7 @@ if ($intent == 'search') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
-}
-elseif ($intent == 'removeFromQueue') {
+} elseif ($intent == 'removeFromQueue') {
     if (isset($_REQUEST[PatientQueueTable::patient_id])) {
         $usher = new ArrivalController();
         $response = $usher->removePatient($_REQUEST[PatientQueueTable::patient_id]);

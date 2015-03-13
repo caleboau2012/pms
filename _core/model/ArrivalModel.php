@@ -80,7 +80,7 @@ class ArrivalModel extends BaseModel {
         $data[PatientQueueTable::doctor_id] = $doctor_id;
         $result = $this->conn->fetchAll($stmt, $data);
 
-        return $result;
+        return (sizeof($result) > 0) ? $result : false;
     }
 
     public function getQueue() {

@@ -31,6 +31,12 @@ class ArrivalController {
         return $arrival->getGenQueue();
     }
 
+    public function getDoctorQueue($doctor_id) {
+        $arrival = new ArrivalModel();
+        $feedback = $arrival->getDoctorQueue($doctor_id);
+        return $feedback;
+    }
+
     public function addPatient($patient, $doctor) {
         $arrival = new ArrivalModel();
 
