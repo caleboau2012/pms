@@ -7,50 +7,99 @@ class HaematologyModel extends BaseModel{
     }
 
     public function getTestDetails($treatmentId){
+        $result = array();
         $data = array(HaematologyTable::treatment_id => $treatmentId);
-        return $this->conn->fetch(HaematologyRequestSqlStatement::GET_DETAILS, $data);
+        $result['details'] = $this->conn->fetch(HaematologyRequestSqlStatement::GET_DETAILS, $data);
+        $result['blood_test'] = $this->getBloodTestDetails($treatmentId);
+        $result['differential_count'] = $this->getDifferentialCountTestDetails($treatmentId);
+        $result['film_appearance'] = $this->getFilmAppearanceTestDetails($treatmentId);
+
+        return $result;
     }
 
-    public function setTestDetails($treatmentId){
-
+    public function setTestDetails($data){
+        return $this->updateTestDetails($data);
     }
 
-    public function getBloodTestDetails($haematology_id){
-        $data = array(BloodTestTable::haematology_id => $haematology_id);
+    public function updateTestDetails($data){
+        try{
+            $this->conn->beginTransaction();
+            $this->updateDetails($data['details']);
+            $this->updateBloodTestDetails($data['blood_test']);
+            $this->updateDifferentialCountTestDetails($data['differential_count']);
+            $this->updateFilmAppearanceTestDetails($data['film_appearance']);
+            $this->conn->commit();
+        } catch(Exception $e){
+            $this->conn->rollBack();
+            echo $e->getMessage();
+            return false;
+        }
+
+        return true;
+    }
+
+    private function updateDetails($data){
+        if(!$this->conn->execute(HaematologyRequestSqlStatement::UPDATE_DETAILS, $data))
+            throw new Exception('Could not update haematology details');
+        return true;
+    }
+
+
+/*------------------------------------------ Blood Test Section -----------------------------------------*/
+
+    private function getBloodTestDetails($treatmentId){
+        $data = array(HaematologyTable::treatment_id => $treatmentId);
         return $this->conn->fetch(BloodTestSqlStatement::GET, $data);
     }
 
-    public function setBloodTestDetails($data){
-        return $this->conn->execute(BloodTestSqlStatement::ADD, $data);
+    private function setBloodTestDetails($data){
+        if(!$this->conn->execute(BloodTestSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not set blood test details');
+        return true;
     }
 
-    public function updateBloodTestDetails($data){
-        return $this->conn->execute(BloodTestSqlStatement::UPDATE, $data);
+    private function updateBloodTestDetails($data){
+        if(!$this->conn->execute(BloodTestSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not update blood test details');
+        return true;
     }
 
-    public function getFilmAppearanceTestDetails($haematology_id){
-        $data = array(BloodTestTable::haematology_id => $haematology_id);
+
+/*------------------------------------- Film Appearance Section ----------------------------------------*/
+
+    private function getFilmAppearanceTestDetails($treatmentId){
+        $data = array(HaematologyTable::treatment_id => $treatmentId);
         return $this->conn->fetch(FilmAppearanceSqlStatement::GET, $data);
     }
 
-    public function setFilmAppearanceTestDetails($data){
-        return $this->conn->execute(FilmAppearanceSqlStatement::ADD, $data);
+    private function setFilmAppearanceTestDetails($data){
+        if (!$this->conn->execute(FilmAppearanceSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not set film appearance details');
+        return true;
     }
 
-    public function updateFilmAppearanceTestDetails($data){
-        return $this->conn->execute(FilmAppearanceSqlStatement::UPDATE, $data);
+    private function updateFilmAppearanceTestDetails($data){
+        if (!$this->conn->execute(FilmAppearanceSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not update film appearnce test details');
+        return true;
     }
 
-    public function getDifferentialCountTestDetails($haematologyId){
-        $data = array(BloodTestTable::haematology_id => $haematologyId);
+
+/*------------------------------- Differential Count Section --------------------------------------------*/
+    private function getDifferentialCountTestDetails($treatmentId){
+        $data = array(HaematologyTable::treatment_id => $treatmentId);
         return $this->conn->fetch(DifferentialCountSqlStatement::GET, $data);
     }
 
-    public function setDifferentialCountTestDetails($data){
-        return $this->conn->execute(DifferentialCountSqlStatement::ADD, $data);
+    private function setDifferentialCountTestDetails($data){
+        if(!$this->conn->execute(DifferentialCountSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not set differential count details');
+        return true;
     }
 
-    public function updateDifferentialCountTestDetails($data){
-        return $this->conn->execute(DifferentialCountSqlStatement::UPDATE, $data);
+    private function updateDifferentialCountTestDetails($data){
+        if(!$this->conn->execute(DifferentialCountSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not update differential count details');
+        return true;
     }
 }

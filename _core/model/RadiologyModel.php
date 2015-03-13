@@ -1,7 +1,7 @@
 <?php
 class RadiologyModel extends BaseModel{
 
-    public function getPatientQueue($status = PENDING, $activeFg = ACTIVE){
+    public function getPatientQueue($status = PENDING, $activeFg = 1){
         $data = array(RadiologyRequestTable::status_id => $status, RadiologyRequestTable::active_fg => $activeFg);
         return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);
     }
@@ -11,12 +11,23 @@ class RadiologyModel extends BaseModel{
         return $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
     }
 
-    public function setTestDetails(){
-
+    public function setTestDetails($data){
+        return $this->updateTestDetails($data);
     }
 
     public function updateTestDetails($data){
-        return $this->conn->execute(VisualRequestSqlStatement::UPDATE_DETAILS, $data);
+        try{
+            $this->conn->beginTransaction();
+            $this->conn->execute(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']);
+            $this->conn->execute(RadiologySqlStatement::UPDATE, $data['radiology']);
+            $this->conn->commit();
+        } catch(Exception $e){
+            $this->conn->rollBack();
+            echo $e->getMessage();
+            return false;
+        }
+
+        return true;
     }
 
 }

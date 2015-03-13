@@ -16,3 +16,4 @@ class VisualModel extends BaseModel{
     }
 
 }
+
