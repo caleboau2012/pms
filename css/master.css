@@ -688,3 +688,48 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 .pad {
     margin-left: 7px;
 }
+
+/*ADMISSION MODULE*/
+.pending-list{
+    height: 58em;
+    max-height: 58em;
+    overflow-y: auto;
+}
+.pending-list li.list-group-item{
+    color: #2F6EA4;
+    margin: 0.25em 0;
+    border-radius: 0.3em;
+    box-shadow: 0px 1px 1px #9CB2C4;
+    font-size: 1.1em;
+}
+.patient-content{
+    background: #F5F5F5;
+    min-height: 60em;
+}
+.div-rounded{
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background: #BEC2C4;
+    margin: 0 auto;
+    text-align: center;
+    font-size: 4.5em;
+    color: #FFF;
+}
+.div-rounded.active#step-1{
+    background: #8A6D3B;
+}
+.div-rounded.active#step-2{
+    background: #BE7070;
+}
+.div-rounded.active#step-3{
+    background: #87C988;
+}
+#ward_chosen, #bed_chosen{
+    box-shadow: 1px 1px 3px #AAA;
+    margin: 0;
+    padding: 0.3em;
+}
+#bed_chosen{
+    margin-bottom: 0.3em;
+}
