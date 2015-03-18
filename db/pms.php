@@ -22,7 +22,6 @@ DROP TABLE IF EXISTS `admission`;
 
 CREATE TABLE `admission` (
 `admission_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-`bed_id` int(11) unsigned DEFAULT NULL,
 `admitted_by` int(11) NOT NULL,
 `discharged_by` int(11) DEFAULT NULL,
 `patient_id` int(11) unsigned NOT NULL,
@@ -38,7 +37,6 @@ KEY `fk_AdmittedBy` (`admitted_by`),
 KEY `fk_PatientAdmitted` (`patient_id`),
 KEY `fk_TreatmentAdmission` (`treatment_id`),
 KEY `discharged_by` (`discharged_by`),
-KEY `fk_bedAdmitted` (`bed_id`),
 CONSTRAINT `fk_AdmittedBy` FOREIGN KEY (`admitted_by`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_DischargedBy` FOREIGN KEY (`discharged_by`) REFERENCES `user_auth` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT `fk_PatientAdmitted` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
@@ -47,7 +45,7 @@ CONSTRAINT `fk_TreatmentAdmission` FOREIGN KEY (`treatment_id`) REFERENCES `trea
 
 /*Data for the table `admission` */
 
-insert  into `admission`(`admission_id`,`bed_id`,`admitted_by`,`discharged_by`,`patient_id`,`entry_date`,`exit_date`,`comments`,`created_date`,`modified_date`,`active_fg`,`treatment_id`) values (17,NULL,1,NULL,1,'2015-03-17 11:50:45',NULL,'Why the comment','2015-03-17 11:50:45','2015-03-17 11:50:45',1,1);
+insert  into `admission`(`admission_id`,`admitted_by`,`discharged_by`,`patient_id`,`entry_date`,`exit_date`,`comments`,`created_date`,`modified_date`,`active_fg`,`treatment_id`) values (17,1,NULL,1,'2015-03-17 11:50:45',NULL,'Why the comment','2015-03-17 11:50:45','2015-03-17 11:50:45',1,1);
 
 /*Table structure for table `admission_bed` */
 
