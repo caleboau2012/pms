@@ -85,8 +85,8 @@ $wards = $admission->loadWards();
                     <div class="panel-body">
                         <div class="col-md-4">
                             <div class="well well-sm">
-                                <div class="div-rounded active" id="step-1">1</div>
-                                <p class="small text-warning text-center">select ward below</p>
+                                <div class="div-rounded active" id="step-1"><span class="fa fa-road"></span> </div>
+                                <!--                                <p class="small text-muted text-center">Select ward below</p>-->
                                 <ul class="list-group">
                                     <?php
                                     foreach($wards as $ward){
@@ -102,8 +102,8 @@ $wards = $admission->loadWards();
                         </div>
                         <div class="col-md-4">
                             <div class="well well-sm">
-                                <div class="div-rounded" id="step-2">2</div>
-                                <!--                                <p class="small text-warning text-center">select bed below</p>-->
+                                <div class="div-rounded" id="step-2"><span class="fa fa-bed"></div>
+                                <!--  <p class="small text-warning text-center">select bed below</p>-->
                                 <div id="bed-list">
                                     <h3 class="text-muted text-center"><br/>&larr;Select ward<br/><br/><br/></h3>
                                 </div>
@@ -111,10 +111,15 @@ $wards = $admission->loadWards();
                         </div>
                         <div class="col-md-4">
                             <div class="well well-sm">
-                                <div class="div-rounded" id="step-3">3</div>
+                                <div class="div-rounded" id="step-3"><span class="fa fa-check"></span> </div>
                                 <p class="small text-warning text-center"><br/></p>
                                 <h3 class="text-warning text-center text-capitalize hidden" id="ward_chosen"></h3>
+                                <div class="thin-separator hidden"></div>
                                 <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
+                                <div id="response" class="text-center center-block">
+                                    <img class="hidden" id="loader" src="../images/loading.gif">
+                                    <div id="response_msg"></div>
+                                </div>
                                 <button class="btn btn-primary form-control hidden" id="assignPatient">ASSIGN</button>
                                 <div>
                                 </div>
@@ -127,8 +132,22 @@ $wards = $admission->loadWards();
     </div>
 
     <div class="adm-page-content" id="in-patient-view">
-        <h2 class="text-muted">IN-PATIENT</h2>
+        <div class="row">
 
+            <div class="col-md-9" id="in-patient-content">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <div class="input-group">
+                            <input type="text" class="form-control input-lg" name="query" placeholder="Search patient" required>
+                            <div class="input-group-addon">Search</div>
+                        </div>
+                    </div>
+                    <div class="panel-body">
+                        <h3 class="text-muted text-center"><br/>Search patient<br/><br/><br/></h3>
+                    </div>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>

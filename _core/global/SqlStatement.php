@@ -727,36 +727,36 @@ class AdmissionReqSqlStatement {
 
     const DISMISS_REQUEST = "UPDATE admission_req SET active_fg = 1 WHERE treatment_id = :treatment_id";
 
-    const GET_ALL_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
-        FROM admission_req AS ar 
-            INNER JOIN treatment AS t 
-                ON t.treatment_id = ar.treatment_id 
-            INNER JOIN profile AS p 
-                ON p.userid = t.doctor_id 
-            INNER JOIN patient AS pt 
-                ON pt.patient_id = t.patient_id 
+    const GET_ALL_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
+        FROM admission_req AS ar
+            INNER JOIN treatment AS t
+                ON t.treatment_id = ar.treatment_id
+            INNER JOIN profile AS p
+                ON p.userid = t.doctor_id
+            INNER JOIN patient AS pt
+                ON pt.patient_id = t.patient_id
         WHERE ar.active_fg = 1
-            AND t.active_fg = 1 
-            AND p.active_fg = 1 
+            AND t.active_fg = 1
+            AND p.active_fg = 1
             AND pt.active_fg = 1
         ORDER BY ar.created_date DESC";
 
-    const SEARCH_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
-        FROM admission_req AS ar 
-            INNER JOIN treatment AS t 
-                ON t.treatment_id = ar.treatment_id 
-            INNER JOIN profile AS p 
-                ON p.userid = t.doctor_id 
-            INNER JOIN patient AS pt 
-                ON pt.patient_id = t.patient_id 
-        WHERE ar.active_fg = 1 
-            AND t.active_fg = 1 
-            AND p.active_fg = 1 
-            AND pt.active_fg = 1 
+    const SEARCH_REQUESTS = "SELECT ar.admission_req_id, ar.treatment_id, t.doctor_id, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
+        FROM admission_req AS ar
+            INNER JOIN treatment AS t
+                ON t.treatment_id = ar.treatment_id
+            INNER JOIN profile AS p
+                ON p.userid = t.doctor_id
+            INNER JOIN patient AS pt
+                ON pt.patient_id = t.patient_id
+        WHERE ar.active_fg = 1
+            AND t.active_fg = 1
+            AND p.active_fg = 1
+            AND pt.active_fg = 1
             AND (
-                pt.surname LIKE :wildcard 
-                OR pt.surname LIKE :wildcard 
-                OR pt.middlename LIKE :wildcard 
+                pt.surname LIKE :wildcard
+                OR pt.surname LIKE :wildcard
+                OR pt.middlename LIKE :wildcard
                 OR pt.regNo = :parameter
             )
         ORDER BY ar.created_date DESC";
@@ -770,11 +770,11 @@ class AdmissionSqlStatement {
 
     const REMOVE_FROM_BED = "UPDATE admission_bed SET active_fg = 0 WHERE admission_id = :admission_id AND bed_id = :bed_id AND active_fg = 1";
 
-    const GET_ADMISSION_DETAILS = "SELECT ad.admission_id, adb.bed_id 
-        FROM admission AS ad 
-            INNER JOIN admission_bed AS adb 
-                ON ad.admission_id = adb.admission_id 
-        WHERE adb.active_fg = 1 
+    const GET_ADMISSION_DETAILS = "SELECT ad.admission_id, adb.bed_id
+        FROM admission AS ad
+            INNER JOIN admission_bed AS adb
+                ON ad.admission_id = adb.admission_id
+        WHERE adb.active_fg = 1
             AND ad.patient_id = :patient_id
             AND ad.active_fg = 1";
 
@@ -782,37 +782,37 @@ class AdmissionSqlStatement {
 
     const IS_ADMITTED = "SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND active_fg = 1";
 
-    const SEARCH_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
-        FROM admission AS ad 
-            INNER JOIN treatment AS t 
-                ON t.treatment_id = ad.treatment_id 
-            INNER JOIN profile AS p 
-                ON p.userid = t.doctor_id 
-            INNER JOIN patient AS pt 
-                ON pt.patient_id = t.patient_id 
-        WHERE ad.active_fg = 1 
-            AND t.active_fg = 1 
-            AND p.active_fg = 1 
-            AND pt.active_fg = 1 
+    const SEARCH_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
+        FROM admission AS ad
+            INNER JOIN treatment AS t
+                ON t.treatment_id = ad.treatment_id
+            INNER JOIN profile AS p
+                ON p.userid = t.doctor_id
+            INNER JOIN patient AS pt
+                ON pt.patient_id = t.patient_id
+        WHERE ad.active_fg = 1
+            AND t.active_fg = 1
+            AND p.active_fg = 1
+            AND pt.active_fg = 1
             AND (
                 pt.surname LIKE :wildcard
-                OR pt.surname LIKE :wildcard 
-                OR pt.middlename LIKE :wildcard 
+                OR pt.surname LIKE :wildcard
+                OR pt.middlename LIKE :wildcard
                 OR pt.regNo = :parameter
             )
         ORDER BY ad.created_date DESC";
 
-    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo 
-        FROM admission AS ad 
-            INNER JOIN treatment AS t 
-                ON t.treatment_id = ad.treatment_id 
-            INNER JOIN profile AS p 
-                ON p.userid = t.doctor_id 
-            INNER JOIN patient AS pt 
-                ON pt.patient_id = t.patient_id 
-        WHERE ad.active_fg = 1 
-            AND t.active_fg = 1 
-            AND p.active_fg = 1 
+    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
+        FROM admission AS ad
+            INNER JOIN treatment AS t
+                ON t.treatment_id = ad.treatment_id
+            INNER JOIN profile AS p
+                ON p.userid = t.doctor_id
+            INNER JOIN patient AS pt
+                ON pt.patient_id = t.patient_id
+        WHERE ad.active_fg = 1
+            AND t.active_fg = 1
+            AND p.active_fg = 1
             AND pt.active_fg = 1
         ORDER BY ad.created_date DESC";
 }

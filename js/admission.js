@@ -111,8 +111,8 @@ Admission = {
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                content = "<p class='small text-warning text-center'>select bed below</p>";
-                content += "<ol class='list-group'>";
+                //content = "<p class='small text-muted text-center'>select bed below</p>";
+                content = "<ol class='list-group'>";
                 data.data.forEach(function(record){
                     content += "<li class='bed-item list-group-item pointer' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
                 });
@@ -146,24 +146,27 @@ Admission = {
         Admission.GLOBAL.SELECTED_BED_ID = $(bed).attr('data-bed-id');
         Admission.GLOBAL.SELECTED_WARD_ID = $(bed).attr('data-ward-id');
         $('#ward_chosen').html(Admission.GLOBAL.SELECTED_WARD).removeClass('hidden');
+        $('.thin-separator').removeClass('hidden');
         $('#bed_chosen').html($(bed).html()).removeClass('hidden');
         $('#assignPatient').removeClass('hidden');
         //show selected details
 
     },
     assignPatient: function(){
+        $('#loader').removeClass('hidden');
         payload = {};
         payload.intent = "admitPatient";
         payload.bed_id = Admission.GLOBAL.SELECTED_BED_ID;
         payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
-        payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
-        payload.treatmentId = Admission.GLOBAL.TREATMENT_ID;
-        payload.admitted_by = Admission.GLOBAL.ADMITTED_BY;
-        payload.comments = "Why the comment";
+        payload.treatment_id = Admission.GLOBAL.TREATMENT_ID;
 
         console.log(payload);
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
-           console.log(data);
+            $('#loader').addClass('hidden');
+            console.log(data);
+            if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
+                $('#response_msg').html("<p class='text-danger'>" + data.message +"</p>");
+            }
         }).fail(function(data){
             console.log(data.responseText);
         });
