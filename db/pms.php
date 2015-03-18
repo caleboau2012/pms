@@ -1,6 +1,6 @@
 /*
 SQLyog Ultimate v11.33 (64 bit)
-MySQL - 5.6.17 : Database - pms
+MySQL - 5.5.30 : Database - pms
 *********************************************************************
 */
 
@@ -22,6 +22,7 @@ DROP TABLE IF EXISTS `admission`;
 
 CREATE TABLE `admission` (
 `admission_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+`bed_id` int(11) unsigned DEFAULT NULL,
 `admitted_by` int(11) NOT NULL,
 `discharged_by` int(11) DEFAULT NULL,
 `patient_id` int(11) unsigned NOT NULL,
@@ -37,13 +38,16 @@ KEY `fk_AdmittedBy` (`admitted_by`),
 KEY `fk_PatientAdmitted` (`patient_id`),
 KEY `fk_TreatmentAdmission` (`treatment_id`),
 KEY `discharged_by` (`discharged_by`),
+KEY `fk_bedAdmitted` (`bed_id`),
 CONSTRAINT `fk_AdmittedBy` FOREIGN KEY (`admitted_by`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_DischargedBy` FOREIGN KEY (`discharged_by`) REFERENCES `user_auth` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT `fk_PatientAdmitted` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),
 CONSTRAINT `fk_TreatmentAdmission` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
 
 /*Data for the table `admission` */
+
+insert  into `admission`(`admission_id`,`bed_id`,`admitted_by`,`discharged_by`,`patient_id`,`entry_date`,`exit_date`,`comments`,`created_date`,`modified_date`,`active_fg`,`treatment_id`) values (17,NULL,1,NULL,1,'2015-03-17 11:50:45',NULL,'Why the comment','2015-03-17 11:50:45','2015-03-17 11:50:45',1,1);
 
 /*Table structure for table `admission_bed` */
 
@@ -57,13 +61,34 @@ CREATE TABLE `admission_bed` (
 `created_date` datetime NOT NULL,
 `modified_date` datetime NOT NULL,
 PRIMARY KEY (`admission_bed_id`),
-KEY `admission_id` (`admission_id`,`bed_id`),
 KEY `bed_id` (`bed_id`),
+KEY `admission_id` (`admission_id`),
 CONSTRAINT `admission_bed_ibfk_1` FOREIGN KEY (`admission_id`) REFERENCES `admission` (`admission_id`),
-CONSTRAINT `admission_bed_ibfk_2` FOREIGN KEY (`bed_id`) REFERENCES `admission` (`bed_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+CONSTRAINT `admission_bed_ibfk_2` FOREIGN KEY (`bed_id`) REFERENCES `bed` (`bed_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 /*Data for the table `admission_bed` */
+
+insert  into `admission_bed`(`admission_bed_id`,`admission_id`,`bed_id`,`active_fg`,`created_date`,`modified_date`) values (18,17,1,1,'2015-03-17 11:50:45','2015-03-17 11:50:45');
+
+/*Table structure for table `admission_req` */
+
+DROP TABLE IF EXISTS `admission_req`;
+
+CREATE TABLE `admission_req` (
+`admission_req_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+`treatment_id` int(11) unsigned NOT NULL,
+`created_date` datetime NOT NULL,
+`modified_date` datetime NOT NULL,
+`active_fg` tinyint(1) NOT NULL DEFAULT '1',
+PRIMARY KEY (`admission_req_id`),
+UNIQUE KEY `treatment_id` (`treatment_id`),
+CONSTRAINT `fk_AdmissionTreatmentId` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+/*Data for the table `admission_req` */
+
+insert  into `admission_req`(`admission_req_id`,`treatment_id`,`created_date`,`modified_date`,`active_fg`) values (1,1,'2015-03-17 00:00:00','2015-03-18 00:00:00',0),(2,2,'2015-03-13 00:00:00','2015-03-13 00:00:00',1);
 
 /*Table structure for table `bed` */
 
@@ -80,9 +105,11 @@ CREATE TABLE `bed` (
 PRIMARY KEY (`bed_id`),
 KEY `fk_BedWard` (`ward_id`),
 CONSTRAINT `fk_BedWard` FOREIGN KEY (`ward_id`) REFERENCES `ward_ref` (`ward_ref_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 
 /*Data for the table `bed` */
+
+insert  into `bed`(`bed_id`,`bed_description`,`bed_status`,`ward_id`,`created_date`,`modified_date`,`active_fg`) values (1,'Bed 1',1,1,'2015-03-13 00:00:00','2015-03-13 00:00:00',1),(2,'Bed B',0,1,'2015-03-13 00:00:00','2015-03-13 00:00:00',1);
 
 /*Table structure for table `blood_test` */
 
@@ -168,9 +195,12 @@ CREATE TABLE `chemical_pathology_request` (
 `cp_ref_id` int(11) DEFAULT NULL,
 PRIMARY KEY (`cpreq_id`),
 UNIQUE KEY `NewIndex1` (`laboratory_ref`),
+KEY `fk_ChemicalTreatment` (`treatment_id`),
 KEY `fk_ChemicalDoctor` (`doctor_id`),
 KEY `fk_ChemicalStatus` (`status_id`),
-KEY `fk_ChemicalTreatment` (`treatment_id`)
+CONSTRAINT `fk_ChemicalDoctor` FOREIGN KEY (`doctor_id`) REFERENCES `user_auth` (`userid`),
+CONSTRAINT `fk_ChemicalStatus` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+CONSTRAINT `fk_ChemicalTreatment` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `chemical_pathology_request` */
@@ -194,11 +224,11 @@ KEY `fk_MsgSender` (`sender_id`),
 KEY `fk_MsgRecipient` (`recipient_id`),
 CONSTRAINT `fk_MsgRecipient` FOREIGN KEY (`recipient_id`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_MsgSender` FOREIGN KEY (`sender_id`) REFERENCES `user_auth` (`userid`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=32 DEFAULT CHARSET=latin1;
 
 /*Data for the table `communication` */
 
-insert  into `communication`(`msg_id`,`sender_id`,`recipient_id`,`msg_subject`,`msg_body`,`msg_status`,`active_fg`,`created_date`,`modified_date`) values (1,1,2,'Lorem ipsum','Bacno ipsum',1,1,'2015-02-17 12:12:00','2015-02-17 12:12:00'),(10,1,2,'Labore jerky swine sausage','Labore jerky swine sausage alcatra leberkas nostrud sint. Consequat po',1,1,'2015-02-17 16:20:04','2015-02-17 16:20:04'),(11,1,2,'Pastrami doner tenderloin','Pastrami doner tenderloin sirloin jerky chuck flank filet mignon shoul',0,1,'2015-02-17 16:49:41','2015-02-17 16:59:11');
+insert  into `communication`(`msg_id`,`sender_id`,`recipient_id`,`msg_subject`,`msg_body`,`msg_status`,`active_fg`,`created_date`,`modified_date`) values (1,1,2,'Lorem ipsum','Bacno ipsum',1,1,'2015-02-17 12:12:00','2015-02-23 12:36:35'),(10,1,2,'Labore jerky swine sausage','Labore jerky swine sausage alcatra leberkas nostrud sint. Consequat po',1,1,'2015-02-17 16:20:04','2015-02-23 12:36:36'),(11,2,1,'Pastrami doner tenderloin','Pastrami doner tenderloin sirloin jerky chuck flank filet mignon shoul',0,1,'2015-02-17 16:49:41','2015-02-23 12:19:40'),(12,1,2,'Pastrami tenderloin','Bacon ipsum dolor amet bresaola spare ribs pig, picanha tail turducken bacon chicken jerky tri-tip leberkas. Spare ribs shank t-bone, venison tenderloin ham hock hamburger leberkas. Kielbasa pork bell',1,1,'2015-02-23 11:48:58','2015-02-24 17:48:36'),(14,3,1,'tri-tip prosciutto','icanha tri-tip prosciutto landjaeger flank porchetta turducken pork. Shank drumstick pork chop picanha swine tenderloin porchetta doner sausage pork ball tip ground round jerky. Andouille prosciutto b',0,1,'2015-02-23 13:33:37','2015-02-23 16:21:40'),(15,3,2,'turkey jowl salami tongue','Salami tongue cupim jowl, turkey venison beef ribs shankle swine frankfurter tenderloin. Drumstick hamburger ham turducken tri-tip alcatra short loin pastrami. Jerky cupim porchetta corned beef, tri-t',0,1,'2015-02-23 13:35:32','2015-02-24 15:30:00'),(16,3,1,'Cupim alcatra drumstick','Shankle cow ball tip jerky tongue rump jowl filet mignon pig tri-tip shank spare ribs chicken. Venison biltong tri-tip, pork loin leberkas hamburger tail t-bone. Bacon frankfurter tenderloin shoulder,',0,1,'2015-02-23 13:48:39','2015-02-23 16:21:38'),(17,3,2,'pastrami rump chicken','andjaeger corned beef turkey, filet mignon tail pork ham hock pork chop short loin leberkas bacon strip steak ribeye pork loin alcatra. Fatback sausage bacon short ribs jerky brisket. Drumstick landja',0,1,'2015-02-23 13:52:17','2015-02-24 19:12:31'),(18,3,2,'Cupim alcatra drumstick','Andouille ham hock biltong, shoulder bacon flank strip steak frankfurter ball tip salami porchetta capicola. Pork andouille strip steak jerky pork loin ball tip. Meatloaf tail jowl, pig ham bresaola p',0,1,'2015-02-23 14:12:41','2015-02-24 15:29:16'),(19,3,1,'Cupim alcatra drumstick','Cupim alcatra drumstick',0,1,'2015-02-23 14:18:42','2015-02-23 16:21:31'),(20,3,1,'drumstick','Cupim alcatra drumstick',0,1,'2015-02-23 14:19:32','2015-02-23 16:21:16'),(21,3,2,'alcatra','Cupim alcatra drumstick\nCupim alcatra drumstick\nCupim alcatra drumstick',1,1,'2014-02-23 14:22:11','2015-02-24 17:48:35'),(22,2,1,'Fwd: turkey jowl salami tongue','\n---------- Forwarded message ----------\nFrom: adewoye adeola abiodun\nDate: Mon Feb 23 2015 at 1:35:32 PM\nSubject: turkey jowl salami tongue\nTo: moses olajuwon adebayo\n\nSalami tongue cupim jowl, turke',1,1,'2015-02-24 15:30:40','2015-02-24 15:30:40'),(29,2,3,'Fwd: Fwd: turkey jowl salami tongue','Bacon ipsum dolor amet bacon tri-tip pancetta shoulder brisket. Ground round brisket chuck, tri-tip filet mignon bacon pork belly jowl rump salami spare ribs pancetta. Prosciutto cow tongue shankle po',1,1,'2015-02-24 17:42:38','2015-02-24 18:41:08'),(30,2,1,'Fwd: Cupim alcatra drumstick','\n---------- Forwarded message ----------\nFrom: adewoye adeola abiodun\nDate: Mon Feb 23 2015 at 2:12:41 PM\nSubject: Cupim alcatra drumstick\nTo: moses olajuwon adebayo\n\nAndouille ham hock biltong, shoul',0,1,'2015-02-24 17:43:58','2015-03-03 10:59:20'),(31,2,1,'Fwd: alcatra','\n---------- Forwarded message ----------\nFrom: adewoye adeola abiodun\nDate: Mon Feb 23 2015 at 2:22:11 PM\nSubject: alcatra\nTo: moses olajuwon adebayo\n\nCupim alcatra drumstick\nCupim alcatra drumstick\nC',0,1,'2015-02-24 17:44:14','2015-03-03 10:59:30');
 
 /*Table structure for table `department` */
 
@@ -279,48 +309,6 @@ CONSTRAINT `fk_PersonnelEncountered` FOREIGN KEY (`personnel_id`) REFERENCES `us
 
 /*Data for the table `encounter` */
 
-/*Table structure for table `examination_requested` */
-
-DROP TABLE IF EXISTS `examination_requested`;
-
-CREATE TABLE `examination_requested` (
-`examination_requested_id` int(11) NOT NULL AUTO_INCREMENT,
-`radiology_id` int(11) NOT NULL,
-`clinical_diagnosis_details` varchar(100) DEFAULT NULL,
-`previous_operation` varchar(25) NOT NULL,
-`any_known_allergies` varchar(25) NOT NULL,
-`previous_xray` tinyint(4) NOT NULL,
-`xray_number` varchar(7) NOT NULL,
-`create_date` datetime NOT NULL,
-`modified_date` datetime NOT NULL,
-`active_fg` tinyint(1) NOT NULL DEFAULT '1',
-PRIMARY KEY (`examination_requested_id`),
-KEY `fk_ExaminationRequestedRadiologyId` (`radiology_id`),
-CONSTRAINT `fk_ExaminationRequestedRadiologyId` FOREIGN KEY (`radiology_id`) REFERENCES `radiology` (`radiology_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `examination_requested` */
-
-/*Table structure for table `eye` */
-
-DROP TABLE IF EXISTS `eye`;
-
-CREATE TABLE `eye` (
-`eye_id` int(11) NOT NULL AUTO_INCREMENT,
-`userid` int(11) NOT NULL,
-`eye_defect` int(11) NOT NULL,
-`create_date` datetime NOT NULL,
-`modified_date` datetime NOT NULL,
-`active_fg` tinyint(1) NOT NULL DEFAULT '1',
-PRIMARY KEY (`eye_id`),
-KEY `fk_EyeUserId` (`userid`),
-KEY `fk_EyeDefect` (`eye_defect`),
-CONSTRAINT `fk_EyeDefect` FOREIGN KEY (`eye_defect`) REFERENCES `name_of_field` (`name_of_field_id`),
-CONSTRAINT `fk_EyeUserId` FOREIGN KEY (`userid`) REFERENCES `user_auth` (`userid`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
-/*Data for the table `eye` */
-
 /*Table structure for table `film_appearance` */
 
 DROP TABLE IF EXISTS `film_appearance`;
@@ -367,8 +355,11 @@ CREATE TABLE `haematology` (
 `status_id` int(11) NOT NULL DEFAULT '5',
 PRIMARY KEY (`haematology_id`),
 KEY `fk_DoctorId` (`doctor_id`),
+KEY `fk_TreatmentId` (`treatment_id`),
 KEY `fk_HaematologyStatus` (`status_id`),
-KEY `fk_TreatmentId` (`treatment_id`)
+CONSTRAINT `fk_DoctorId` FOREIGN KEY (`doctor_id`) REFERENCES `user_auth` (`userid`),
+CONSTRAINT `fk_HaematologyStatus` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+CONSTRAINT `fk_TreatmentId` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `haematology` */
@@ -490,9 +481,12 @@ CREATE TABLE `parasitology_req` (
 `lab_num` varchar(15) DEFAULT NULL,
 `lab_comment` text,
 PRIMARY KEY (`preq_id`),
+KEY `fk_ParasitologyTreatmentId` (`treatment_id`),
 KEY `fk_ParasitologyDoctorId` (`doctor_id`),
 KEY `fk_ParasitologyStatusId` (`status_id`),
-KEY `fk_ParasitologyTreatmentId` (`treatment_id`)
+CONSTRAINT `fk_ParasitologyDoctorId` FOREIGN KEY (`doctor_id`) REFERENCES `user_auth` (`userid`),
+CONSTRAINT `fk_ParasitologyStatusId` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+CONSTRAINT `fk_ParasitologyTreatmentId` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 /*Data for the table `parasitology_req` */
@@ -532,11 +526,11 @@ CREATE TABLE `patient` (
 PRIMARY KEY (`patient_id`),
 KEY `fk_PatientNok` (`nok_relationship`),
 CONSTRAINT `fk_PatientNok` FOREIGN KEY (`nok_relationship`) REFERENCES `nok_relationship` (`nok_relationship_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 
 /*Data for the table `patient` */
 
-insert  into `patient`(`patient_id`,`surname`,`firstname`,`middlename`,`regNo`,`home_address`,`telephone`,`sex`,`height`,`weight`,`birth_date`,`nok_firstname`,`nok_middlename`,`nok_surname`,`nok_address`,`nok_telephone`,`nok_relationship`,`citizenship`,`religion`,`family_position`,`mother_status`,`father_status`,`marital_status`,`no_of_children`,`created_date`,`modified_date`,`active_fg`) values (1,'Adeyinka','Akinlabi','Toluwani','23453534','Bolade close','00809098700','Male',11,65,'2015-02-10','Olaniyi','Moses','Arawande','lagos','07030747331',4,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-19 00:00:00',1),(2,'Adefemi','Olatunji','Abayomi','56745689','lagos state','88909804889','Male',45,34,'2015-02-17','Gabriel','Adewale','Dada','ibadan','08025641756',3,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-06 00:00:00',1),(3,'Adefem3','Olatunjirf','Abayomiw','56745689','Ogun state','88909804889','Male',45,34,'2015-02-17','Ibrahim','Olakunle','Uthsman','ile-ife','09156234178',0,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-06 00:00:00',1),(4,'kunle','ajasin','chikaodi','234','fnfnfnnnn','345668','Male',3,4,'2015-02-17','chika','odi','chukuamaka','ilupeju','3459696999',5,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-08 00:00:00',1),(5,'kunle','ajasin','chikaodi','234','fnfnfnnnn','345668','Male',3,4,'2015-02-17','chika','odi','chukuamaka','ilupeju','3459696999',5,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-12 16:10:16',1),(6,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','kunle','james','fatima','ibadan street','4345555',2,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-12 16:21:27',1),(7,'vgg','vvhv','v','vv','vv','vvv','Male',6,6,'2015-02-11','hjhj','jjh','hjhj','kjkj','jjj',9,'','',0,'','','',0,'0000-00-00 00:00:00','2015-02-11 00:00:00',1),(8,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan street','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-13 12:45:53',1),(9,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan street','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-13 12:46:17',1),(10,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan street','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-13 12:47:32',1),(11,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan street','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:20:43',1),(12,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan street','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:20:53',1),(13,'cmoses','adereti','sannid','4356664','gowon Estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan street','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:21:14',1),(14,'cmoses','adereti','sannid','4356664','gowon estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan streeet','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:22:06',1),(15,'cmoses','adereti','sannid','4356664','gowon, estate','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan streeet','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:23:45',1),(16,'cmoses','adereti','sannid','4356664','gowon, estate. 12, gthyh','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','ibadan streeet','4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:24:06',1),(17,'cmoses','adereti','sannid','4356664','gowon, estate. 12, gthyh','07045346079','Male',43,45,'2015-02-03','caleb','james','fatima','room 012, space computer buidling., obafemi awolowo university',' 4345555',2,'nigeria','christian',2,'alive','alive','married',5,'0000-00-00 00:00:00','2015-02-19 00:26:09',1),(18,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University',' 234567890','Male',12,12,'2015-03-03','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University',' 2343765832768',1,'Nigeria','ISLAM',1,'ALIVE','ALIVE','SINGLE',1,'0000-00-00 00:00:00','2015-02-19 00:26:28',1),(19,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Female',12,12,'2015-02-11','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',1,'Nigeria','ISLAM',3,'ALIVE','ALIVE','MARRIED',2,'0000-00-00 00:00:00','2015-02-19 00:29:43',1),(20,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Male',12,12,'2015-02-12','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',1,'Nigeria','CHRISTAINITY',4,'ALIVE','ALIVE','SINGLE',9,'0000-00-00 00:00:00','2015-02-19 02:15:38',1),(21,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Male',12,12,'2015-02-12','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',1,'Nigeria','CHRISTAINITY',4,'ALIVE','ALIVE','SINGLE',9,'0000-00-00 00:00:00','2015-02-19 02:17:11',1),(22,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Male',12,12,'2015-02-12','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',1,'Nigeria','CHRISTAINITY',4,'ALIVE','ALIVE','SINGLE',9,'0000-00-00 00:00:00','2015-02-19 02:17:57',1),(23,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Male',12,12,'2015-02-12','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',1,'Nigeria','CHRISTAINITY',4,'ALIVE','ALIVE','SINGLE',9,'0000-00-00 00:00:00','2015-02-19 02:18:00',1),(24,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Male',12,12,'2015-02-04','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',3,'Nigeria','CHRISTAINITY',4,'ALIVE','ALIVE','SINGLE',2,'0000-00-00 00:00:00','2015-02-19 02:36:31',1),(25,'mbakwe','caleb','chukwuezugo','CSC/2008/065','Room 012, computer building, Obafemi Awolowo University','+234567890','Male',12,12,'2015-02-12','Caleb','Chukwuezugo','Mbakwe','Room 012, computer building, Obafemi Awolowo University','+2343765832768',3,'Nigeria','ISLAM',4,'ALIVE','ALIVE','SINGLE',2,'0000-00-00 00:00:00','2015-02-19 02:41:35',1);
+insert  into `patient`(`patient_id`,`surname`,`firstname`,`middlename`,`regNo`,`home_address`,`telephone`,`sex`,`height`,`weight`,`birth_date`,`nok_firstname`,`nok_middlename`,`nok_surname`,`nok_address`,`nok_telephone`,`nok_relationship`,`citizenship`,`religion`,`family_position`,`mother_status`,`father_status`,`marital_status`,`no_of_children`,`created_date`,`modified_date`,`active_fg`) values (1,'Adeyinka','Akinlabi','Toluwani','23453534','Bolade close','00809098700','Male',11,65,'2015-02-10','Olaniyi','Moses','Arawande','lagos','07030747331',4,'','',0,'','','',0,'2015-02-18 00:00:00','2015-02-19 00:00:00',1),(2,'Adefemi','Olatunji','Abayomi','56745689','lagos state','88909804889','Male',45,34,'2015-02-17','Gabriel','Adewale','Dada','ibadan','08025641756',3,'','',0,'','','',0,'2015-02-12 00:00:00','2015-02-06 00:00:00',1),(3,'Adefem3','Olatunjirf','Abayomiw','56745689','Ogun state','88909804889','Male',45,34,'2015-02-17','Ibrahim','Olakunle','Uthsman','ile-ife','09156234178',0,'','',0,'','','',0,'2015-02-12 00:00:00','2015-02-06 00:00:00',1),(4,'kunle','ajasin','chikaodi','234','fnfnfnnnn','345668','Male',3,4,'2015-02-17','chika','odi','chukuamaka','ilupeju','3459696999',5,'','',0,'','','',0,'2015-02-10 00:00:00','2015-02-08 00:00:00',1);
 
 /*Table structure for table `patient_queue` */
 
@@ -554,9 +548,11 @@ KEY `fk_patientQueue` (`patient_id`),
 KEY `fk_PatientDoctor` (`doctor_id`),
 CONSTRAINT `fk_PatientDoctor` FOREIGN KEY (`doctor_id`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_patientQueue` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `patient_queue` */
+
+insert  into `patient_queue`(`patient_queue_id`,`patient_id`,`doctor_id`,`active_fg`,`created_date`,`modified_date`) values (1,1,NULL,2,'2015-02-23 15:31:11','2015-02-27 10:49:19'),(2,2,2,1,'2015-02-23 15:45:59','2015-02-27 10:47:19'),(3,3,NULL,2,'2015-02-27 10:50:48','2015-02-27 10:50:48');
 
 /*Table structure for table `permission_role` */
 
@@ -577,11 +573,11 @@ KEY `fk_RoleId` (`staff_role_id`),
 CONSTRAINT `fk_permissionRoleUserId` FOREIGN KEY (`userid`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_staffPermissionRole` FOREIGN KEY (`staff_permission_id`) REFERENCES `staff_permission` (`staff_permission_id`),
 CONSTRAINT `fk_staffRole` FOREIGN KEY (`staff_role_id`) REFERENCES `staff_role` (`staff_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=38 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=39 DEFAULT CHARSET=latin1;
 
 /*Data for the table `permission_role` */
 
-insert  into `permission_role`(`permission_role_id`,`userid`,`staff_permission_id`,`staff_role_id`,`created_date`,`modified_date`,`active_fg`) values (1,1,2,1,'0000-00-00 00:00:00','2015-02-02 16:29:46',0),(2,1,1,2,'0000-00-00 00:00:00','2015-02-02 15:29:07',0),(3,1,1,3,'0000-00-00 00:00:00','2015-01-28 20:03:38',0),(4,1,2,4,'0000-00-00 00:00:00','2015-01-28 19:45:39',0),(5,1,1,1,'0000-00-00 00:00:00','2015-02-02 15:39:45',0),(6,1,1,1,'0000-00-00 00:00:00','2015-02-02 16:23:49',0),(7,1,1,3,'0000-00-00 00:00:00','2015-02-02 16:24:13',0),(8,1,1,4,'0000-00-00 00:00:00','2015-02-02 16:25:38',0),(9,1,1,5,'0000-00-00 00:00:00','2015-02-02 16:28:13',0),(10,1,1,6,'0000-00-00 00:00:00','2015-02-02 16:28:47',0),(11,1,1,9,'0000-00-00 00:00:00','2015-02-02 16:28:54',0),(12,1,2,7,'0000-00-00 00:00:00','2015-02-02 16:29:45',0),(13,1,1,8,'0000-00-00 00:00:00','2015-02-02 16:28:55',0),(14,1,1,1,'0000-00-00 00:00:00','2015-02-03 16:25:18',0),(15,1,1,2,'0000-00-00 00:00:00','2015-02-11 11:41:17',0),(16,1,1,3,'0000-00-00 00:00:00','2015-02-13 15:39:21',0),(17,1,1,4,'0000-00-00 00:00:00','2015-02-13 15:39:16',0),(18,1,1,10,'0000-00-00 00:00:00','2015-02-02 16:28:02',1),(19,1,1,5,'0000-00-00 00:00:00','2015-02-02 16:30:08',0),(20,1,1,1,'0000-00-00 00:00:00','2015-02-10 11:14:09',1),(21,2,2,1,'0000-00-00 00:00:00','2015-02-10 12:33:01',1),(22,2,2,10,'0000-00-00 00:00:00','2015-02-10 12:33:11',1),(23,2,2,8,'0000-00-00 00:00:00','2015-02-10 12:33:24',1),(24,1,1,2,'0000-00-00 00:00:00','2015-02-13 15:39:26',0),(25,2,2,2,'0000-00-00 00:00:00','2015-02-11 15:54:45',1),(26,1,1,14,'0000-00-00 00:00:00','2015-02-13 15:38:05',1),(27,1,2,2,'0000-00-00 00:00:00','2015-02-13 15:39:39',1),(28,1,1,3,'0000-00-00 00:00:00','2015-02-13 15:40:34',1),(29,1,1,5,'0000-00-00 00:00:00','2015-02-13 15:41:09',1),(30,1,1,11,'0000-00-00 00:00:00','2015-02-13 15:41:19',1),(31,1,1,8,'0000-00-00 00:00:00','2015-02-13 15:41:24',1),(32,1,1,4,'0000-00-00 00:00:00','2015-02-13 15:48:29',1),(33,1,2,15,'0000-00-00 00:00:00','2015-02-16 11:16:27',1),(34,3,2,1,'0000-00-00 00:00:00','2015-02-19 16:50:13',0),(35,3,2,2,'0000-00-00 00:00:00','2015-02-16 14:06:25',1),(36,3,2,3,'0000-00-00 00:00:00','2015-02-16 14:06:35',1),(37,1,2,9,'0000-00-00 00:00:00','2015-02-17 17:32:17',1);
+insert  into `permission_role`(`permission_role_id`,`userid`,`staff_permission_id`,`staff_role_id`,`created_date`,`modified_date`,`active_fg`) values (1,1,2,1,'2015-01-27 16:25:12','2015-02-02 16:29:46',0),(2,1,1,2,'2015-01-27 16:25:35','2015-02-02 15:29:07',0),(3,1,1,3,'2015-01-28 18:02:22','2015-01-28 20:03:38',0),(4,1,2,4,'2015-01-28 18:38:27','2015-01-28 19:45:39',0),(5,1,1,1,'2015-01-30 15:10:20','2015-02-02 15:39:45',0),(6,1,1,1,'2015-01-30 16:07:18','2015-02-02 16:23:49',0),(7,1,1,3,'2015-02-02 14:59:39','2015-02-02 16:24:13',0),(8,1,1,4,'2015-02-02 15:05:44','2015-02-02 16:25:38',0),(9,1,1,5,'2015-02-02 15:05:51','2015-02-02 16:28:13',0),(10,1,1,6,'2015-02-02 15:06:44','2015-02-02 16:28:47',0),(11,1,1,9,'2015-02-02 15:13:44','2015-02-02 16:28:54',0),(12,1,2,7,'2015-02-02 15:14:52','2015-02-02 16:29:45',0),(13,1,1,8,'2015-02-02 15:15:34','2015-02-02 16:28:55',0),(14,1,1,1,'2015-02-02 15:28:44','2015-02-03 16:25:18',0),(15,1,1,2,'2015-02-02 16:24:09','2015-02-11 11:41:17',0),(16,1,1,3,'2015-02-02 16:25:35','2015-02-13 15:39:21',0),(17,1,1,4,'2015-02-02 16:27:41','2015-02-13 15:39:16',0),(18,1,1,10,'2015-02-02 16:28:02','2015-02-02 16:28:02',1),(19,1,1,5,'2015-02-02 16:28:31','2015-02-02 16:30:08',0),(20,1,1,1,'2015-02-10 11:14:09','2015-02-10 11:14:09',1),(21,2,2,1,'2015-02-10 12:33:01','2015-02-10 12:33:01',1),(22,2,2,10,'2015-02-10 12:33:11','2015-02-10 12:33:11',1),(23,2,2,8,'2015-02-10 12:33:24','2015-02-10 12:33:24',1),(24,1,1,2,'2015-02-11 11:41:24','2015-02-13 15:39:26',0),(25,2,2,2,'2015-02-11 15:54:45','2015-02-11 15:54:45',1),(26,1,1,14,'2015-02-13 15:38:05','2015-02-13 15:38:05',1),(27,1,2,2,'2015-02-13 15:39:39','2015-02-13 15:39:39',1),(28,1,1,3,'2015-02-13 15:40:34','2015-02-13 15:40:34',1),(29,1,1,5,'2015-02-13 15:41:09','2015-02-13 15:41:09',1),(30,1,1,11,'2015-02-13 15:41:19','2015-02-13 15:41:19',1),(31,1,1,8,'2015-02-13 15:41:24','2015-02-13 15:41:24',1),(32,1,1,4,'2015-02-13 15:48:29','2015-02-13 15:48:29',1),(33,1,2,15,'2015-02-16 11:16:27','2015-02-16 11:16:27',1),(34,3,2,1,'2015-02-16 14:03:58','2015-02-19 16:50:13',0),(35,3,2,2,'2015-02-16 14:06:22','2015-02-16 14:06:25',1),(36,3,2,3,'2015-02-16 14:06:33','2015-02-16 14:06:35',1),(37,1,2,9,'2015-02-17 17:32:17','2015-02-17 17:32:17',1),(38,1,2,16,'2015-03-12 10:59:32','2015-03-12 10:59:32',1);
 
 /*Table structure for table `pharmacist_outgoing_drug` */
 
@@ -601,6 +597,30 @@ CONSTRAINT `fk_Outgoing` FOREIGN KEY (`outgoing_drug_id`) REFERENCES `outgoing_d
 /*Data for the table `pharmacist_outgoing_drug` */
 
 insert  into `pharmacist_outgoing_drug`(`pharmacist_outgoing_drug_id`,`pharmacist_id`,`outgoing_drug_id`,`created_date`,`active_fg`) values (32,1,66,'2015-02-25 13:00:43',1),(33,1,67,'2015-02-25 13:00:43',1),(34,1,68,'2015-02-25 13:02:05',1),(35,1,69,'2015-02-25 13:02:05',1),(36,1,70,'2015-02-25 13:02:11',1),(37,1,71,'2015-02-25 13:02:11',1),(38,1,72,'2015-02-25 13:10:55',1),(39,1,73,'2015-02-25 13:10:55',1),(40,1,74,'2015-02-25 13:10:58',1),(41,1,75,'2015-02-25 13:10:58',1),(42,1,76,'2015-02-25 13:10:59',1),(43,1,77,'2015-02-25 13:10:59',1),(44,1,78,'2015-02-25 13:25:26',1),(45,1,79,'2015-02-25 13:25:26',1),(46,1,80,'2015-02-25 13:43:24',1),(47,1,81,'2015-02-25 13:43:24',1),(48,1,82,'2015-02-25 16:30:09',1),(49,1,83,'2015-02-25 16:30:09',1),(50,1,84,'2015-02-25 17:40:21',1),(51,1,85,'2015-02-25 17:40:21',1),(55,1,89,'2015-03-02 14:17:17',1),(56,1,90,'2015-03-02 14:20:50',1),(57,1,91,'2015-03-02 14:55:19',1),(58,1,92,'2015-03-02 15:00:13',1),(59,1,93,'2015-03-02 15:12:13',1),(60,1,94,'2015-03-02 15:26:54',1),(61,1,95,'2015-03-02 16:23:16',1),(62,1,96,'2015-03-02 16:24:51',1),(63,1,97,'2015-03-02 16:30:07',1),(64,1,98,'2015-03-02 16:30:50',1),(65,1,99,'2015-03-02 16:31:45',1),(66,1,100,'2015-03-02 16:33:45',1),(67,1,101,'2015-03-02 16:41:03',1),(68,1,102,'2015-03-02 16:42:40',1),(69,1,103,'2015-03-04 14:54:32',1),(70,1,104,'2015-03-04 15:07:00',1),(71,1,105,'2015-03-04 15:08:33',1);
+
+/*Table structure for table `prescription` */
+
+DROP TABLE IF EXISTS `prescription`;
+
+CREATE TABLE `prescription` (
+`prescription_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
+`prescription` varchar(255) DEFAULT NULL,
+`treatment_id` int(11) unsigned NOT NULL,
+`status` int(11) NOT NULL,
+`modified_by` int(11) unsigned NOT NULL,
+`created_date` int(11) unsigned NOT NULL,
+`modified_date` int(11) unsigned NOT NULL,
+`active_fg` tinyint(1) NOT NULL DEFAULT '1',
+PRIMARY KEY (`prescription_id`),
+KEY `fk_TreatmentPrescription` (`treatment_id`),
+KEY `fk_PrescriptionStatus` (`status`),
+CONSTRAINT `fk_PrescriptionStatus` FOREIGN KEY (`status`) REFERENCES `status` (`status_id`),
+CONSTRAINT `fk_TreatmentPrescription` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
+
+/*Data for the table `prescription` */
+
+insert  into `prescription`(`prescription_id`,`prescription`,`treatment_id`,`status`,`modified_by`,`created_date`,`modified_date`,`active_fg`) values (5,'Quinine',1,1,1,2015,2015,1),(6,'Paracetamol',1,1,1,2015,2015,1),(7,'aaskas',1,1,1,2015,2015,1),(8,'xdsfdfs',1,1,1,2015,2015,1);
 
 /*Table structure for table `prescription_outgoing_drug` */
 
@@ -653,7 +673,7 @@ CONSTRAINT `fk_UserProfile` FOREIGN KEY (`userid`) REFERENCES `user_auth` (`user
 
 /*Data for the table `profile` */
 
-insert  into `profile`(`profile_id`,`userid`,`surname`,`firstname`,`middlename`,`department_id`,`work_address`,`home_address`,`telephone`,`sex`,`height`,`weight`,`birth_date`,`created_date`,`modified_date`,`active_fg`) values (7,1,'mbakwe','caleb','chukwuezugo',1,'room 012, computer building, obafemi awolowo university\r\n8, watch tower street, onipanu','room 012, computer building, obafemi awolowo university\r\n8, watch tower street, onipanu','+2348030420046','MALE',2,80,'2015-02-06','0000-00-00 00:00:00','2015-02-06 12:10:49',1),(9,2,'moses','adebayo','olajuwon',2,'23b ezeagu lane, ajegunle lagos','23b ezeagu lane, ajegunle lagos','+2348162886288','MALE',120,75,'1979-09-15','0000-00-00 00:00:00','2015-02-10 12:27:27',1),(10,3,'adewoye','abiodun','adeola',4,'23b ezeagu lane, ajegunle lagos','23b ezeagu lane, ajegunle lagos','+2348162886288','MALE',12,123,'2015-02-20','0000-00-00 00:00:00','2015-02-19 16:47:22',1);
+insert  into `profile`(`profile_id`,`userid`,`surname`,`firstname`,`middlename`,`department_id`,`work_address`,`home_address`,`telephone`,`sex`,`height`,`weight`,`birth_date`,`created_date`,`modified_date`,`active_fg`) values (7,1,'mbakwe','caleb','chukwuezugo',1,'room 012, computer building, obafemi awolowo university\r\n8, watch tower street, onipanu','room 012, computer building, obafemi awolowo university\r\n8, watch tower street, onipanu','+2348030420046','MALE',2,80,'2015-02-06','2015-02-06 12:10:49','2015-02-06 12:10:49',1),(9,2,'moses','adebayo','olajuwon',2,'23b ezeagu lane, ajegunle lagos','23b ezeagu lane, ajegunle lagos','+2348162886288','MALE',120,75,'1979-09-15','2015-02-10 12:27:27','2015-02-10 12:27:27',1),(10,3,'adewoye','abiodun','adeola',4,'23b ezeagu lane, ajegunle lagos','23b ezeagu lane, ajegunle lagos','+2348162886288','MALE',12,123,'2015-02-20','2015-02-19 16:47:22','2015-02-19 16:47:22',1);
 
 /*Table structure for table `radiology` */
 
@@ -678,11 +698,36 @@ CREATE TABLE `radiology` (
 `status_id` int(11) NOT NULL DEFAULT '5',
 PRIMARY KEY (`radiology_id`),
 KEY `fk_RadiologyDoctor` (`doctor_id`),
+KEY `fk_RadiologyTreatment` (`treatment_id`),
 KEY `fk_RadiologyStatus` (`status_id`),
-KEY `fk_RadiologyTreatment` (`treatment_id`)
+CONSTRAINT `fk_RadiologyDoctor` FOREIGN KEY (`doctor_id`) REFERENCES `user_auth` (`userid`),
+CONSTRAINT `fk_RadiologyStatus` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
+CONSTRAINT `fk_RadiologyTreatment` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 /*Data for the table `radiology` */
+
+/*Table structure for table `radiology_request` */
+
+DROP TABLE IF EXISTS `radiology_request`;
+
+CREATE TABLE `radiology_request` (
+`radiology_request_id` int(11) NOT NULL AUTO_INCREMENT,
+`radiology_id` int(11) NOT NULL,
+`clinical_diagnosis_details` varchar(100) DEFAULT NULL,
+`previous_operation` varchar(25) NOT NULL,
+`any_known_allergies` varchar(25) NOT NULL,
+`previous_xray` tinyint(4) NOT NULL,
+`xray_number` varchar(7) NOT NULL,
+`created_date` datetime NOT NULL,
+`modified_date` datetime NOT NULL,
+`active_fg` tinyint(1) NOT NULL DEFAULT '1',
+PRIMARY KEY (`radiology_request_id`),
+KEY `fk_ExaminationRequestedRadiologyId` (`radiology_id`),
+CONSTRAINT `fk_ExaminationRequestedRadiologyId` FOREIGN KEY (`radiology_id`) REFERENCES `radiology` (`radiology_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+/*Data for the table `radiology_request` */
 
 /*Table structure for table `roster` */
 
@@ -731,7 +776,7 @@ PRIMARY KEY (`staff_permission_id`)
 
 /*Data for the table `staff_permission` */
 
-insert  into `staff_permission`(`staff_permission_id`,`staff_permission`,`created_date`,`modified_date`,`active_fg`) values (1,'read_only','0000-00-00 00:00:00','2015-01-26 12:44:20',1),(2,'read_write','0000-00-00 00:00:00','2015-01-26 12:46:12',1);
+insert  into `staff_permission`(`staff_permission_id`,`staff_permission`,`created_date`,`modified_date`,`active_fg`) values (1,'read_only','2015-01-26 12:44:17','2015-01-26 12:44:20',1),(2,'read_write','2015-01-26 12:46:14','2015-01-26 12:46:12',1);
 
 /*Table structure for table `staff_role` */
 
@@ -745,11 +790,11 @@ CREATE TABLE `staff_role` (
 `role_label` varchar(50) DEFAULT NULL,
 `active_fg` tinyint(1) NOT NULL DEFAULT '1',
 PRIMARY KEY (`staff_role_id`)
-) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=17 DEFAULT CHARSET=latin1;
 
 /*Data for the table `staff_role` */
 
-insert  into `staff_role`(`staff_role_id`,`created_date`,`modified_date`,`staff_role`,`role_label`,`active_fg`) values (1,'0000-00-00 00:00:00','2015-01-26 12:24:54','administrator','adminisrator',1),(2,'0000-00-00 00:00:00','0000-00-00 00:00:00','doctor','doctor',1),(3,'0000-00-00 00:00:00','2015-01-26 12:26:52','pharmacist','pharmacist',1),(4,'0000-00-00 00:00:00','2015-01-28 13:00:42','medical_records','medical records',1),(5,'0000-00-00 00:00:00','2015-01-28 13:01:25','permission','permission_granter',1),(6,'0000-00-00 00:00:00','2015-01-28 13:02:01','urine','urine test conductor',1),(7,'0000-00-00 00:00:00','2015-01-28 13:02:43','visual','visual test conductor',1),(8,'0000-00-00 00:00:00','2015-01-28 13:03:03','xray ','xray test conductor',1),(9,'0000-00-00 00:00:00','2015-01-28 13:03:35','health_scheme','health scheme',1),(10,'0000-00-00 00:00:00','2015-01-28 13:04:06','parasitology','parasitology conductor',1),(11,'0000-00-00 00:00:00','2015-01-28 13:04:26','chemical_pathology','chemical pathology conductor',1),(12,'0000-00-00 00:00:00','2015-01-28 13:05:07','add_staff','staff adding officer',1),(13,'0000-00-00 00:00:00','2015-01-28 13:05:33','staff_reg','staff clearance',1),(14,'0000-00-00 00:00:00','2015-01-28 13:05:54','treatment_recrods','treatment history',1),(15,'0000-00-00 00:00:00','2015-02-16 00:00:00','roster','roster creator',1);
+insert  into `staff_role`(`staff_role_id`,`created_date`,`modified_date`,`staff_role`,`role_label`,`active_fg`) values (1,'2015-01-26 12:24:47','2015-01-26 12:24:54','administrator','adminisrator',1),(2,'0000-00-00 00:00:00','0000-00-00 00:00:00','doctor','doctor',1),(3,'2015-01-26 12:26:48','2015-01-26 12:26:52','pharmacist','pharmacist',1),(4,'2015-01-28 13:00:36','2015-01-28 13:00:42','medical_records','medical records',1),(5,'2015-01-28 13:01:20','2015-01-28 13:01:25','permission','permission_granter',1),(6,'2015-01-28 13:01:58','2015-01-28 13:02:01','urine','urine test conductor',1),(7,'2015-01-28 13:02:40','2015-01-28 13:02:43','visual','visual test conductor',1),(8,'2015-01-28 13:02:59','2015-01-28 13:03:03','xray ','xray test conductor',1),(9,'2015-01-28 13:03:32','2015-01-28 13:03:35','health_scheme','health scheme',1),(10,'2015-01-28 13:04:03','2015-01-28 13:04:06','parasitology','parasitology conductor',1),(11,'2015-01-28 13:04:24','2015-01-28 13:04:26','chemical_pathology','chemical pathology conductor',1),(12,'2015-01-28 13:05:02','2015-01-28 13:05:07','add_staff','staff adding officer',1),(13,'2015-01-28 13:05:30','2015-01-28 13:05:33','staff_reg','staff clearance',1),(14,'2015-01-28 13:05:51','2015-01-28 13:05:54','treatment_recrods','treatment history',1),(15,'2015-02-16 01:04:09','2015-02-16 00:00:00','roster','roster creator',1),(16,'2015-03-12 10:56:06','2015-03-12 10:56:10','admission_officer','admission officer',1);
 
 /*Table structure for table `status` */
 
@@ -782,9 +827,11 @@ CREATE TABLE `treatment` (
 `modified_date` datetime NOT NULL,
 `active_fg` tinyint(1) NOT NULL DEFAULT '1',
 PRIMARY KEY (`treatment_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8;
 
 /*Data for the table `treatment` */
+
+insert  into `treatment`(`treatment_id`,`doctor_id`,`patient_id`,`consultation`,`symptoms`,`diagnosis`,`comments`,`created_date`,`modified_date`,`active_fg`) values (1,1,1,'','Head ache and body ache','Fever',NULL,'2015-02-20 00:00:00','2015-02-20 00:00:00',1),(2,1,2,'Lorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior d','Lorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior d','Lorem ipsum vi et sallum in jior d','Lorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior dLorem ipsum vi et sallum in jior d','2015-03-13 00:00:00','2015-03-13 00:00:00',1);
 
 /*Table structure for table `unit_ref` */
 
@@ -837,8 +884,8 @@ CREATE TABLE `urinary` (
 `modified_date` datetime NOT NULL,
 `active_fg` tinyint(1) NOT NULL DEFAULT '1',
 PRIMARY KEY (`urinary_id`),
-KEY `fk_UrinaryProblem` (`urinaryproblem`),
 KEY `fk_UrinaryUserId` (`patient_id`),
+KEY `fk_UrinaryProblem` (`urinaryproblem`),
 CONSTRAINT `fk_UrinaryPatientId` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -928,7 +975,7 @@ CONSTRAINT `fk_UserStatus` FOREIGN KEY (`status`) REFERENCES `status` (`status_i
 
 /*Data for the table `user_auth` */
 
-insert  into `user_auth`(`userid`,`regNo`,`passcode`,`created_date`,`modified_date`,`status`,`active_fg`,`online_status`) values (1,'PMS001','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','0000-00-00 00:00:00','2015-02-13 15:25:18',1,1,1),(2,'PMS002','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','0000-00-00 00:00:00','2015-02-06 12:05:46',1,1,0),(3,'PMS003','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','0000-00-00 00:00:00','2015-02-19 16:45:59',1,1,0);
+insert  into `user_auth`(`userid`,`regNo`,`passcode`,`created_date`,`modified_date`,`status`,`active_fg`,`online_status`) values (1,'PMS001','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','2015-01-26 18:30:48','2015-02-13 15:25:18',1,1,1),(2,'PMS002','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','2015-01-28 18:00:51','2015-02-06 12:05:46',1,1,1),(3,'PMS003','7110eda4d09e062aa5e4a390b0a572ac0d2c0220','2015-01-29 18:37:49','2015-02-19 16:45:59',1,1,0);
 
 /*Table structure for table `visual_skills_profile` */
 
@@ -957,8 +1004,8 @@ CREATE TABLE `visual_skills_profile` (
 `status_id` int(11) NOT NULL DEFAULT '5',
 PRIMARY KEY (`visual_profile_id`),
 KEY `fk_VisualDoctor` (`doctor_id`),
-KEY `fk_VisualStatus` (`status_id`),
 KEY `fk_VisualTreatment` (`treatment_id`),
+KEY `fk_VisualStatus` (`status_id`),
 CONSTRAINT `fk_VisualDoctor` FOREIGN KEY (`doctor_id`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_VisualStatus` FOREIGN KEY (`status_id`) REFERENCES `status` (`status_id`),
 CONSTRAINT `fk_VisualTreatment` FOREIGN KEY (`treatment_id`) REFERENCES `treatment` (`treatment_id`)
@@ -1005,9 +1052,11 @@ CREATE TABLE `ward_ref` (
 `modified_date` datetime NOT NULL,
 `active_fg` tinyint(1) NOT NULL DEFAULT '1',
 PRIMARY KEY (`ward_ref_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 /*Data for the table `ward_ref` */
+
+insert  into `ward_ref`(`ward_ref_id`,`description`,`created_date`,`modified_date`,`active_fg`) values (1,'Ward A','2015-03-13 00:00:00','2015-03-13 00:00:00',1),(2,'Ward B','2015-03-13 00:00:00','2015-03-13 00:00:00',1),(3,'Ward C','2015-03-13 00:00:00','2015-03-13 00:00:00',1);
 
 /*Table structure for table `xray_case` */
 
