@@ -127,9 +127,9 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <div class="haematology">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form">
-                        <input type="hidden" name="<?php HaematologyTable::table_name.'['.HaematologyTable::haematology_id.']'; ?>" value="<?php echo $_REQUEST['haematology_id']; ?>" />
+                        <input type="hidden" name="<?php HaematologyTable::table_name.'['.HaematologyTable::haematology_id.']'; ?>"  />
                         <input type="hidden" name="<?php  HaematologyTable::table_name.'['.HaematologyTable::lab_attendant_id.']' ?>" value="<?php echo $_SESSION['userid']; ?>" />
-                        <input type="hidden" name="<?php HaematologyTable::table_name.'['.HaematologyTable::treatment_id.']'; ?>" value="<?php echo $_REQUEST['treatment_id']; ?>">
+                        <input type="hidden" name="<?php HaematologyTable::table_name.'['.HaematologyTable::treatment_id.']'; ?>" >
 
                         <div class="row">
                             <div class="page-header">
@@ -141,10 +141,14 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Clinical Diagnosis and Relevant Details</h4>
-                                        <textarea readonly class="col-sm-12 form-control" name="<?php HaematologyTable::table_name.'['.HaematologyTable::clinical_diagnosis_details.']'; ?>">{{Test Request Here}}
-
+                                        <textarea readonly class="col-sm-12 form-control" >
+                                            <?php
+                                                if(isset($_SESSION[HaematologyTable::clinical_diagnosis_details])){
+                                                    echo $_SESSION[HaematologyTable::clinical_diagnosis_details];
+                                                }
+                                            ?>
                                         </textarea>
-                                        <div class="test-label">Dcotor: {{Doctor's Name}}<span class="pad5 test-label">Date:</span></div>
+                                        <div class="test-label">Doctor: {{Doctor's Name}}<span class="pad5 test-label">Date:</span></div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -152,10 +156,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
-                                        <textarea name="<?php echo HaematologyTable::table_name.'['.HaematologyTable::laboratory_report.']'; ?>" class="col-sm-12 form-control">
+                                        <textarea name="<?php echo 'details'.'['.HaematologyTable::table_name.'['.HaematologyTable::laboratory_report.']'.']'; ?>" class="col-sm-12 form-control">
 
                                         </textarea>
-                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="[laboratory_ref]"></span> </div>
+                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="<?php echo 'details'.'['.HaematologyTable::table_name.'['.HaematologyTable::laboratory_ref.']'.']'; ?>"></span> </div>
                                     </fieldset>
                                 </div>
                             </div>

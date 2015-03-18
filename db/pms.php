@@ -22,7 +22,6 @@ DROP TABLE IF EXISTS `admission`;
 
 CREATE TABLE `admission` (
 `admission_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
-`bed_id` int(11) unsigned NOT NULL,
 `admitted_by` int(11) NOT NULL,
 `discharged_by` int(11) DEFAULT NULL,
 `patient_id` int(11) unsigned NOT NULL,
@@ -38,7 +37,6 @@ KEY `fk_AdmittedBy` (`admitted_by`),
 KEY `fk_PatientAdmitted` (`patient_id`),
 KEY `fk_TreatmentAdmission` (`treatment_id`),
 KEY `discharged_by` (`discharged_by`),
-KEY `fk_bedAdmitted` (`bed_id`),
 CONSTRAINT `fk_AdmittedBy` FOREIGN KEY (`admitted_by`) REFERENCES `user_auth` (`userid`),
 CONSTRAINT `fk_DischargedBy` FOREIGN KEY (`discharged_by`) REFERENCES `user_auth` (`userid`) ON DELETE NO ACTION ON UPDATE NO ACTION,
 CONSTRAINT `fk_PatientAdmitted` FOREIGN KEY (`patient_id`) REFERENCES `patient` (`patient_id`),

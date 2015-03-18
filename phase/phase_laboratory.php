@@ -23,8 +23,8 @@ if(isset($_REQUEST['submit'])){
 
 $lab_attendant_id = CxSessionHandler::getItem('userid');
 $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : array();
-$data['details']['lab_attendant_id'] = $lab_attendant_id;
-
+//$data['details']['lab_attendant_id'] = $lab_attendant_id;
+$data['details'] = array('haematology_id' => 1, 'clinical_diagnosis_details' => 'something sha', 'lab_attendant_id' => 3, 'laboratory_report' => 'somthing too sha', 'laboratory_ref' => 'H101');
 if ($intent == 'getPatientQueue') {
     if (isset($_REQUEST['labType'])) {
         $labType = $_REQUEST['labType'];

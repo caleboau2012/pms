@@ -22,10 +22,9 @@ var Laboratory = {
             e.preventDefault();
             var payload = {};
             payload.data = $(this).serialize();
-            payload.details = {};
             payload.intent = 'setLabDetails';
-                payload.labType ='haematology';
-            var form_data = $(this).serialize();
+            payload.labType ='haematology';
+            //var form_data = $(this).serialize();
             //payload.data = form_data;
             //console.log(payload);
             var request = $.getJSON(host + Laboratory.URL.incoming_lab_data, payload, function(data){
