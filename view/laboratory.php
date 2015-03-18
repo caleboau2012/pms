@@ -27,7 +27,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Treatment</title>
+    <title>Laboratory</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -121,25 +121,72 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 <div class="container-fluid">
     <div class="row">
+        <div class="col-sm-9 well">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <label class="panel-title">Patients' Test Records</label>
+                </div>
+                <div class="panel-body">
+                    <table class="table table-stripped table--bordered dataTable">
+                        <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Identification No.</th>
+                            <th>Test Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            <th>Created Date</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                        <tr class="odd">
+                            <td>No data available</td>
+                        </tr>
+                        </tbody>
+                        <tfoot>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Name</th>
+                            <th>Identification No.</th>
+                            <th>Test Type</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                            <th>Created Date</th>
+                        </tr>
+                        </tfoot>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <label>Select Test</label>
+            <select id="type" class="form-control" name="test_id">
+                <option value="5">RADIOLOGY</option>
+                <option value="2">HAEMATOLOGY</option>
+                <option value="3">XRAY</option>
+                <option value="4">VISUAL SKILL PROFILE</option>
+                <option value="15">CHEMICAL PATHOLOGY</option>
+                <option value="16">PARASITOLOGY</option>
+            </select>
+        </div>
+
+        <div class="col-sm-3">
+            <br/>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <label>Pending Test</label>
+                </div>
+                <div class="panel-body">
+                    <ul class="list-group">
+                        <li class="list-group-item list-group-item-success">Patient's name</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
 
     </div>
 </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -149,7 +196,5 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
-<script src="../js/libs/masonry.js"></script>
-<script src="../js/treatment.js"></script>
 </body>
 </html>

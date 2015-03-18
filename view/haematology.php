@@ -127,8 +127,8 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <div class="haematology">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form">
-                        <input type="hidden" name="haematology['haematology_id']" value="[haematology_id]">
-                        <input type="hidden" name="haematology['treatment_id']" value="[treatment_id]">
+                        <input type="hidden" name="<?php HaematologyTable::table_name.'['.HaematologyTable::haematology_id.']'; ?>">
+                        <input type="hidden" name="<?php HaematologyTable::table_name.'['.HaematologyTable::treatment_id.']'; ?>" value="[treatment_id]">
 
                         <div class="row">
                             <div class="page-header">
@@ -140,7 +140,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Clinical Diagnosis and Relevant Details</h4>
-                                        <textarea type="text" readonly class="col-sm-12 form-control">{{Test Requested Here}}
+                                        <textarea type="text" readonly class="col-sm-12 form-control">{{Test Request Here}}
 
                                         </textarea>
                                         <div class="test-label">Dcotor: {{Doctor's Name}}<span class="pad5 test-label">Date:</span></div>
@@ -267,7 +267,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                         <?php } else { ?>
                                         <div class="center-block">
                                             <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo DifferentialCountTable::table_name.'['.$attr['column'].']'; ?>">
+                                            <input type="text" class="form-control col-sm-12" name="<?php echo 'data'.'['.DifferentialCountTable::table_name.'['.$attr['column'].']]'; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>
@@ -276,12 +276,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 </div>
 
                                 <div class="col-sm-6 submit-test">
-                                    <input type='submit' class='btn btn-primary pull-right pad' value='Submit' name='submit'>
-                                    <input type='submit' class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
+                                    <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
+                                    <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
                                 </div>
                         </div>
                     </form>
-
                 </div>
             </div>
         </div>
@@ -296,6 +295,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
-<script src="../js/mail.js" type="text/javascript"></script>
+<script src="../js/laboratory.js" type="text/javascript"></script>
+
 </body>
 </html>

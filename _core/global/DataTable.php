@@ -637,3 +637,18 @@ class WardRefTable {
     const modified_date = 'modified_date';
     const active_fg = 'active_fg';
 }
+
+class ExaminationRequestedTable {
+
+    const table_name                 = 'examination_requested';
+    const examination_requested_id   = 'examination_requested_id';
+    const radiology_id               = 'radiology_id';
+    const clinical_diagnosis_details = 'clinical_diagnosis_details';
+    const previous_operation         = 'previous_operation';
+    const any_known_allergies        = 'any_known_allergies';
+    const previous_xray              = 'previous_xray';
+    const xray_number                = 'xray_number';
+    const create_date                = 'create_date';
+    const modified_date              = 'modified_date';
+    const active_fg                  = 'active_fg';
+}

@@ -25,7 +25,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Haematology</title>
+    <title>Parasitology</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -119,7 +119,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9 well">
+        <div class="col-sm-12 well">
             <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title">{{Patient Name}}</h2>
@@ -152,19 +152,23 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     </fieldset>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="center-block">
-                                    <fieldset>
-                                        <h4 class="title">Other Relevant Details</h4>
-                                        <label class="test-label">Nature of Specimen</label>
-                                        <textarea class="col-sm-12 form-control" placeholder="Nature of Specimen" name="<?php echo ParasitologyRequestTable::table_name.'['.ParasitologyRequestTable::nature_of_specimen.']'; ?>"></textarea>
-                                    </fieldset>
-                                    <label class="test-label">Investigation Required</label>
-                                    <textarea class="col-sm-12 form-control" placeholder="Investigation Required" name="<?php echo ParasitologyRequestTable::table_name.'['.ParasitologyRequestTable::investigation_required.']'; ?>"></textarea>
-                                    <div class="test-label">Date of Collection:<span class="pad5 test-label">Date Reported:</span></div>
+                                    <div class="col-sm-12"><h4 class="title">Other Relevant Details</h4></div>
+                                    <div class="col-sm-6">
+                                        <fieldset>
+                                            <label class="test-label">Nature of Specimen</label>
+                                            <textarea class="col-sm-12 form-control" placeholder="Nature of Specimen" name="<?php echo ParasitologyRequestTable::table_name.'['.ParasitologyRequestTable::nature_of_specimen.']'; ?>"></textarea>
+                                        </fieldset>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label class="test-label">Investigation Required</label>
+                                        <textarea class="col-sm-12 form-control" placeholder="Investigation Required" name="<?php echo ParasitologyRequestTable::table_name.'['.ParasitologyRequestTable::investigation_required.']'; ?>"></textarea>
+                                        <div class="test-label">Date of Collection:<span class="pad5 test-label">Date Reported:</span></div>
+                                    </div>
                                 </div>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
@@ -199,26 +203,120 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             $occult_blood_parasites = new LabelList();
                             $occult_blood_parasites->addNode(new LabelNode("Positive", 14));
                             $occult_blood_parasites->addNode(new LabelNode("Negative", 15));
-
                             ?>
 
+                            <div class="col-sm-12">
+                                <h4 class="title text-center">Appearance</h4>
+                                <p class="text-center">The Following Parasites seen</p>
+                            </div>
+                            <div class="col-sm-6">
+                                <table class="table table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" colspan="2" class="test-label text-center">Cells</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                        <?php
+                                        foreach ($cells_parasites->getList() as $label){ ?>
+                                        <tr>
+                                            <td class="test-label"><?php echo $label->getLabel(); ?></td>
+                                            <td class="text-center"><input type="checkbox" name="<?php echo ParasitologyDetailsTable::table_name.'['.$label->getId().']'; ?>"></td>
+                                        </tr>
+                                        <?php
+                                        }
+                                        ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <table class="table table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" colspan="2" class="test-label text-center">Larvae of</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach($larvae_of_parasites->getList() as $label){
+                                        ?>
+                                        <tr>
+                                            <td class="test-label"><?php echo $label->getLabel();?></td>
+                                            <td class="text-center"><input type="checkbox" name="<?php echo  ParasitologyDetailsTable::table_name.'['.$label->getId().']'; ?>"> </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <table class="table table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" colspan="2" class="test-label text-center">Oval Of</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach($ova_of_parasites->getList() as $label){
+                                        ?>
+                                        <tr>
+                                            <td class="test-label"><?php echo $label->getLabel();?></td>
+                                            <td class="text-center"><input name="<?php echo  ParasitologyDetailsTable::table_name.'['.$label->getId().']'; ?>" type="checkbox"> </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    </tbody>
+                                </table>
+                            </div>
+
+                            <div class="col-sm-6">
+                                <table class="table table-responsive">
+                                    <thead>
+                                    <tr>
+                                        <th scope="col" colspan="2" class="test-label text-center">Trophozoites/cyts of</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php
+                                    foreach($trophozoites_cyts_parasites->getList() as $label){
+                                        ?>
+                                        <tr>
+                                            <td class="test-label"><?php echo $label->getLabel();?></td>
+                                            <td class="text-center"><input type="checkbox" name="<?php echo  ParasitologyDetailsTable::table_name.'['.$label->getId().']'; ?>"> </td>
+                                        </tr>
+                                    <?php
+                                    }
+                                    ?>
+                                    <tr>
+                                        <th scope="col" colspan="2" class="test-label text-center">Occult Blood</th>
+                                    </tr>
+                                    <?php
+                                    foreach($occult_blood_parasites->getList() as $label){
+                                    ?>
+                                    <tr>
+                                        <td class="test-label"><?php echo $label->getLabel();?></td>
+                                        <td class="text-center"><input type="checkbox"  name="<?php echo  ParasitologyDetailsTable::table_name.'['.$label->getId().']'; ?>"> </td>
+                                    </tr>
+                                    <?php } ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div class="col-sm-12 submit-test">
+                                <input type='submit' class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
+                                <input type='submit' class='btn btn-primary pull-right pad' value='Submit' name='submit'>
+                            </div>
                         </div>
                     </form>
                 </div>
             </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
