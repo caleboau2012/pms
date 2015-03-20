@@ -42,6 +42,23 @@ if ($intent == 'getPatientQueue') {
         echo JsonResponse::error("No lab type chosen");
         exit();
     }
+} elseif ($intent == 'getAllTest') {
+    if (isset($_REQUEST['labType'])) {
+        $labType = $_REQUEST['labType'];
+
+        $lab = new LaboratoryController();
+        $queue = $lab->getAllTest($labType);
+        if (is_array($queue) && !empty($queue)) {
+            echo JsonResponse::success($queue);
+            exit();
+        } else {
+            echo JsonResponse::error("No test found!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("No lab type chosen");
+        exit();
+    }
 } elseif ($intent == 'getLabDetails') {
     if (isset($_REQUEST['labType']) && isset($_REQUEST['treatmentId'])) {
         $labType = $_REQUEST['labType'];

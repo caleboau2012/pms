@@ -1,9 +1,14 @@
 <?php
 class HaematologyModel extends BaseModel{
 
-    public function getPatientQueue($status = PENDING, $activeFg = ACTIVE){
+    public function getPatientQueue($status = PENDING, $activeFg = 1){
         $data = array(HaematologyTable::status_id => $status, HaematologyTable::active_fg => $activeFg);
         return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);
+    }
+
+    public function getAllTest($activeFg = 1){
+        $data = array(HaematologyTable::active_fg => $activeFg);
+        return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
     public function getTestDetails($treatmentId){

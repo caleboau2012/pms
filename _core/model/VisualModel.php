@@ -6,6 +6,11 @@ class VisualModel extends BaseModel{
         return $this->conn->fetchAll(VisualRequestSqlStatement::GET_PATIENT_QUEUE, $data);
     }
 
+    public function getAllTest($activeFg = 1){
+        $data = array(VisualSkillsProfileTable::active_fg => $activeFg);
+        return $this->conn->fetchAll(VisualRequestSqlStatement::GET_ALL_TEST, $data);
+    }
+
     public function getTestDetails($treatmentId){
         $data = array(VisualSkillsProfileTable::treatment_id => $treatmentId);
         return $this->conn->fetch(VisualRequestSqlStatement::GET_DETAILS, $data);

@@ -505,6 +505,8 @@ class ParasitologyRequestSqlStatement {
     const GET_PATIENT_QUEUE = "SELECT * FROM parasitology_req AS pr INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE pr.status_id = :status_id
                                AND pr.active_fg = :active_fg";
+    const GET_ALL_TEST = "SELECT * FROM parasitology_req AS pr INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE pr.active_fg = :active_fg";
     const GET_DETAILS = "SELECT * FROM parasitology_req WHERE treatment_id = :treatment_id AND active_fg = :active_fg";
     const GET_PARASITES = "SELECT pref_id FROM parasitology_details WHERE preq_id IN (SELECT preq_id FROM parasitology_req WHERE treatment_id = :treatment_id) AND active_fg = :active_fg";
     const UPDATE_DETAILS = "UPDATE parasitology_req SET nature_of_specimen = :nature_of_specimen,
@@ -523,11 +525,6 @@ class ParasitologyRequestSqlStatement {
                     modified_date = NOW()
                     WHERE preq_id = :preq_id';
     const GET_PARASITOLOGY_REQ_ID = 'SELECT preq_id from parasitology_req where preq_id = :preq_id ';
-
-    const GET_ALL_TEST = 'SELECT pr.preq_id, i.surname, i.middlename, i.firstname, u.regNo, pr.status_id, pr.user_id AS userid, pr.modified_date FROM parasitology_req pr
-    LEFT JOIN user_auth u ON (pr.user_id=u.userid)
-    LEFT JOIN identification i ON (i.userid=u.userid)
-    ORDER BY pr.modified_date DESC';
 
     const GET_BY_REGNO = 'SELECT i.surname, i.middlename, i.firstname, ua.regNo, pr.status_id, pr.user_id FROM parasitology_req pr
     LEFT JOIN user_auth ua ON (ua.userid=pr.user_id)
@@ -596,6 +593,10 @@ class RadiologyRequestSqlStatement{
                                rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
                                r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
                                WHERE r.status_id = :status_id AND rr.active_fg = :active_fg";
+    const GET_ALL_TEST = "SELECT * FROM radiology_request AS rr INNER JOIN radiology AS r ON
+                          rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
+                          r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
+                          WHERE rr.active_fg = :active_fg";
     const GET_DETAILS = "SELECT * FROM radiology AS r INNER JOIN radiology_request as rr ON
                          r.radiology_id = rr.radiology_id LEFT JOIN xray_no AS x ON x.radiology_id INNER JOIN treatment
                          AS t on r.treatment_id = t.treatment_id WHERE t.treatment_id = :treatment_id";
@@ -620,6 +621,8 @@ class HaematologyRequestSqlStatement{
     const GET_PATIENT_QUEUE = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.status_id = :status_id
                                AND h.active_fg = :active_fg";
+    const GET_ALL_TEST = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.active_fg = :active_fg";
     const GET_DETAILS = "SELECT * FROM haematology AS h INNER JOIN treatment AS t on h.treatment_id = t.treatment_id
                          WHERE  h.treatment_id = :treatment_id";
     const UPDATE_DETAILS = "UPDATE haematology SET clinical_diagnosis_details = :clinical_diagnosis_details,
@@ -685,6 +688,8 @@ class MicroscopyRequestSqlStatment{
     const GET_PATIENT_QUEUE = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON u.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.status_id = :status_id
                                AND u.active_fg = :active_fg";
+    const GET_ALL_TEST = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON u.treatment_id  = t.treatment_id
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.active_fg = :active_fg";
     const GET_DETAILS = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON t.treatment_id  WHERE u.treatment_id = :treatment_id";
 }
 
@@ -695,6 +700,8 @@ class ChemicalPathologyRequestSqlStatement{
     const GET_PATIENT_QUEUE = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t ON c.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.status_id = :status_id
                                AND c.active_fg = :active_fg";
+    const GET_ALL_TEST = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t ON c.treatment_id  = t.treatment_id
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.active_fg = :active_fg";
     const GET_DETAIL = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t on
                         c.treatment_id = t.treatment_id WHERE c.treatment_id = :treatment_id";
     const GET_DETAILS = "SELECT c.cpreq_id, c.cpref_id, c.result FROM chemical_pathology_details AS c INNER JOIN
@@ -713,6 +720,8 @@ class VisualRequestSqlStatement{
                           VALUES (:doctor_id, :treatment_id, NOW(), NOW())";
     const GET_HISTORY = "SELECT * FROM visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON v.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.status_id = :status_id AND v.active_fg = :active_fg";
+    const GET_ALL_TEST = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON v.treatment_id  = t.treatment_id
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.active_fg = :active_fg";
     const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE treatment_id = :treatment_id";
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
                             distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,

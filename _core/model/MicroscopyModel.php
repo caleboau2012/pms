@@ -6,6 +6,11 @@ class MicroscopyModel extends BaseModel{
         return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_PATIENT_QUEUE, $data);
     }
 
+    public function getAllTest($activeFg = 1){
+        $data = array(UrineTable::active_fg => $activeFg);
+        return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_ALL_TEST, $data);
+    }
+
     public function getTestDetails($treatmentId){
         $result = array();
         $data = array(UrineTable::treatment_id => $treatmentId);

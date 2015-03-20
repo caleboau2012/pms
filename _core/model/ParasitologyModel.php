@@ -6,6 +6,11 @@ class ParasitologyModel extends BaseModel{
         return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);
     }
 
+    public function getAllTest($activeFg = 1){
+        $data = array();
+        return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_ALL_TEST, $data);
+    }
+
     public function getTestDetails($treatmentId, $activeFg = 1){
         $result = array();
         $data = array(ParasitologyRequestTable::treatment_id => $treatmentId, ParasitologyRequestTable::active_fg => $activeFg);

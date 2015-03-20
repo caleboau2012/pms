@@ -2,8 +2,13 @@
 class RadiologyModel extends BaseModel{
 
     public function getPatientQueue($status = PENDING, $activeFg = 1){
-        $data = array(RadiologyRequestTable::status_id => $status, RadiologyRequestTable::active_fg => $activeFg);
+        $data = array(RadiologyTable::status_id => $status, RadiologyRequestTable::active_fg => $activeFg);
         return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);
+    }
+
+    public function getAllTest($activeFg = 1){
+        $data = array(RadiologyRequestTable::active_fg => $activeFg);
+        return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
     public function getTestDetails($treatmentId){

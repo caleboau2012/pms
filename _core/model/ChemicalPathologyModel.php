@@ -6,6 +6,11 @@ class ChemicalPathologyModel extends BaseModel{
         return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);
     }
 
+    public function getAllTest($activeFg = 1){
+        $data = array(ChemicalPathologyRequestTable::active_fg => $activeFg);
+        return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_ALL_TEST, $data);
+    }
+
     public function getTestDetails($treatmentId){
         $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId);
         return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);

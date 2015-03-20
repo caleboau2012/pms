@@ -35,6 +35,25 @@ class LaboratoryController{
         }
     }
 
+    public function getAllTest($labType){
+        switch($labType){
+            case CHEMICAL_PATHOLOGY:
+                return $this->chemicalPathology->getAllTest();
+            case HAEMATOLOGY:
+                return $this->haematology->getAllTest();
+            case PARASITOLOGY:
+                return $this->parasitology->getAllTest();
+            case MICROSCOPY:
+                return $this->microscopy->getAllTest();
+            case VISUAL:
+                return $this->visual->getAllTest();
+            case RADIOLOGY:
+                return $this->radiology->getAllTest();
+            default:
+                return array();
+        }
+    }
+
     public function getLabDetails($labType, $treatmentId){
         switch($labType){
             case CHEMICAL_PATHOLOGY:
