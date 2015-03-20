@@ -85,7 +85,7 @@ $wards = $admission->loadWards();
                     <div class="panel-body">
                         <div class="col-md-4">
                             <div class="well well-sm">
-                                <div class="div-rounded active" id="step-1"><span class="fa fa-road"></span> </div>
+                                <div class="div-rounded" id="step-1"><span class="fa fa-road"></span> </div>
                                 <!--                                <p class="small text-muted text-center">Select ward below</p>-->
                                 <ul class="list-group">
                                     <?php
@@ -117,7 +117,7 @@ $wards = $admission->loadWards();
                                 <div class="thin-separator hidden"></div>
                                 <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
                                 <div id="response" class="text-center center-block">
-                                    <img class="hidden" id="loader" src="../images/loading.gif">
+                                    <span id="loader" class="fa fa-spinner fa-spin hidden"></span>
                                     <div id="response_msg"></div>
                                 </div>
                                 <button class="btn btn-primary form-control hidden" id="assignPatient">ASSIGN</button>

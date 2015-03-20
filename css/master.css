@@ -743,3 +743,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 #in-patient-content{
     margin: 0 auto;
 }
+
+span#loader{
+   font-size: 2em;
+}
