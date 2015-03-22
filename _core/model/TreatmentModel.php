@@ -11,7 +11,7 @@ class TreatmentModel extends BaseModel{
 
             $sql = PatientQueueSqlStatement::DOCTOR_QUEUE;
             $data = array(PatientQueueTable::doctor_id => $doctorId );
-            $result = $this->conn->fetch($sql, $data);
+            $result = $this->conn->fetchAll($sql, $data);
 
             $this->conn->commit();
 
