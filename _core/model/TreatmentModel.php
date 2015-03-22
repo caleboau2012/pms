@@ -1,33 +1,147 @@
 <?php
 class TreatmentModel extends BaseModel{
 
-    /* This fetches the patient queue assigned to a particular  */
+
+       /* This fetches the patient queue assigned to a particular  */
     public function getPatientQueue($doctorId){
+
+        try {
+
+            $this->conn->beginTransaction();
+
+            $sql = PatientQueueSqlStatement::DOCTOR_QUEUE;
+            $data = array(PatientQueueTable::doctor_id => $doctorId );
+            $result = $this->conn->fetch($sql, $data);
+
+            $this->conn->commit();
+
+            return $result;
+
+        }
+        catch (Exception $e){
+
+            $this->conn->rollBack();
+            return false;
+
+        }
 
     }
 
     /* This fethces the list of admitted patients */
     public function getInPatientQueue(){
 
+        try {
+            $this->conn->beginTransaction();
+            $sql = AdmissionSqlStatement::GET_PATIENTS;
+            $data = array ();
+            $result = $this->conn->fetchAll($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+
+       catch (Exception $e){
+
+            $this->conn->rollBack();
+            return false;
+
+        }
+
     }
 
     public function getAdmittedPatientQueue(){
+        try {
+            $this->conn->beginTransaction();
+            $sql = AdmissionSqlStatement::GET_PATIENTS;
+            $data = array();
+            $result = $this->conn->fetchAll($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+        catch (Exception $e){
+            $this->conn->rollBack();
+            return false;
+        }
 
     }
 
     public function requestAdmission($treatmentId){
 
+        try {
+            $this->conn->beginTransaction();
+            $sql = AdmissionReqSqlStatement::REQUEST_ADMISSION;
+            $data = array (AdmissionReqTable::treatment_id => $treatmentId);
+            $result = $this->conn->execute($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+        catch (Exception $e){
+            $this->conn->rollBack();
+            return false;
+        }
+
     }
 
     public function addTreatment($treatmentInfo){
+
+        try {
+            $this->conn->beginTransaction();
+            $sql = TreatmentSqlStatement::ADD_TREATMENT;
+            $data = array ($treatmentInfo);
+            $result = $this->conn->execute($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+        catch (Exception $e){
+            $this->conn->rollBack();
+            return false;
+        }
 
     }
 
     public function updateTreatment($treatmentInfo){
 
+        try {
+            $this->conn->beginTransaction();
+            $sql = TreatmentSqlStatement::UPDATE_TREATMENT;
+            $data = array ($treatmentInfo);
+            $result = $this->conn->execute($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+    catch (Exception $e){
+            $this->conn->rollBack();
+            return false;
+        }
+
+
     }
 
     public function getTreatmentHistory($patientId){
+
+        try {
+            $this->conn->beginTransaction();
+            $sql = TreatmentSqlStatement::GET_TREATMENT;
+            $data = array (TreatmentTable::patient_id=>$patientId);
+            $result = $this->conn->fetch($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+    catch (Exception $e){
+            $this->conn->rollBack();
+            return false;
+        }
 
     }
 

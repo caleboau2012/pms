@@ -36,6 +36,7 @@ class PatientController {
         $mother_status, $father_status, $marital_status, $no_of_children )
     {
 
+
         //$patient = new PatientModel();
         $data = array(
 

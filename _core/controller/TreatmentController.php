@@ -5,10 +5,12 @@ class TreatmentController{
 
     public function __construct(){
         $this->treatmentModel = new TreatmentModel();
+
     }
 
     public function getPatientQueue($doctorId){
-        return $this->treatmentModel->getInPatientQueue($doctorId);
+        return $this->treatmentModel->getPatientQueue($doctorId);
+
     }
 
     public function getInpatientQueue(){

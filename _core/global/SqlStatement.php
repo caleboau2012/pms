@@ -769,6 +769,8 @@ class AdmissionReqSqlStatement {
                 OR pt.regNo = :parameter
             )
         ORDER BY ar.created_date DESC";
+
+
 }
 
 class AdmissionSqlStatement {
@@ -839,4 +841,17 @@ class WardRefSqlStatement {
     const GET_ALL = "SELECT ward_ref_id, description FROM ward_ref";
 
     const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id";
+}
+
+class TreatmentSqlStatement {
+
+    const ADD_TREATMENT = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
+    VALUES(doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments, NOW(), NOW(), 1)";
+
+    const UPDATE_TREATMENT = 'UPDATE treatment SET  doctor_id = :doctor_id, patient_id =:patient_id, consultation=:consultation, symptoms=:symptoms,
+                            diagnosis=:diagnosis, comments=:comments, created_date=NOW(), modified_date = NOW(), active_fg=1 WHERE treatment_id=:treatment_id';
+
+
+    const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id=:patient_id";
+
 }
