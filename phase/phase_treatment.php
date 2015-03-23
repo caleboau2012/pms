@@ -140,7 +140,7 @@ elseif  ($intent == 'addTreatment1') {
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment1($doctorId, $patientId, );
+        $admission_add = $newaddm->addTreatment1($doctorId, $patientId);
     }
 
 
@@ -363,7 +363,7 @@ elseif  ($intent == 'getEncounterHistory') {
         }
     }
 
-}
+
 elseif  ($intent == 'searchPatient') {
 
     $treat = new TreatmentController();
