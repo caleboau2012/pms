@@ -104,11 +104,12 @@ elseif  ($intent == 'addTreatment1') {
 
     $doctorid ="";
     $patientid ="";
-//    $consultation ="";
-//    $symptoms ="";
-//    $comments= "";
-//    $diagnosis ="";
-    //    $diagnosis ="";
+    $consultation ="";
+    $symptoms ="";
+    $comments= "";
+    $diagnosis ="";
+
+
 
 
 
@@ -133,14 +134,14 @@ elseif  ($intent == 'addTreatment1') {
 
     if (empty($doctorid) || empty ($patientid) ){
 
-        print_r($_REQUEST);
+//        print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment1($doctorid, $patientid);
+        $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
     }
 
 
@@ -149,7 +150,7 @@ elseif  ($intent == 'addTreatment1') {
         exit();
     } else {
 //        print_r($_REQUEST);
-        echo JsonResponse::error("Error addmitting patient");
+        echo JsonResponse::error("Error treating patient");
         exit();
     }
 
