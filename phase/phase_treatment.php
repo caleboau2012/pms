@@ -131,7 +131,7 @@ elseif  ($intent == 'addTreatment1') {
 
     $admission_add = null;
 
-    if (empty($doctorId) || empty ($patientId) ){
+    if (empty($doctorid) || empty ($patientid) ){
 
         print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
@@ -140,7 +140,7 @@ elseif  ($intent == 'addTreatment1') {
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment1($doctorId, $patientId);
+        $admission_add = $newaddm->addTreatment1($doctorid, $patientid);
     }
 
 
