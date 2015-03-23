@@ -150,7 +150,7 @@ class PatientQueueSqlStatement {
         WHERE pq.active_fg = 1
             AND ua.online_status != 1";
 
-    const DOCTOR_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex
+    const DOCTOR_QUEUE = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, p.birth_date
         FROM patient_queue AS pq
             INNER JOIN patient AS p
                 ON pq.patient_id = p.patient_id
@@ -158,7 +158,7 @@ class PatientQueueSqlStatement {
             AND p.active_fg = 1
             AND pq.doctor_id = :doctor_id";
 
-    const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date) AS LMT FROM patient_queue";
+    const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date)  AS LMT FROM patient_queue";
 
     const PATIENT_ON_QUEUE = "SELECT COUNT(*) AS count FROM patient_queue WHERE patient_id = :patient_id AND active_fg = 1";
 
@@ -845,7 +845,10 @@ class WardRefSqlStatement {
 
 class TreatmentSqlStatement {
 
-    const ADD_TREATMENT = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
+    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, created_date, modified_date, active_fg)
+    VALUES(doctor_id, :patient_id, NOW(), NOW(), 1)";
+
+    const ADD_TREATMENT2 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
     VALUES(doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments, NOW(), NOW(), 1)";
 
     const UPDATE_TREATMENT = 'UPDATE treatment SET  doctor_id = :doctor_id, patient_id =:patient_id, consultation=:consultation, symptoms=:symptoms,

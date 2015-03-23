@@ -24,12 +24,17 @@ class TreatmentController{
     public function requestAdmission($treatmentId){
         return $this->treatmentModel->requestAdmission($treatmentId);
     }
+    public function addTreatment1($doctorId, $patientId){
+        $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId
+            );
+        return $this->treatmentModel->addTreatment1($treatmentInfo);
+    }
 
-    public function addTreatment($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments){
+    public function addTreatment2($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments){
         $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
                                TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
                                TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments);
-        return $this->treatmentModel->addTreatment($treatmentInfo);
+        return $this->treatmentModel->addTreatment2($treatmentInfo);
     }
 
     public function getTreatmentHistory($patientId){

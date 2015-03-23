@@ -87,11 +87,30 @@ class TreatmentModel extends BaseModel{
 
     }
 
-    public function addTreatment($treatmentInfo){
+    public function addTreatment2($treatmentInfo){
 
         try {
             $this->conn->beginTransaction();
-            $sql = TreatmentSqlStatement::ADD_TREATMENT;
+            $sql = TreatmentSqlStatement::ADD_TREATMENT2;
+            $data = array ($treatmentInfo);
+            $result = $this->conn->execute($sql, $data);
+            $this->conn->commit();
+            return $result;
+
+        }
+
+        catch (Exception $e){
+            $this->conn->rollBack();
+            return false;
+        }
+
+    }
+
+    public function addTreatment1($treatmentInfo){
+
+        try {
+            $this->conn->beginTransaction();
+            $sql = TreatmentSqlStatement::ADD_TREATMENT1;
             $data = array ($treatmentInfo);
             $result = $this->conn->execute($sql, $data);
             $this->conn->commit();
