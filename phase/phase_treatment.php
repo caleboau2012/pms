@@ -108,6 +108,7 @@ elseif  ($intent == 'addTreatment1') {
 //    $symptoms ="";
 //    $comments= "";
 //    $diagnosis ="";
+    //    $diagnosis ="";
 
 
 
