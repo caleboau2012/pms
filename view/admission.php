@@ -102,7 +102,7 @@ $wards = $admission->loadWards();
                         </div>
                         <div class="col-md-4">
                             <div class="well well-sm">
-                                <div class="div-rounded" id="step-2"><span class="fa fa-bed"></div>
+                                <div class="div-rounded" id="step-2"><span class="fa fa-bed"></span></div>
                                 <!--  <p class="small text-warning text-center">select bed below</p>-->
                                 <div id="bed-list">
                                     <h3 class="text-muted text-center"><br/>&larr;Select ward<br/><br/><br/></h3>
@@ -130,31 +130,129 @@ $wards = $admission->loadWards();
             </div>
         </div>
     </div>
-
+    <!---
+        ----IN-PATIENT
+            ----------    View
+    -->
     <div class="adm-page-content" id="in-patient-view">
         <div class="row">
-
-            <div class="col-md-9" id="in-patient-content">
+            <div class="col-md-3">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
-                        <div class="input-group">
-                            <input type="text" class="form-control input-lg" name="query" placeholder="Search patient" required>
-                            <div class="input-group-addon">Search</div>
-                        </div>
+                        <form id="in-patient-form">
+                            <input id = "patient_query" class="form-control" placeholder="Search for in-patients">
+                        </form>
                     </div>
                     <div class="panel-body">
-                        <h3 class="text-muted text-center"><br/>Search patient<br/><br/><br/></h3>
+                        <div id="in-patient-result">
+                            <h2 class="text-muted text-center">Hit enter to get patient</h2>
+                        </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="col-md-9">
+                <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
+                <div id="active_in_patient" class="in-patient-content">
+                    <div id="in-patient-identity">
+                        <span class="fa fa-pulse fa-spin"></span>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="well well-sm">
+                            <div class="div-rounded encounter-icon">
+                                <span class="fa fa-stethoscope"></span>
+                            </div>
+                            <!--                            <h2 class="text-warning text-center">Log Encounter...</h2>-->
+                            <form id="log_encounter">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="temp">Tempertaure</label>
+                                        <input type="text" class="form-control" id="temp" name="temp">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="pulse">Pulse</label>
+                                        <input type="text" id="pulse" class="form-control" name="pulse">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="respiratory_rate">Respiratoty Rate</label>
+                                        <input type="text" class="form-control" id="respiratory_rate" name="respiratory_rate">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="blood_pressure">Blood Pressure</label>
+                                        <input type="text" class="form-control" id = "blood_pressure" name="blood_pressure">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="height">Height</label>
+                                        <input type="text" class="form-control" id="height" name="height">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="weight">Weight</label>
+                                        <input type="text" class="form-control" id="weight" name="weight">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label for="comment">Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="bmi">BMI</label>
+                                        <input type="text" class="form-control" id="bmi" name="bmi">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <br/>
+                                        <input type="submit" class="btn btn-primary">
+                                    </div>
+                                </div>
+
+                            </form>
+                            <div class="clearfix"></div>
+                            <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
+                            <div class="text-center" id="log_encounter_response"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="well well-sm" id="encounter_history">
+                            <div class="div-rounded encounter-icon">
+                                <span class="fa fa-stethoscope"></span>
+                            </div>
+                            <h2 class="text-warning text-center">Log Encounter...</h2>
+
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div>
+                            <br/><br/><br/>
+                            <div class="div-rounded encounter-icon">
+                                <span class="fa fa-user-plus"></span>
+                            </div>
+                            <div class="text-center" id="dischage_patient_content">
+                                <button class="btn btn-warning" id="discharge_patient">Discharge</button>
+                                <div id="discharge_patient_error" class="text-danger"></div>
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
                 </div>
             </div>
         </div>
 
     </div>
 </div>
-</div>
+
+<!--  -->
 <script src='../js/bootstrap/jquery.min.js'></script>
 <script src='../js/bootstrap/bootstrap.min.js'></script>
 <script src="../js/constants.js"></script>
 <script src="../js/admission.js"></script>
+
 </body>
 </html>

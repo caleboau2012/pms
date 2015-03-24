@@ -695,13 +695,13 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     max-height: 58em;
     overflow-y: auto;
 }
-.pending-list li.list-group-item{
-    color: #2F6EA4;
-    margin: 0.25em 0;
-    border-radius: 0.3em;
-    box-shadow: 0px 1px 1px #9CB2C4;
-    font-size: 1.1em;
-}
+/*.pending-list li.list-group-item{*/
+    /*color: #2F6EA4;*/
+    /*margin: 0.25em 0;*/
+    /*border-radius: 0.3em;*/
+    /*box-shadow: 0px 1px 1px #9CB2C4;*/
+    /*font-size: 1.1em;*/
+/*}*/
 .patient-content{
     background: #F5F5F5;
     min-height: 60em;
@@ -723,7 +723,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 .div-rounded.active#step-2{
     background: #BE7070;
 }
-.div-rounded.active#step-3 {
+.div-rounded.active#step-3, .encounter-icon {
     background: #87C988;
 }
 .thin-separator{
@@ -746,4 +746,21 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 span#loader{
    font-size: 2em;
+}
+.patient-pill{
+    color: #2F6EA4;
+    margin: 0.25em 0;
+    border-radius: 0.3em;
+    box-shadow: 0 1px 1px #9CB2C4;
+    font-size: 1.1em;
+}
+.in-patient-content{
+    background: #ffffff;
+    padding-bottom: 3em;
+}
+#in-patient-identity{
+    padding: 1em 1em 2em;
+}
+#encounter_history{
+    height: 32em;
 }
