@@ -304,9 +304,9 @@ Admission = {
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                $('#dischage_patient_content').html("<h2>" + data.message +"</h2>");
+                $('#discharge_patient_content').html("<h2 class='text-success'>" + data.message +"</h2>");
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
-                $('#discharge_patient_error').html("<h4>" + data.data +"</h4>");
+                $('#discharge_patient_error').html("<h4>" + data.message +"</h4>");
             }
         });
     }

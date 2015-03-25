@@ -690,7 +690,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 
 /*ADMISSION MODULE*/
-.pending-list{
+.pending-list, .in-patient-list{
     height: 58em;
     max-height: 58em;
     overflow-y: auto;
