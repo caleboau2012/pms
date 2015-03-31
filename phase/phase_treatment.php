@@ -193,7 +193,7 @@ elseif  ($intent == 'submitTreatment') {
 
     $admission_add = null;
 
-    if (empty($doctorId) || empty ($patientId) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
+    if (empty($doctorid) || empty ($patientid) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
 
         print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");

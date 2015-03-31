@@ -92,7 +92,7 @@ class TreatmentModel extends BaseModel{
         try {
             $this->conn->beginTransaction();
             $sql = TreatmentSqlStatement::ADD_TREATMENT2;
-            $data = array ($treatmentInfo);
+            $data = $treatmentInfo;
             $result = $this->conn->execute($sql, $data);
             $this->conn->commit();
             return $result;
