@@ -248,6 +248,7 @@ class HaematologyTable {
     const treatment_id               = 'treatment_id';
     const active_fg                  = 'active_fg';
     const status_id                  = 'status_id';
+    const doctor_id                 = 'doctor_id';
 }
 
 class UrineTable {
@@ -266,6 +267,7 @@ class UrineTable {
     const modified_date              = 'modified_date';
     const status_id                  = 'status_id';
     const active_fg                  = 'active_fg';
+    const doctor_id                 = 'doctor_id';
 }
 
 class ParasitologyRequestTable {

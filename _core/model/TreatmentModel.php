@@ -113,8 +113,15 @@ class TreatmentModel extends BaseModel{
             $sql = TreatmentSqlStatement::ADD_TREATMENT1;
             $data = array ($treatmentInfo);
             $result = $this->conn->execute($sql, $data);
-            $this->conn->commit();
-            return $result;
+
+
+            if ($result){
+
+                $this->conn->commit();
+                $last_id = $this->conn->getLastInsertedId();
+                return $last_id;
+            }
+
 
         }
 
@@ -317,8 +324,8 @@ class TreatmentModel extends BaseModel{
             case MICROSCOPY:
                 return $this->getMicroscopyLabHistory($patientId);
 
-            case VISUAL:
-                return $this->getVisualLabHistory($patientId);
+         //   case VISUAL:
+           //     return $this->getVisualLabHistory($patientId);
 
             case CHEMICAL_PATHOLOGY:
                 return $this->getChemicalPathologyLabHistory($patientId);

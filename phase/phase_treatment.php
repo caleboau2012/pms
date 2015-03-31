@@ -119,10 +119,10 @@ elseif  ($intent == 'addTreatment1') {
 
         $doctorid =$_REQUEST[TreatmentTable::doctor_id];
         $patientid =$_REQUEST[TreatmentTable::patient_id];
-       // $consultation =$_REQUEST[TreatmentTable::consultation];
-       // $symptoms =$_REQUEST[TreatmentTable::symptoms];
-       // $comments= $_REQUEST[TreatmentTable::comments];
-       // $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
+        $consultation ="";
+        $symptoms ="";
+        $comments= "";
+        $diagnosis ="";
 
     }
     else {
@@ -198,7 +198,7 @@ elseif  ($intent == 'addTreatment2') {
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments);
+        $admission_add = $newaddm->addTreatment2($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments);
     }
 
 
@@ -218,7 +218,7 @@ elseif  ($intent == 'addTreatment2') {
 elseif  ($intent == 'getTreatmentHistory') {
 
     if (isset($_REQUEST['patient_id'])){
-        $patientid_id = $_REQUEST['patient_id'];
+        $patientid = $_REQUEST['patient_id'];
     }
     else{
         echo JsonResponse::error("patient_id not Set");
@@ -226,7 +226,7 @@ elseif  ($intent == 'getTreatmentHistory') {
     }
 
     $treat = new TreatmentController();
-    $request_adm = $treat->getTreatmentHistory($patientid_id);
+    $request_adm = $treat->getTreatmentHistory($patientid);
 
     if(is_array($request_adm)){
         echo JsonResponse::success($request_adm);
@@ -241,22 +241,21 @@ elseif  ($intent == 'requestLabTest') {
 
     $treat = new TreatmentController();
 
+    //$doctorId, $treatmentId, $labTestType, $comment
+
     $treatmentId ="";
-    $patientid ="";
     $doctorId ="";
     $labTestType ="";
     $comment= "";
 
-    if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
+    if (isset($_REQUEST['treatmentId']) && isset($_REQUEST['doctorId'])){  // change surname to what you thin should be set.
 
         // var_dump($_REQUEST);
 
-        $doctorid =$_REQUEST[TreatmentTable::doctor_id];
-        $treatmentId =$_REQUEST[TreatmentTable::treatment_id];
-        $patientid =$_REQUEST[TreatmentTable::patient_id];
         $doctorId =$_REQUEST[TreatmentTable::doctor_id];
-        $labTestType = $_REQUEST['test_id'];  // no tbale for this variable.
-        $comment= $_REQUEST[TreamentTable::comments];
+        $treatmentId =$_REQUEST[TreatmentTable::treatment_id];
+        $labTestType = $_REQUEST['test_id'];
+        $comment= $_REQUEST[TreatmentTable::comments];
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -265,16 +264,15 @@ elseif  ($intent == 'requestLabTest') {
 
     $admission_add = null;
 
-    if (empty($treatmentId) || empty ($patientId) || empty ($doctorId) || empty ($labTestType) || empty ($comments)){
+    if (empty($treatmentId) || empty ($doctorId) || empty ($labTestType) || empty ($comment)){
 
-        print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment($doctorId, $treatmentId, $labTestType, $comment);
+        $admission_add = $newaddm->requestLabTest($doctorId, $treatmentId, $labTestType, $comment);
     }
 
     if($admission_add){
@@ -292,15 +290,13 @@ elseif  ($intent == 'requestLabTest') {
 elseif  ($intent == 'logEncounter') {
     $treat = new TreatmentController();
 
-
     $doctorId ="";
     $patientId="";
     $admissionId="";
     $comments="";
 
 
-
-    if (/*isset($_REQUEST['admissionId']) &&*/ isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
+    if (/*isset($_REQUEST['admissionId']) &&*/ isset($_REQUEST['patient_id'])){
 
         // var_dump($_REQUEST);
 
@@ -369,22 +365,11 @@ elseif  ($intent == 'searchPatient') {
 
     $treat = new TreatmentController();
 
-    $treatmentId ="";
-    $patientid ="";
-    $doctorId ="";
-    $labTestType ="";
-    $comment= "";
 
-    if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
+    if (isset($_REQUEST['treatment_id']) ){  // change surname to what you thin should be set.
 
-        // var_dump($_REQUEST);
+       $patientName =$_REQUEST[''];
 
-        $doctorid =$_REQUEST[TreatmentTable::doctor_id];
-        $treatmentId =$_REQUEST[TreatmentTable::treatment_id];
-        $patientid =$_REQUEST[TreatmentTable::patient_id];
-        $doctorId =$_REQUEST[TreatmentTable::doctor_id];
-        $labTestType = $_REQUEST['test_id'];  // no tbale for this variable.
-        $comment= $_REQUEST[TreamentTable::comments];
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -393,16 +378,15 @@ elseif  ($intent == 'searchPatient') {
 
     $admission_add = null;
 
-    if (empty($treatmentId) || empty ($patientId) || empty ($doctorId) || empty ($labTestType) || empty ($comments)){
+    if (empty($patientName) ){
 
-        print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment($doctorId, $treatmentId, $labTestType, $comment);
+        $admission_add = $newaddm->searchPatient($patientName);
     }
 
     if($admission_add){
@@ -410,7 +394,7 @@ elseif  ($intent == 'searchPatient') {
         exit();
     } else {
 //        print_r($_REQUEST);
-        echo JsonResponse::error("Error requesting lab test");
+        echo JsonResponse::error("No patient found");
         exit();
     }
 
@@ -420,22 +404,16 @@ elseif  ($intent == 'getLabHistory') {
 
     $treat = new TreatmentController();
 
-    $treatmentId ="";
-    $patientid ="";
-    $doctorId ="";
+    $patientId ="";
     $labTestType ="";
-    $comment= "";
 
     if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
 
         // var_dump($_REQUEST);
 
-        $doctorid =$_REQUEST[TreatmentTable::doctor_id];
-        $treatmentId =$_REQUEST[TreatmentTable::treatment_id];
-        $patientid =$_REQUEST[TreatmentTable::patient_id];
-        $doctorId =$_REQUEST[TreatmentTable::doctor_id];
+        $patientId =$_REQUEST[TreatmentTable::patient_id];
         $labTestType = $_REQUEST['test_id'];  // no tbale for this variable.
-        $comment= $_REQUEST[TreamentTable::comments];
+
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -444,16 +422,16 @@ elseif  ($intent == 'getLabHistory') {
 
     $admission_add = null;
 
-    if (empty($treatmentId) || empty ($patientId) || empty ($doctorId) || empty ($labTestType) || empty ($comments)){
+    if (empty ($patientId) || empty ($labTestType) ){
 
-        print_r($_REQUEST);
+        //print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment($doctorId, $treatmentId, $labTestType, $comment);
+        $admission_add = $newaddm->getLabHistory($patientId, $labTestType);
     }
 
     if($admission_add){
@@ -461,7 +439,7 @@ elseif  ($intent == 'getLabHistory') {
         exit();
     } else {
 //        print_r($_REQUEST);
-        echo JsonResponse::error("Error requesting lab test");
+        echo JsonResponse::error("Error getting lab history");
         exit();
     }
 
