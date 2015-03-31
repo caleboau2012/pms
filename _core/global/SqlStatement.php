@@ -846,10 +846,13 @@ class WardRefSqlStatement {
 class TreatmentSqlStatement {
 
     const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
-    VALUES(doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments, NOW(), NOW(), 1)";
+    VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments,  NOW(), NOW(), 1)";
+
+//    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, created_date, modified_date, active_fg)
+//    VALUES(:doctor_id, :patient_id, NOW(), NOW(), 1)";
 
     const ADD_TREATMENT2 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
-    VALUES(doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments, NOW(), NOW(), 1)";
+    VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments, NOW(), NOW(), 1)";
 
     const UPDATE_TREATMENT = 'UPDATE treatment SET  doctor_id = :doctor_id, patient_id =:patient_id, consultation=:consultation, symptoms=:symptoms,
                             diagnosis=:diagnosis, comments=:comments, created_date=NOW(), modified_date = NOW(), active_fg=1 WHERE treatment_id=:treatment_id';

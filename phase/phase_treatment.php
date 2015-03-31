@@ -104,10 +104,10 @@ elseif  ($intent == 'startTreatment') {
 
     $doctorid ="";
     $patientid ="";
-    $consultation ="";
-    $symptoms ="";
-    $comments= "";
-    $diagnosis ="";
+//    $consultation ="";
+//    $symptoms ="";
+//    $comments= "";
+//    $diagnosis ="";
 
 
 
@@ -142,15 +142,19 @@ elseif  ($intent == 'startTreatment') {
 
         $newaddm = new TreatmentController();
         $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
+//        $admission_add = $newaddm->addTreatment1($doctorid, $patientid);
     }
 
 
     if($admission_add){
+        //var_dump($admission_add);
         echo JsonResponse::success($admission_add);
         exit();
     } else {
 //        print_r($_REQUEST);
-        echo JsonResponse::error("Error treating patient");
+//        echo'admission';
+//        var_dump($admission_add);
+        echo JsonResponse::error("Error starting treatment process");
         exit();
     }
 

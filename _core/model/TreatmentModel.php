@@ -111,14 +111,20 @@ class TreatmentModel extends BaseModel{
         try {
             $this->conn->beginTransaction();
             $sql = TreatmentSqlStatement::ADD_TREATMENT1;
-            $data = array ($treatmentInfo);
+            $data = $treatmentInfo;
             $result = $this->conn->execute($sql, $data);
 
+//            echo'last result';
+//            var_dump($result);
 
             if ($result){
 
-                $this->conn->commit();
                 $last_id = $this->conn->getLastInsertedId();
+                $this->conn->commit();
+
+
+//                echo'last id';
+//                var_dump($last_id);
                 return $last_id;
             }
 
