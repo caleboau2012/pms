@@ -229,7 +229,9 @@ elseif  ($intent == 'getTreatmentHistory') {
     $request_adm = $treat->getTreatmentHistory($patientid);
 
     if(is_array($request_adm)){
-        echo JsonResponse::success($request_adm);
+        //echo JsonResponse::success($request_adm);
+        echo JsonResponse::success(array($request_adm));
+        //echo array($request_adm);
         exit();
     } else {
         echo JsonResponse::error("Could not get history. Please try again!");
