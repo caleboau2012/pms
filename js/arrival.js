@@ -9,6 +9,10 @@ $(document).ready(function(){
 
 function init(){
 
+    $('#search-form').on('submit', function(e){
+        e.preventDefault();
+    })
+
     $("input[name='search']").autocomplete({
         source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
         minLength : 3,

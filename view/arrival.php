@@ -65,7 +65,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     </ul>
                 </div>
             </ul>
-            <form class="patient-arrival navbar-form">
+            <form id="search-form" class="patient-arrival navbar-form">
                 <div class="search">
                     <input type="text" class="form-control" name="search" placeholder="Search Returning Patients...">
                 </div>
