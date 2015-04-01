@@ -80,7 +80,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 if ($staff[StaffRoleTable::staff_role_id] == DOCTOR) {
                     ?>
                     <div class="col-xs-3  text-center">
-                        <a href="#" class="dashboard-link">
+                        <a href="treatment.php" class="dashboard-link">
                             <img src="../images/medical_consultants.png" width="60">
 
                             <div class="dashboard-desc">Doctor</div>
@@ -104,66 +104,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             <img src="../images/arrival.png">
 
                             <div class="dashboard-desc">Patient Arrival</div>
-                        </a>
-                    </div>
-                <?php
-                }else if ($staff[StaffRoleTable::staff_role_id] == URINE_CONDUCTOR) {
-                    ?>
-                    <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
-                            <img src="../images/lab_registration.png">
-
-                            <div class="dashboard-desc">Urine</div>
-                        </a>
-                    </div>
-                <?php
-                }else if ($staff[StaffRoleTable::staff_role_id] == VISUAL_CONDUCTOR) {
-                    ?>
-                    <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
-                            <img src="../images/lab_registration.png">
-
-                            <div class="dashboard-desc">Visual</div>
-                        </a>
-                    </div>
-                <?php
-                }else if ($staff[StaffRoleTable::staff_role_id] == XRAY_CONDUCTOR) {
-                    ?>
-                    <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
-                            <img src="../images/lab_registration.png">
-
-                            <div class="dashboard-desc">Xray</div>
-                        </a>
-                    </div>
-                <?php
-                }else if ($staff[StaffRoleTable::staff_role_id] == PARASITOLOGY_CONDUCTOR) {
-                    ?>
-                    <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
-                            <img src="../images/lab_registration.png">
-
-                            <div class="dashboard-desc">Parasitology</div>
-                        </a>
-                    </div>
-                <?php
-                }else if ($staff[StaffRoleTable::staff_role_id] == CHEMICAL_PATHOLOGY_CONDUCTOR) {
-                    ?>
-                    <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
-                            <img src="../images/lab_registration.png">
-
-                            <div class="dashboard-desc">Chemical Pathology</div>
-                        </a>
-                    </div>
-                <?php
-                }else if ($staff[StaffRoleTable::staff_role_id] == TREATMENT_RECORD) {
-                    ?>
-                    <div class="col-xs-3 text-center">
-                        <a href="#" class="dashboard-link">
-                            <img src="../images/dash-icons.png">
-
-                            <div class="dashboard-desc">Treatment Record</div>
                         </a>
                     </div>
                 <?php
@@ -226,41 +166,6 @@ $administrator = false;
                         <img src="../images/arrival.png">
 
                         <div class="dashboard-desc">Admission</div>
-                    </a>
-                </div>
-            <?php
-            }
-            else{
-            } if($staff[StaffRoleTable::staff_role_id] == STAFF_ADDING_OFFICER){
-                $administrator = true;
-                ?>
-                <div class="col-xs-3 text-center">
-                    <a href="#" class="dashboard-link">
-                        <img src="../images/file-edit.png">
-
-                        <div class="dashboard-desc">Staff Adding Officer</div>
-                    </a>
-                </div>
-            <?php
-            }else if($staff[StaffRoleTable::staff_role_id] == STAFF_CLEARANCE_OFFICER){
-                $administrator = true;
-                ?>
-                <div class="col-xs-3 text-center">
-                    <a href="#" class="dashboard-link">
-                        <img src="../images/file-edit.png">
-
-                        <div class="dashboard-desc">Staff Clearance Officer</div>
-                    </a>
-                </div>
-            <?php
-            }else if($staff[StaffRoleTable::staff_role_id] == HEALTH_SCHEME){
-                $administrator = true;
-                ?>
-                <div class="col-xs-3 text-center">
-                    <a href="#" class="dashboard-link">
-                        <img src="../images/file-edit.png">
-
-                        <div class="dashboard-desc">Health Scheme</div>
                     </a>
                 </div>
             <?php
