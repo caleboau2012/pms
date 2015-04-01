@@ -162,6 +162,7 @@ elseif  ($intent == 'submitTreatment') {
 
     $doctorid ="";
     $patientid ="";
+    $treatment_id="";
     $consultation ="";
     $symptoms ="";
     $comments= "";
@@ -179,6 +180,7 @@ elseif  ($intent == 'submitTreatment') {
         $symptoms =$_REQUEST[TreatmentTable::symptoms];
         $comments= $_REQUEST[TreatmentTable::comments];
         $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
+        $treatment_id =$_REQUEST['treatment_id'];
 
     }
     else {
@@ -188,7 +190,7 @@ elseif  ($intent == 'submitTreatment') {
 
     $admission_add = null;
 
-    if (empty($doctorid) || empty ($patientid) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
+    if (empty($treatment_id) || empty($doctorid) || empty ($patientid) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
 
         print_r($_REQUEST);
         echo JsonResponse::error("MANY filled, Ensure All fields are filled");
@@ -196,7 +198,7 @@ elseif  ($intent == 'submitTreatment') {
     }
     else{
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment2($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
+        $admission_add = $newaddm->addTreatment2($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments, $treatment_id);
     }
 
     if($admission_add){

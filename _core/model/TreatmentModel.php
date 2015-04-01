@@ -91,7 +91,8 @@ class TreatmentModel extends BaseModel{
 
         try {
             $this->conn->beginTransaction();
-            $sql = TreatmentSqlStatement::ADD_TREATMENT2;
+            $sql = TreatmentSqlStatement::UPDATE_TREATMENT;
+                   
             $data = $treatmentInfo;
 
             $result = $this->conn->execute($sql, $data);
