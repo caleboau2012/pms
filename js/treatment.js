@@ -75,7 +75,7 @@ Treatment = {
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "submitTreatment",
-
+            treatment_id: Treatment.CONSTANTS.treatmentid,
             doctor_id: Treatment.CONSTANTS.doctorid,
             patient_id: $('.patient-ID').html(),
             symptoms: data.symptoms.value,
