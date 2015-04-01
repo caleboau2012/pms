@@ -60,7 +60,7 @@ Treatment = {
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
             console.log(data);
-            $('.treatment-ID').html(data.data[0]);
+            $('.treatment-ID').html(data.data);
             Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
             $('.patient-name').html($(patient).find('.patientName').html());
             $('.patient-RegNo').html($(patient).find('.patientRegNo').html());

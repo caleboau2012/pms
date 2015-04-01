@@ -156,6 +156,7 @@ elseif  ($intent == 'startTreatment') {
 }
 
 elseif  ($intent == 'submitTreatment') {
+    echo json_encode($_REQUEST);
 
     $treat = new TreatmentController();
 
