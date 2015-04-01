@@ -109,13 +109,7 @@ elseif  ($intent == 'startTreatment') {
 //    $comments= "";
 //    $diagnosis ="";
 
-
-
-
-
     if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
-
-        // var_dump($_REQUEST);
 
         $doctorid =$_REQUEST[TreatmentTable::doctor_id];
         $patientid =$_REQUEST[TreatmentTable::patient_id];
@@ -196,22 +190,20 @@ elseif  ($intent == 'submitTreatment') {
     if (empty($doctorid) || empty ($patientid) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
 
         print_r($_REQUEST);
-        echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
+        echo JsonResponse::error("MANY filled, Ensure All fields are filled");
         exit();
     }
     else{
-
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment2($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments);
+        $admission_add = $newaddm->addTreatment2($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
     }
-
 
     if($admission_add){
         echo JsonResponse::success($admission_add);
         exit();
     } else {
 //        print_r($_REQUEST);
-        echo JsonResponse::error("Error addmitting patient");
+        echo JsonResponse::error("Error add patient");
         exit();
     }
 

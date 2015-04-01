@@ -51,7 +51,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right nav-pills">
                 <li><a href="#" data-toggle="modal" data-target="#newPatientModal">New Patient</a></li>
-                <li><a href="#" onclick="emergency()">Emergency</a></li>
+                <li><a href="#" onclick="emergency()"><span class="text-danger">Emergency</span></a></li>
                 <div class="dropdown navbar-right navbar-right-text pointer">
             <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                 <img src="../images/profile.png">
@@ -118,7 +118,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     <h2 class="panel-title">General Queue</h2>
                 </div>
                 <div class="panel-body patients">
-                    <span class="to_doctor" hidden>0</span>
+                    <span class="to_doctor" hidden></span>
                     <div class="panel-group drop" id="accordion0" role="tablist" aria-multiselectable="true">
                     </div>
                 </div>

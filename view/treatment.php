@@ -73,7 +73,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 </nav>
 
 <script id="tmplPatients" type="text/html">
-    <div class="panel {{status}} patient">
+    <div class="panel {{status}} patient pointer">
         <div class="panel-heading" role="tab" id="heading{{patientid}}">
             <h4 class="panel-title">
                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
@@ -86,13 +86,36 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
              aria-labelledby="heading{{patientid}}">
             <div class="panel-body">
                 <p>{{name}}</p>
-
+                <p>{{Age}} year(s)</p>
                 <p>{{sex}}</p>
                 <span class="patientid" hidden>{{patientid}}</span>
                 <span class="doctorid" hidden>{{userid}}</span>
+                <span class="patientName" hidden>{{name}}</span>
+                <span class="patientSex" hidden>{{sex}}</span>
+                <span class="patientRegNo" hidden>{{regNo}}</span>
+                <span class="patientAge">{{Age}} year(s)</span>
             </div>
         </div>
     </div>
+</script>
+
+<script id="tmplTreatmentHistory" type="text/html">
+    <li class="list-group-item">
+        <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
+           href="#collapse{{treatmentid}}" aria-expanded="false" aria-controls="collapse{{treatmentid}}">
+            <b>Diagnosis:</b> {{diagnosis}}
+        </a>
+        <div id="collapse{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
+             aria-labelledby="heading{{treatmentid}}">
+            <div class="panel-body">
+                <p><b>Comments:</b> {{comments}}</p>
+                <p><b>Consultation Details:</b> {{consultation}}</p>
+                <span class="treatmentid" hidden>{{treatmentid}}</span>
+                <span class="doctorid" hidden>{{doctorid}}</span>
+                <p><b>Syptoms:</b> {{symptoms}}</p>
+            </div>
+        </div>
+    </li>
 </script>
 
 <script id="tmplDoctor" type="text/html">
@@ -113,15 +136,18 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-9 well">
+        <div class="col-sm-9">
+            <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">{{Patient Name}}</h2>
+                    <h2 class="panel-title patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> </h2>
                 </div>
                 <div class="panel-body">
-                    <p>{{Reg No}}</p>
-                    <span>{{Sex}}</span>
-                    <span>{{Age}} years</span>
+                    <p class="patient-RegNo"></p>
+                    <span class="patient-Sex"></span>
+                    <span class="patient-ID hidden"></span>
+                    <span class="treatment-ID hidden"></span>
+                    <span class="patient-Age"></span>
                 </div>
             </div>
 
@@ -133,30 +159,19 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <li class="lh" onclick="switchTabs('lab-history', 'lh')"><a href="#">Lab History</a></li>
                 </ul>
                 <div class="add-treatment">
-                    <form id="addTreatmentForm" class="form">
-                        <input type="hidden" name="treatment[doctor_id]" value="[doctor_id]">
-                        <input type="hidden" name="treatment[patient_id]" value="[patient_id]">
-                        <input type="hidden" name="treatment[treatment_id]" value="[treatment_id]">
-
+                    <form name="addTreatmentForm" class="form">
                         <div class="row">
                             <br/>
-
-                            <div class="col-sm-6">
+                            <div class="col-sm-12">
                                 <div class="center-block">
-                                    <label>Symptoms:</label>
-                                    <textarea type="text" class="form-control" name="treatment[symptoms]"></textarea>
+                                    <label>Consultation Details:</label>
+                                    <textarea type="text" class="form-control" name="consultation"></textarea>
                                 </div>
-                                <br/>
-
-                                <div class="center-block"><label>Diagnosis:</label>
-                                    <input type="text" class="form-control" name="treatment[diagnosis]">
-                                </div>
-                                <br/>
-                                <button id="treatmentSubmit" class="btn btn-primary">Submit</button>
                             </div>
+                            <br/>
                             <div class="col-sm-6">
                                 <div class="center-block"><label>Comments:</label>
-                                    <textarea class="form-control" name="treatment[comment_treatment]"></textarea>
+                                    <textarea class="form-control" name="comment"></textarea>
                                 </div>
                                 <br/>
 
@@ -174,25 +189,35 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     </ol>
                                 </div>
                             </div>
+                            <div class="col-sm-6">
+                                <div class="center-block">
+                                    <label>Symptoms:</label>
+                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
+                                </div>
+                                <br/>
+
+                                <div class="center-block"><label>Diagnosis:</label>
+                                    <input type="text" class="form-control" name="diagnosis">
+                                </div>
+                                <br/>
+                                <button id="treatmentSubmit" type="submit" class="btn btn-primary">Submit</button>
+                            </div>
                         </div>
                     </form>
                 </div>
                 <div class="request-test hidden">
-                    <form class="form">
+                    <form name="requestTestForm" class="form">
                         <div class="row">
-                            <input type="hidden" value="128" name="patient_id">
-                            <input type="hidden" value="42" name="treatment_id">
-
                             <br/>
                             <div class="col-sm-5 col-md-3 form-inline">
                                 <label>Test Type</label>
-                                <select id="type" class="form-control" name="test_id">
-                                    <option value="5">RADIOLOGY</option>
-                                    <option value="2">HAEMATOLOGY</option>
-                                    <option value="3">MICROSCOPY</option>
-                                    <option value="4">VISUAL SKILL PROFILE</option>
-                                    <option value="15">CHEMICAL PATHOLOGY</option>
-                                    <option value="16">PARASITOLOGY</option>
+                                <select class="form-control" name="test_id">
+                                    <option value="radiology">RADIOLOGY</option>
+                                    <option value="haematology">HAEMATOLOGY</option>
+                                    <option value="microscopy">MICROSCOPY</option>
+                                    <option value="visual">VISUAL SKILL PROFILE</option>
+                                    <option value="chemical">CHEMICAL PATHOLOGY</option>
+                                    <option value="parasitology">PARASITOLOGY</option>
                                 </select>
                                 <br/>
                                 <br/>
@@ -202,21 +227,16 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-7 col-md-9">
                                 <label>Description</label>
                                 <textarea id="description" class="form-control" type="text"
-                                          name="test_description"></textarea>
+                                          name="description"></textarea>
                             </div>
                         </div>
                     </form>
                 </div>
                 <div class="treatment-history hidden">
                     <br/>
-                    <ul class="list-group">
-                        <li class="list-group-item">{{Data}}</li>
-                        <li class="list-group-item">{{Data}}</li>
-                        <li class="list-group-item">{{Data}}</li>
-                        <li class="list-group-item">{{Data}}</li>
-                        <li class="list-group-item">{{Data}}</li>
+                    <ul class="list-group history">
                     </ul>
-                    <button class="btn btn-info">Load More</button>
+<!--                    <button class="btn btn-info">Load More</button>-->
                 </div>
                 <div class="lab-history hidden">
                     <div class="table">
@@ -263,31 +283,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
         <div class="col-sm-3">
             <br/>
             <div class="panel panel-primary doctor">
-                <div class="panel-heading" userid="{{userid}}">
+                <div class="panel-heading">
+                    <p style="display: none;" id="doctorid"><?php echo ucwords(CxSessionHandler::getItem(ProfileTable::userid)); ?></p>
                     <h2 class="panel-title">Patient Queue</h2>
                 </div>
                 <div class="panel-body patients">
-                    <span class="to_doctor" hidden>{{userid}}</span>
-                    <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">
-                        <div class="panel panel-success {{status}} patient">
-                            <div class="panel-heading" role="tab" id="heading{{patientid}}">
-                                <h4 class="panel-title">
-                                    <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
-                                       href="#collapse{{patientid}}" aria-expanded="false" aria-controls="collapse{{patientid}}">
-                                        {{regNo}}
-                                    </a>
-                                </h4>
-                            </div>
-                            <div id="collapse{{patientid}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{patientid}}">
-                                <div class="panel-body">
-                                    <p>{{name}}</p>
-                                    <p>{{sex}}</p>
-                                    <span class="patientid" hidden>{{patientid}}</span>
-                                    <span class="doctorid" hidden>{{userid}}</span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
             </div>
         </div>

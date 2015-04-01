@@ -93,9 +93,17 @@ class TreatmentModel extends BaseModel{
             $this->conn->beginTransaction();
             $sql = TreatmentSqlStatement::ADD_TREATMENT2;
             $data = $treatmentInfo;
+
             $result = $this->conn->execute($sql, $data);
-            $this->conn->commit();
-            return $result;
+
+//            echo($result);
+
+            if ($result){
+
+                             //               $last_id = $this->conn->getLastInsertedId();
+                $this->conn->commit();
+                return $result;
+            }
 
         }
 

@@ -92,8 +92,12 @@ function init(){
 
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=loadGenQueue'), function(data){
         data = JSON.parse(data);
+
         data = data.data;
         var patientHTML = "";
+
+        if(data == null)
+            return;
 
         for (var j = 0; j < data.length; j++) {
             if (data[j].regNo == 'EMER')
@@ -143,39 +147,50 @@ function patientDrop(e, ui){
 
     $(source).find('.doctorid').html(toDoctor);
 
-    if((toDoctor == 0) && (fromDoctor == 0))
-        return;
-    else if(toDoctor != 0)
-        addToDoctor(patient, toDoctor);
-    else if(toDoctor == 0)
-        returnToGenQueue(patient);;
+    //if((toDoctor == '') && (fromDoctor))
+    //    console.log('Moving ' + patient + ' from ' + fromDoctor + ' to ' + toDoctor);
+    //else if(fromDoctor)
+    //    console.log('switching');
+    //else if(toDoctor == '')
+    //    console.log('adding to gen queue');
+    //    //addToGenQueue(patient);
+
+    switchQueue(patient, fromDoctor, toDoctor);
 
     $(target).find('.drop').prepend(source);
     $('#masonry').masonry();
 }
 
-function addToGenQueue(patient){
-    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToGeneralQueue&patient_id=' + patient), function(data){
-        //console.log('Adding to Gen Queue');
-        //console.log(data);
+function addToQueue(patient){
+    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToQueue&patient_id='
+    + patient), function(data){
+        console.log('Adding to Gen Queue');
+        console.log(data);
     });
 }
 
-function addToDoctor(patient, doctor){
-    //console.log(patient, doctor);
+//function addToGenQueue(patient){
+//    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToGeneralQueue&patient_id=' + patient), function(data){
+//        //console.log('Adding to Gen Queue');
+//        //console.log(data);
+//    });
+//}
 
-    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToDoctor&patient_id=' + patient + '&doctor_id=' + doctor), function(data){
-        //console.log('Adding to Doctor Queue');
-        //console.log(data);
-    });
-}
-
-function returnToGenQueue(patient){
-    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=returnToGenQueue&patient_id=' + patient), function(data){
-        //console.log('Returning to Gen Queue');
-        //console.log(data);
-    });
-}
+//function addToDoctor(patient, doctor){
+//    //console.log(patient, doctor);
+//
+//    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToDoctor&patient_id=' + patient + '&doctor_id=' + doctor), function(data){
+//        //console.log('Adding to Doctor Queue');
+//        //console.log(data);
+//    });
+//}
+//
+//function returnToGenQueue(patient){
+//    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=returnToGenQueue&patient_id=' + patient), function(data){
+//        //console.log('Returning to Gen Queue');
+//        //console.log(data);
+//    });
+//}
 
 function removeFromQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id=' + patient), function(data){
@@ -184,12 +199,11 @@ function removeFromQueue(patient){
 }
 
 function switchQueue(patient, fromDoctor, toDoctor){
-    //console.log('switching queues');
-    addToDoctor(patient, toDoctor);
-}
-
-function replaceAll(find, replace, str) {
-    return str.replace(new RegExp(find, 'g'), replace);
+    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=switchQueue&patient_id='
+    + patient + '&to_doctor=' + toDoctor + '&from_doctor=' + fromDoctor), function(data){
+        console.log('Switching Queues');
+        console.log(data);
+    });
 }
 
 $("#newPatientForm").on('submit', function(e){
@@ -203,7 +217,6 @@ $("#naija").on('change', function () {
 });
 
 function addPatient(form){
-
     var citizenship = $('#naija').is(':checked')?"Nigeria":form.citizenship;
     //console.log(citizenship);
 
@@ -289,7 +302,7 @@ function emergency(){
             no_of_children : 0
         },
         function(data){
-            console.log(data);
+            //console.log(data);
             data = JSON.parse(data);
             //console.log(data);
             id = data.data;
@@ -303,7 +316,7 @@ function emergency(){
             patientHTML = replaceAll('{{regNo}}', 'EMER' + id, patientHTML);
             patientHTML = replaceAll('{{name}}', 'EMER' + id, patientHTML);
             patientHTML = replaceAll('{{sex}}', '', patientHTML);
-            addToGenQueue(id);
+            addToQueue(id);
 
             $(".general").find('.drop').prepend(patientHTML);
             draggableDropabble();
@@ -320,9 +333,7 @@ function searchResult(patientDetails){
     patientHTML = replaceAll('{{regNo}}', patientDetails.regNo, patientHTML);
     patientHTML = replaceAll('{{name}}', patientDetails.value, patientHTML);
     patientHTML = replaceAll('{{sex}}', patientDetails.sex, patientHTML);
-    addToGenQueue(patientDetails.patient_id);
-
-    console.log(patientHTML);
+    addToQueue(patientDetails.patient_id);
 
     $(".general").find('.drop').prepend(patientHTML);
     draggableDropabble();
