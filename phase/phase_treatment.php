@@ -208,6 +208,7 @@ elseif  ($intent == 'submitTreatment') {
 //        print_r($_REQUEST);
         echo JsonResponse::error("Error add patient");
         exit();
+        //otu
     }
 
 
