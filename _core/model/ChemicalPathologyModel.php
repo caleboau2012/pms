@@ -53,7 +53,7 @@ class ChemicalPathologyModel extends BaseModel{
         $diff = array_diff($existingIds, $cPRefIds);
 
         if($diff){
-            $this->deleteTestValues($cPReqId, $diff, 0);    // delete from ref table (i.e, set active_fg = 0)
+            $this->deleteTestValues($cPReqId, $diff);    // delete from ref table (i.e, set active_fg = 0)
         }
 
         unset($diff);
@@ -75,6 +75,7 @@ class ChemicalPathologyModel extends BaseModel{
     private function updateDetails($data){
         if(!$this->conn->execute(ChemicalPathologyRequestSqlStatement::UPDATE_DETAILS, $data))
             throw new Exception("Error updating chemical pathology details");
+        return true;
     }
 
     private function getExistingIds($cPReqId){
@@ -82,9 +83,9 @@ class ChemicalPathologyModel extends BaseModel{
     }
 
     /* This method simple sets their active_fg to INACTIVE i.e 0 */
-    private function deleteTestValues($cPReqId, $cPRefIds, $activeFg){
-        foreach($cPRefIds as $id){
-            $data = array(ChemicalPathologyDetailsTable::cpreq_id => $cPReqId, ChemicalPathologyDetailsTable::cpref_id => $id, ChemicalPathologyDetailsTable::active_fg => $activeFg);
+    private function deleteTestValues($cPReqId, $cPRefIds){
+        foreach($cPRefIds as $key => $id){
+            $data = array(ChemicalPathologyDetailsTable::cpreq_id => $cPReqId, ChemicalPathologyDetailsTable::cpref_id => $id);
             if(!$this->conn->execute(ChemicalPathologyRequestSqlStatement::DELETE, $data))
                 throw new Exception("Could not delete values in chemical pathology");
         }
@@ -102,7 +103,10 @@ class ChemicalPathologyModel extends BaseModel{
 
         $vals = rtrim($vals, ' ,');
         $query = str_replace(':vals', $vals, ChemicalPathologyRequestSqlStatement::ADD_VALUES);
-        return $this->conn->execute($query, array());
+        if(!$this->conn->execute($query, array()))
+            throw new Exception("Error adding chemical pathology values");
+
+        return true;
     }
 
     private function updateTestValues($cPReqId, $cPRefIds, $activeFg){

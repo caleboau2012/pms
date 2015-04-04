@@ -111,7 +111,6 @@ class MicroscopyModel extends BaseModel{
         $intersect = array_intersect($existingIds, $ids);
         if($intersect){
             // Update ids in intersect
-            print_r(array_intersect_key($isolateDegreeIds, array_flip($intersect)));
             $this->updateIds($urineId, array_intersect_key($isolateDegreeIds, array_flip($intersect)), 1);
         }
 
@@ -138,6 +137,7 @@ class MicroscopyModel extends BaseModel{
 
         $vals = rtrim($vals, ", ");
         $query = str_replace(':vals', $vals, UrineSensitivitySqlStatement::ADD_ISOLATES);
+        echo $query;
         if(!$this->conn->execute($query, array()))
             throw new Exception('Could not add new isolates');
 

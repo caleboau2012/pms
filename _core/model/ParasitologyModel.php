@@ -97,7 +97,7 @@ class ParasitologyModel extends BaseModel{
         foreach($ids as $id){
             $data = array(ParasitologyDetailsTable::preq_id => $pReqId, ParasitologyDetailsTable::pref_id => $id,ParasitologyDetailsTable::active_fg => $activeFg);
             if(!$this->conn->execute(ParasitologyDetailsSqlStatement::UPDATE_IDS, $data))
-                throw new Exception('Could not update IDs');
+                throw new Exception('Could not update parasite IDs');
         }
 
         return true;
@@ -112,7 +112,7 @@ class ParasitologyModel extends BaseModel{
 
         $query = str_replace(':vals', $vals, ParasitologyDetailsSqlStatement::ADD_VALUES);
         if(!$this->conn->execute($query, array()))
-            throw new Exception('Could not insert IDs');
+            throw new Exception('Could not insert parasite IDs');
 
         return true;
     }

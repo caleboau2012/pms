@@ -332,7 +332,7 @@ FROM
 
 class UrineSqlStatement {
 
-    const ADD = 'INSERT INTO urine(treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date)
+    const ADD = 'INSERT INTO urine(treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,created_date,modified_date)
                                         VALUES(:treatment_id, :lab_attendant_id, :clinical_diagnosis_details,:investigation_required,:doctor_id,:laboratory_report,:laboratory_ref,:culture_value, now(), now())';
     const DELETE = 'DELETE FROM urine WHERE userid = :userid';
     const GET = 'SELECT treatment_id,lab_attendant_id,clinical_diagnosis_details,investigation_required,doctor_id,laboratory_report,laboratory_ref,culture_value,create_date,modified_date FROM urine WHERE userid = :userid ORDER BY create_date DESC LIMIT 1';
