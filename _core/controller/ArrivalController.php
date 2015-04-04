@@ -42,9 +42,10 @@ class ArrivalController {
         $arrival = new ArrivalModel();
 
         $response = array();
-        
+
         $is_doctor = RoleController::hasRole($doctor, DOCTOR);
-        if (!$is_doctor) {
+        $is_general_queue = ($doctor == GENERAL_QUEUE);
+        if (!$is_doctor && !$is_general_queue) {
             $response[P_STATUS] = STATUS_ERROR;
             $response[P_MESSAGE] = "Error!!! Invalid doctor!";
             return $response;
