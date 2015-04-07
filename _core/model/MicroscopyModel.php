@@ -137,7 +137,6 @@ class MicroscopyModel extends BaseModel{
 
         $vals = rtrim($vals, ", ");
         $query = str_replace(':vals', $vals, UrineSensitivitySqlStatement::ADD_ISOLATES);
-        echo $query;
         if(!$this->conn->execute($query, array()))
             throw new Exception('Could not add new isolates');
 
