@@ -500,7 +500,7 @@ class ParasitologyRefSqlStatement {
 
 class ParasitologyRequestSqlStatement {
     const ADD_REQ_INFO = "INSERT INTO parasitology_req (doctor_id, treatment_id, diagnosis, created_date, modified_date)
-                          VALUES (:doctor_id, :treatment_id, ::diagnosis, NOW(), NOW())";
+                          VALUES (:doctor_id, :treatment_id, :diagnosis, NOW(), NOW())";
     const GET_HISTORY = "SELECT * FROM parasitology_req WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM parasitology_req AS pr INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE pr.status_id = :status_id
@@ -694,8 +694,8 @@ class MicroscopyRequestSqlStatment{
 }
 
 class ChemicalPathologyRequestSqlStatement{
-    const ADD_REQ_INFO = "INSERT INTO chemical_pathology_request (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
-                          VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
+    const ADD_REQ_INFO = "INSERT INTO chemical_pathology_request (doctor_id, treatment_id, clinical_diagnosis, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, :clinical_diagnosis, NOW(), NOW())";
     const GET_HISTORY = "SELECT * FROM chemical_pathology_request WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t ON c.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.status_id = :status_id

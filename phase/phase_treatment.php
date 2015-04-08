@@ -471,6 +471,7 @@ elseif($intent == 'labRequest'){
     if(isset($_REQUEST['labType'])){
         $type = $_REQUEST['labType'];
         $doctorId = intval(CxSessionHandler::getItem('userid'));
+//        $doctorId = 1;
         $treatmentId = intval($_REQUEST['treatmentId']);
         $description = isset($_REQUEST['description']) ? $_REQUEST['description'] : "";
         $lab = new LaboratoryController();

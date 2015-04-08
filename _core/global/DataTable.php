@@ -248,7 +248,7 @@ class HaematologyTable {
     const treatment_id               = 'treatment_id';
     const active_fg                  = 'active_fg';
     const status_id                  = 'status_id';
-    const doctor_id                 = 'doctor_id';
+    const doctor_id                  = 'doctor_id';
 }
 
 class UrineTable {

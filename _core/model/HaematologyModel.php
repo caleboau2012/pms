@@ -6,7 +6,7 @@ class HaematologyModel extends BaseModel{
         return $this->conn->execute(HaematologyRequestSqlStatement::ADD_REQ_INFO, $data);
     }
 
-    private function getHaematologyLabHistory($patientId){
+    public function getLabHistory($patientId){
         $data = array(TreatmentTable::patient_id => $patientId);
         return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_HISTORY, $data);
     }
