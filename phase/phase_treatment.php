@@ -11,7 +11,7 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
-Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel'));
+Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
 Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController'));
 
 
