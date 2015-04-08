@@ -764,3 +764,218 @@ span#loader{
 #encounter_history{
     height: 32em;
 }
+
+.patient-queue-content {
+    background: #6d95bf;
+}
+.patient-queue-wrap {
+    position: relative;
+    height: 31.75em;
+}
+.patient-queue-wrap ::-webkit-scrollbar {
+    width: 0.6em;
+}
+.patient-queue-wrap ::-webkit-scrollbar:horizontal {
+    height: 0.9em;
+}
+.patient-queue-wrap ::-webkit-scrollbar-track {
+    border-radius: 0.5em;
+    background: rgba(0, 0, 0, 0.1);
+}
+.patient-queue-wrap ::-webkit-scrollbar-thumb {
+    border-radius: 0.5em;
+    background: rgba(255, 255, 255, 0.5);
+}
+.patient-queue-wrap ::-webkit-scrollbar-thumb:horizontal {
+    background: rgba(0, 0, 0, 0.2);
+}
+.patient-queue-row {
+    position: absolute;
+    top: 0;
+    left: 21em;
+    right: 0;
+    bottom: 0;
+    overflow-y: hidden;
+    overflow-x: auto;
+    -ms-flex-align: start;
+    -moz-box-align: start;
+    -webkit-box-align: start;
+    -webkit-align-items: flex-start;
+    align-items: flex-start;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -moz-box-orient: horizontal;
+    -webkit-box-orient: horizontal;
+    -ms-flex-direction: row;
+    -webkit-flex-direction: row;
+    flex-direction: row;
+    flex-wrap: nowrap;
+}
+.patient-queue-column {
+    width: 21em;
+    height: 100%;
+    padding-bottom: 0.5em;
+    display: -moz-box;
+    display: -ms-flexbox;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: flex;
+    -moz-box-orient: vertical;
+    -webkit-box-orient: vertical;
+    -ms-flex-direction: column;
+    -webkit-flex-direction: column;
+    flex-direction: column;
+    -moz-box-flex: 0;
+    -webkit-box-flex: 0;
+    -ms-flex: 0 0 21em;
+    -webkit-flex: 0 0 21em;
+    flex: 0 0 21em;
+}
+.patient-queue-column + .patient-queue-column {
+    padding-left: 0.9375em;
+}
+.l-column.patient-queue-column {
+    padding-right: 0 !important;
+}
+.patient-queue {
+    border-radius: 0.25em;
+    background: #326294;
+    font-size: 1em;
+    overflow-y: hidden;
+}
+.patient-queue__header,
+.patient-queue__body {
+    padding: 0.4375em 0.875em 0;
+}
+.patient-queue__header {
+    color: #ffffff;
+}
+.patient-queue__title {
+    margin: 0;
+    font-size: 1.25em;
+    color: inherit;
+}
+.patient-queue__title.is-large {
+    font-size: 1.75em;
+}
+.patient-queue__header + .patient-queue__body {
+    padding-top: 0;
+}
+.patient-queue__list {
+    min-height: 4.875em;
+    max-height: 27.6em;
+    margin: 0 -0.4375em;
+    padding: 0 0.4375em;
+    overflow-y: auto;
+    border: 3px dotted transparent;
+}
+.patient-queue__list.is-dragged-over {
+    border-color: rgba(0, 0, 0, 0.5);
+}
+.patient-queue__item {
+    position: relative;
+    height: 3.25em;
+    margin: 0.375em 0;
+    font-weight: 600;
+    padding: 0.375em 0.75em;
+    background: #EDF1F4;
+    border-radius: 0.1875em;
+    -webkit-box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+.patient-queue__item.is-being-dragged {
+    opacity: 0.5;
+    filter: alpha(opacity=50);
+}
+.patient-queue__item {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+ .patient-queue__item:hover {
+    background: #f2f2f2;
+}
+.patient-queue__item.is-focused {
+    -webkit-box-shadow: 0 0 1px 4px #973d3b;
+    box-shadow: 0 0 1px 4px #973d3b;
+    background: #F5F7F8;
+    background: #EAF2F6;
+}
+.patient-queue__item.is-haematology {
+    background: #F5DADF;
+}
+.patient-queue__item.is-haematology:hover {
+    background: #f2ced5;
+}
+.patient-queue__item.is-parasitology {
+    background: #D3F0D3;
+}
+.patient-queue__item.is-parasitology:hover {
+    background: #c8ecc8;
+}
+.patient-queue__item.is-microscopy,
+.patient-queue__item.is-selected {
+    background: #F3F3B7;
+}
+.patient-queue__item.is-microscopy:hover,
+.patient-queue__item.is-selected:hover {
+    background: #f1f1aa;
+}
+.patient-queue__item.is-chemical-pathology {
+    background: #DCE6F8;
+}
+.patient-queue__item.is-chemical-pathology:hover {
+    background: #cfddf5;
+}
+.patient-queue__item.is-radiology {
+    background: #e6e6e6;
+}
+.patient-queue__item.is-radiology:hover {
+    background: #dedede;
+}
+.patient-queue__image-wrap {
+    display: block;
+    width: 2.5em;
+    height: 2.5em;
+    float: left;
+}
+.patient-queue__item-label,
+.patient-queue__item-label-block {
+    height: 2.5em;
+    /*margin-left: 3em;*/
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+.patient-queue__item-label {
+    line-height: 2.5em;
+}
+.patient-queue__item-label-block {
+    position: relative;
+}
+.patient-queue__item-label-block .sub {
+    position: absolute;
+    bottom: -2px;
+    left: 0;
+    font-size: 85%;
+    color: #999999;
+    text-transform: capitalize;
+}
+.patient-queue.patient-queue--transparent {
+    background: transparent;
+}
+.patient-queue.patient-queue--transparent .patient-queue__header {
+    color: #555555;
+}
+.patient-queue.patient-queue--gray {
+    background: #d5d5d5;
+}
+.patient-queue.patient-queue--gray .patient-queue__header {
+    color: #555555;
+}
