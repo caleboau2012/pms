@@ -1,6 +1,17 @@
 <?php
 class ParasitologyModel extends BaseModel{
 
+    public function parasitologyRequest($doctorId, $treatmentId, $description){
+            $data = array(ParasitologyRequestTable::doctor_id => $doctorId, ParasitologyRequestTable::treatment_id => $treatmentId,
+                          ParasitologyRequestTable::diagnosis => $description);
+            return $this->conn->execute(ParasitologyRequestSqlStatement::ADD_REQ_INFO, $data);
+    }
+
+    public function getLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_HISTORY, $data);
+    }
+
     public function getPatientQueue($status = PENDING, $activeFg = 1){
         $data = array(ParasitologyRequestTable::status_id => $status, ParasitologyRequestTable::active_fg => $activeFg);
         return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);

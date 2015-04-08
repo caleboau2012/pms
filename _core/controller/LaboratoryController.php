@@ -111,4 +111,54 @@ class LaboratoryController{
         }
     }
 
+    public function requestLabTest($labTestType, $doctorId, $treatmentId, $description){
+        switch($labTestType){
+            case RADIOLOGY:
+                return $this->radiology->radiologyRequest($doctorId, $treatmentId, $description);
+
+            case HAEMATOLOGY:
+                return $this->haematology->haematologyRequest($doctorId, $treatmentId, $description);
+
+            case MICROSCOPY:
+                return $this->microscopy->microscopyRequest($doctorId, $treatmentId, $description);
+
+            case VISUAL:
+                return $this->visual->visualRequest($doctorId, $treatmentId);
+
+            case CHEMICAL_PATHOLOGY:
+                return $this->chemicalPathology->chemicalPathologyRequest($doctorId, $treatmentId, $description);
+
+            case PARASITOLOGY:
+                return $this->parasitology->parasitologyRequest($doctorId, $treatmentId, $description);
+
+            default:
+                return false;
+        }
+    }
+
+    public function getLabHistory($labTestType, $patientId){
+        switch($labTestType){
+            case RADIOLOGY:
+                return $this->radiology->getLabHistory($patientId);
+
+            case HAEMATOLOGY:
+                return $this->haematology->getLabHistory($patientId);
+
+            case MICROSCOPY:
+                return $this->microscopy->getLabHistory($patientId);
+
+            case VISUAL:
+                 return $this->visual->getLabHistory($patientId);
+
+            case CHEMICAL_PATHOLOGY:
+                return $this->chemicalPathology->getLabHistory($patientId);
+
+            case PARASITOLOGY:
+                return $this->parasitology->getLabHistory($patientId);
+
+            default:
+                return array();
+        }
+    }
+
 }

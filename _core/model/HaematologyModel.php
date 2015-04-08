@@ -1,6 +1,16 @@
 <?php
 class HaematologyModel extends BaseModel{
 
+    public function haematologyRequest($doctorId, $treatmentId, $description){
+        $data = array(HaematologyTable::doctor_id => $doctorId, HaematologyTable::treatment_id => $treatmentId, HaematologyTable::clinical_diagnosis_details => $description);
+        return $this->conn->execute(HaematologyRequestSqlStatement::ADD_REQ_INFO, $data);
+    }
+
+    private function getHaematologyLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_HISTORY, $data);
+    }
+
     public function getPatientQueue($status = PENDING, $activeFg = 1){
         $data = array(HaematologyTable::status_id => $status, HaematologyTable::active_fg => $activeFg);
         return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);

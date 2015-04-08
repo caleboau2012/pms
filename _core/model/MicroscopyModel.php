@@ -1,6 +1,16 @@
 <?php
 class MicroscopyModel extends BaseModel{
 
+    public function microscopyRequest($doctorId, $treatmentId, $description){
+        $data = array(UrineTable::doctor_id => $doctorId, UrineTable::treatment_id => $treatmentId, UrineTable::clinical_diagnosis_details => $description);
+        return $this->conn->execute(MicroscopyRequestSqlStatment::ADD_REQ_INFO, $data);
+    }
+
+    public function getLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_HISTORY, $data);
+    }
+
     public function getPatientQueue($status = PENDING, $activeFg = ACTIVE){
         $data = array(UrineTable::status_id => $status, UrineTable::active_fg => $activeFg);
         return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_PATIENT_QUEUE, $data);

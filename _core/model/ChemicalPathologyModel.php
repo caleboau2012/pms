@@ -1,6 +1,17 @@
 <?php
 class ChemicalPathologyModel extends BaseModel{
 
+    public function chemicalPathologyRequest($doctorId, $treatmentId, $description){
+            $data = array(ChemicalPathologyRequestTable::doctor_id => $doctorId, ChemicalPathologyRequestTable::treatment_id => $treatmentId,
+                ChemicalPathologyRequestTable::clinical_diagnosis => $description);
+            return $this->conn->execute(ChemicalPathologyRequestSqlStatement::ADD_REQ_INFO, $data);
+    }
+
+    public function getLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_HISTORY, $data);
+    }
+
     public function getPatientQueue($status = PENDING, $activeFg = ACTIVE){
         $data = array(ChemicalPathologyRequestTable::status_id => $status, ChemicalPathologyRequestTable::active_fg => $activeFg);
         return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_PATIENT_QUEUE, $data);

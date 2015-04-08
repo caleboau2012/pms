@@ -305,12 +305,12 @@ class TreatmentModel extends BaseModel{
 
     private function getRadiologyLabHistory($patientId){
         $data = array(TreatmentTable::patient_id => $patientId);
-        return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_HISTORY, $data);
+        return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_HISTORY, $data);
     }
 
     private function getHaematologyLabHistory($patientId){
         $data = array(TreatmentTable::patient_id => $patientId);
-        return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_HISTORY, $data);
+        return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_HISTORY, $data);
     }
 
     private function getMicroscopyLabHistory($patientId){

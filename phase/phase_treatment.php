@@ -12,7 +12,7 @@ require_once '../_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
 Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel'));
-Crave::requireFiles(CONTROLLER, array('TreatmentController'));
+Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController'));
 
 
 if (isset($_REQUEST['intent'])) {
@@ -446,4 +446,45 @@ elseif  ($intent == 'getLabHistory') {
     }
 
 
+}
+
+elseif($intent == 'labHistory'){
+    if(isset($_REQUEST['labType'])){
+        $type = $_REQUEST['labType'];
+        $patientId = intval($_REQUEST['patientId']);
+        $lab = new LaboratoryController();
+
+        $result = $lab->getLabHistory($type, $patientId);
+        if($result){
+            echo JsonResponse::success($result);
+            exit();
+        } else {
+            echo JsonResponse::error("No test found for this patient");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Please select a lab type");
+        exit();
+    }
+}
+elseif($intent == 'labRequest'){
+    if(isset($_REQUEST['labType'])){
+        $type = $_REQUEST['labType'];
+        $doctorId = intval(CxSessionHandler::getItem('userid'));
+        $treatmentId = intval($_REQUEST['treatmentId']);
+        $description = isset($_REQUEST['description']) ? $_REQUEST['description'] : "";
+        $lab = new LaboratoryController();
+
+        $result = $lab->requestLabTest($type, $doctorId, $treatmentId, $description);
+        if($result){
+            echo JsonResponse::success("Request successful");
+            exit();
+        } else {
+            echo JsonResponse::error("Request unsuccessful. Try again!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Please select a lab type");
+        exit();
+    }
 }
