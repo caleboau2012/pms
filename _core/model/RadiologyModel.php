@@ -6,12 +6,14 @@ class RadiologyModel extends BaseModel{
             $this->conn->beginTransaction();
 
             $data = array(RadiologyTable::doctor_id => $doctorId, RadiologyTable::treatment_id => $treatmentId);
-            $this->conn->execute(RadiologyRequestSqlStatement::ADD_RAD_INFO, $data);
+            if(!$this->conn->execute(RadiologyRequestSqlStatement::ADD_RAD_INFO, $data))
+                throw new Exception("Error requesting xray test1");
 
             unset($data);
             $lastInsertId = $this->conn->getLastInsertedId();
             $data = array(RadiologyRequestTable::radiology_id => $lastInsertId, RadiologyRequestTable::clinical_diagnosis_details => $description);
-            $this->conn->execute(RadiologyRequestSqlStatement::ADD_RAD_REQ_INFO, $data);
+            if(!$this->conn->execute(RadiologyRequestSqlStatement::ADD_RAD_REQ_INFO, $data))
+                throw new Exception("Error requesting xray test2");
 
             $this->conn->commit();
         } catch(Exception $e){
