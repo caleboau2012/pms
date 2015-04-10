@@ -23,10 +23,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
+<!--    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">-->
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -176,11 +177,18 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <br/>
 
                                 <div class="center-block"><label>Prescriptions:</label>
-                                    <input type="text" id="prescriptionInput" class="form-control" placeholder="">
+                                    <input list="drugNames" type="text" id="prescriptionInput" class="form-control" placeholder="">
 
                                     <p>
                                         <small>Type and press the Enter key to add to prescription list</small>
                                     </p>
+
+                                    <datalist id="drugNames">
+
+                                    </datalist>
+
+                                    <ul class="list-group" id="prescriptions">
+                                    </ul>
                                 </div>
                                 <br/>
 
@@ -216,7 +224,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     <option value="haematology">HAEMATOLOGY</option>
                                     <option value="microscopy">MICROSCOPY</option>
                                     <option value="visual">VISUAL SKILL PROFILE</option>
-                                    <option value="chemical">CHEMICAL PATHOLOGY</option>
+                                    <option value="chemical_pathology">CHEMICAL PATHOLOGY</option>
                                     <option value="parasitology">PARASITOLOGY</option>
                                 </select>
                                 <br/>
@@ -244,12 +252,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                         <div class="center-block form-inline">
                             <label>Select a test: </label>
                             <select id="type" class="form-control" name="test_id">
-                                <option value="5">RADIOLOGY</option>
-                                <option value="2">HAEMATOLOGY</option>
-                                <option value="3">MICROSCOPY</option>
-                                <option value="4">VISUAL SKILL PROFILE</option>
-                                <option value="15">CHEMICAL PATHOLOGY</option>
-                                <option value="16">PARASITOLOGY</option>
+                                <option value="radiology">RADIOLOGY</option>
+                                <option value="haematology">HAEMATOLOGY</option>
+                                <option value="microscopy">MICROSCOPY</option>
+                                <option value="visual">VISUAL SKILL PROFILE</option>
+                                <option value="chemical_pathology">CHEMICAL PATHOLOGY</option>
+                                <option value="parasitology">PARASITOLOGY</option>
                             </select>
                         </div>
                         <br/>
@@ -259,20 +267,19 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <th>S/N</th>
                                 <th>Diagnosis</th>
                                 <th>Date</th>
-                                <th>Action</th>
+                                <th>Status</th>
+                                <th>Acton</th>
                             </tr>
                             </thead>
-                            <tbody>
-                            <tr class="odd">
-                                <td>No data available in table</td>
-                            </tr>
+                            <tbody class="table-data">
                             </tbody>
                             <tfoot>
                             <tr>
                                 <th>S/N</th>
                                 <th>Diagnosis</th>
                                 <th>Date</th>
-                                <th>Action</th>
+                                <th>Status</th>
+                                <th>Acton</th>
                             </tr>
                             </tfoot>
                         </table>

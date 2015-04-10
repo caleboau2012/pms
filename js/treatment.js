@@ -7,8 +7,33 @@ Treatment = {
         treatmentid: null
     },
     init: function(){
+        $('.navbar-form').on('submit', function(e){
+            e.preventDefault();
+        });
+
+        $("input[name='search']").autocomplete({
+            source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
+            minLength : 3,
+            select : function(event, ui) {
+                //$(this).attr("id", "user-" + ui.item.userid);
+                $(this).val(ui.item.value);
+                Treatment.searchResult(ui.item);
+                return false;
+            }
+        }).autocomplete( "instance" )._renderItem = function( ul, item ) {
+            //console.log(item);
+            return $( "<li>" )
+                .append( "<div class='panel-success'>" +
+                "<div class='panel panel-heading' style='margin: 1px'>" +
+                "<p class='panel-title'>" + toTitleCase(item.value) + "</p>" +
+                "<p class='label label-info' style='margin-right: 10px;'> " + item.regNo + "</p>" +
+                "<p class='label label-default'>" + item.sex + "</p>" +
+                "</div>" +
+                "</div>" )
+                .appendTo( ul );
+        };
+
         $('body').delegate('.patient', 'click', function(e){
-            console.log(this);
             Treatment.startTreatment(this);
         });
 
@@ -26,8 +51,46 @@ Treatment = {
             Treatment.getTreatmentHistory();
         });
 
+        $('.lh').click(function(){
+            Treatment.getLabHistory("radiology");
+        });
+
         Treatment.getPatientQueue();
         $('.well').addClass('hidden');
+
+        $('#prescriptionInput').keydown(function(e){
+            if(e.keyCode == 13) {
+                e.preventDefault();
+                Treatment.addPrescription(this.value);
+            }
+        });
+    },
+    addPrescription: function(drug){
+        console.log(drug);
+        var drugHTML = "";
+        drugHTML = "<li class='list-group-item'>" + drug + "</li>";
+        $('#prescriptions').append(drugHTML);
+    },
+    searchResult: function(patientDetails){
+        var patientHTML = "";
+        //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+        patientHTML += $('#tmplPatients').html();
+        patientHTML = patientHTML.replace('{{status}}', 'panel-success');
+        patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+        patientHTML = replaceAll('{{patientid}}', patientDetails.patient_id, patientHTML);
+        patientHTML = replaceAll('{{regNo}}', patientDetails.regNo, patientHTML);
+        patientHTML = replaceAll('{{name}}', patientDetails.value, patientHTML);
+        patientHTML = replaceAll('{{sex}}', patientDetails.sex, patientHTML);
+
+        function addToQueue(patient){
+            $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToQueue&patient_id='
+            + patient), function(data){
+                console.log('Adding to Gen Queue');
+                console.log(data);
+            });
+        }
+
+        $('.patients').prepend(patientHTML);
     },
     getPatientQueue: function(){
         var url = host + "phase/phase_treatment.php?intent=getPatientQueue&doctorid=" + Treatment.CONSTANTS.doctorid;
@@ -38,7 +101,6 @@ Treatment = {
             for(i = 0; i < data.length; i++){
                 var currentYear = new Date().getFullYear();
                 var age = currentYear - parseInt(data[i].birth_date.split('-')[0]);
-                console.log(age);
 
                 var patientHTML = "";
                 patientName = toTitleCase(data[i].surname) + " " + toTitleCase(data[i].firstname) + " " + toTitleCase(data[i].middlename);
@@ -59,7 +121,7 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
-            console.log(data);
+            //console.log(data);
             $('.treatment-ID').html(data.data);
             Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
             $('.patient-name').html($(patient).find('.patientName').html());
@@ -72,6 +134,12 @@ Treatment = {
         $('.well').removeClass('hidden');
     },
     submitTreatment: function(data){
+        var prescription = [];
+        $('#prescriptions li').each(function(index){
+            //console.log(index + ": " + $(this).text());
+            prescription.push($(this).text());
+        });
+
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "submitTreatment",
@@ -81,7 +149,8 @@ Treatment = {
             symptoms: data.symptoms.value,
             consultation: data.consultation.value,
             comments: data.comment.value,
-            diagnosis: data.diagnosis.value
+            diagnosis: data.diagnosis.value,
+            prescription: prescription
         }, function(data){
             console.log(data);
         })
@@ -89,7 +158,11 @@ Treatment = {
     getTreatmentHistory: function() {
         var url = host + "phase/phase_treatment.php?intent=getTreatmentHistory&patient_id=" + $('.patient-ID').html();
         $.getJSON(url, function (data) {
+            console.log(data.data);
             data = data.data;
+
+            $('.history').empty();
+
             for(i = 0; i < data.length; i++){
                 var patientHTML = "";
                 patientHTML += $('#tmplTreatmentHistory').html();
@@ -100,6 +173,8 @@ Treatment = {
                 patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
                 patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                 patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
+
+                //console.log(patientHTML);
                 $('.history').append(patientHTML);
             }
         });
@@ -107,15 +182,55 @@ Treatment = {
     requestTest: function(form){
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
-            intent: "requestLabTest",
+            intent: "labRequest",
             doctor_id: Treatment.CONSTANTS.doctorid,
             patient_id: $('.patient-ID').html(),
-            treatment_id: Treatment.CONSTANTS.treatmentid,
-            comments: form.deescription.value,
-            test_id: form.test_id.value
+            treatmentId: Treatment.CONSTANTS.treatmentid,
+            description: form.description.value,
+            labType: form.test_id.value
         }, function(data){
             console.log(data);
         })
+    },
+    getLabHistory: function(type){
+        var url = host + "phase/phase_treatment.php";
+        $.post(url, {
+            intent: "labHistory",
+            patientId: $('.patient-ID').html(),
+            labType: type
+        }, function(data){
+            if(data.status == 1){
+                data = data.data;
+                console.log(data[1].status_id);
+                var html = "";
+                for(var i = 0; i < data.length; i++){
+                    var status;
+                    switch(data[i].status_id){
+                        case '5':
+                            status = "Pending";
+                            break;
+                        case '6':
+                            status = "Processing";
+                            break;
+                        case '7':
+                            status = "Completed";
+                            break;
+                        default :
+                            status = "No status put in";
+                    }
+                    html += "<tr>" +
+                        "<td>" + (i + 1) + "</td>" +
+                        "<td>" + data[i].clinical_diagnosis_details + "</td>" +
+                        "<td>" + data[i].modified_date + "</td>" +
+                        "<td>" + status + "</td>" +
+                        "<td><button class='btn btn-sm btn-default'>View</button></td>" +
+                    "</tr>";
+                }
+
+                $('.table-data').html(html);
+                $('.lab-history .dataTable').dataTable();
+            }
+        }, 'json')
     }
 };
 

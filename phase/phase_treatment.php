@@ -156,8 +156,6 @@ elseif  ($intent == 'startTreatment') {
 }
 
 elseif  ($intent == 'submitTreatment') {
-    echo json_encode($_REQUEST);
-
     $treat = new TreatmentController();
 
     $doctorid ="";
@@ -172,8 +170,6 @@ elseif  ($intent == 'submitTreatment') {
 
     if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
 
-        // var_dump($_REQUEST);
-
         $doctorid =$_REQUEST[TreatmentTable::doctor_id];
         $patientid =$_REQUEST[TreatmentTable::patient_id];
         $consultation =$_REQUEST[TreatmentTable::consultation];
@@ -181,7 +177,6 @@ elseif  ($intent == 'submitTreatment') {
         $comments= $_REQUEST[TreatmentTable::comments];
         $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
         $treatment_id =$_REQUEST['treatment_id'];
-
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -250,7 +245,7 @@ elseif  ($intent == 'requestLabTest') {
     $labTestType ="";
     $comment= "";
 
-    if (isset($_REQUEST['treatmentId']) && isset($_REQUEST['doctorId'])){  // change surname to what you thin should be set.
+    if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['doctor_id'])){  // change surname to what you thin should be set.
 
         // var_dump($_REQUEST);
 
@@ -281,7 +276,7 @@ elseif  ($intent == 'requestLabTest') {
         echo JsonResponse::success($admission_add);
         exit();
     } else {
-//        print_r($_REQUEST);
+        print_r($_REQUEST);
         echo JsonResponse::error("Error requesting lab test");
         exit();
     }
