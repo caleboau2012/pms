@@ -23,7 +23,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-<!--    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">-->
+    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -153,12 +153,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             </div>
 
             <div class="well">
-                <ul class="treatment-nav nav nav-tabs nav-justified">
+                <ol class="treatment-nav nav nav-tabs nav-justified">
                     <li class="at active" onclick="switchTabs('add-treatment', 'at')"><a href="#">Add Treatment</a></li>
                     <li class="rt" onclick="switchTabs('request-test', 'rt')"><a href="#">Request Test</a></li>
                     <li class="th" onclick="switchTabs('treatment-history', 'th')"><a href="#">Treatment History</a></li>
                     <li class="lh" onclick="switchTabs('lab-history', 'lh')"><a href="#">Lab History</a></li>
-                </ul>
+                </ol>
                 <div class="add-treatment">
                     <form name="addTreatmentForm" class="form">
                         <div class="row">
@@ -189,12 +189,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
                                     <ul class="list-group" id="prescriptions">
                                     </ul>
-                                </div>
-                                <br/>
-
-                                <div class="center-block prescription">
-                                    <ol id="prescriptionList" class="list-group"><span class="empty-box-message">No prescriptions added</span>
-                                    </ol>
                                 </div>
                             </div>
                             <div class="col-sm-6">

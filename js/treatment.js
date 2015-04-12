@@ -55,6 +55,10 @@ Treatment = {
             Treatment.getLabHistory("radiology");
         });
 
+        $('#type').change(function(e){
+            Treatment.getLabHistory(this.value);
+        });
+
         Treatment.getPatientQueue();
         $('.well').addClass('hidden');
 
@@ -62,13 +66,18 @@ Treatment = {
             if(e.keyCode == 13) {
                 e.preventDefault();
                 Treatment.addPrescription(this.value);
+                this.value = '';
             }
+        });
+
+        $('body').delegate('#prescriptions .close', 'click', function(e){
+            $(this).parent().remove();
         });
     },
     addPrescription: function(drug){
-        console.log(drug);
         var drugHTML = "";
-        drugHTML = "<li class='list-group-item'>" + drug + "</li>";
+        drugHTML = "<li class='list-group-item'>" + drug +
+        "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button></li>";
         $('#prescriptions').append(drugHTML);
     },
     searchResult: function(patientDetails){
@@ -82,15 +91,14 @@ Treatment = {
         patientHTML = replaceAll('{{name}}', patientDetails.value, patientHTML);
         patientHTML = replaceAll('{{sex}}', patientDetails.sex, patientHTML);
 
-        function addToQueue(patient){
-            $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToQueue&patient_id='
-            + patient), function(data){
-                console.log('Adding to Gen Queue');
-                console.log(data);
-            });
-        }
-
+        Treatment.addToQueue(patientDetails.patient_id);
         $('.patients').prepend(patientHTML);
+    },
+    addToQueue: function (patient){
+        $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToQueue&patient_id='
+        + patient + "&doctor_id=" + Treatment.CONSTANTS.doctorid), function(data){
+            console.log(data);
+        });
     },
     getPatientQueue: function(){
         var url = host + "phase/phase_treatment.php?intent=getPatientQueue&doctorid=" + Treatment.CONSTANTS.doctorid;
@@ -153,7 +161,15 @@ Treatment = {
             prescription: prescription
         }, function(data){
             console.log(data);
+            Treatment.removeFromQueue($('.patient-ID').html());
         })
+    },
+    removeFromQueue: function (patient){
+        $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
+        + patient), function(data){
+            console.log(data);
+            location.reload();
+        });
     },
     getTreatmentHistory: function() {
         var url = host + "phase/phase_treatment.php?intent=getTreatmentHistory&patient_id=" + $('.patient-ID').html();
@@ -201,11 +217,10 @@ Treatment = {
         }, function(data){
             if(data.status == 1){
                 data = data.data;
-                console.log(data[1].status_id);
                 var html = "";
                 for(var i = 0; i < data.length; i++){
                     var status;
-                    switch(data[i].status_id){
+                    switch(data[i].status){
                         case '5':
                             status = "Pending";
                             break;
@@ -220,7 +235,7 @@ Treatment = {
                     }
                     html += "<tr>" +
                         "<td>" + (i + 1) + "</td>" +
-                        "<td>" + data[i].clinical_diagnosis_details + "</td>" +
+                        "<td>" + data[i].diagnosis + "</td>" +
                         "<td>" + data[i].modified_date + "</td>" +
                         "<td>" + status + "</td>" +
                         "<td><button class='btn btn-sm btn-default'>View</button></td>" +
