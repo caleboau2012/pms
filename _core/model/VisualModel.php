@@ -8,7 +8,11 @@ class VisualModel extends BaseModel{
 
     public function getLabHistory($patientId){
         $data = array(TreatmentTable::patient_id => $patientId);
-        return $this->conn->fetchAll(VisualRequestSqlStatement::GET_HISTORY, $data);
+        $result = $this->conn->fetchAll(VisualRequestSqlStatement::GET_HISTORY, $data);
+        foreach($result as &$obj){
+            $obj['diagnosis'] = 'No diagnosis';
+        }
+        return $result;
     }
 
     public function getPatientQueue($status = PENDING, $activeFg = ACTIVE){
