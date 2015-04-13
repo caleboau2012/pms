@@ -64,7 +64,7 @@ $wards = $admission->loadWards();
 <div class="container-fluid">
 <div class="row">
     <div class="adm-page-content" id="out-patient-view">
-        <div class="col-md-3">
+        <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     Pending Request
@@ -74,7 +74,7 @@ $wards = $admission->loadWards();
                 </div>
             </div>
         </div>
-        <div class="col-md-9 patient-content">
+        <div class="col-sm-9 patient-content">
             <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
             <div id="patient-panel" class="panel panel-primary hidden">
                 <div class="panel-heading">
@@ -83,7 +83,7 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
                 <div class="panel-body">
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <div class="well well-sm">
                             <div class="div-rounded" id="step-1"><span class="fa fa-road"></span> </div>
                             <!--                                <p class="small text-muted text-center">Select ward below</p>-->
@@ -100,7 +100,7 @@ $wards = $admission->loadWards();
                             </ul>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <div class="well well-sm">
                             <div class="div-rounded" id="step-2"><span class="fa fa-bed"></span></div>
                             <!--  <p class="small text-warning text-center">select bed below</p>-->
@@ -109,7 +109,7 @@ $wards = $admission->loadWards();
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-4">
+                    <div class="col-sm-4">
                         <div class="well well-sm">
                             <div class="div-rounded" id="step-3"><span class="fa fa-check"></span> </div>
                             <p class="small text-warning text-center"><br/></p>
@@ -136,7 +136,7 @@ $wards = $admission->loadWards();
 -->
 <div class="adm-page-content" id="in-patient-view">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-3">
             <div class="panel panel-primary">
                 <div class="panel-heading">
                     <form id="in-patient-form">
@@ -151,13 +151,13 @@ $wards = $admission->loadWards();
             </div>
         </div>
 
-        <div class="col-md-9">
+        <div class="col-sm-9">
             <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
             <div id="active_in_patient" class="in-patient-content">
                 <div id="in-patient-identity">
                     <span class="fa fa-pulse fa-spin"></span>
                 </div>
-                <div class="col-md-8">
+                <div class="col-sm-8">
                     <div class="well well-sm">
                         <div class="div-rounded encounter-icon">
                             <span class="fa fa-stethoscope"></span>
@@ -217,7 +217,7 @@ $wards = $admission->loadWards();
                         <div class="text-center" id="log_encounter_response"></div>
                     </div>
                 </div>
-                <div class="col-md-2 col-md-offset-1">
+                <div class="col-sm-2 col-sm-offset-1">
                     <div>
                         <br/><br/><br/>
                         <div class="div-rounded encounter-icon">

@@ -195,9 +195,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
     </div>
 </div>
 
-
-
-
+<?php include('footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

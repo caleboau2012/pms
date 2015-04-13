@@ -58,7 +58,7 @@ $units = $pharmacist->getUnits();
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-md-3">
+        <div class="col-sm-3">
             <div class="p-sidebar">
                 <div class="p-panel">
                     <div class=" p-heading">
@@ -94,7 +94,7 @@ $units = $pharmacist->getUnits();
                 </div>
             </div>
         </div>
-        <div class="col-md-9 p-content">
+        <div class="col-sm-9 p-content">
             <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
             <div class="col-md-12">
                 <div class="active_patient hidden">
@@ -175,6 +175,9 @@ $units = $pharmacist->getUnits();
         </div>
     </div>
 </div>
+
+<?php include('footer.php'); ?>
+
 <script src='../js/bootstrap/jquery.min.js'></script>
 <script src='../js/bootstrap/bootstrap.min.js'></script>
 <script src="../js/constants.js"></script>

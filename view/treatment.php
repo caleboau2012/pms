@@ -53,12 +53,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <ul class="nav navbar-nav navbar-right nav-pills">
                 <div class="dropdown navbar-right navbar-right-text pointer">
                     <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                    <img src="../images/profile.png">
-                    <span>
-                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname) . ' ' . CxSessionHandler::getItem(ProfileTable::firstname)) ?>
+                        <img src="../images/profile.png">
+                        <span>
+                            <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname) . ' ' . CxSessionHandler::getItem(ProfileTable::firstname)) ?>
+                        </span>
+                        <span class="caret"></span>
                     </span>
-                    <span class="caret"></span>
-                </span>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
@@ -238,7 +238,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <br/>
                     <ul class="list-group history">
                     </ul>
-<!--                    <button class="btn btn-info">Load More</button>-->
+                    <!--                    <button class="btn btn-info">Load More</button>-->
                 </div>
                 <div class="lab-history hidden">
                     <div class="table">

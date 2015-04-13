@@ -45,7 +45,7 @@ $(function(){
         e.preventDefault();
         var form_data = $(this).serialize();
         if($('#passcode').val() == $('#confirm_passcode').val()){
-            var request = $.post('phase/phase_auth.php', form_data);
+            var request = $.post(host + 'phase/phase_auth.php', form_data);
             request.done(function(data){
                 var response = JSON.parse(data);
                 console.log(response.data.message);
@@ -56,7 +56,7 @@ $(function(){
                     $('#form-success').html(response.data.message);
 
                     setTimeout(function(){
-                        window.location.reload();
+                        window.location.href = host;
                     }, 1500);
                 }else if(response.status == 2){
                     $('#form-loading').addClass('hidden');

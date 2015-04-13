@@ -58,7 +58,7 @@ $list_of_staff = $userController->getAllUsers();
 </nav>
 
 <div id='roster-wrap' class="row">
-    <div class="col-md-4">
+    <div class="col-sm-4">
         <div id='external-events' >
             <div class="roster-list">
                 <div class="roster-list_heading">
@@ -93,7 +93,7 @@ $list_of_staff = $userController->getAllUsers();
         </div>
 
     </div>
-    <div class="col-md-8">
+    <div class="col-sm-8">
         <div id='roster_loading'>
             <span class="fa fa-pulse fa-spinner"></span>
         </div>

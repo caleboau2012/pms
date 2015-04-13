@@ -1,5 +1,5 @@
 <?php
-require_once '_core/global/_require.php';
+require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
@@ -30,6 +30,7 @@ Crave::requireAll(UTIL);
 
     <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
+    <script src="../js/constants.js"></script>
     <script src="../js/profile.js"></script>
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->

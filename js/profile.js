@@ -11,7 +11,7 @@ $(function(){
         var form_data = $(this).serialize();
         e.preventDefault();
 
-        var request = $.post('phase/phase_profile.php', form_data);
+        var request = $.post(host + 'phase/phase_profile.php', form_data);
         console.log(form_data);
 
         request.done(function(data){

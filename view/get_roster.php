@@ -62,8 +62,9 @@ $list_of_staff = $userController->getAllUsers();
         <div id='calendar'></div>
     </div>
     <div  class="clearfix"></div>
-
 </div>
+
+<?php include('footer.php'); ?>
 <script src='../js/bootstrap/jquery.min.js'></script>
 <script src='../js/bootstrap/bootstrap.min.js'></script>
 <script src='../js/libs/fullcalendar/moment.min.js'></script>

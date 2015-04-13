@@ -1,3 +1,15 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: olajuwon
+ * Date: 2/16/2015
+ * Time: 1:10 PM
+ */
+require_once '../_core/global/_require.php';
+
+Crave::requireAll(GLOBAL_VAR);
+Crave::requireAll(UTIL);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -41,8 +53,19 @@
                 <li><a href="#" class="label-default">Patients</a></li>
                 <li><a href="staff.php">Staff</a></li>
                 <li><a href="#">Config</a></li>
-                <li><a href="#">Help</a></li>
-                <li><a id="sign-out" href="#">Logout</a></li>
+                <li class="dropdown navbar-right-text pointer">
+                    <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                    <img src="../images/profile.png">
+                    <span>
+                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+                        <span class="caret"></span>
+                     </span>
+                    </span>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
+                        <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
+                    </ul>
+                </li>
             </ul>
 <!--            <form class="navbar-form navbar-right">-->
 <!--                <input type="text" class="form-control" placeholder="Search...">-->

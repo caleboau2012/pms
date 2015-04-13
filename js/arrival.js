@@ -263,7 +263,7 @@ function addPatient(form){
         patientHTML = replaceAll('{{regNo}}', form.regNo.value, patientHTML);
         patientHTML = replaceAll('{{name}}', patientName, patientHTML);
         patientHTML = replaceAll('{{sex}}', form.sex.value, patientHTML);
-        addToGenQueue(data.data);
+        addToQueue(data.data);
 
         $(".general").find('.drop').prepend(patientHTML);
         $('#newPatientModal').modal('hide');
