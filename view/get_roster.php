@@ -11,6 +11,10 @@ Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'StaffRosterModel'));
 Crave::requireFiles(CONTROLLER, array('UserController', 'StaffRosterController'));
 
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: ../index.php");
+}
+
 $userController = new UserController();
 $list_of_staff = $userController->getAllUsers();
 ?>
@@ -53,7 +57,6 @@ $list_of_staff = $userController->getAllUsers();
         </div>
     </div>
 </nav>
-
 <div id='roster-wrap' class="row">
     <div class="col-md-10 col-md-push-1">
         <div id='roster_loading'>

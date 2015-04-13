@@ -203,6 +203,7 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     border: none;
     text-align: center;
     box-shadow: 1px 2px 2px #908585;
+    color: #fff;
 
 }
 .a-duty{
@@ -212,6 +213,7 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     margin-right: 0.4em;
     text-align: center;
     box-shadow: 1px 2px 2px #908585;
+    color: #fff;
 }
 .m-duty{
     padding: 0.4em;
@@ -219,8 +221,8 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     margin-right: 0.4em;
     text-align: center;
     box-shadow: 1px 2px 2px #908585;
-
-    /*background: #aaa;*/
+    color: #fff;
+    background: #3A87AD;
 }
 #external-events .fc-event {
     cursor: pointer;
@@ -246,7 +248,7 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     padding: 0 1em;
 }
 .roster-list{
-    /*background: #fff;*/
+    margin-bottom: 1em;
 }
 .roster-list_heading{
     border-radius: 0 0.6em 0 0em;
@@ -261,6 +263,9 @@ a.dashboard-link:hover, a.dashboard-link:focus {
 #roster-list_names{
     /*padding: 0.3em 1em;*/
     background: #fff;
+}
+#roster-legend{
+    margin: 0.3em;
 }
 .fc-event.ui-draggable.ui-draggable-handle{
 

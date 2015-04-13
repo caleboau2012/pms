@@ -11,6 +11,10 @@ Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'StaffRosterModel'));
 Crave::requireFiles(CONTROLLER, array('UserController', 'StaffRosterController'));
 
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: ../index.php");
+}
+
 $userController = new UserController();
 $list_of_staff = $userController->getAllUsers();
 ?>
