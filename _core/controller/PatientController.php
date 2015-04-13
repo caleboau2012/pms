@@ -95,16 +95,21 @@ class PatientController {
 
     public function  retrievePatientInfo ($patient_id ){
 
-       return $this->patient->GetPatientDetails($patient_id);
+       return $this->patient->getPatientDetails($patient_id);
 
     }
 
     public function  retrieveAllPatientInfo ( ){
 
-        return $this->patient->GetAllPatientDetails();
+        return $this->patient->getAllPatientDetails();
 
     }
 
+    public function  getExistingPatientRegNos(){
+         return $this->patient->getExistingPatientRegNos();
+    }
 
-
+    public function regNoExists($regNo){
+        return $this->patient->isRegNumExisting($regNo);
+    }
 }

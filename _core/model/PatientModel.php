@@ -36,13 +36,13 @@ class PatientModel extends BaseModel {
 
     /*Fetch Operation*/
 
-    public function  GetPatientDetails ($patient_id){
+    public function  getPatientDetails ($patient_id){
         $sql = PatientSqlStatement::GET;
         $result =$this->conn->fetch($sql, array(PatientTable::patient_id => $patient_id));
         return $result;
     }
 
-    public function  GetAllPatientDetails (){
+    public function  getAllPatientDetails (){
         $sql = PatientSqlStatement::GET_ALL;
         $result =$this->conn->fetchAll($sql, array());
         return $result;
@@ -58,5 +58,19 @@ class PatientModel extends BaseModel {
         $result = $this->conn->fetchAll($stmt, $data);
 
         return $result;
+    }
+
+    public function getExistingPatientRegNos(){
+        return $this->conn->fetchAll(PatientSqlStatement::GET_EXISTING_PATIENT_REG_NO, array());
+    }
+
+    public function isRegNumExisting($regNo){
+        $data = array(PatientTable::regNo => strtoupper($regNo));
+        $response = $this->conn->fetch(PatientSqlStatement::IS_REG_EXISTING, $data);
+        if($response['result'] > 0){
+            return true;
+        } else {
+            return false;
+        }
     }
 }
