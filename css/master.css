@@ -979,3 +979,8 @@ span#loader{
 .patient-queue.patient-queue--gray .patient-queue__header {
     color: #555555;
 }
+
+/*Footer*/
+#footer{
+    margin: 1.5em 0 0;
+}
