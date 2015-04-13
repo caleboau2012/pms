@@ -120,6 +120,10 @@ class PatientSqlStatement {
             OR pq.active_fg = 0)";
         const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
+
+        const GET_EXISTING_PATIENT_REG_NO = "SELECT regNo FROM patient order by regNo DESC";
+
+        const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
 }
 
 class PatientQueueSqlStatement {

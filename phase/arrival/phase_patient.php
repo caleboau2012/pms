@@ -146,11 +146,19 @@ else if ($intent == 'addPatient') {
 
 }
 elseif($intent == 'getRegNos'){
+    $patientController = new PatientController();
     $regNos = $patientController->getExistingPatientRegNos();
-    echo JsonResponse::success($regNos);
+    if(is_array($regNos)){
+        echo JsonResponse::success($regNos);
+        exit();
+    } else {
+        echo JsonResponse::error("Not available");
+        exit();
+    }
 }
 elseif($intent == 'verifyRegNo'){
     $regNo = $_REQUEST['regNo'];
+    $patientController = new PatientController();
 
     if($regNo){
         if(!$patientController->regNoExists($regNo)){
