@@ -35,6 +35,16 @@ class UserModel extends BaseModel {
         return false;
     }
 
+    public function getDoctorNameById($doctorId){
+        $data = array(UserAuthTable::userid => $doctorId);
+        $result = $this->conn->fetchAll(ProfileSqlStatement::GET_DOCTOR_NAME_BY_ID, $data);
+        if(is_array($result)){
+            return $result[ProfileTable::surname] + " " + $result[ProfileTable::firstname] + " " + $result[ProfileTable::middlename];
+        } else {
+            return "No name";
+        }
+    }
+
     public function getByCredentials($data) {
         $stmt = UserAuthSqlStatement::GET_USER_BY_CREDENTIALS;
         $result = $this->conn->fetch($stmt, $data);

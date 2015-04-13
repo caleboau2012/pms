@@ -4,7 +4,6 @@ class UserController {
 
     public function __construct() {
         $this->user = new UserModel();
-
     }
 
     public function getStaffDetails($userid){
@@ -80,6 +79,10 @@ class UserController {
         $feedback = $this->user->searchByName($userid, $name_array[0]);
 
         return $feedback;
+    }
+
+    public function getDoctorNameById($doctorId){
+        return $this->user->getDoctorNameById($doctorId);
     }
 
 }
