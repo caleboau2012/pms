@@ -97,6 +97,7 @@ if ($intent == 'getPatientQueue') {
 } elseif ($intent == 'updateLabDetails') {
     if (isset($_REQUEST['labType']) && isset($_REQUEST['data'])) {
         $labType = $_REQUEST['labType'];
+        $data = $_REQUEST['data'];
 
         $lab = new LaboratoryController();
         $response = $lab->updateLabDetails($labType, $data);

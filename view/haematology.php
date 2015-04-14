@@ -39,7 +39,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]'.'['.HaematologyTable::haematology_id.']'; ?>" value="<?php echo $view_bag['details']['haematology_id'] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.HaematologyTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
-                        <input type="hidden" name="<?php echo 'data[details'.']['.HaematologyTable::treatment_id.']'; ?>"  value="<?php echo $view_bag['details']['treatment_id'] ?>">
+                        <!--<input type="hidden" name="<?php /*echo 'data[details'.']['.HaematologyTable::treatment_id.']'; */?>"  value="<?php /*echo $view_bag['details']['treatment_id'] */?>">-->
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="haematology">
 
@@ -186,7 +186,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                         <?php } else { ?>
                                         <div class="center-block">
                                             <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.DifferentialCountTable::table_name.']['.$attr['column']; ?>" value="<?php if (isset($view_bag[DifferentialCountTable::table_name][$attr['column']])) echo $view_bag[DifferentialCountTable::table_name][$attr['column']]; ?>">
+                                            <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.DifferentialCountTable::table_name.']['.$attr['column']. ']'; ?>" value="<?php if (isset($view_bag[DifferentialCountTable::table_name][$attr['column']])) echo $view_bag[DifferentialCountTable::table_name][$attr['column']]; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>

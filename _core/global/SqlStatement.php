@@ -80,6 +80,8 @@ class ProfileSqlStatement {
             LIMIT 0 , 30";
 
         const BUILD_CONTACT_LIST = "SELECT userid, surname, firstname, middlename FROM profile";
+
+        const GET_DOCTOR_NAME_BY_ID = "SELECT surname, firstname, middlename FROM profile WHERE  userid = :userid";
 }
 
 class PermissionRoleSqlStatement {
