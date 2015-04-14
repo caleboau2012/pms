@@ -635,8 +635,7 @@ class HaematologyRequestSqlStatement{
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.active_fg = :active_fg";
     const GET_DETAILS = "SELECT * FROM haematology AS h INNER JOIN treatment AS t on h.treatment_id = t.treatment_id
                          WHERE  h.treatment_id = :treatment_id";
-    const UPDATE_DETAILS = "UPDATE haematology SET clinical_diagnosis_details = :clinical_diagnosis_details,
-                            lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report,
+    const UPDATE_DETAILS = "UPDATE haematology SET lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report,
                             laboratory_ref = :laboratory_ref, modified_date = NOW() WHERE haematology_id = :haematology_id";
 }
 

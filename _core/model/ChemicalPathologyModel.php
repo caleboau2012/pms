@@ -24,7 +24,7 @@ class ChemicalPathologyModel extends BaseModel{
 
     public function getTestDetails($treatmentId){
         $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId);
-        return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
+        return $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
     }
 
     public function setTestDetails($cPReqId, $data){

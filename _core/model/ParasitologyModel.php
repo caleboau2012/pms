@@ -18,7 +18,7 @@ class ParasitologyModel extends BaseModel{
     }
 
     public function getAllTest($activeFg = 1){
-        $data = array();
+        $data = array(ParasitologyRequestTable::active_fg => $activeFg);
         return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
