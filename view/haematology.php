@@ -18,6 +18,10 @@ $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
 var_dump($view_bag);
 
+if ($view_bag['details'][HaematologyTable::status_id] == 7){
+    $disabled = 'disabled="disabled"';
+}else { $disabled = '';}
+
 ?>
 <body>
 <div class="container-fluid">
@@ -52,7 +56,7 @@ var_dump($view_bag);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Clinical Diagnosis and Relevant Details</h4>
-                                        <textarea disabled class="col-sm-12 form-control"><?php
+                                        <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['clinical_diagnosis_details'])){
                                                 echo $view_bag['details']['clinical_diagnosis_details'];
                                             }
@@ -66,13 +70,13 @@ var_dump($view_bag);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
-                                        <textarea name="<?php echo 'data[details]'.'['.HaematologyTable::laboratory_report.']'; ?>" class="col-sm-12 form-control"><?php
+                                        <textarea <?php echo $disabled; ?> name="<?php echo 'data[details]'.'['.HaematologyTable::laboratory_report.']'; ?>" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['laboratory_report'])){
                                                 echo $view_bag['details']['laboratory_report'];
                                             }
                                             ?>
                                         </textarea>
-                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="<?php echo 'data[details]'.'['.HaematologyTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details']['laboratory_ref'])) echo $view_bag['details']['laboratory_ref']; ?>"></span> </div>
+                                        <div class="test-label">Laboratory Ref: <span><input type="text" <?php echo $disabled; ?> class="form-inline form-margin" name="<?php echo 'data[details]'.'['.HaematologyTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details']['laboratory_ref'])) echo $view_bag['details']['laboratory_ref']; ?>"></span> </div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -103,7 +107,7 @@ var_dump($view_bag);
                                         <?php } else { ?>
                                     <div class="center-block">
                                         <?php } ?>
-                                        <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.BloodTestTable::table_name. ']['.$attr['column'].']' ?>" value="<?php if (isset($view_bag[BloodTestTable::table_name][$attr['column']])) echo $view_bag[BloodTestTable::table_name][$attr['column']]; ?>">
+                                        <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data['.BloodTestTable::table_name. ']['.$attr['column'].']' ?>" value="<?php if (isset($view_bag[BloodTestTable::table_name][$attr['column']])) echo $view_bag[BloodTestTable::table_name][$attr['column']]; ?>">
                                         <?php if (isset($attr['unit'])){ ?>
                                             <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                         <?php } ?>
@@ -135,7 +139,7 @@ var_dump($view_bag);
                                     <?php } else { ?>
                                         <div class="center-block">
                                     <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.FilmAppearanceTable::table_name.']['.$attr['column'].']'; ?>" value="<?php if (isset($view_bag[FilmAppearanceTable::table_name][$attr['column']])) echo $view_bag[FilmAppearanceTable::table_name][$attr['column']]; ?>">
+                                            <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data['.FilmAppearanceTable::table_name.']['.$attr['column'].']'; ?>" value="<?php if (isset($view_bag[FilmAppearanceTable::table_name][$attr['column']])) echo $view_bag[FilmAppearanceTable::table_name][$attr['column']]; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>
@@ -170,7 +174,7 @@ var_dump($view_bag);
                                         <?php } else { ?>
                                             <div class="center-block">
                                         <?php } ?>
-                                                <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.DifferentialCountTable::table_name.']['.$attr['column'].']'; ?>" value="<?php if (isset($view_bag[DifferentialCountTable::table_name][$attr['column']])) echo $view_bag[DifferentialCountTable::table_name][$attr['column']]; ?>">
+                                                <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data['.DifferentialCountTable::table_name.']['.$attr['column'].']'; ?>" value="<?php if (isset($view_bag[DifferentialCountTable::table_name][$attr['column']])) echo $view_bag[DifferentialCountTable::table_name][$attr['column']]; ?>">
                                                 <?php if (isset($attr['unit'])){ ?>
                                                     <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                                 <?php } ?>
@@ -186,7 +190,7 @@ var_dump($view_bag);
                                         <?php } else { ?>
                                         <div class="center-block">
                                             <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.DifferentialCountTable::table_name.']['.$attr['column']. ']'; ?>" value="<?php if (isset($view_bag[DifferentialCountTable::table_name][$attr['column']])) echo $view_bag[DifferentialCountTable::table_name][$attr['column']]; ?>">
+                                            <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data['.DifferentialCountTable::table_name.']['.$attr['column']. ']'; ?>" value="<?php if (isset($view_bag[DifferentialCountTable::table_name][$attr['column']])) echo $view_bag[DifferentialCountTable::table_name][$attr['column']]; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>
@@ -194,10 +198,14 @@ var_dump($view_bag);
                                         <?php } ?>
                                 </div>
 
+                                <?php
+                                    if ($view_bag['details'][HaematologyTable::status_id] == 5 || $view_bag['details'][HaematologyTable::status_id] == 6){?>
                                 <div class="col-sm-6 submit-test">
                                     <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
                                     <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
                                 </div>
+                                <?php } ?>
+
                         </div>
                     </form>
                 </div>

@@ -14,6 +14,10 @@ $lab = new LaboratoryController();
 $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
 var_dump($view_bag);
+
+if ($view_bag['details'][HaematologyTable::status_id] == 7){
+    $disabled = 'disabled="disabled"';
+}else { $disabled = '';}
 ?>
 
 <body>
@@ -49,7 +53,7 @@ var_dump($view_bag);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Clinical Diagnosis</h4>
-                                        <textarea readonly class="col-sm-12 form-control"><?php
+                                        <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details'][ChemicalPathologyRequestTable::clinical_diagnosis])){
                                                 echo $view_bag['details'][ChemicalPathologyRequestTable::clinical_diagnosis];
                                             }
@@ -62,7 +66,7 @@ var_dump($view_bag);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
-                                        <textarea type="text" class="col-sm-12 form-control" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::laboratory_comment.']'; ?>"><?php
+                                        <textarea type="text" <?php echo $disabled; ?> class="col-sm-12 form-control" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::laboratory_comment.']'; ?>"><?php
                                             if(isset($view_bag['details'][ChemicalPathologyRequestTable::laboratory_comment])){
                                                 echo $view_bag['details'][ChemicalPathologyRequestTable::laboratory_comment];
                                             }
@@ -93,7 +97,7 @@ var_dump($view_bag);
                                     <?php } else { ?>
                                     <div class="center-block">
                                         <?php } ?>
-                                        <input type="text" class="form-control col-sm-12" name="<?php echo ChemicalPathologyDetailsTable::table_name. '['.$label->getId().']' ?>">
+                                        <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data[values]['.$label->getId().']' ?>" value="<?php if (isset($view_bag['values'][$label->getId()])) echo $view_bag['values'][$label->getId()]; else echo 0; ?>">
                                         <?php if (isset($attr['unit'])){ ?>
                                             <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                         <?php } ?>
@@ -121,7 +125,7 @@ var_dump($view_bag);
                                         <?php } else { ?>
                                         <div class="center-block">
                                             <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo ChemicalPathologyDetailsTable::table_name. '['.$label->getId().']' ?>">
+                                            <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data[values]['.$label->getId().']' ?>" value="<?php if (isset($view_bag['values'][$label->getId()])) echo $view_bag['values'][$label->getId()]; else echo 0; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>
@@ -149,7 +153,7 @@ var_dump($view_bag);
                                         <?php } else { ?>
                                         <div class="center-block">
                                             <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo ChemicalPathologyDetailsTable::table_name.'['.$label->getId().']'; ?>">
+                                            <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data[values]['.$label->getId().']' ?>" value="<?php if (isset($view_bag['values'][$label->getId()])) echo $view_bag['values'][$label->getId()]; else echo 0; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>
@@ -174,7 +178,7 @@ var_dump($view_bag);
                                             <?php } else { ?>
                                             <div class="center-block">
                                                 <?php } ?>
-                                                <input type="text" class="form-control col-sm-12" name="<?php echo ChemicalPathologyDetailsTable::table_name.'['.$label->getId().']'; ?>">
+                                                <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data[values]['.$label->getId().']' ?>" value="<?php if (isset($view_bag['values'][$label->getId()])) echo $view_bag['values'][$label->getId()]; else echo 0; ?>">
                                                 <?php if (isset($attr['unit'])){ ?>
                                                     <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                                 <?php } ?>
@@ -182,10 +186,13 @@ var_dump($view_bag);
                                             <?php } ?>
                                         </div>
 
-                                <div class="col-sm-6 submit-test">
-                                    <input type='submit' class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
-                                    <input type='submit' class='btn btn-primary pull-right pad' value='Submit' name='submit'>
-                                </div>
+                                        <?php
+                                        if ($view_bag['details'][HaematologyTable::status_id] == 5 || $view_bag['details'][HaematologyTable::status_id] == 6){?>
+                                            <div class="col-sm-6 submit-test">
+                                                <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
+                                                <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
+                                            </div>
+                                        <?php } ?>
                         </div>
                     </form>
                 </div>
