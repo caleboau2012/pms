@@ -718,8 +718,11 @@ class ChemicalPathologyRequestSqlStatement{
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.active_fg = :active_fg";
     const GET_DETAIL = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t on
                         c.treatment_id = t.treatment_id WHERE c.treatment_id = :treatment_id";
-    const GET_DETAILS = "SELECT c.cpreq_id, c.cpref_id, c.result FROM chemical_pathology_details AS c INNER JOIN
-                         chemical_pathology_request AS cr ON c.cpreq_id = cr.cpreq_id WHERE cr.treatment_id = :treatment_id";
+    const GET_DETAILS = "SELECT cpreq_id, treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis,
+                         created_date, doctor_id, lab_attendant_id, status_id FROM chemical_pathology_request WHERE
+                         treatment_id = :treatment_id";
+    const GET_VALUES = "SELECT cpref_id, result FROM chemical_pathology_details WHERE cpreq_id IN (SELECT cpreq_id FROM
+                        chemical_pathology_request WHERE treatment_id = :treatment_id)";
     const DELETE = 'UPDATE chemical_pathology_details SET active_fg = 0, modified_date = NOW() WHERE cpreq_id = :cpreq_id AND cpref_id = :cpref_id';
     const ADD_VALUES = 'INSERT into chemical_pathology_details (cpreq_id, cpref_id, result, created_date, modified_date) VALUES :vals';
     const UPDATE_VALUES = 'UPDATE chemical_pathology_details SET result = :result, active_fg = :active_fg, modified_date = NOW() WHERE cpreq_id = :cpreq_id AND cpref_id = :cpref_id';

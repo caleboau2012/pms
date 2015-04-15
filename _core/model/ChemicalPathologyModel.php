@@ -23,8 +23,11 @@ class ChemicalPathologyModel extends BaseModel{
     }
 
     public function getTestDetails($treatmentId){
+        $result = array();
         $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId);
-        return $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
+        $result['details'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
+        $result['values'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
+        return $result;
     }
 
     public function setTestDetails($cPReqId, $data){
@@ -32,7 +35,19 @@ class ChemicalPathologyModel extends BaseModel{
     }
 
 
+    private function cleanUpDataValues(&$data){
+        foreach($data as $key => $value){
+            if(!$data[$key]){
+                unset($data[$key]);
+            } else {
+                $data[$key] = floatval($data[$key]);
+            }
+        }
+    }
+
     public function updateTestDetails($data){
+        $this->cleanUpDataValues($data['values']);      // Cleans up the $data['values']
+
         try{
             $this->conn->beginTransaction();
             $this->updateDetails($data['details']);
