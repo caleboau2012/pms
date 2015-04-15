@@ -16,7 +16,7 @@ $view_bag = array();
 
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-//var_dump($view_bag);
+var_dump($view_bag);
 
 ?>
 <body>
@@ -115,16 +115,17 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                             <?php
                             $film_list = new LabelList();
 
-                            $film_list->addNode(new LabelNode("Aniscocytosis", 10, array('column' => FilmAppearanceTable::aniscocytosis)));
+                            $film_list->addNode(new LabelNode("Aniscocytosis", 11, array('column' => FilmAppearanceTable::aniscocytosis)));
                             $film_list->addNode(new LabelNode("Poikilocytosis", 1, array('column' => FilmAppearanceTable::poikilocytosis)));
                             $film_list->addNode(new LabelNode("Polychromasia", 2, array('column' => FilmAppearanceTable::polychromasia)));
                             $film_list->addNode(new LabelNode("Macrocytosis", 3, array('column' => FilmAppearanceTable::macrocytosis)));
-                            $film_list->addNode(new LabelNode("Hypochromia", 4, array('column' => FilmAppearanceTable::hypochromia)));
-                            $film_list->addNode(new LabelNode("Sickle Cells", 5, array('column' => FilmAppearanceTable::sickle_cells)));
-                            $film_list->addNode(new LabelNode("Target Cells", 6, array('column' => FilmAppearanceTable::target_cells)));
-                            $film_list->addNode(new LabelNode("Spherocytes", 7, array('column' => FilmAppearanceTable::spherocytes)));
-                            $film_list->addNode(new LabelNode("Nucleated RBC", 8, array('column' => FilmAppearanceTable::nucleated_rbc)));
-                            $film_list->addNode(new LabelNode("Sickling Test", 9, array('column' => FilmAppearanceTable::sickling_test)));
+                            $film_list->addNode(new LabelNode("Microcytosis", 4, array('column' => FilmAppearanceTable::microcytosis)));
+                            $film_list->addNode(new LabelNode("Hypochromia", 5, array('column' => FilmAppearanceTable::hypochromia)));
+                            $film_list->addNode(new LabelNode("Sickle Cells", 6, array('column' => FilmAppearanceTable::sickle_cells)));
+                            $film_list->addNode(new LabelNode("Target Cells", 7, array('column' => FilmAppearanceTable::target_cells)));
+                            $film_list->addNode(new LabelNode("Spherocytes", 8, array('column' => FilmAppearanceTable::spherocytes)));
+                            $film_list->addNode(new LabelNode("Nucleated RBC", 9, array('column' => FilmAppearanceTable::nucleated_rbc)));
+                            $film_list->addNode(new LabelNode("Sickling Test", 10, array('column' => FilmAppearanceTable::sickling_test)));
                             ?>
                             <div class="col-sm-6">
                                 <h4 class="title">Film Appearance</h4>

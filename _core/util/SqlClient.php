@@ -91,4 +91,22 @@ class SqlClient {
     public function rollBack() {
         return $this->pdo->rollBack();
     }
+
+    public function checkParams($stmt, $data){
+        $pattern = '/:(\w*)/';
+        preg_match_all($pattern, $stmt, $matches);
+        $vars = array_unique($matches[0]);
+
+        if(sizeof($vars) != sizeof($data))
+            return false;
+
+        foreach($vars as $key){
+            echo substr($key, 1) . "<br>";
+            if(!array_key_exists(substr($key, 1), $data)){
+                return false;
+            }
+        }
+
+        return true;
+    }
 }

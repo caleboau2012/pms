@@ -95,6 +95,10 @@ class LaboratoryController{
     public function updateLabDetails($labType, &$data){
         switch($labType){
             case CHEMICAL_PATHOLOGY:
+                $haematology_id = $data['details']['haematology_id'];
+                $data['blood_test']['haematology_id'] = $haematology_id;
+                $data['film_appearance']['haematology_id'] = $haematology_id;
+                $data['differential_count']['haematology_id'] = $haematology_id;
                 return $this->chemicalPathology->updateTestDetails($data);
             case HAEMATOLOGY:
                 $haematology_id = $data['details']['haematology_id'];

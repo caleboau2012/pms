@@ -1,5 +1,13 @@
 <?php
 class HaematologyModel extends BaseModel{
+    /*The following arrays include columns to be checked for decimal type in the different tables*/
+    private $diff_count = array(DifferentialCountTable::polymorphs_neutrophils, DifferentialCountTable::lymphocytes,
+                                DifferentialCountTable::monocytes, DifferentialCountTable::eosinophils,
+                                DifferentialCountTable::basophils, DifferentialCountTable::widals_test);
+
+    private $blood_test = array(BloodTestTable::pcv, BloodTestTable::hb, BloodTestTable::hchc, BloodTestTable::wbc,
+                                BloodTestTable::eosinophils, BloodTestTable::platelets, BloodTestTable::rectis,
+                                BloodTestTable::rectis_index, BloodTestTable::e_s_r);
 
     public function haematologyRequest($doctorId, $treatmentId, $description){
         $data = array(HaematologyTable::doctor_id => $doctorId, HaematologyTable::treatment_id => $treatmentId, HaematologyTable::clinical_diagnosis_details => $description);
@@ -46,14 +54,15 @@ class HaematologyModel extends BaseModel{
             $this->conn->commit();
         } catch(Exception $e){
             $this->conn->rollBack();
-            echo $e->getMessage();
-            return false;
+            return array('status'=>false, 'message'=>$e->getMessage());
         }
 
-        return true;
+        return array('status'=>true);
     }
 
     private function updateDetails($data){
+        if(!$this->conn->checkParams(HaematologyRequestSqlStatement::UPDATE_DETAILS, $data))
+            throw new Exception('Incomplete haematology details params');
         if(!$this->conn->execute(HaematologyRequestSqlStatement::UPDATE_DETAILS, $data))
             throw new Exception('Could not update haematology details');
         return true;
@@ -74,8 +83,14 @@ class HaematologyModel extends BaseModel{
     }
 
     private function updateBloodTestDetails($data){
-        if(!$this->conn->execute(BloodTestSqlStatement::ADD_UPDATE, $data))
-            throw new Exception('Could not update blood test details');
+        if(!$this->conn->checkParams(BloodTestSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Incomplete blood test params');
+
+        if($this->checkDecimalColumns($this->blood_test, $data)){
+            if(!$this->conn->execute(BloodTestSqlStatement::ADD_UPDATE, $data))
+                throw new Exception('Could not update blood test details');
+        }
+
         return true;
     }
 
@@ -94,6 +109,8 @@ class HaematologyModel extends BaseModel{
     }
 
     private function updateFilmAppearanceTestDetails($data){
+        if(!$this->conn->checkParams(FilmAppearanceSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Incomplete film appearance params');
         if (!$this->conn->execute(FilmAppearanceSqlStatement::ADD_UPDATE, $data))
             throw new Exception('Could not update film appearnce test details');
         return true;
@@ -113,8 +130,27 @@ class HaematologyModel extends BaseModel{
     }
 
     private function updateDifferentialCountTestDetails($data){
-        if(!$this->conn->execute(DifferentialCountSqlStatement::ADD_UPDATE, $data))
-            throw new Exception('Could not update differential count details');
+        if(!$this->conn->checkParams(DifferentialCountSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Incomplete differential count params');
+
+        if($this->checkDecimalColumns($this->diff_count, $data)){
+            if(!$this->conn->execute(DifferentialCountSqlStatement::ADD_UPDATE, $data))
+                throw new Exception('Could not update differential count details');
+        }
+
         return true;
     }
+
+
+
+/*------------------------------------------------------------------------------------------------------*/
+
+    private function validateData(&$data){
+        foreach($data as $obj){
+            if(!$obj)
+                $obj = null;
+        }
+    }
+
+
 }

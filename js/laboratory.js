@@ -171,7 +171,7 @@ var Laboratory = {
                 console.log(returnedData);
             },
             error: function(){
-                console.log('no work');
+                console.log($data);
             }
         });
     }
