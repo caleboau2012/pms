@@ -101,11 +101,13 @@ if ($intent == 'getPatientQueue') {
 
         $lab = new LaboratoryController();
         $response = $lab->updateLabDetails($labType, $data);
-        if ($response) {
+        //echo JsonResponse::success($response);
+        //exit();
+        if ($response['status']) {
             echo JsonResponse::success("Successfully updated");
             exit();
         } else {
-            echo JsonResponse::error("Could not update the lab details");
+            echo JsonResponse::error($response['message']);
             exit();
         }
     } else {

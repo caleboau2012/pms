@@ -16,4 +16,12 @@ abstract class  BaseModel {
         $this->conn = new SqlClient($db_host, $db_name, $db_username, $db_password);
 
     }
+
+    protected function checkDecimalColumns($arrayOfDecCols, &$data){
+        foreach($arrayOfDecCols as $col){
+            $data[$col] = floatval($data[$col]);
+        }
+
+        return true;
+    }
 }

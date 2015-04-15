@@ -101,6 +101,7 @@ class LaboratoryController{
                 $data['blood_test']['haematology_id'] = $haematology_id;
                 $data['film_appearance']['haematology_id'] = $haematology_id;
                 $data['differential_count']['haematology_id'] = $haematology_id;
+                //return $data;
                 return $this->haematology->updateTestDetails($data);
             case PARASITOLOGY:
                 return $this->parasitology->updateTestDetails($data);
