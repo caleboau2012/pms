@@ -608,9 +608,9 @@ class RadiologyRequestSqlStatement{
                           rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
                           r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
                           WHERE rr.active_fg = :active_fg";
-    const GET_DETAILS = "SELECT * FROM radiology AS r INNER JOIN radiology_request as rr ON
-                         r.radiology_id = rr.radiology_id LEFT JOIN xray_no AS x ON x.radiology_id INNER JOIN treatment
-                         AS t on r.treatment_id = t.treatment_id WHERE t.treatment_id = :treatment_id";
+    const GET_DETAILS = "SELECT * FROM radiology_request WHERE radiology_id IN (SELECT radiology_id FROM radiology WHERE
+                         treatment_id = :treatment_id)";
+    const GET_RADIOLOGY_VALS = "SELECT * FROM radiology WHERE treatment_id = :treatment_id";
     const UPDATE_DETAILS = "UPDATE radiology_request SET clinical_diagnosis_details = :clinical_diagnosis_details,
                             previous_operation = :previous_operation, any_known_allergies = :any_known_allergies,
                             previous_xray = :previous_xray, xray_number = :xray_number, modified_date = NOW()
