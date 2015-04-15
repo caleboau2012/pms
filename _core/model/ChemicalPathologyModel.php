@@ -22,11 +22,21 @@ class ChemicalPathologyModel extends BaseModel{
         return $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
+    private function formatValues($cprefidResultArray){
+        $result = array();
+        foreach ($cprefidResultArray as $obj){
+            $result[$obj['cpref_id']] = $obj['result'];
+        }
+
+        return $result;
+    }
+
     public function getTestDetails($treatmentId){
         $result = array();
         $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId);
         $result['details'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
-        $result['values'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
+        $values = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
+        $result['values'] = $this->formatValues($values);
         return $result;
     }
 
