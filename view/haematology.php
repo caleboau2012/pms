@@ -39,7 +39,6 @@ var_dump($view_bag);
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]'.'['.HaematologyTable::haematology_id.']'; ?>" value="<?php echo $view_bag['details']['haematology_id'] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.HaematologyTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
-                        <!--<input type="hidden" name="<?php /*echo 'data[details'.']['.HaematologyTable::treatment_id.']'; */?>"  value="<?php /*echo $view_bag['details']['treatment_id'] */?>">-->
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="haematology">
 

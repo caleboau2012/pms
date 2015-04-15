@@ -686,7 +686,7 @@ class DifferentialCountSqlStatement {
                  monocytes = :monocytes, eosinophils = :eosinophils, basophils = :basophils, widals_test = :widals_test,
                  blood_group = :blood_group, rhesus_factor = :rhesus_factor, genotype = :genotype, modified_date = NOW()';
     const DELETE = 'DELETE FROM differential_count WHERE haematology_id = :haematology_id';
-    const GET    = 'SELECT * FROM differential_count d WHERE d.haematology_id IN (SELECT haematology_id FROM haematology WHERE treatment_id = :treatment_id) ORDER BY d.create_date DESC LIMIT 1';
+    const GET    = 'SELECT * FROM differential_count d WHERE d.haematology_id IN (SELECT haematology_id FROM haematology WHERE treatment_id = :treatment_id) ORDER BY d.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT dc.polymorphs_neutrophils,dc.lymphocytes,dc.monocytes,dc.eosinophils,dc.basophils,dc.widals_test,dc.blood_group,dc.rhesus_factor,dc.genotype, dc.modified_date, h.haematology_id FROM haematology h, differential_count dc WHERE dc.haematology_id=:haematology_id AND h.haematology_id=dc.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE differential_count SET polymorphs_neutrophils = :polymorphs_neutrophils, lymphocytes = :lymphocytes, monocytes = :monocytes, eosinophils = :eosinophils, basophils = :basophils, widals_test = :widals_test, blood_group = :blood_group, rhesus_factor = :rhesus_factor, genotype = :genotype, modified_date = NOW() WHERE haematology_id = :haematology_id';
 
