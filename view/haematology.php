@@ -16,7 +16,7 @@ $view_bag = array();
 
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-//var_dump($view_bag);
+var_dump($view_bag);
 
 ?>
 <body>

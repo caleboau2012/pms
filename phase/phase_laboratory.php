@@ -14,7 +14,7 @@ if (isset($_REQUEST['intent'])) {
     exit();
 }
 
-if(isset($_REQUEST['save'])){
+if(isset($_REQUEST['save_continue'])){
     $status_id = 6;
 }
 if(isset($_REQUEST['submit'])){
@@ -23,7 +23,11 @@ if(isset($_REQUEST['submit'])){
 
 $lab_attendant_id = CxSessionHandler::getItem('userid');
 $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : array();
-$data['details']['lab_attendant_id'] = $lab_attendant_id;
+if($data){
+    $data['details']['lab_attendant_id'] = $lab_attendant_id;
+    $data['details']['status_id'] = $status_id;
+}
+
 
 if ($intent == 'getPatientQueue') {
     if (isset($_REQUEST['labType'])) {
