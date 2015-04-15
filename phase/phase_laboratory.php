@@ -23,9 +23,14 @@ if(isset($_REQUEST['submit'])){
 
 $lab_attendant_id = CxSessionHandler::getItem('userid');
 $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : array();
-if($data){
+$labType = $_REQUEST['labType'];
+
+if($data && $labType != 'radiology'){
     $data['details']['lab_attendant_id'] = $lab_attendant_id;
     $data['details']['status_id'] = $status_id;
+} elseif ($labType == 'radiology'){
+    $data['radiology']['lab_attendant_id'] = $lab_attendant_id;
+    $data['radiology']['status_id'] = $status_id;
 }
 
 

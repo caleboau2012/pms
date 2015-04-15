@@ -40,8 +40,11 @@ class RadiologyModel extends BaseModel{
     }
 
     public function getTestDetails($treatmentId){
+        $result = array();
         $data = array(RadiologyTable::treatment_id => $treatmentId);
-        return $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
+        $result['details'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
+        $result['radiology'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_RADIOLOGY_VALS, $data);
+        return $result;
     }
 
     public function setTestDetails($data){
@@ -51,16 +54,17 @@ class RadiologyModel extends BaseModel{
     public function updateTestDetails($data){
         try{
             $this->conn->beginTransaction();
-            $this->conn->execute(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']);
-            $this->conn->execute(RadiologySqlStatement::UPDATE, $data['radiology']);
+            if(!$this->conn->execute(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']))
+                throw new Exception("Could not update radiology details");
+            if(!$this->conn->execute(RadiologySqlStatement::UPDATE, $data['radiology']))
+                throw new Exception("Could not update radiology values");
             $this->conn->commit();
         } catch(Exception $e){
             $this->conn->rollBack();
-            echo $e->getMessage();
-            return false;
+            return array('status'=>false, 'message'=>$e->getMessage());
         }
 
-        return true;
+        return array('status'=>true);
     }
 
 }
