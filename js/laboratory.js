@@ -176,6 +176,7 @@ var Laboratory = {
             url : url,
             success: function(returnedData){
                 console.log(returnedData);
+                console.log(data);
             },
             error: function(){
                 console.log($data);
