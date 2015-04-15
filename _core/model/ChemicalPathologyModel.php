@@ -40,11 +40,10 @@ class ChemicalPathologyModel extends BaseModel{
             $this->conn->commit();
         } catch (Exception $e){
             $this->conn->rollBack();
-            echo $e->getMessage();
-            return false;
+            return array('status'=>false, 'message'=>$e->getMessage());
         }
 
-        return true;
+        return array('status'=>true);
     }
 
 
@@ -84,6 +83,8 @@ class ChemicalPathologyModel extends BaseModel{
     }
 
     private function updateDetails($data){
+        if(!$this->conn->checkParams(ChemicalPathologyRequestSqlStatement::UPDATE_DETAILS, $data))
+            throw new Exception("Non-matching number of params in chemical pathology details");
         if(!$this->conn->execute(ChemicalPathologyRequestSqlStatement::UPDATE_DETAILS, $data))
             throw new Exception("Error updating chemical pathology details");
         return true;

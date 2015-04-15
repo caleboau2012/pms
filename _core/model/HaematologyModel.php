@@ -54,7 +54,6 @@ class HaematologyModel extends BaseModel{
             $this->conn->commit();
         } catch(Exception $e){
             $this->conn->rollBack();
-            //echo $e->getMessage();
             return array('status'=>false, 'message'=>$e->getMessage());
         }
 
