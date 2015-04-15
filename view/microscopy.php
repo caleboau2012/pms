@@ -13,7 +13,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 $lab = new LaboratoryController();
 $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-//var_dump($_REQUEST);
+var_dump($view_bag);
 
 ?>
 <body>
@@ -37,7 +37,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                         <input type="hidden" name="<?php echo 'data[details]'.'['.UrineTable::urine_d.']'; ?>" value="<?php echo $view_bag['details']['urine_id'] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.UrineTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
                         <input type="hidden" name="intent" value="updateLabDetails">
-                        <input type="hidden" name="labType" value="haematology">
+                        <input type="hidden" name="labType" value="microscopy">
 
                         <div class="row">
                             <div class="page-header">

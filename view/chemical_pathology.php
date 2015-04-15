@@ -34,8 +34,8 @@ var_dump($view_bag);
             <div class="haematology">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form">
-                        <input type="hidden" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::cpreq_id.']'; ?>">
-                        <input type="hidden" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::lab_attendant_id.']'; ?>">
+                        <input type="hidden" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::cpreq_id.']'; ?>" value="<?php if (isset($view_bag['details'][ChemicalPathologyRequestTable::cpreq_id])) echo $view_bag['details'][ChemicalPathologyRequestTable::cpreq_id] ?>">
+                        <input type="hidden" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::lab_attendant_id.']'; ?>" value="<?php if (isset($view_bag['details'][ChemicalPathologyRequestTable::lab_attendant_id])) echo $view_bag['details'][ChemicalPathologyRequestTable::lab_attendant_id] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="chemical_pathology">
 
@@ -62,10 +62,12 @@ var_dump($view_bag);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
-                                        <textarea type="text" class="col-sm-12 form-control">
-
-                                        </textarea>
-                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="[laboratory_ref]"></span></div>
+                                        <textarea type="text" class="col-sm-12 form-control" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::laboratory_comment.']'; ?>"><?php
+                                            if(isset($view_bag['details'][ChemicalPathologyRequestTable::laboratory_comment])){
+                                                echo $view_bag['details'][ChemicalPathologyRequestTable::laboratory_comment];
+                                            }
+                                            ?></textarea>
+                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details'][ChemicalPathologyRequestTable::laboratory_ref])) echo $view_bag['details'][ChemicalPathologyRequestTable::laboratory_ref]; ?>"></span></div>
                                     </fieldset>
                                 </div>
                             </div>

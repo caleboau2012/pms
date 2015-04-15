@@ -47,7 +47,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.ParasitologyRequestTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
                         <input type="hidden" name="<?php echo 'data[details'.']['.ParasitologyRequestTable::treatment_id.']'; ?>"  value="<?php echo $view_bag['details']['treatment_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
-                        <input type="hidden" name="labType" value="haematology">
+                        <input type="hidden" name="labType" value="parasitology">
                         <div class="row">
                             <div class="page-header">
                                 <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>

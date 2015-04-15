@@ -16,7 +16,7 @@ $view_bag = array();
 
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-var_dump($view_bag);
+//var_dump($view_bag);
 
 ?>
 <body>
@@ -44,7 +44,7 @@ var_dump($view_bag);
 
                         <div class="row">
                             <div class="page-header">
-
+                                <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
                                 <h2 class="page-header__title">Haematology</h2>
                             </div>
 

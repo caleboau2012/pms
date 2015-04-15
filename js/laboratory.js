@@ -15,7 +15,8 @@ var Laboratory = {
 
     },
     URL: {
-        lab_uri: "phase/phase_laboratory.php"
+        lab_uri: "phase/phase_laboratory.php",
+        lab: "view/laboratory.php"
     },
     init:function(){
         $('#addTestForm').on('submit', function(e){
@@ -25,6 +26,12 @@ var Laboratory = {
         });
 
         Laboratory.onDocReady();
+
+        $('#back').on('click', function(e){
+            e.preventDefault();
+            history.go(0);
+
+        });
     },
 
     ajaxRequest:function(url, data, request_type){

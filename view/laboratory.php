@@ -163,7 +163,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <select id="type" class="form-control" name="test_id" onchange="Laboratory.onTestChange()">
                 <option value="haematology">HAEMATOLOGY</option>
                 <option value="microscopy">MICROSCOPY</option>
-                <option value="xray">XRAY</option>
+                <option value="radiology">XRAY</option>
                 <option value="visual">VISUAL SKILL PROFILE</option>
                 <option value="chemical_pathology">CHEMICAL PATHOLOGY</option>
                 <option value="parasitology">PARASITOLOGY</option>
