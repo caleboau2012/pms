@@ -19,6 +19,12 @@ var Laboratory = {
         lab: "view/laboratory.php"
     },
     init:function(){
+        $('#submit').on('click', function(){
+            $('#status').attr('value', 7);
+        });
+        $('#save').on('click', function(){
+            $('#status').attr('value', 6);
+        });
         $('#addTestForm').on('submit', function(e){
             e.preventDefault();
             var data = $(this).serialize();

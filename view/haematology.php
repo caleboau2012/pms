@@ -46,10 +46,11 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.HaematologyTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="haematology">
+                        <input type="hidden" id="status" name="status" value="">
 
                         <div class="row">
                             <div class="page-header">
-                                <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
+                                <a id="bck" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
                                 <h2 class="page-header__title">Haematology</h2>
                             </div>
 

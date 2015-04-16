@@ -14,12 +14,7 @@ if (isset($_REQUEST['intent'])) {
     exit();
 }
 
-if(isset($_REQUEST['save_continue'])){
-    $status_id = 6;
-}
-if(isset($_REQUEST['submit'])){
-    $status_id = 7;
-}
+$status_id = $_REQUEST['status'];
 
 $lab_attendant_id = CxSessionHandler::getItem('userid');
 $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : array();
@@ -104,14 +99,14 @@ if ($intent == 'getPatientQueue') {
         exit();
     }
 } elseif ($intent == 'updateLabDetails') {
-    if (isset($_REQUEST['labType']) && isset($_REQUEST['data'])) {
+    if (isset($_REQUEST['labType']) && $data) {
         $labType = $_REQUEST['labType'];
 //        $data = $_REQUEST['data'];
 
         $lab = new LaboratoryController();
         $response = $lab->updateLabDetails($labType, $data);
-        //echo JsonResponse::success($response);
-        //exit();
+        /*echo JsonResponse::success($data);
+        exit();*/
         if ($response['status']) {
             echo JsonResponse::success("Successfully updated");
             exit();

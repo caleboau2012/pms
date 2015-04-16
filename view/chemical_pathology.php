@@ -42,6 +42,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                         <input type="hidden" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::lab_attendant_id.']'; ?>" value="<?php if (isset($view_bag['details'][ChemicalPathologyRequestTable::lab_attendant_id])) echo $view_bag['details'][ChemicalPathologyRequestTable::lab_attendant_id] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="chemical_pathology">
+                        <input type="hidden" id="status" name="status" value="">
 
                         <div class="row">
                             <div class="page-header">
@@ -190,7 +191,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         if ($view_bag['details'][HaematologyTable::status_id] == 5 || $view_bag['details'][HaematologyTable::status_id] == 6){?>
                                             <div class="col-sm-6 submit-test">
                                                 <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
-                                                <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
+                                                <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save'>
                                             </div>
                                         <?php } ?>
                         </div>

@@ -54,8 +54,12 @@ class RadiologyModel extends BaseModel{
     public function updateTestDetails($data){
         try{
             $this->conn->beginTransaction();
+            if(!$this->conn->checkParams(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']))
+                throw new Exception("Incomplete radiology details params");
             if(!$this->conn->execute(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']))
                 throw new Exception("Could not update radiology details");
+            if(!$this->conn->checkParams(RadiologySqlStatement::UPDATE, $data['details']))
+                throw new Exception("Incomplete radiology params");
             if(!$this->conn->execute(RadiologySqlStatement::UPDATE, $data['radiology']))
                 throw new Exception("Could not update radiology values");
             $this->conn->commit();

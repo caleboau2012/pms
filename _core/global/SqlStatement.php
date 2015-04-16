@@ -611,15 +611,15 @@ class RadiologyRequestSqlStatement{
     const GET_DETAILS = "SELECT * FROM radiology_request WHERE radiology_id IN (SELECT radiology_id FROM radiology WHERE
                          treatment_id = :treatment_id)";
     const GET_RADIOLOGY_VALS = "SELECT * FROM radiology WHERE treatment_id = :treatment_id";
-    const UPDATE_DETAILS = "UPDATE radiology_request SET clinical_diagnosis_details = :clinical_diagnosis_details,
-                            previous_operation = :previous_operation, any_known_allergies = :any_known_allergies,
-                            previous_xray = :previous_xray, xray_number = :xray_number, modified_date = NOW()
-                            WHERE radiology_id = :radiology_id";
+    const UPDATE_DETAILS = "UPDATE radiology_request SET previous_operation = :previous_operation,
+                            any_known_allergies = :any_known_allergies, previous_xray = :previous_xray,
+                            xray_number = :xray_number, modified_date = NOW() WHERE radiology_id = :radiology_id";
 }
 
 class RadiologySqlStatement{
     const UPDATE = "UPDATE radiology SET lab_attendant_id = :lab_attendant_id, xray_case_id = :xray_case_id,
-                    xray_size_id = :xray_size_id, consultant_in_charge = :consultant_in_charge, checked_by = :checked_by,
+                    ward_clinic_id = :ward_clinic_id, xray_size_id = :xray_size_id,
+                    consultant_in_charge = :consultant_in_charge, checked_by = :checked_by,
                     radiographers_note = :radiographers_note, radiologists_report = :radiologists_report, lmp = :lmp
                     modified_date = NOW() WHERE radiology_id = :radiology_id";
 }
@@ -638,7 +638,7 @@ class HaematologyRequestSqlStatement{
     const GET_DETAILS = "SELECT * FROM haematology AS h INNER JOIN treatment AS t on h.treatment_id = t.treatment_id
                          WHERE  h.treatment_id = :treatment_id";
     const UPDATE_DETAILS = "UPDATE haematology SET lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report,
-                            laboratory_ref = :laboratory_ref, modified_date = NOW() WHERE haematology_id = :haematology_id";
+                            laboratory_ref = :laboratory_ref, status_id = :status_id, modified_date = NOW() WHERE haematology_id = :haematology_id";
 }
 
 class BloodTestSqlStatement {
