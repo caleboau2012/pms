@@ -619,15 +619,16 @@ class RadiologyRequestSqlStatement{
 class RadiologySqlStatement{
     const UPDATE = "UPDATE radiology SET lab_attendant_id = :lab_attendant_id, xray_case_id = :xray_case_id,
                     ward_clinic_id = :ward_clinic_id, xray_size_id = :xray_size_id,
-                    consultant_in_charge = :consultant_in_charge, checked_by = :checked_by,
-                    radiographers_note = :radiographers_note, radiologists_report = :radiologists_report, lmp = :lmp
+                    consultant_in_charge = :consultant_in_charge, checked_by = :checked_by, status_id = :status_id,
+                    radiographers_note = :radiographers_note, radiologists_report = :radiologists_report, lmp = :lmp,
                     modified_date = NOW() WHERE radiology_id = :radiology_id";
 }
 
 class XRaySqlStatement{
     const UPDATE = "INSERT INTO xray_no (radiology_id, xray_number, casual_no, gp_no, ante_natal_no, created_date, modified_date)
                     VALUES(:radiology_id, :xray_number, :casual_no, :gp_no, :ante_natal_no, NOW(), NOW()) ON DUPLICATE
-                    KEY UPDATE xray_no = :xray_number, casual_no = :casual_no, gp_no = :gp_no, ante_natal_no = :ante_natal_no";
+                    KEY UPDATE xray_number = :xray_number, casual_no = :casual_no, gp_no = :gp_no, ante_natal_no = :ante_natal_no,
+                    modified_date = NOW()";
 }
 
 class HaematologyRequestSqlStatement{
