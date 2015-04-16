@@ -163,8 +163,8 @@ var_dump($view_bag);
                                                 <tr>
                                                     <td class="test-label"><?php echo $label->getLabel(); ?></td>
 
-                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($urine_sensitivity_view_bag[$label->getLabel()])) {	if ($urine_sensitivity_view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
-                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($urine_sensitivity_view_bag[$label->getLabel()])) {	if ($urine_sensitivity_view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
+                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::isolates.']['.$label->getId().']' ?>" <?php if (isset($view_bag[$label->getLabel()])) {	if ($view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
+                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::isolates.']['.$label->getId().']' ?>" <?php if (isset($view_bag[$label->getLabel()])) {	if ($view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
                                                 </tr>
                                             <?php } ?>
                                         </table>
