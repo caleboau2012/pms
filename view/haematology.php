@@ -17,6 +17,7 @@ $view_bag = array();
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
 var_dump($view_bag);
+var_dump($_REQUEST);
 
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';

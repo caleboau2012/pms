@@ -112,7 +112,7 @@ var Laboratory = {
     onTestChange: function(){
         var test = Laboratory.selectedOption();
         var data = Laboratory.payload('getAllTest', test);
-        Laboratory.changeAction();
+//        Laboratory.changeAction();
         Laboratory.ajaxRequest(host + Laboratory.URL.lab_uri,data,'GET');
 
     },
@@ -143,9 +143,9 @@ var Laboratory = {
         $(document).ready(function(){
             var test = Laboratory.selectedOption();
             var data = Laboratory.payload('getAllTest', test);
-            Laboratory.changeAction();
+//            Laboratory.changeAction();
             Laboratory.ajaxRequest(host + Laboratory.URL.lab_uri,data,'GET');
-//            Laboratory.getLabDetails(test);
+            Laboratory.getLabDetails(test);
         });
     },
     getLabDetails: function(test){
