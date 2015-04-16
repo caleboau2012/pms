@@ -1,5 +1,8 @@
 <?php
 class RadiologyModel extends BaseModel{
+    /*The arrays below contains columns whose values should be numbers*/
+    private $rad = array('xray_case_id', 'xray_size_id');
+    private $rad_req = array('previous_xray', 'xray_number');
 
     public function radiologyRequest($doctorId, $treatmentId, $description){
         try{
@@ -51,17 +54,37 @@ class RadiologyModel extends BaseModel{
         return $this->updateTestDetails($data);
     }
 
-    public function updateTestDetails($data){
+    private function updateDetails($data){
+        $this->checkDecimalColumns($this->rad_req, $data);
+        if(!$this->conn->checkParams(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data))
+            throw new Exception("Incomplete radiology details params");
+        if(!$this->conn->execute(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data))
+            throw new Exception("Could not update radiology details");
+    }
+
+    private function updateRadiology($data){
+        $this->checkDecimalColumns($this->rad, $data);
+        if(!$this->conn->checkParams(RadiologySqlStatement::UPDATE, $data))
+            throw new Exception("Incomplete radiology params");
+        if(!$this->conn->execute(RadiologySqlStatement::UPDATE, $data))
+            throw new Exception("Could not update radiology values");
+    }
+
+    private function updateXRayNo($data){
+        if(!$this->conn->checkParams(XRaySqlStatement::UPDATE, $data))
+            throw new Exception("Check XRay No Parameters");
+        if(!$this->conn->execute(XRaySqlStatement::UPDATE, $data))
+            throw new Exception("Could not update xray");
+    }
+
+    public function updateTestDetails(&$data){
+        $data['radiology']['radiology_id'] = $data['details']['radiology_id'];
+        $data['xray']['radiology_id'] = $data['details']['radiology_id'];
         try{
             $this->conn->beginTransaction();
-            if(!$this->conn->checkParams(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']))
-                throw new Exception("Incomplete radiology details params");
-            if(!$this->conn->execute(RadiologyRequestSqlStatement::UPDATE_DETAILS, $data['details']))
-                throw new Exception("Could not update radiology details");
-            if(!$this->conn->checkParams(RadiologySqlStatement::UPDATE, $data['details']))
-                throw new Exception("Incomplete radiology params");
-            if(!$this->conn->execute(RadiologySqlStatement::UPDATE, $data['radiology']))
-                throw new Exception("Could not update radiology values");
+            $this->updateDetails($data['details']);
+            $this->updateRadiology($data['radiology']);
+            $this->updateXRayNo($data['xray']);
             $this->conn->commit();
         } catch(Exception $e){
             $this->conn->rollBack();
