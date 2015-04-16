@@ -26,7 +26,8 @@ class ParasitologyModel extends BaseModel{
         $result = array();
         $data = array(ParasitologyRequestTable::treatment_id => $treatmentId, ParasitologyRequestTable::active_fg => $activeFg);
         $result['details'] = $this->conn->fetch(ParasitologyRequestSqlStatement::GET_DETAILS, $data);
-        $result['parasites'] = $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PARASITES, $data);
+        $result['parasites'] = $this->formatValues($this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PARASITES, $data));
+//        $result['parasites'] = $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PARASITES, $data);
 
         return $result;
     }
@@ -39,15 +40,14 @@ class ParasitologyModel extends BaseModel{
         try{
             $this->conn->beginTransaction();
             $this->updateDetails($data['details']);
-            $this->updateParasiteDetails($data['details'][ParasitologyDetailsTable::preq_id], $data['parasites']);
+            $this->updateParasiteDetails($data['details'][ParasitologyDetailsTable::preq_id], array_keys($data['parasites']));
             $this->conn->commit();
         } catch(Exception $e){
             $this->conn->rollBack();
-            echo $e->getMessage();
-            return false;
+            return array('status'=>false, 'message'=>$e->getMessage());
         }
 
-        return true;
+        return array('status'=>true);
     }
 
 
@@ -62,8 +62,10 @@ class ParasitologyModel extends BaseModel{
     }
 
     private function updateDetails($data){
+        if(!$this->conn->checkParams(ParasitologyRequestSqlStatement::UPDATE_DETAILS, $data))
+            throw new Exception("Check parasitology params");
         if(!$this->conn->execute(ParasitologyRequestSqlStatement::UPDATE_DETAILS, $data))
-            throw new Exception('Could not update details');
+            throw new Exception('Could not update parasitology details');
 
         return true;
     }
@@ -135,5 +137,14 @@ class ParasitologyModel extends BaseModel{
         }
 
         return $arr;
+    }
+
+    private function formatValues($cprefidResultArray){
+        $result = array();
+        foreach ($cprefidResultArray as $obj){
+            array_push($result, $obj['pref_id']);
+        }
+
+        return $result;
     }
 }

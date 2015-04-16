@@ -47,11 +47,13 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
             <div class="parasitology">
                 <div class="add-parasitology">
                     <form id="addTestForm" class="form">
-                        <input type="hidden" name="<?php echo 'data[details]['.ParasitologyRequestTable::preq_id.']'; ?>" value="<?php echo $view_bag['details']['preq_id'] ?>" />
-                        <input type="hidden" name="<?php  echo 'data[details]['.ParasitologyRequestTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
-                        <input type="hidden" name="<?php echo 'data[details['.ParasitologyRequestTable::treatment_id.']'; ?>"  value="<?php echo $view_bag['details']['treatment_id'] ?>">
+                        <input type="hidden" name="<?php echo 'data[details]'.'['.ParasitologyRequestTable::preq_id.']'; ?>" value="<?php echo $view_bag['details']['preq_id'] ?>" />
+                        <input type="hidden" name="<?php  echo 'data[details]'.'['.ParasitologyRequestTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
+                        <input type="hidden" name="<?php echo 'data['.ParasitologyRequestTable::treatment_id.']'; ?>"  value="<?php echo $view_bag['details']['treatment_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="parasitology">
+                        <input type="hidden" id="status" name="status" value="">
+
                         <div class="row">
                             <div class="page-header">
                                 <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
@@ -152,7 +154,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         foreach ($cells_parasites->getList() as $label){ ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel(); ?></td>
-                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo 'data[parasites]parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked='checked'";} ?>></td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo 'data[parasites]['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked='checked'";} ?>></td>
                                         </tr>
                                         <?php
                                         }
@@ -174,7 +176,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'data[parasites]parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'data[parasites]['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -196,7 +198,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input <?php echo $disabled; ?> name="<?php echo  'data[parasites]parasites['.$label->getId().']'; ?>" type="checkbox" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input <?php echo $disabled; ?> name="<?php echo  'data[parasites]['.$label->getId().']'; ?>" type="checkbox" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -218,7 +220,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'data[parasites]parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'data[parasites]['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }

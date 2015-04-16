@@ -31,7 +31,11 @@ class VisualModel extends BaseModel{
     }
 
     public function updateTestDetails($data){
-        return $this->conn->execute(VisualRequestSqlStatement::UPDATE_DETAILS, $data);
+        if(!$this->conn->checkParams(VisualRequestSqlStatement::UPDATE_DETAILS, $data['details']))
+            return array('status'=>false, 'message'=>'check visual params');
+        if(!$this->conn->execute(VisualRequestSqlStatement::UPDATE_DETAILS, $data['details']))
+            return array('status'=>false, 'message'=>'Could not update visual details');
+        return array('status'=>true);
     }
 
 }

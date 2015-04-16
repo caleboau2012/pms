@@ -754,7 +754,7 @@ class VisualRequestSqlStatement{
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
                             pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
                             amplitude_of_accomodation = :amplitude_of_accomodation, modified_date = NOW(),
-                            status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE treatment_id = :treatment_id";
+                            status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE visual_profile_id = :visual_profile_id";
 }
 
 class AdmissionReqSqlStatement {
