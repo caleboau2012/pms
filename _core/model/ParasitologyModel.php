@@ -145,6 +145,6 @@ class ParasitologyModel extends BaseModel{
             array_push($result, $obj['pref_id']);
         }
 
-        return $result;
+        return array_flip($result);
     }
 }

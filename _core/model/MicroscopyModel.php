@@ -28,6 +28,8 @@ class MicroscopyModel extends BaseModel{
         $result['urinalysis'] = $this->getUrinalysisDetails($treatmentId);
         $result['microscopy'] = $this->getMicroscopyDetails($treatmentId);
         $result['urine_sensitivity'] = $this->getUrineSensitivityDetails($treatmentId);
+
+        return $result;
     }
 
     public function setTestDetails($data){
