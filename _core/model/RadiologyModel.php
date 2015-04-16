@@ -83,7 +83,7 @@ class RadiologyModel extends BaseModel{
         try{
             $this->conn->beginTransaction();
             $this->updateDetails($data['details']);
-            $this->updateRadiology($data['radiology']);
+            //$this->updateRadiology($data['radiology']);
             $this->updateXRayNo($data['xray']);
             $this->conn->commit();
         } catch(Exception $e){
