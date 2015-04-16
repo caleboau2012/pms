@@ -624,6 +624,12 @@ class RadiologySqlStatement{
                     modified_date = NOW() WHERE radiology_id = :radiology_id";
 }
 
+class XRaySqlStatement{
+    const UPDATE = "INSERT INTO xray_no (radiology_id, xray_number, casual_no, gp_no, ante_natal_no, created_date, modified_date)
+                    VALUES(:radiology_id, :xray_number, :casual_no, :gp_no, :ante_natal_no, NOW(), NOW()) ON DUPLICATE
+                    KEY UPDATE xray_no = :xray_number, casual_no = :casual_no, gp_no = :gp_no, ante_natal_no = :ante_natal_no";
+}
+
 class HaematologyRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO haematology (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
