@@ -18,7 +18,7 @@ $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
 var_dump($view_bag);
 
-if ($view_bag[HaematologyTable::status_id] == 7){
+if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
 ?>
@@ -42,8 +42,8 @@ if ($view_bag[HaematologyTable::status_id] == 7){
             <div class="haematology">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="post">
-                        <input type="hidden" name="<?php echo 'data[details]['.RadiologyTable::radiology_id.']'; ?>"value="<?php echo $view_bag['radiology_id'] ?>">
-                        <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::lab_attendant_id.']'; ?>" value="<?php echo $view_bag['lab_attendant_id'] ?>">
+                        <input type="hidden" name="<?php echo 'data[details]['.RadiologyTable::radiology_id.']'; ?>"value="<?php echo $view_bag['details']['radiology_id'] ?>">
+                        <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::lab_attendant_id.']'; ?>" value="<?php echo $view_bag['radiology']['lab_attendant_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="radiology">
                         <input type="hidden" id="status" name="status" value="">
@@ -86,14 +86,19 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                         $movement_list->addNode(new LabelNode("Trolley", 3));
                                         $movement_list->addNode(new LabelNode("Theatre", 4));
                                         $movement_list->addNode(new LabelNode("Portable", 5));
+                                        $movement_list->addNode(new LabelNode("L.M.P.", 6));
                                         ?>
 
                                         <?php foreach ($movement_list->getList() as $label){?>
-                                            <label class="test-label col-sm-1"><input type="radio" class="form" name="<?php RadiologyTable::table_name.'['.RadiologyTable::xray_case_id.']'; ?>">
+                                            <label class="test-label col-sm-1">
+                                                <!--<input type="radio" class="form" name="<?php /*RadiologyTable::table_name.'['.RadiologyTable::xray_case_id.']'; */?>">-->
+                                                <input type="radio" <?php echo $disabled; ?> <?php
+                                                if(isset($view_bag['radiology']['xray_case_id'])){
+                                                    echo ($view_bag['radiology']['xray_case_id'] == $label->getId()) ?  "checked='checked'" : '';
+                                                } ?> name="<?php echo 'data['.RadiologyTable::table_name.'][xray_case_id]'; ?>" value="<?php if(isset($view_bag['radiology']['xray_case_id'])) echo $view_bag['radiology']['xray_case_id']; ?>"/>
                                                 <?php echo $label->getLabel(); ?>
                                             </label>
                                         <?php } ?>
-                                        <label class="test-label col-sm-1 text-right">L.M.P:</label>
                                         <div class="col-sm-3">
                                             <input type="text" <?php echo $disabled; ?> placeholder="L.M.P." class="form-control" name="<?php echo 'data[radiology][' . RadiologyTable::lmp . ']'; ?>"/>
                                         </div>
@@ -143,7 +148,10 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                             <?php foreach ($dimension_list->getList() as $label) { ?>
                                                 <tr>
                                                     <td class="test-label">&nbsp;<?php echo $label->getLabel(); ?> </td>
-                                                    <td><input type="radio" <?php echo $disabled; ?> name="<?php echo 'data['.RadiologyTable::table_name.'][xray_size_id]'; ?>" value="5"/></td>
+                                                    <td><input type="radio" <?php echo $disabled; ?> <?php
+                                                        if(isset($view_bag['radiology']['xray_size_id'])){
+                                                            echo ($view_bag['radiology']['xray_size_id'] == $label->getId()) ?  "checked='checked'" : '';
+                                                        } ?> name="<?php echo 'data['.RadiologyTable::table_name.'][xray_size_id]'; ?>" value="<?php if(isset($view_bag['radiology']['xray_size_id'])) echo $view_bag['radiology']['xray_size_id']; ?>"/></td>
                                                 </tr>
                                             <?php } ?>
                                         </table>

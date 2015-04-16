@@ -54,7 +54,7 @@ var Laboratory = {
                 if(returnedData.status == 2){
                     test_data = "<tr>" +
                         "<td colspan='7' class='text-center'>"+ returnedData.message + "</td>"
-                        "</tr>"
+                    "</tr>"
 
                     pending += '<p class="text-warning">No pending test</p>';
 
@@ -105,7 +105,7 @@ var Laboratory = {
                 $('#pending .patient-queue__list').empty().append(pending);
 
                 $('body').delegate('.action', 'click', function(e){
-                   Laboratory.getLabDetails(this);
+                    Laboratory.getLabDetails(this);
                 });
 
             },

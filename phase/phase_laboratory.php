@@ -14,7 +14,7 @@ if (isset($_REQUEST['intent'])) {
     exit();
 }
 
-$status_id = $_REQUEST['status'];
+$status_id = (isset($_REQUEST['status'])) ? $_REQUEST['status'] : null;
 
 $lab_attendant_id = CxSessionHandler::getItem('userid');
 $data = isset($_REQUEST['data']) ? $_REQUEST['data'] : array();

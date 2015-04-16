@@ -35,7 +35,7 @@ class ChemicalPathologyModel extends BaseModel{
         $result = array();
         $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId);
         $result['details'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
-        $values = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
+        $values = $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
         $result['values'] = $this->formatValues($values);
         return $result;
     }
