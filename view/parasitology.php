@@ -21,7 +21,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 $lab = new LaboratoryController();
 $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-//var_dump($view_bag);
+var_dump($view_bag);
+
+if ($view_bag['details'][HaematologyTable::status_id] == 7){
+    $disabled = 'disabled="disabled"';
+}else { $disabled = '';}
 ?>
 
 <body>
@@ -58,7 +62,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Clinical Diagnosis</h4>
-                                        <textarea readonly class="col-sm-12 form-control"><?php
+                                        <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['diagnosis'])){
                                                 echo $view_bag['details']['diagnosis'];
                                             }
@@ -73,7 +77,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                     <div class="col-sm-6">
                                         <fieldset>
                                             <label class="test-label">Nature of Specimen</label>
-                                            <textarea class="col-sm-12 form-control" placeholder="Nature of Specimen" name="<?php echo 'data[details]['.ParasitologyRequestTable::nature_of_specimen.']'; ?>"><?php
+                                            <textarea class="col-sm-12 form-control" <?php echo $disabled; ?> placeholder="Nature of Specimen" name="<?php echo 'data[details]['.ParasitologyRequestTable::nature_of_specimen.']'; ?>"><?php
                                                 if (isset($view_bag['details'][ParasitologyRequestTable::nature_of_specimen])){
                                                     echo $view_bag['details'][ParasitologyRequestTable::nature_of_specimen];
                                                 }
@@ -82,7 +86,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                     </div>
                                     <div class="col-sm-6">
                                         <label class="test-label">Investigation Required</label>
-                                        <textarea class="col-sm-12 form-control" placeholder="Investigation Required" name="<?php echo 'data[details]['.ParasitologyRequestTable::investigation_required.']'; ?>"><?php
+                                        <textarea class="col-sm-12 form-control" <?php echo $disabled; ?> placeholder="Investigation Required" name="<?php echo 'data[details]['.ParasitologyRequestTable::investigation_required.']'; ?>"><?php
                                             if (isset($view_bag['details']['investigation_req'])) {
                                                 echo $view_bag['details']['investigation_req'];
                                             }
@@ -95,12 +99,12 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
-                                        <textarea class="col-sm-12 form-control" placeholder="Laboratory Report" name="<?php echo 'data[details]['.ParasitologyRequestTable::lab_comment.']'; ?>"><?php
+                                        <textarea class="col-sm-12 form-control" <?php echo $disabled; ?> placeholder="Laboratory Report" name="<?php echo 'data[details]['.ParasitologyRequestTable::lab_comment.']'; ?>"><?php
                                             if (isset($view_bag['details'][ParasitologyRequestTable::lab_comment])){
                                                 echo $view_bag['details'][ParasitologyRequestTable::lab_comment];
                                             }
                                             ?></textarea>
-                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="<?php echo 'data[details]['.ParasitologyRequestTable::lab_number.']'; ?>" value="<?php if (isset($view_bag['details'][ParasitologyRequestTable::lab_number])) echo $view_bag['details'][ParasitologyRequestTable::lab_number]; ?>"></span> </div>
+                                        <div class="test-label">Laboratory Ref: <span><input type="text" <?php echo $disabled; ?> class="form-inline form-margin" name="<?php echo 'data[details]['.ParasitologyRequestTable::lab_number.']'; ?>" value="<?php if (isset($view_bag['details'][ParasitologyRequestTable::lab_number])) echo $view_bag['details'][ParasitologyRequestTable::lab_number]; ?>"></span> </div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -148,7 +152,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                         foreach ($cells_parasites->getList() as $label){ ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel(); ?></td>
-                                            <td class="text-center"><input type="checkbox" name="<?php echo 'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>></td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo 'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>></td>
                                         </tr>
                                         <?php
                                         }
@@ -170,7 +174,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input type="checkbox" name="<?php echo  'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -192,7 +196,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input name="<?php echo  'parasites['.$label->getId().']'; ?>" type="checkbox" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input <?php echo $disabled; ?> name="<?php echo  'parasites['.$label->getId().']'; ?>" type="checkbox" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -214,7 +218,7 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input type="checkbox" name="<?php echo  'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -227,16 +231,19 @@ $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
                                     ?>
                                     <tr>
                                         <td class="test-label"><?php echo $label->getLabel();?></td>
-                                        <td class="text-center"><input type="checkbox"  name="<?php echo 'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                        <td class="text-center"><input type="checkbox"  <?php echo $disabled; ?> name="<?php echo 'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                     </tr>
                                     <?php } ?>
                                     </tbody>
                                 </table>
                             </div>
-                            <div class="col-sm-12 submit-test">
-                                <input type='submit' class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
-                                <input type='submit' class='btn btn-primary pull-right pad' value='Submit' name='submit'>
-                            </div>
+                            <?php
+                            if ($view_bag['details'][ParasitologyRequestTable::status_id] == 5 || $view_bag['details'][ParasitologyRequestTable::status_id] == 6){?>
+                                <div class="col-sm-12 submit-test">
+                                    <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
+                                    <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
+                                </div>
+                            <?php } ?>
                         </div>
                     </form>
                 </div>

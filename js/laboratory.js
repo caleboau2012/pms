@@ -173,6 +173,7 @@ var Laboratory = {
                 $('#mainContent').html(msg + xhr.status + " " + xhr.statusText);
             }
         }).fadeIn('slow');
+        return false;
     },
 
     updateLabDetails: function(url, data, request_type){
