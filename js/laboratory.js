@@ -29,8 +29,8 @@ var Laboratory = {
             e.preventDefault();
             var data = $(this).serialize();
             Laboratory.updateLabDetails(host + Laboratory.URL.lab_uri, data, 'POST');
-            var test = Laboratory.selectedOption();
-            //history.go(0);
+            //var test = Laboratory.selectedOption();
+//            $('mainContent').empty().append('cool');
             //$('#success').show();
         });
 
@@ -40,6 +40,10 @@ var Laboratory = {
             e.preventDefault();
             history.go(0);
 
+        });
+        $('body').delegate('.action', 'click', function(e){
+            e.preventDefault();
+            Laboratory.getLabDetails(this);
         });
     },
 
@@ -62,6 +66,7 @@ var Laboratory = {
                     pending += '<p class="text-warning">No pending test</p>';
 
                 }else {
+
                     $(returnedData.data).each(function(){
 //                        console.log(this);
                         var name = this.surname.toUpperCase() + ' ' + this.firstname + ' ' + this.middlename;
@@ -101,16 +106,9 @@ var Laboratory = {
 //                        pending += '</a>';
 
                     });
-
-
                 }
                 $('#test_table tbody').empty().append(test_data);
                 $('#pending .patient-queue__list').empty().append(pending);
-
-                $('body').delegate('.action', 'click', function(e){
-                    Laboratory.getLabDetails(this);
-                });
-
             },
             error: function(){
                 console.log('failed');
@@ -151,10 +149,9 @@ var Laboratory = {
     onDocReady: function(){
         $(document).ready(function(){
             $('#success').hide();
-            $('#fail').hide();
             var test = Laboratory.selectedOption();
             var data = Laboratory.payload('getAllTest', test);
-//            Laboratory.changeAction();
+            Laboratory.changeAction();
             Laboratory.ajaxRequest(host + Laboratory.URL.lab_uri,data,'GET');
             Laboratory.getLabDetails(test);
         });
@@ -178,7 +175,6 @@ var Laboratory = {
                 $('#mainContent').html(msg + xhr.status + " " + xhr.statusText);
             }
         }).fadeIn('slow');
-        return false;
     },
 
     updateLabDetails: function(url, data, request_type){

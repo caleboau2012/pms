@@ -129,7 +129,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <label class="panel-title">Patients' Test Records</label>
                 </div>
                 <div id="success" class="alert alert-success">Your Changes are Saved</div>
-                <div id="fail" class="alert alert-danger">Your Changes are not Saved</div>
                 <div class="panel-body">
                     <table id="test_table" class="table table-stripped table--bordered dataTable">
                         <thead>
