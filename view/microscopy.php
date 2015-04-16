@@ -80,21 +80,21 @@ var_dump($view_bag);
                             <?php
                             $urinalysis_label_list = new LabelList();
 
-                            $urinalysis_label_list->addNode(new LabelNode("Appearance", 1));
-                            $urinalysis_label_list->addNode(new LabelNode("pH", 2));
-                            $urinalysis_label_list->addNode(new LabelNode("glucose", 3));
-                            $urinalysis_label_list->addNode(new LabelNode("protein", 4));
-                            $urinalysis_label_list->addNode(new LabelNode("Bilirubin", 5));
-                            $urinalysis_label_list->addNode(new LabelNode("Urobilinogen", 6));
+                            $urinalysis_label_list->addNode(new LabelNode("Appearance", 1, array('column'=>UrinalysisTable::appearance)));
+                            $urinalysis_label_list->addNode(new LabelNode("pH", 2, array('column'=>UrinalysisTable::ph)));
+                            $urinalysis_label_list->addNode(new LabelNode("glucose", 3, array('column'=>UrinalysisTable::glucose)));
+                            $urinalysis_label_list->addNode(new LabelNode("protein", 4, array('column'=>UrinalysisTable::protein)));
+                            $urinalysis_label_list->addNode(new LabelNode("Bilirubin", 5, array('column'=>UrinalysisTable::bilirubin)));
+                            $urinalysis_label_list->addNode(new LabelNode("Urobilinogen", 6, array('column'=>UrinalysisTable::urobillinogen)));
 
                             $microscopy_label_list = new LabelList();
 
-                            $microscopy_label_list->addNode(new LabelNode("Pus Cells", 1));
-                            $microscopy_label_list->addNode(new LabelNode("Red Cells", 2));
-                            $microscopy_label_list->addNode(new LabelNode("Epithelial Cells", 3));
-                            $microscopy_label_list->addNode(new LabelNode("Casts", 4));
-                            $microscopy_label_list->addNode(new LabelNode("Crystals", 5));
-                            $microscopy_label_list->addNode(new LabelNode("Others", 6));
+                            $microscopy_label_list->addNode(new LabelNode("Pus Cells", 1, array('column'=>MicroscopyTable::pus_cells)));
+                            $microscopy_label_list->addNode(new LabelNode("Red Cells", 2, array('column'=>MicroscopyTable::red_cells)));
+                            $microscopy_label_list->addNode(new LabelNode("Epithelial Cells", 3, array('column'=>MicroscopyTable::epithelial_cells)));
+                            $microscopy_label_list->addNode(new LabelNode("Casts", 4, array('column'=>MicroscopyTable::casts)));
+                            $microscopy_label_list->addNode(new LabelNode("Crystals", 5, array('column'=>MicroscopyTable::crystals)));
+                            $microscopy_label_list->addNode(new LabelNode("Others", 6, array('column'=>MicroscopyTable::others)));
 
                             $anibiotics_label_list = new LabelList();
 
@@ -120,6 +120,7 @@ var_dump($view_bag);
                                     <?php } else { ?>
                                     <div class="center-block">
                                         <?php } ?>
+
                                         <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.UrinalysisTable::table_name. ']['.$attr['column'].']' ?>" value="<?php if (isset($view_bag[UrinalysisTable::table_name][$attr['column']])) echo $view_bag[UrinalysisTable::table_name][$attr['column']]; ?>">
                                         <?php if (isset($attr['unit'])){ ?>
                                             <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
@@ -162,8 +163,8 @@ var_dump($view_bag);
                                                 <tr>
                                                     <td class="test-label"><?php echo $label->getLabel(); ?></td>
 
-                                                    <td class="text-center"><input type="radio" name="<?php echo UrineSensitivityTable::table_name.'['.$label->getId().']' ?>" <?php if (isset($urine_sensitivity_view_bag[$label->getLabel()])) {	if ($urine_sensitivity_view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
-                                                    <td class="text-center"><input type="radio" name="<?php echo UrineSensitivityTable::table_name.'['.$label->getId().']' ?>" <?php if (isset($urine_sensitivity_view_bag[$label->getLabel()])) {	if ($urine_sensitivity_view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
+                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($urine_sensitivity_view_bag[$label->getLabel()])) {	if ($urine_sensitivity_view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
+                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($urine_sensitivity_view_bag[$label->getLabel()])) {	if ($urine_sensitivity_view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
                                                 </tr>
                                             <?php } ?>
                                         </table>

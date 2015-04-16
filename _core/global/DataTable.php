@@ -372,7 +372,7 @@ class ChemicalPathologyDetailsTable {
 
 class UrinalysisTable {
 
-    const table_name    = 'Urinalysis';
+    const table_name    = 'urinalysis';
     const id            = 'urinalysis_id';
     const urine_id      = 'urine_id';
     const appearance    = 'appearance';
