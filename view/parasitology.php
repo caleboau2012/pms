@@ -152,7 +152,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         foreach ($cells_parasites->getList() as $label){ ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel(); ?></td>
-                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo 'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked='checked'";} ?>></td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo 'data[parasites]parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked='checked'";} ?>></td>
                                         </tr>
                                         <?php
                                         }
@@ -174,7 +174,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'data[parasites]parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -196,7 +196,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input <?php echo $disabled; ?> name="<?php echo  'parasites['.$label->getId().']'; ?>" type="checkbox" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input <?php echo $disabled; ?> name="<?php echo  'data[parasites]parasites['.$label->getId().']'; ?>" type="checkbox" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -218,7 +218,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         ?>
                                         <tr>
                                             <td class="test-label"><?php echo $label->getLabel();?></td>
-                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                            <td class="text-center"><input type="checkbox" <?php echo $disabled; ?> name="<?php echo  'data[parasites]parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                         </tr>
                                     <?php
                                     }
@@ -231,7 +231,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                     ?>
                                     <tr>
                                         <td class="test-label"><?php echo $label->getLabel();?></td>
-                                        <td class="text-center"><input type="checkbox"  <?php echo $disabled; ?> name="<?php echo 'parasites['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
+                                        <td class="text-center"><input type="checkbox"  <?php echo $disabled; ?> name="<?php echo 'data[parasites]['.$label->getId().']'; ?>" <?php if (isset($view_bag['parasites'][$label->getId()])) {echo "checked";} ?>> </td>
                                     </tr>
                                     <?php } ?>
                                     </tbody>

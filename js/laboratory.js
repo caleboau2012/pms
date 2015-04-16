@@ -29,6 +29,9 @@ var Laboratory = {
             e.preventDefault();
             var data = $(this).serialize();
             Laboratory.updateLabDetails(host + Laboratory.URL.lab_uri, data, 'POST');
+            var test = Laboratory.selectedOption();
+            //history.go(0);
+            //$('#success').show();
         });
 
         Laboratory.onDocReady();
@@ -147,6 +150,8 @@ var Laboratory = {
 
     onDocReady: function(){
         $(document).ready(function(){
+            $('#success').hide();
+            $('#fail').hide();
             var test = Laboratory.selectedOption();
             var data = Laboratory.payload('getAllTest', test);
 //            Laboratory.changeAction();
@@ -166,7 +171,7 @@ var Laboratory = {
             $(test).attr('data-regno'),
             $(test).attr('data-sex')
         );
-        console.log(data);
+//        console.log(data);
         $('#mainContent').load($(test).attr('data-ref'), data, function(response, status, xhr){
             if (status == 'error'){
                 var msg = 'there is error on this page';
@@ -183,7 +188,7 @@ var Laboratory = {
             url : url,
             success: function(returnedData){
                 console.log(returnedData);
-                console.log(data);
+
             },
             error: function(){
                 console.log($data);
