@@ -16,7 +16,7 @@ $view_bag = array();
 
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-var_dump($view_bag);
+//var_dump($view_bag);
 
 if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
@@ -43,9 +43,9 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]['.VisualSkillsProfileTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::lab_attendant_id])) echo $view_bag[VisualSkillsProfileTable::lab_attendant_id] ?>" />
-                        <input type="hidden" name="<?php echo 'data[details'.']['.VisualSkillsProfileTable::treatment_id.']'; ?>"  value="<?php echo $view_bag['treatment_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="visual">
+                        <input type="hidden" id="status" name="status" value="">
 
                         <div class="row">
                             <div class="page-header">
