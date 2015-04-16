@@ -16,7 +16,7 @@ $view_bag = array();
 
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-//var_dump($view_bag);
+var_dump($view_bag);
 
 if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
@@ -41,8 +41,9 @@ if ($view_bag[HaematologyTable::status_id] == 7){
             <div class="haematology">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="POST">
-                        <input type="hidden" name="<?php echo 'data['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
-                        <input type="hidden" name="<?php  echo 'data['.VisualSkillsProfileTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::lab_attendant_id])) echo $view_bag[VisualSkillsProfileTable::lab_attendant_id] ?>" />
+                        <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
+                        <input type="hidden" name="<?php  echo 'data[details]['.VisualSkillsProfileTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::lab_attendant_id])) echo $view_bag[VisualSkillsProfileTable::lab_attendant_id] ?>" />
+                        <input type="hidden" name="<?php echo 'data[details'.']['.VisualSkillsProfileTable::treatment_id.']'; ?>"  value="<?php echo $view_bag['treatment_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="visual">
 
@@ -62,23 +63,23 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                     <tbody>
                                         <tr>
                                             <td class="test-label"><span>Distance &raquo;</td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data['.VisualSkillsProfileTable::distance_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::distance_be])) echo $view_bag[VisualSkillsProfileTable::distance_be]; ?>"></td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data['.VisualSkillsProfileTable::distance_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::distance_re])) echo $view_bag[VisualSkillsProfileTable::distance_re]; ?>"></td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data['.VisualSkillsProfileTable::distance_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::distance_le])) echo $view_bag[VisualSkillsProfileTable::distance_le]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::distance_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::distance_be])) echo $view_bag[VisualSkillsProfileTable::distance_be]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::distance_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::distance_re])) echo $view_bag[VisualSkillsProfileTable::distance_re]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::distance_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::distance_le])) echo $view_bag[VisualSkillsProfileTable::distance_le]; ?>"></td>
 
                                         </tr>
                                         <tr>
                                             <td class="test-label"><span>Near &raquo;</td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data['.VisualSkillsProfileTable::near_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::near_be])) echo $view_bag[VisualSkillsProfileTable::near_be]; ?>"></td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data['.VisualSkillsProfileTable::near_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::near_re])) echo $view_bag[VisualSkillsProfileTable::near_be]; ?>"></td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data['.VisualSkillsProfileTable::near_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::near_le])) echo $view_bag[VisualSkillsProfileTable::near_be]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::near_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::near_be])) echo $view_bag[VisualSkillsProfileTable::near_be]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::near_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::near_re])) echo $view_bag[VisualSkillsProfileTable::near_be]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::near_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::near_le])) echo $view_bag[VisualSkillsProfileTable::near_be]; ?>"></td>
 
                                         </tr>
                                         <tr>
                                             <td class="test-label"><span>Pinhole Acuity &raquo;</td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data['.VisualSkillsProfileTable::pinhole_acuity_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_be])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_be]; ?>"></td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data['.VisualSkillsProfileTable::pinhole_acuity_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_re])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_re]; ?>"></td>
-                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data['.VisualSkillsProfileTable::pinhole_acuity_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_le])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_le]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_be])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_be]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_re])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_re]; ?>"></td>
+                                            <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_le])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_le]; ?>"></td>
 
                                         </tr>
                                     </tbody>
@@ -92,15 +93,15 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                     <tbody>
                                     <tr>
                                         <td class="test-label"><span>Colour Vision</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data['.VisualSkillsProfileTable::colour_vision.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::colour_vision])) echo $view_bag[VisualSkillsProfileTable::colour_vision]; ?>"></td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::colour_vision.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::colour_vision])) echo $view_bag[VisualSkillsProfileTable::colour_vision]; ?>"></td>
                                     </tr>
                                     <tr>
                                         <td class="test-label"><span>Stereopsis</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data['.VisualSkillsProfileTable::stereopsis.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::stereopsis])) echo $view_bag[VisualSkillsProfileTable::stereopsis]; ?>"></td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::stereopsis.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::stereopsis])) echo $view_bag[VisualSkillsProfileTable::stereopsis]; ?>"></td>
                                     </tr>
                                     <tr>
                                         <td class="test-label"><span>Amplitude of Accommodation</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data['.VisualSkillsProfileTable::amplitude_of_accomodation.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::amplitude_of_accomodation])) echo $view_bag[VisualSkillsProfileTable::amplitude_of_accomodation]; ?>"></td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::amplitude_of_accomodation.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::amplitude_of_accomodation])) echo $view_bag[VisualSkillsProfileTable::amplitude_of_accomodation]; ?>"></td>
                                     </tr>
                                     </tbody>
                                 </table>

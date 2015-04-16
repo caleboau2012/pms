@@ -36,12 +36,13 @@ var_dump($view_bag);
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]'.'['.UrineTable::urine_d.']'; ?>" value="<?php echo $view_bag['details']['urine_id'] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.UrineTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
+                        <input type="hidden" name="<?php echo 'data[details]['.UrineTable::treatment_id.']' ?>" value="<?php if(isset($view_bag['details']['treatment_id'])) echo $view_bag['details']['treatment_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="microscopy">
 
                         <div class="row">
                             <div class="page-header">
-
+                                <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
                                 <h2 class="page-header__title">Microscopy</h2>
                             </div>
 
