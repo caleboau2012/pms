@@ -5,8 +5,8 @@ class CommunicationModel extends BaseModel {
 
         $stmt = CommunicationSqlStatement::GET_INBOX;
         $stmt = $this->prepareLimitStatement($stmt, $page);
-        
-        
+
+
         $data = array();
         $data[CommunicationTable::recipient_id] = $userid;
 
@@ -20,12 +20,12 @@ class CommunicationModel extends BaseModel {
 
         $stmt = CommunicationSqlStatement::GET_SENT_MESSAGES;
         $stmt = $this->prepareLimitStatement($stmt, $page);
-        
+
         $data = array();
         $data[CommunicationTable::sender_id] = $userid;
 
         $result = $this->conn->fetchAll($stmt, $data);
-        
+
         return $result;
     }
 
@@ -42,15 +42,15 @@ class CommunicationModel extends BaseModel {
 
             $result = $this->conn->execute($stmt, $msg_data);
 
-            
+
             if ($result) {
                 $last_id = $this->conn->getLastInsertedId();
                 $writer = $this->writeMessageToFile($msg_body, $last_id);
 
-                if ($writer) {    
+                if ($writer) {
                     $this->conn->commit();
                     return true;
-                } else {    
+                } else {
                     $this->conn->rollBack();
                     return false;
                 }
@@ -58,13 +58,13 @@ class CommunicationModel extends BaseModel {
                 $this->conn->rollBack();
             }
         }
-        
+
         return false;
     }
 
     public function getMessage($userid, $msg_id) {
         $msg_type = $this->getMessageType($msg_id, $userid);
-        
+
         if ($msg_type == INBOX_MESSAGE) {
             $stmt = CommunicationSqlStatement::GET_INBOX_MESSAGE;
 
@@ -105,9 +105,9 @@ class CommunicationModel extends BaseModel {
         if ($msg_status == READ) {
             return true;
         }
-        
+
         $stmt = CommunicationSqlStatement::MARK_AS_READ;
-        
+
 
         $result = $this->conn->execute($stmt, $data, true);
         return $result;
@@ -139,6 +139,16 @@ class CommunicationModel extends BaseModel {
         return isset($result[CommunicationTable::msg_status]) ? $result[CommunicationTable::msg_status] : false;
     }
 
+    public function countUnread($userid) {
+        $stmt = CommunicationSqlStatement::COUNT_UNREAD;
+        $data = array();
+        $data[CommunicationTable::recipient_id] = $userid;
+
+        $result = $this->conn->fetch($stmt, $data);
+
+        return $result[COUNT];
+    }
+
     public function checkNewMessage($poll_data) {
         $stmt = CommunicationSqlStatement::CHECK_NEW_MESSAGE;
 
@@ -150,7 +160,7 @@ class CommunicationModel extends BaseModel {
     private function getMessageType($msg_id, $userid) {
         // CHECK FOR INBOX MESSAGE
         $stmt = CommunicationSqlStatement::CHECK_INBOX_MESSAGE;
-        
+
         $data = array();
         $data[CommunicationTable::msg_id] = $msg_id;
         $data[CommunicationTable::recipient_id] = $userid;
@@ -217,7 +227,7 @@ class CommunicationModel extends BaseModel {
     public function numberOfMesssages($userid, $msg_type) {
         if ($msg_type == INBOX_MESSAGE) {
             $stmt = CommunicationSqlStatement::COUNT_INBOX;
-            
+
             $data = array();
             $data[CommunicationTable::recipient_id] = $userid;
         } elseif ($msg_type == SENT_MESSAGE) {

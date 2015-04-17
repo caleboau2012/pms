@@ -194,27 +194,29 @@ class DepartmentSqlStatment{
 }
 
 class CommunicationSqlStatement {
-    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date 
-        FROM communication 
-            INNER JOIN profile 
+    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date
+        FROM communication
+            INNER JOIN profile
                 ON communication.sender_id = profile.userid
-        WHERE recipient_id = :recipient_id 
+        WHERE recipient_id = :recipient_id
         ORDER BY communication.created_date DESC
         LIMIT @offset, @count";
 
     const GET_SENT_MESSAGES = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, recipient_id, msg_subject, msg_body, communication.created_date
-        FROM communication 
-            INNER JOIN profile 
+        FROM communication
+            INNER JOIN profile
                 ON communication.recipient_id = profile.userid
-        WHERE sender_id = :sender_id 
+        WHERE sender_id = :sender_id
         ORDER BY communication.created_date DESC
         LIMIT @offset, @count";
 
-    const COUNT_INBOX = "SELECT 
-        (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id) AS count, 
+    const COUNT_INBOX = "SELECT
+        (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id) AS count,
         (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id AND msg_status = 1) AS unread";
 
     const COUNT_SENT = "SELECT COUNT(*) AS count FROM communication WHERE sender_id = :sender_id";
+
+    const COUNT_UNREAD = "SELECT COUNT(*) AS count FROM communication WHERE recipient_id = :recipient_id AND msg_status = 1";
 
     const SEND_MESSAGE = "INSERT INTO communication (sender_id, recipient_id, msg_subject, msg_body, msg_status, active_fg, created_date, modified_date) VALUES (:sender_id, :recipient_id, :msg_subject, :msg_body, 1, 1, NOW(), NOW())";
 
@@ -222,7 +224,7 @@ class CommunicationSqlStatement {
 
     const CHECK_SENT_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE msg_id = :msg_id AND sender_id = :sender_id";
 
-    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date 
+    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date
         FROM communication
             INNER JOIN profile
                 ON communication.sender_id = profile.userid

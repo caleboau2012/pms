@@ -4,7 +4,7 @@ Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 
 if(!CxSessionHandler::getItem(UserAuthTable::userid)){
-    header("Location: index.php");
+    header("Location: ../index.php");
 } else {
     $name = CxSessionHandler::getItem(ProfileTable::surname) . " " . CxSessionHandler::getItem(ProfileTable::middlename) . " " . CxSessionHandler::getItem(ProfileTable::firstname);
 }

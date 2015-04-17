@@ -55,7 +55,7 @@ if ($intent == 'getInbox') {
         $recipient_id = intval($_REQUEST[CommunicationTable::recipient_id]);
         $msg_subject = $_REQUEST[CommunicationTable::msg_subject];
         $msg_body = $_REQUEST[CommunicationTable::msg_body];
-        
+
         $announcer = new CommunicationController();
         $response = $announcer->sendMessage($sender_id, $recipient_id, $msg_subject, $msg_body);
         if ($response) {
@@ -64,7 +64,7 @@ if ($intent == 'getInbox') {
         } else {
             echo JsonResponse::error("Unable to send message!");
             exit();
-        } 
+        }
     } else {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
@@ -86,15 +86,54 @@ if ($intent == 'getInbox') {
         echo JsonResponse::error("Incomplete request parameters");
         exit();
     }
+} elseif ($intent == 'countUnread') {
+    $announcer = new CommunicationController();
+    $unread_count = $announcer->countUnread();
+    $response = array(
+        COUNT   =>  $unread_count
+    );
+    echo JsonResponse::success($response);
+    exit();
+} elseif ($intent == 'pollUnread') {
+    if (isset($_REQUEST[COUNT])) {
+        $announcer = new CommunicationController();
+        $old_unread_count = $_REQUEST[COUNT];
+        for ($i=0; $i < MAX_NUM_POLL; $i++) {
+            $new_unread_count = $announcer->countUnread();
+            if ($new_unread_count != $old_unread_count) {
+                $response = array(
+                    COUNT   =>  $new_unread_count
+                );
+                echo JsonResponse::success($response);
+                exit();
+            }
+            sleep(POLLING_SLEEP_TIME);
+            $i += 1;
+        }
+        $new_unread_count = $announcer->countUnread();
+        if ($new_unread_count != $old_unread_count) {
+            $response = array(
+                COUNT   =>  $new_unread_count
+            );
+            echo JsonResponse::success($response);
+            exit();
+        } else {
+            echo JsonResponse::error("No change in unread count!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
 } elseif ($intent == 'pollInbox') {
     if (isset($_REQUEST[LMT])) {
         $lmt = $_REQUEST[LMT];
         $userid = CxSessionHandler::getItem(UserAuthTable::userid);
-        
+
         $announcer = new CommunicationController();
-        
+
         $change = false;
-        for ($i=0; $i < MAX_NUM_POLL; $i++) { 
+        for ($i=0; $i < MAX_NUM_POLL; $i++) {
             $change = $announcer->checkNewMessage($userid, $lmt);
             if ($change) {
                 echo JsonResponse::message(STATUS_OK, "New inbox message!");
