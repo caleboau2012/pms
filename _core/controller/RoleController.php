@@ -103,4 +103,9 @@ Class RoleController {
 
         return $feedback;
     }
+
+    public static function hasPermission($userid, $role_id, $permission_id){
+        $role_model = new RoleModel();
+        return $role_model->hasPermission($userid, $role_id, $permission_id);
+    }
 }
