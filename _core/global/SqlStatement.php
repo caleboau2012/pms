@@ -350,9 +350,8 @@ class UrineSqlStatement {
         WHERE u.treatment_id= :treatment_id
         ORDER BY u.modified_date DESC';
 
-    const UPDATE = 'UPDATE urine SET clinical_diagnosis_details = :clinical_diagnosis_details ,
-                    investigation_required = :investigation_required,laboratory_report = :laboratory_report,
-                    laboratory_ref = :laboratory_ref,culture_value =:culture_value, lab_attendant_id = :lab_attendant_id,
+    const UPDATE = 'UPDATE urine SET investigation_required = :investigation_required, laboratory_report = :laboratory_report,
+                    laboratory_ref = :laboratory_ref, culture_value =:culture_value, lab_attendant_id = :lab_attendant_id,
                     modified_date = NOW(), status_id =:status_id
                     WHERE urine_id=:urine_id';
 
@@ -404,7 +403,7 @@ class UrinalysisSqlStatement {
 
 class UrineSensitivitySqlStatement {
     const ADD    = 'INSERT INTO urine_sensitivity(urine_id,isolates,isolates_degree, create_date, modified_date) VALUES(:urine_id,:isolates,:isolates_degree, now(), now())';
-    const GET    = 'SELECT ur.urine_sensitivity_id, ur.urine_id, ur.isolates, ur.isolates_degree,ur.created_date,ur.modified_date
+    const GET    = 'SELECT ur.isolates, ur.isolates_degree
                         FROM urine_sensitivity ur
                         WHERE ur.urine_id IN (SELECT urine_id FROM urine WHERE treatment_id = :treatment_id)
                         ORDER BY ur.created_date';
@@ -439,8 +438,8 @@ class MicroscopySqlStatement {
                         ORDER BY m.modified_date DESC LIMIT 1';
     const GET_TEST = 'SELECT m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.modified_date, u.urine_id FROM urine u, microscopy m
                             WHERE m.urine_id=:urine_id AND u.urine_id=m.urine_id LIMIT 1';
-    const ADD_UPDATE = 'INSERT INTO microscopy (urine_id,pus_cells,red_cells,epithelial_cells,casts,crystals,others, created_date, modified_date)
-                        VALUES(:urine_id,:pus_cells,:red_cells,:epithelial_cells,:casts,:crystals,:others, NOW(), NOW())
+    const ADD_UPDATE = 'INSERT INTO microscopy (urine_id,pus_cells, red_cells, epithelial_cells, casts, crystals, others, created_date, modified_date)
+                        VALUES(:urine_id, :pus_cells, :red_cells, :epithelial_cells, :casts, :crystals, :others, NOW(), NOW())
                         ON DUPLICATE KEY
                         UPDATE pus_cells = :pus_cells,red_cells = :red_cells,epithelial_cells = :epithelial_cells,casts = :casts,crystals = :crystals,others = :others, modified_date = now()';
 

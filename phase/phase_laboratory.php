@@ -86,8 +86,8 @@ if ($intent == 'getPatientQueue') {
         $labType = $_REQUEST['labType'];
 
         $lab = new LaboratoryController();
-        $response = $lab->setLabDetails($labType, $treatmentId);
-        if ($response) {
+        $response = $lab->setLabDetails($labType, $data);
+        if ($response['status']) {
             echo JsonResponse::success("Successfully added");
             exit();
         } else {
@@ -101,7 +101,6 @@ if ($intent == 'getPatientQueue') {
 } elseif ($intent == 'updateLabDetails') {
     if (isset($_REQUEST['labType']) && $data) {
         $labType = $_REQUEST['labType'];
-//        $data = $_REQUEST['data'];
 
         $lab = new LaboratoryController();
         $response = $lab->updateLabDetails($labType, $data);

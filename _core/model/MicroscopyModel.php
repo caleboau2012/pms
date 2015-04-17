@@ -36,7 +36,10 @@ class MicroscopyModel extends BaseModel{
         return $this->updateTestDetails($data);
     }
 
-    public function updateTestDetails($data){
+    public function updateTestDetails(&$data){
+        $data['urinalysis']['urine_id'] = $data['details']['urine_id'];
+        $data['microscopy']['urine_id'] = $data['details']['urine_id'];
+
         try{
             $this->conn->beginTransaction();
             $this->updateDetails($data['details']);
@@ -46,14 +49,15 @@ class MicroscopyModel extends BaseModel{
             $this->conn->commit();
         } catch(Exception $e){
             $this->conn->rollBack();
-            echo $e->getMessage();
-            return false;
+            return array('status' => false, 'message' => $e->getMessage());
         }
 
-        return true;
+        return array('status' => true);
     }
 
     private function updateDetails($data){
+        if(!$this->conn->checkParams(UrineSqlStatement::UPDATE, $data))
+            throw new Exception('Check urine details params');
         if(!$this->conn->execute(UrineSqlStatement::UPDATE, $data))
             throw new Exception('Error updating details in microscopy');
 
@@ -73,7 +77,12 @@ class MicroscopyModel extends BaseModel{
     }
 
     private function updateUrinalysisDetails($data){
-        return $this->conn->execute(UrinalysisSqlStatement::ADD_UPDATE, $data);
+        if(!$this->conn->checkParams(UrinalysisSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Check urinalysis details params');
+        if(!$this->conn->execute(UrinalysisSqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not update urinalysis');
+
+        return true;
     }
 
 
@@ -89,15 +98,30 @@ class MicroscopyModel extends BaseModel{
     }
 
     private function updateMicroscopyDetails($data){
-        return $this->conn->execute(MicroscopySqlStatement::ADD_UPDATE, $data);
+        if(!$this->conn->checkParams(MicroscopySqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Check microscopy details params');
+        if(!$this->conn->execute(MicroscopySqlStatement::ADD_UPDATE, $data))
+            throw new Exception('Could not update microscopy');
+
+        return true;
     }
 
 
 /*------------------------------------- Urine Sensitivity Section --------------------------------------*/
 
+    private function formatUrineSensitivityValues($isolatesArray){
+        $result = array();
+
+        foreach($isolatesArray as $obj){
+            $result[$obj['isolates']] = $obj['isolates_degree'];
+        }
+
+        return $result;     // An array of isolates as key and isolates_degree as value
+    }
+
     private function getUrineSensitivityDetails($treatmentId){
         $data = array(UrineTable::treatment_id => $treatmentId);
-        return $this->conn->fetch(UrineSensitivitySqlStatement::GET, $data);
+        return $this->formatUrineSensitivityValues($this->conn->fetchAll(UrineSensitivitySqlStatement::GET, $data));
     }
 
     private function setUrineSensitivityDetails($urineId, $isolateDegreeIds){
