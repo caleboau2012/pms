@@ -15,6 +15,10 @@ $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
 var_dump($view_bag);
 
+if ($view_bag['details'][UrineTable::status_id] == 7){
+    $disabled = 'disabled="disabled"';
+}else { $disabled = '';}
+
 ?>
 <body>
 <div class="container-fluid">
@@ -145,7 +149,14 @@ var_dump($view_bag);
                                         </div>
                                         <?php } ?>
                                     </div>
-
+                                    <div class="col-sm-12">
+                                        <div class="center-block">
+                                            <fieldset>
+                                                <h4 class="title">Culture</h4>
+                                                <textarea <?php echo $disabled ?> class="col-sm-12 form-control" name="<?php echo 'data[details]['.UrineTable::culture_value.']' ?>" ><?php if (isset($view_bag['details'][UrineTable::culture_value])) echo $view_bag['details'][UrineTable::culture_value]; ?></textarea>
+                                            </fieldset>
+                                        </div>
+                                    </div>
                                     <div class="col-sm-12">
                                         <table class="table table-striped table-responsive">
                                             <thead>
