@@ -40,9 +40,10 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]'.'['.UrineTable::urine_d.']'; ?>" value="<?php echo $view_bag['details']['urine_id'] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]'.'['.UrineTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>" />
-                        <input type="hidden" name="<?php echo 'data[details]['.UrineTable::treatment_id.']' ?>" value="<?php if(isset($view_bag['details']['treatment_id'])) echo $view_bag['details']['treatment_id'] ?>">
+                        <input type="hidden" name="<?php echo 'data['.UrineTable::treatment_id.']' ?>" value="<?php if(isset($view_bag['details']['treatment_id'])) echo $view_bag['details']['treatment_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="microscopy">
+                        <input type="hidden" id="status" name="status" value="">
 
                         <div class="row">
                             <div class="page-header">
@@ -174,8 +175,8 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                                 <tr>
                                                     <td class="test-label"><?php echo $label->getLabel(); ?></td>
 
-                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::isolates.']['.$label->getId().']' ?>" <?php if (isset($view_bag[$label->getLabel()])) {	if ($view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
-                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::isolates.']['.$label->getId().']' ?>" <?php if (isset($view_bag[$label->getLabel()])) {	if ($view_bag[$label->getLabel()][UrineSensitivityTable::isolates_degree] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
+                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
+                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
                                                 </tr>
                                             <?php } ?>
                                         </table>
