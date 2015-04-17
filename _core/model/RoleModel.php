@@ -64,4 +64,11 @@ Class RoleModel extends BaseModel {
         
         return $result[COUNT] > 0 ? true : false;
     }
+
+    public function hasPermission($userId, $staffRoleId, $staffPermissionId){
+        $data = array(PermissionRoleTable::userid => $userId, PermissionRoleTable::staff_role_id => $staffRoleId,
+                      PermissionRoleTable::permission_role_id => $staffPermissionId);
+        $result = $this->conn->fetch(PermissionRoleSqlStatement::HAS_PERMISSION, $data);
+        return $result['count'] == 1;
+    }
 }

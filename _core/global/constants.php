@@ -40,6 +40,11 @@ define('STAFF_CLEARANCE_OFFICER', 13);
 define('TREATMENT_RECORD', 14);
 define('ROASTER_CREATOR', 15);
 define('ADMISSION_OFFICER', 16);
+define('HAEMATOLOGY_CONDUCTOR', 17);
+
+//Staff Permission
+define('READ_ONLY', 1);
+define('READ_WRITE', 2);
 
 //ACTIVE STATUS CONSTANTS
 define('ACTIVE', 1);
