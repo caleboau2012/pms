@@ -40,6 +40,7 @@ define('STAFF_CLEARANCE_OFFICER', 13);
 define('TREATMENT_RECORD', 14);
 define('ROASTER_CREATOR', 15);
 define('ADMISSION_OFFICER', 16);
+define('HAEMATOLOGY_CONDUCTOR', 17);
 
 //ACTIVE STATUS CONSTANTS
 define('ACTIVE', 1);
@@ -49,6 +50,10 @@ define('CLEARED', 4);
 define('PENDING', 5);
 define('PROCESSING', 6);
 define('COMPLETED', 7);
+
+//Read/Write permission
+define("READ_WRITE", 0);
+define("READ_ONLY", 1);
 
 //PATIENT ARRIVAL CONSTANTS
 define('PARAMETER', 'parameter');

@@ -163,12 +163,35 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
         <div class="col-sm-3">
             <label>Select Test</label>
             <select id="type" class="form-control" name="test_id" onchange="Laboratory.onTestChange()">
-                <option value="haematology">HAEMATOLOGY</option>
-                <option value="microscopy">MICROSCOPY</option>
-                <option value="radiology">XRAY</option>
-                <option value="visual">VISUAL SKILL PROFILE</option>
-                <option value="chemical_pathology">CHEMICAL PATHOLOGY</option>
-                <option value="parasitology">PARASITOLOGY</option>
+                <?php
+                foreach (CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff){
+                    if ($staff[StaffRoleTable::staff_role_id] == HAEMATOLOGY_CONDUCTOR){
+                        ?>
+                        <option value="haematology">HAEMATOLOGY</option>
+                <?php
+                    } else if ($staff[StaffRoleTable::staff_role_id] == URINE_CONDUCTOR){
+                        ?>
+                        <option value="microscopy">MICROSCOPY</option>
+                <?php
+                    } else if ($staff[StaffRoleTable::staff_role_id] == XRAY_CONDUCTOR){
+                        ?>
+                        <option value="radiology">XRAY</option>
+                <?php
+                    } else if ($staff[StaffRoleTable::staff_role_id] == VISUAL_CONDUCTOR){
+                        ?>
+                        <option value="visual">VISUAL SKILL PROFILE</option>
+                <?php
+                    } else if ($staff[StaffRoleTable::staff_role_id] == CHEMICAL_PATHOLOGY_CONDUCTOR){
+                        ?>
+                        <option value="chemical_pathology">CHEMICAL PATHOLOGY</option>
+                <?php
+                    } else if ($staff[StaffRoleTable::staff_role_id] == PARASITOLOGY_CONDUCTOR){
+                        ?>
+                        <option value="parasitology">PARASITOLOGY</option>
+                <?php
+                    }
+                }
+                ?>
             </select>
         </div>
 
