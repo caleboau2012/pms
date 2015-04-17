@@ -5,7 +5,7 @@ class CommunicationController {
 
         $comm_model = new CommunicationModel();
         $messages = $comm_model->getInbox($userid, $page);
-        
+
         if ($messages) {
             $feedback = array();
             $feedback[INBOX] = $messages;
@@ -19,7 +19,7 @@ class CommunicationController {
             $feedback[TOTAL] = $total_message_count[COUNT];
             $feedback[UNREAD_MESSAGE] = $total_message_count[UNREAD_MESSAGE];
             $feedback[CURRENT_PAGE] = $page + 1;
-            
+
             return $feedback;
         } else {
             return false;
@@ -34,7 +34,7 @@ class CommunicationController {
 
         if ($messages) {
             $feedback = array();
-            $feedback[SENT] = $messages;            
+            $feedback[SENT] = $messages;
             $num_messages = sizeof($messages);
             $total_message_count = $comm_model->numberOfMesssages($userid, SENT_MESSAGE);
 
@@ -67,9 +67,9 @@ class CommunicationController {
 
     public function getMessage($userid, $msg_id) {
         $comm_model = new CommunicationModel();
-        
+
         $feedback = $comm_model->getMessage($userid, $msg_id);
-        
+
         return $feedback;
     }
 
@@ -97,6 +97,14 @@ class CommunicationController {
         $comm_model = new CommunicationModel();
 
         $feedback = $comm_model->markAsUnread($userid, $msg_id);
+
+        return $feedback;
+    }
+
+    public function countUnread() {
+        $comm_model = new CommunicationModel();
+        $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+        $feedback = $comm_model->countUnread($userid);
 
         return $feedback;
     }
