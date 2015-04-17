@@ -29,9 +29,6 @@ var Laboratory = {
             e.preventDefault();
             var data = $(this).serialize();
             Laboratory.updateLabDetails(host + Laboratory.URL.lab_uri, data, 'POST');
-            //var test = Laboratory.selectedOption();
-//            $('mainContent').empty().append('cool');
-            //$('#success').show();
         });
 
         Laboratory.onDocReady();
@@ -41,9 +38,13 @@ var Laboratory = {
             history.go(0);
 
         });
-        $('body').delegate('.action', 'click', function(e){
+        $('body').delegate('.action, pending', 'click', function(e){
             e.preventDefault();
             Laboratory.getLabDetails(this);
+            /*$(this).delegate('a.pending', 'click', function(e){
+                e.preventDefault();
+                Laboratory.getLabDetails(this);
+            });*/
         });
     },
 
@@ -96,14 +97,18 @@ var Laboratory = {
                         test_data += "<td>" + this.created_date + "</td>";
                         test_data += "</tr>";
 
-//                        pending += '<a href='+"#"+Laboratory.selectedOption();
-//                        pending += 'data-toggle="modal>';
+                        pending += '<a data-ref='+Laboratory.selectedOption()+'.php';
+                        pending += ' data-id='+this.treatment_id + ' data-status='+this.status_id + ' data-regNo='+this.regNo + ' data-sex='+this.sex;
+                        pending += ' data-surname='+this.surname;
+                        pending += ' data-firstname='+this.firstname;
+                        pending += ' data.middlename='+this.middlename;
+                        pending += ' class="pending">';
                         pending += '<div class="patient-queue__item">';
                         pending += '<div class="patient-queue__item-label-block">' + name;
                         pending += '<small class="sub">' + $("#type").val() + '</small>';
                         pending += '</div>';
                         pending += '</div>';
-//                        pending += '</a>';
+                        pending += '</a>';
 
                     });
                 }
