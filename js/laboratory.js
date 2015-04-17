@@ -38,13 +38,9 @@ var Laboratory = {
             history.go(0);
 
         });
-        $('body').delegate('.action, pending', 'click', function(e){
+        $('body').delegate('.action, a.pending', 'click', function(e){
             e.preventDefault();
             Laboratory.getLabDetails(this);
-            /*$(this).delegate('a.pending', 'click', function(e){
-                e.preventDefault();
-                Laboratory.getLabDetails(this);
-            });*/
         });
     },
 

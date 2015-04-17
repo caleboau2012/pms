@@ -50,7 +50,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
 
                         <div class="row">
                             <div class="page-header">
-                                <a id="bck" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
+                                <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
                                 <h2 class="page-header__title">Haematology</h2>
                             </div>
 

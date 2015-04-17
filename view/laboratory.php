@@ -16,7 +16,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
 }
 
-//var_dump($_REQUEST);
 ?>
 
 

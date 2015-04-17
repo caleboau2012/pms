@@ -55,7 +55,7 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Clinical Diagnosis and Relevant Details</h4>
-                                        <textarea disabled class="col-sm-12 form-control"><?php
+                                        <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['clinical_diagnosis_details'])){
                                                 echo $view_bag['details']['clinical_diagnosis_details'];
                                             }
@@ -69,14 +69,14 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                 <div class="center-block">
                                     <fieldset>
                                         <h4 class="title">Laboratory Report</h4>
-                                        <textarea name="<?php echo 'data[details]'.'['.HaematologyTable::laboratory_report.']'; ?>" class="col-sm-12 form-control"><?php
+                                        <textarea <?php echo $disabled; ?> name="<?php echo 'data[details]'.'['.HaematologyTable::laboratory_report.']'; ?>" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['laboratory_report'])){
                                                 echo $view_bag['details']['laboratory_report'];
                                             }
                                             ?>
                                         </textarea>
-                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="<?php echo 'data[details]'.'['.UrineTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details']['laboratory_ref'])) echo $view_bag['details']['laboratory_ref']; ?>"></span> </div>
-                                        <div class="test-label">Investigation Required: <span><input type="text" class="form-inline form-margin" name="<?php echo 'data[details]'.'['.UrineTable::investigation_required.']'; ?>" value="<?php if (isset($view_bag['details']['investigation_required'])) echo $view_bag['details']['investigation_required']; ?>"></span> </div>
+                                        <div class="test-label">Laboratory Ref: <span><input type="text" <?php echo $disabled; ?> class="form-inline form-margin" name="<?php echo 'data[details]'.'['.UrineTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details']['laboratory_ref'])) echo $view_bag['details']['laboratory_ref']; ?>"></span> </div>
+                                        <div class="test-label">Investigation Required: <span><input type="text" <?php echo $disabled; ?> class="form-inline form-margin" name="<?php echo 'data[details]'.'['.UrineTable::investigation_required.']'; ?>" value="<?php if (isset($view_bag['details']['investigation_required'])) echo $view_bag['details']['investigation_required']; ?>"></span> </div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -126,7 +126,7 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                     <div class="center-block">
                                         <?php } ?>
 
-                                        <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.UrinalysisTable::table_name. ']['.$attr['column'].']' ?>" value="<?php if (isset($view_bag[UrinalysisTable::table_name][$attr['column']])) echo $view_bag[UrinalysisTable::table_name][$attr['column']]; ?>">
+                                        <input type="text" class="form-control col-sm-12" <?php echo $disabled; ?> name="<?php echo 'data['.UrinalysisTable::table_name. ']['.$attr['column'].']' ?>" value="<?php if (isset($view_bag[UrinalysisTable::table_name][$attr['column']])) echo $view_bag[UrinalysisTable::table_name][$attr['column']]; ?>">
                                         <?php if (isset($attr['unit'])){ ?>
                                             <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                         <?php } ?>
@@ -143,7 +143,7 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                         <?php } else { ?>
                                         <div class="center-block">
                                             <?php } ?>
-                                            <input type="text" class="form-control col-sm-12" name="<?php echo 'data['.MicroscopyTable::table_name.']['.$attr['column'].']'; ?>" value="<?php if (isset($view_bag[MicroscopyTable::table_name][$attr['column']])) echo $view_bag[MicroscopyTable::table_name][$attr['column']]; ?>">
+                                            <input type="text" class="form-control col-sm-12" <?php echo $disabled; ?> name="<?php echo 'data['.MicroscopyTable::table_name.']['.$attr['column'].']'; ?>" value="<?php if (isset($view_bag[MicroscopyTable::table_name][$attr['column']])) echo $view_bag[MicroscopyTable::table_name][$attr['column']]; ?>">
                                             <?php if (isset($attr['unit'])){ ?>
                                                 <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
                                             <?php } ?>
@@ -154,7 +154,7 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                         <div class="center-block">
                                             <fieldset>
                                                 <h4 class="title">Culture</h4>
-                                                <textarea <?php echo $disabled ?> class="col-sm-12 form-control" name="<?php echo 'data[details]['.UrineTable::culture_value.']' ?>" ><?php if (isset($view_bag['details'][UrineTable::culture_value])) echo $view_bag['details'][UrineTable::culture_value]; ?></textarea>
+                                                <textarea <?php echo $disabled; ?> class="col-sm-12 form-control" name="<?php echo 'data[details]['.UrineTable::culture_value.']' ?>" ><?php if (isset($view_bag['details'][UrineTable::culture_value])) echo $view_bag['details'][UrineTable::culture_value]; ?></textarea>
                                             </fieldset>
                                         </div>
                                     </div>
@@ -175,16 +175,19 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                                 <tr>
                                                     <td class="test-label"><?php echo $label->getLabel(); ?></td>
 
-                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
-                                                    <td class="text-center"><input type="radio" name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
+                                                    <td class="text-center"><input type="radio" <?php echo $disabled; ?> name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
+                                                    <td class="text-center"><input type="radio" <?php echo $disabled; ?> name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
                                                 </tr>
                                             <?php } ?>
                                         </table>
                                     </div>
-                                            <div class="col-sm-12 submit-test">
-                                                <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
-                                                <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
-                                            </div>
+                                    <?php
+                                    if ($view_bag['details'][UrineTable::status_id] == 5 || $view_bag['details'][UrineTable::status_id] == 6){?>
+                                        <div class="col-sm-12 submit-test">
+                                            <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
+                                            <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save_continue'>
+                                        </div>
+                                    <?php } ?>
                                         </div>
                     </form>
                 </div>
