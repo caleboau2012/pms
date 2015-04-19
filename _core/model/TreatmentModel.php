@@ -27,6 +27,14 @@ class TreatmentModel extends BaseModel{
 
     }
 
+    public function checkForExistingTreatment ($patientInfo){
+        $sql = TreatmentSqlStatement::CHECK_TREATMENT;
+        $data = $patientInfo;
+        $result = $this->conn->fetch($sql, $data);
+        return $result;   // returns the number of time patient id has been registred for trreament.
+
+    }
+
     /* This fethces the list of admitted patients */
     public function getInPatientQueue(){
 

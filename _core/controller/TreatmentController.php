@@ -45,6 +45,11 @@ class TreatmentController{
         return $this->treatmentModel->addTreatment2($treatmentInfo);
     }
 
+    public function doesTreatmentExist ($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
+        return $this->treatmentModel->checkForExistingTreatment ($data);
+        }
+
     public function getTreatmentHistory($patientId){
         return $this->treatmentModel->getTreatmentHistory($patientId);
     }

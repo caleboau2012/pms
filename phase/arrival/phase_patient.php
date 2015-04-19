@@ -145,35 +145,162 @@ else if ($intent == 'addPatient') {
     }
 
 }
-elseif($intent == 'getRegNos'){
+////////////Used to add emergency patient
+else if ($intent == 'addEmergencyPatient') {
     $patientController = new PatientController();
-    $regNos = $patientController->getExistingPatientRegNos();
-    if(is_array($regNos)){
-        echo JsonResponse::success($regNos);
+
+    $addEmerPat = $patientController->addEmergencyPatient();
+
+    if($addEmerPat){
+
+     $addEmerList = $patientController->addEmergencyPatientList( $addEmerPat);
+
+        if ($addEmerList){
+
+
+
+            $emergency_reg = 'EMER'. $addEmerList;
+            $emergencydata = array('patient_id'=>$addEmerPat,'emergency_reg'=>$emergency_reg);
+
+        echo JsonResponse::success($emergencydata);
         exit();
-    } else {
-        echo JsonResponse::error("Not available");
+        }
+        else{
+          echo  JsonResponse::error("Error registering to emergency list");
+        }
+    }
+    else {
+//        print_r($_REQUEST);
+        JsonResponse::error("Error registering to patient list");
         exit();
     }
 }
-elseif($intent == 'verifyRegNo'){
-    $regNo = $_REQUEST['regNo'];
+
+////////////////// upgrade emergency patient to Real patient
+else if ($intent == 'UpgradeEmergencyPatient') {
+
     $patientController = new PatientController();
 
-    if($regNo){
-        if(!$patientController->regNoExists($regNo)){
-            echo JsonResponse::success("Registration number does not exist");
-            exit();
-        } else {
-            echo JsonResponse::error("Registration number already exists.");
+    $patient_id ="";
+    $surname ="";
+    $firstname ="";
+    $middlename ="";
+    $regNo ="";
+    $home_address= "";
+    $telephone ="";
+    $sex ="";
+    $height ="";
+    $weight ="";
+    $birth_date = "";
+    $nok_firstname ="";
+    $nok_middlename = "";
+    $nok_surname = "";
+    $nok_address = "";
+    $nok_telephone = "";
+    $nok_relationship  ="";
+    $citizenship ="";
+    $religion="";
+    $family_position="";
+    $mother_status="";
+    $father_status="";
+    $marital_status="";
+    $no_of_children="";
+
+    if (isset($_REQUEST[PatientTable::patient_id])){  // change surname to what you thin should be set.
+
+        // var_dump($_REQUEST);
+
+        $patient_id =$_REQUEST[PatientTable::patient_id];
+
+        //check if the emergency patient has not been previously upgraded.
+
+        $result = $patientController->checkEmergencyStatus($patient_id); // return  the status, 1 active, 2 upgraded, 3 treatment...
+
+        if ($result == 1){ //
+
+
+            $surname =$_REQUEST[PatientTable::surname];
+            $firstname =$_REQUEST[PatientTable::firstname];
+            $middlename =$_REQUEST[PatientTable::middlename];
+            $regNo =$_REQUEST[PatientTable::regNo];
+            $home_address= $_REQUEST[PatientTable::home_address];
+            $telephone =$_REQUEST[PatientTable::telephone];
+            $sex =$_REQUEST[PatientTable::sex];
+            $height =$_REQUEST[PatientTable::height];
+            $weight =$_REQUEST[PatientTable::weight];
+            $birth_date = $_REQUEST[PatientTable::birth_date];
+            $nok_firstname = $_REQUEST[PatientTable::nok_firstname];
+            $nok_middlename = $_REQUEST[PatientTable::nok_middlename];
+            $nok_surname = $_REQUEST[PatientTable::nok_surname];
+            $nok_address = $_REQUEST[PatientTable::nok_address];
+            $nok_telephone = $_REQUEST[PatientTable::nok_telephone];
+            $nok_relationship  = $_REQUEST[PatientTable::nok_relationship];
+            $citizenship =$_REQUEST[PatientTable::citizenship];
+            $religion=$_REQUEST[PatientTable::religion];
+            $family_position=$_REQUEST[PatientTable::family_position];
+            $mother_status=$_REQUEST[PatientTable::mother_status];
+            $father_status=$_REQUEST[PatientTable::father_status];
+            $marital_status=$_REQUEST[PatientTable::marital_status];
+            $no_of_children=$_REQUEST[PatientTable::no_of_children];
+
+        }
+
+        else if ($result == 2){
+            echo JsonResponse::error('Emergency Patient already upgraded') ;
             exit();
         }
-    } else {
-        echo JsonResponse::error("No registration number entered");
+        else if ($result == 3){
+            echo JsonResponse::error('Emergency Patient receiving treatment') ;
+            exit();
+        }
+
+        $patientUp = null;
+
+        if(empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
+          ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status)){
+
+            //print_r($_REQUEST);
+            echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
+            exit();
+        }
+        else{
+            $patientUp = $patientController->EditPatientInfo(
+                $surname, $firstname, $middlename, $regNo,
+                $home_address, $telephone, $sex, $height, $weight,
+                $birth_date, $nok_firstname, $nok_middlename,
+                $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
+                $mother_status, $father_status, $marital_status, $no_of_children, $patient_id );
+        }
+
+        if($patientUp){
+            // change status of emergency table of emergency patient from 1 to 2;
+
+            //create new Editinfo for updating emergency to enable rollback functionality.
+
+            $emergencyreg ="EMER". $patient_id;
+            $change = $patientController->changeEmergencyStatus($emergencyreg, $status);
+
+            if ($change){
+
+            echo JsonResponse::message(1, "Emergency Patient sucessfully upgraded");
+            exit();
+            }
+
+        } else {
+//        print_r($_REQUEST);
+            echo JsonResponse::error("Error upgrading patient.");
+            exit();
+        }
+
+
+    }
+    else{
+        echo JsonResponse::error("Patient not set");
     }
 
-}
+    //
 
+}
 else {
     echo JsonResponse::error('Invalid intent!');
     exit();
