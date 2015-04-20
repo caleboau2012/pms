@@ -318,6 +318,7 @@ else if ($intent == 'UpgradeEmergencyPatient') {
         } else {
             echo JsonResponse::error("Registration number already exists.");
             exit();
+        }
     } else {
         echo JsonResponse::error("No registration number entered");
         exit();
