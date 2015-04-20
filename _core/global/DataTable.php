@@ -654,3 +654,15 @@ class ExaminationRequestedTable {
     const modified_date              = 'modified_date';
     const active_fg                  = 'active_fg';
 }
+
+class EmergencyTable {
+
+    const table_name                 = 'emergency';
+    const emergency_id              = 'emergency_id';
+    const patient_id                = 'patient_id';
+    const emergency_status_id       = 'emergency_status_id';
+    const create_date                = 'create_date';
+    const modified_date              = 'modified_date';
+
+}
+

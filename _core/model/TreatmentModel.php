@@ -2,7 +2,7 @@
 class TreatmentModel extends BaseModel{
 
 
-       /* This fetches the patient queue assigned to a particular  */
+    /* This fetches the patient queue assigned to a particular  */
     public function getPatientQueue($doctorId){
 
         try {
@@ -27,6 +27,22 @@ class TreatmentModel extends BaseModel{
 
     }
 
+    public function checkForExistingTreatment ($patientInfo){
+        $sql = TreatmentSqlStatement::CHECK_TREATMENT;
+        $data = $patientInfo;
+        $result = $this->conn->fetch($sql, $data);
+        return $result;   // returns the number of time patient id has been registred for trreament.
+
+    }
+
+    public function terminateTreatment ($treatmentinfo){
+        $sql = TreatmentSqlStatement::END_TREATMENT;
+        $data = $treatmentinfo;
+        $result = $this->conn->fetch($sql, $data);
+        return $result;   // returns the number of time patient id has been registred for trreament.
+
+    }
+
     /* This fethces the list of admitted patients */
     public function getInPatientQueue(){
 
@@ -41,7 +57,7 @@ class TreatmentModel extends BaseModel{
         }
 
 
-       catch (Exception $e){
+        catch (Exception $e){
 
             $this->conn->rollBack();
             return false;
@@ -92,7 +108,7 @@ class TreatmentModel extends BaseModel{
         try {
             $this->conn->beginTransaction();
             $sql = TreatmentSqlStatement::UPDATE_TREATMENT;
-                   
+
             $data = $treatmentInfo;
 
             $result = $this->conn->execute($sql, $data);
@@ -101,7 +117,7 @@ class TreatmentModel extends BaseModel{
 
             if ($result){
 
-                             //               $last_id = $this->conn->getLastInsertedId();
+                //               $last_id = $this->conn->getLastInsertedId();
                 $this->conn->commit();
                 return $result;
             }
@@ -159,7 +175,7 @@ class TreatmentModel extends BaseModel{
 
         }
 
-    catch (Exception $e){
+        catch (Exception $e){
             $this->conn->rollBack();
             return false;
         }
@@ -179,7 +195,7 @@ class TreatmentModel extends BaseModel{
 
         }
 
-    catch (Exception $e){
+        catch (Exception $e){
             $this->conn->rollBack();
             return false;
         }
@@ -252,7 +268,7 @@ class TreatmentModel extends BaseModel{
         try{
             $this->conn->beginTransaction();
             $data = array(ChemicalPathologyRequestTable::doctor_id => $doctorId, ChemicalPathologyRequestTable::treatment_id => $treatmentId,
-                          ChemicalPathologyRequestTable::clinical_diagnosis => $description);
+                ChemicalPathologyRequestTable::clinical_diagnosis => $description);
             $this->conn->execute(ChemicalPathologyRequestSqlStatement::ADD_REQ_INFO, $data);
             $this->conn->commit();
         } catch(Exception $e){
@@ -267,7 +283,7 @@ class TreatmentModel extends BaseModel{
         try{
             $this->conn->beginTransaction();
             $data = array(ParasitologyRequestTable::doctor_id => $doctorId, ParasitologyRequestTable::treatment_id => $treatmentId,
-                          ParasitologyRequestTable::diagnosis => $description);
+                ParasitologyRequestTable::diagnosis => $description);
             $this->conn->execute(ParasitologyRequestSqlStatement::ADD_REQ_INFO, $data);
             $this->conn->commit();
         } catch(Exception $e){
@@ -339,8 +355,8 @@ class TreatmentModel extends BaseModel{
             case MICROSCOPY:
                 return $this->getMicroscopyLabHistory($patientId);
 
-         //   case VISUAL:
-           //     return $this->getVisualLabHistory($patientId);
+            //   case VISUAL:
+            //     return $this->getVisualLabHistory($patientId);
 
             case CHEMICAL_PATHOLOGY:
                 return $this->getChemicalPathologyLabHistory($patientId);
