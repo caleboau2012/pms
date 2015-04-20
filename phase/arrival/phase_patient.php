@@ -300,8 +300,29 @@ else if ($intent == 'UpgradeEmergencyPatient') {
 
     //
 
-}
-else {
+} elseif($intent == 'getRegNos'){
+    $regNos = $patientController->getExistingPatientRegNos();
+    if(is_array($regNos)){
+        echo JsonResponse::success($regNos);
+        exit();
+    } else {
+        echo JsonResponse::error("Not available");
+        exit();
+    }
+} elseif($intent == 'verifyRegNo') {
+    $regNo = $_REQUEST['regNo'];
+    if($regNo){
+        if(!$patientController->regNoExists($regNo)){
+            echo JsonResponse::success("Registration number does not exist");
+            exit();
+        } else {
+            echo JsonResponse::error("Registration number already exists.");
+            exit();
+    } else {
+        echo JsonResponse::error("No registration number entered");
+        exit();
+    }
+} else {
     echo JsonResponse::error('Invalid intent!');
     exit();
 }

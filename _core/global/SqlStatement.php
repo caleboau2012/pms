@@ -80,7 +80,7 @@ class ProfileSqlStatement {
             LIMIT 0 , 30";
 
         const BUILD_CONTACT_LIST = "SELECT userid, surname, firstname, middlename FROM profile";
-
+        const GET_DOCTOR_NAME_BY_ID = "SELECT surname, firstname, middlename FROM profile WHERE  userid = :userid";
 }
 
 class PermissionRoleSqlStatement {
@@ -94,6 +94,7 @@ class PermissionRoleSqlStatement {
         const CHECK_PERMISSION = "SELECT COUNT(*) AS count FROM staff_permission WHERE staff_permission_id = :staff_permission_id";
         const CHECK_ROLE = "SELECT COUNT(*) AS count FROM staff_role WHERE staff_role_id = :staff_role_id";
         const HAS_ROLE = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid AND staff_role_id = :staff_role_id AND active_fg = 1";
+        const HAS_PERMISSION = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid AND staff_permission_id = :staff_permission_id AND staff_role_id = :staff_role_id AND active_fg = 1";
 }
 
 class PatientSqlStatement {
@@ -106,9 +107,6 @@ class PatientSqlStatement {
                                     FROM patient WHERE patient_id = :patient_id';
         const UPDATE = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW() WHERE patient_id =:patient_id';
 
-
-    /*UPDATE `pms`.`patient` SET `surname` = 'mbakw', `firstname` = 'cale', `middlename` = 'chukwuezug', `regNo` = 'CSC/2008/06', `home_address` = 'Room 012, computer building, Obafemi Awolowo Universit', `telephone` = '+23456789', `height` = '1', `weight` = '1', `birth_date` = '2015-04-13', `nok_firstname` = 'Cale', `nok_middlename` = 'Chukwuezug', `nok_surname` = 'Mbakw', `nok_address` = 'Room 012, computer building, Obafemi Awolowo Universit', `nok_telephone` = '+234376583276', `nok_relationship` = '2', `citizenship` = 'Nigeri', `religion` = 'CHRISTAINIT', `family_position` = '1', `mother_status` = 'ALIV', `father_status` = 'ALIV', `marital_status` = 'SINGL', `no_of_children` = '2', `created_date` = '2015-04-12 16:12:41', `modified_date` = '2015-04-12 16:12:41' WHERE `patient`.`patient_id` = 9;*/
-
         const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
 
@@ -116,17 +114,16 @@ class PatientSqlStatement {
             FROM patient AS p
                 LEFT JOIN patient_queue AS pq
                     ON p.patient_id = pq.patient_id
-            WHERE (surname LIKE :wildcard
-            OR firstname LIKE :wildcard
-            OR middlename LIKE :wildcard
-            OR regNo = :parameter)
-            AND(pq.active_fg IS NULL
-            OR pq.active_fg = 0)";
+            WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :parameter)
+                AND p.patient_id NOT IN
+                    (SELECT pq.patient_id FROM patient_queue AS pq WHERE active_fg = 1)";
         const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
 
-    const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, created_date, modified_date, active_fg)
-    VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', NULL, '', '', '', NULL, NOW(), NOW(), '1')";
+        const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, created_date, modified_date, active_fg)
+            VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', NULL, '', '', '', NULL, NOW(), NOW(), '1')";
+        const GET_EXISTING_PATIENT_REG_NO = "SELECT regNo FROM patient order by regNo DESC";
+        const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
 }
 
 class PatientQueueSqlStatement {
@@ -162,8 +159,7 @@ class PatientQueueSqlStatement {
             INNER JOIN patient AS p
                 ON pq.patient_id = p.patient_id
         WHERE pq.active_fg = 1
-            AND p.active_fg = 1
-            AND pq.doctor_id = :doctor_id";
+            AND p.active_fg = 1";
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date)  AS LMT FROM patient_queue";
 
@@ -195,27 +191,29 @@ class DepartmentSqlStatment{
 }
 
 class CommunicationSqlStatement {
-    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date 
-        FROM communication 
-            INNER JOIN profile 
+    const GET_INBOX = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date
+        FROM communication
+            INNER JOIN profile
                 ON communication.sender_id = profile.userid
-        WHERE recipient_id = :recipient_id 
+        WHERE recipient_id = :recipient_id
         ORDER BY communication.created_date DESC
         LIMIT @offset, @count";
 
     const GET_SENT_MESSAGES = "SELECT profile.surname, profile.middlename, profile.firstname, msg_id, recipient_id, msg_subject, msg_body, communication.created_date
-        FROM communication 
-            INNER JOIN profile 
+        FROM communication
+            INNER JOIN profile
                 ON communication.recipient_id = profile.userid
-        WHERE sender_id = :sender_id 
+        WHERE sender_id = :sender_id
         ORDER BY communication.created_date DESC
         LIMIT @offset, @count";
 
-    const COUNT_INBOX = "SELECT 
-        (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id) AS count, 
+    const COUNT_INBOX = "SELECT
+        (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id) AS count,
         (SELECT COUNT(*) FROM communication WHERE recipient_id = :recipient_id AND msg_status = 1) AS unread";
 
     const COUNT_SENT = "SELECT COUNT(*) AS count FROM communication WHERE sender_id = :sender_id";
+
+    const COUNT_UNREAD = "SELECT COUNT(*) AS count FROM communication WHERE recipient_id = :recipient_id AND msg_status = 1";
 
     const SEND_MESSAGE = "INSERT INTO communication (sender_id, recipient_id, msg_subject, msg_body, msg_status, active_fg, created_date, modified_date) VALUES (:sender_id, :recipient_id, :msg_subject, :msg_body, 1, 1, NOW(), NOW())";
 
@@ -223,7 +221,7 @@ class CommunicationSqlStatement {
 
     const CHECK_SENT_MESSAGE = "SELECT COUNT(*) AS count FROM communication WHERE msg_id = :msg_id AND sender_id = :sender_id";
 
-    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date 
+    const GET_INBOX_MESSAGE = "SELECT CONCAT_WS(' ', profile.surname, profile.middlename, profile.firstname) AS sender_name, msg_id, sender_id, msg_subject, msg_body, msg_status, communication.created_date
         FROM communication
             INNER JOIN profile
                 ON communication.sender_id = profile.userid
@@ -285,32 +283,27 @@ class HaematologySqlStatement {
     const DELETE = 'DELETE FROM haematology WHERE treatment_id = :treatment_id';
     const GET = 'SELECT * FROM haematology WHERE treatment_id = :treatment_id ORDER BY create_date DESC LIMIT 1';
     const GET_TEST = 'SELECT * FROM haematology WHERE haematology_id = :haematology_id LIMIT 1';
-    const GET_HISTORY = 'SELECT p.patient_id AS patient_id,
-    p.regNo AS regNo,
-    h.haematology_id AS testid,
-    h.clinical_diagnosis_details AS diagnosis,
-    h.create_date AS created_date
-FROM
-    haematology h
-    LEFT JOIN treatment t ON (t.treatment_id = h.treatment_id)
-    LEFT JOIN patient p ON (p.patient_id = t.patient_id)
-    WHERE h.treatment_id = :treatment_id
-    ORDER BY h.modified_date DESC';
+    const GET_HISTORY = 'SELECT p.patient_id AS patient_id, p.regNo AS regNo, h.haematology_id AS testid, h.clinical_diagnosis_details AS diagnosis, h.created_date AS created_date
+        FROM haematology h
+        LEFT JOIN treatment t ON (t.treatment_id = h.treatment_id)
+        LEFT JOIN patient p ON (p.patient_id = t.patient_id)
+        WHERE h.treatment_id = :treatment_id
+        ORDER BY h.modified_date DESC';
 
     const UPDATE = 'UPDATE haematology
                     SET laboratory_report = :laboratory_report, laboratory_ref = :laboratory_ref, status_id=:status_id, modified_date = now()
                     WHERE treatment_id=:treatment_id AND haematology_id=:haematology_id';
 
     const GET_ALL_TEST = 'SELECT h.haematology_id, p.surname, p.middlename, p.firstname, p.regNo, h.status_id, h.treatment_id, h.modified_date FROM haematology h
-    LEFT JOIN treatment t ON (h.treatment_id=t.treatment_id)
-    LEFT JOIN patient p ON (p.patient_id=t.patient_id)
-    ORDER BY h.modified_date DESC';
+        LEFT JOIN treatment t ON (h.treatment_id=t.treatment_id)
+        LEFT JOIN patient p ON (p.patient_id=t.patient_id)
+        ORDER BY h.modified_date DESC';
 
     const GET_EACH_TEST = "SELECT h.*, fa.*, dc.*, bt.* FROM haematology h
- LEFT JOIN film_appearance fa ON (fa.haematology_id=h.haematology_id)
- LEFT JOIN blood_test bt ON (bt.haematology_id= h.haematology_id)
- LEFT JOIN differential_count dc ON (dc.haematology_id=h.haematology_id)
- WHERE h.haematology_id=:haematolgy_id AND h.active_fg= 1";
+        LEFT JOIN film_appearance fa ON (fa.haematology_id=h.haematology_id)
+        LEFT JOIN blood_test bt ON (bt.haematology_id= h.haematology_id)
+        LEFT JOIN differential_count dc ON (dc.haematology_id=h.haematology_id)
+        WHERE h.haematology_id=:haematolgy_id AND h.active_fg= 1";
 
     const GET_STATUS = "SELECT h.active_fg FROM treatment t
       LEFT JOIN haematology h ON (t.treatment_id=h.treatment_id)
@@ -353,11 +346,7 @@ class UrineSqlStatement {
         WHERE u.treatment_id= :treatment_id
         ORDER BY u.modified_date DESC';
 
-    const UPDATE = 'UPDATE urine SET clinical_diagnosis_details = :clinical_diagnosis_details ,
-                    investigation_required = :investigation_required,laboratory_report = :laboratory_report,
-                    laboratory_ref = :laboratory_ref,culture_value =:culture_value, lab_attendant_id = :lab_attendant_id,
-                    modified_date = NOW(), status_id =:status_id
-                    WHERE urine_id=:urine_id';
+    const UPDATE = 'UPDATE urine SET investigation_required = :investigation_required, laboratory_report = :laboratory_report, laboratory_ref = :laboratory_ref, culture_value =:culture_value, lab_attendant_id = :lab_attendant_id, modified_date = NOW(), status_id =:status_id WHERE urine_id=:urine_id';
 
     const GET_URINE_ID = 'SELECT urine_id from urine where treatment_id = :treatment_id';
     const GET_TEST_BY_REG_NUM = 'SELECT p.surname, p.middlename, p.firstname, p.regNo FROM urine u
@@ -375,7 +364,7 @@ class UrineSqlStatement {
                                LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
                                LEFT JOIN patient p ON (p.patient_id=t.patient_id)
                                WHERE u.treatment_id=:treatment_id
-                               ORDER BY u.modified_date DESC';
+                               ORDER BY u.created_date DESC';
 
     const GET_TEST_BY_SEARCHQUERY= 'SELECT p.surname, p.middlename, p.firstname, p.regNo, u.status_id, u.treatment_id, u.modified_date FROM urine u
                                     LEFT JOIN treatment t ON (t.treatment_id=u.treatment_id)
@@ -407,7 +396,7 @@ class UrinalysisSqlStatement {
 
 class UrineSensitivitySqlStatement {
     const ADD    = 'INSERT INTO urine_sensitivity(urine_id,isolates,isolates_degree, create_date, modified_date) VALUES(:urine_id,:isolates,:isolates_degree, now(), now())';
-    const GET    = 'SELECT ur.urine_sensitivity_id, ur.urine_id, ur.isolates, ur.isolates_degree,ur.created_date,ur.modified_date
+    const GET    = 'SELECT ur.isolates, ur.isolates_degree
                         FROM urine_sensitivity ur
                         WHERE ur.urine_id IN (SELECT urine_id FROM urine WHERE treatment_id = :treatment_id)
                         ORDER BY ur.created_date';
@@ -442,8 +431,7 @@ class MicroscopySqlStatement {
                         ORDER BY m.modified_date DESC LIMIT 1';
     const GET_TEST = 'SELECT m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.modified_date, u.urine_id FROM urine u, microscopy m
                             WHERE m.urine_id=:urine_id AND u.urine_id=m.urine_id LIMIT 1';
-    const ADD_UPDATE = 'INSERT INTO microscopy (urine_id,pus_cells,red_cells,epithelial_cells,casts,crystals,others, created_date, modified_date)
-                        VALUES(:urine_id,:pus_cells,:red_cells,:epithelial_cells,:casts,:crystals,:others, NOW(), NOW())
+    const ADD_UPDATE = 'INSERT INTO microscopy (urine_id,pus_cells, red_cells, epithelial_cells, casts, crystals, others, created_date, modified_date) VALUES(:urine_id, :pus_cells, :red_cells, :epithelial_cells, :casts, :crystals, :others, NOW(), NOW())
                         ON DUPLICATE KEY
                         UPDATE pus_cells = :pus_cells,red_cells = :red_cells,epithelial_cells = :epithelial_cells,casts = :casts,crystals = :crystals,others = :others, modified_date = now()';
 
@@ -462,7 +450,7 @@ class ChemicalPathologyRequestSqlStatement2 {
                             FROM chemical_pathology_request cpr
                             LEFT JOIN treatment t ON (t.treatment_id=cpr.treatment_id)
                             LEFT JOIN patient p ON (p.patient_id=t.patient_id)
-                            ORDER BY cpr.modified_date DESC';
+                            ORDER BY cpr.created_date DESC';
 
     const GET_TEST_BY_REGNO = 'SELECT p.surname, p.middlename, p.firstname, p.regNo, cpr.status_id, cpr.treatment_id AS testid, cpr.modified_date
                                     FROM chemical_pathology_request cpr
@@ -510,12 +498,20 @@ class ParasitologyRefSqlStatement {
 class ParasitologyRequestSqlStatement {
     const ADD_REQ_INFO = "INSERT INTO parasitology_req (doctor_id, treatment_id, diagnosis, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :diagnosis, NOW(), NOW())";
-    const GET_HISTORY = "SELECT * FROM parasitology_req WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
-    const GET_PATIENT_QUEUE = "SELECT * FROM parasitology_req AS pr INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
-                               INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE pr.status_id = :status_id
-                               AND pr.active_fg = :active_fg";
-    const GET_ALL_TEST = "SELECT * FROM parasitology_req AS pr INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
-                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE pr.active_fg = :active_fg";
+    const GET_HISTORY = "SELECT diagnosis as diagnosis, modified_date as modified_date, status_id as status, treatment_id as treatment_id
+        FROM parasitology_req
+        WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
+    const GET_PATIENT_QUEUE = "SELECT * FROM parasitology_req AS pr
+        INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
+        INNER JOIN patient AS p ON t.patient_id = p.patient_id
+        WHERE pr.status_id = :status_id
+        AND pr.active_fg = :active_fg
+        ORDER BY pr.created_date DESC";
+    const GET_ALL_TEST = "SELECT * FROM parasitology_req AS pr
+        INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
+        INNER JOIN patient AS p ON t.patient_id = p.patient_id
+        WHERE pr.active_fg = :active_fg
+        ORDER BY pr.created_date DESC";
     const GET_DETAILS = "SELECT * FROM parasitology_req WHERE treatment_id = :treatment_id AND active_fg = :active_fg";
     const GET_PARASITES = "SELECT pref_id FROM parasitology_details WHERE preq_id IN (SELECT preq_id FROM parasitology_req WHERE treatment_id = :treatment_id) AND active_fg = :active_fg";
     const UPDATE_DETAILS = "UPDATE parasitology_req SET nature_of_specimen = :nature_of_specimen,
@@ -597,46 +593,46 @@ class RadiologyRequestSqlStatement{
     const ADD_RAD_INFO = "INSERT INTO radiology (doctor_id, treatment_id, created_date, modified_date) VALUES (:doctor_id, :treatment_id, NOW(), NOW())";
     const ADD_RAD_REQ_INFO = "INSERT INTO radiology_request (radiology_id, clinical_diagnosis_details, created_date, modified_date)
                               VALUES (:radiology_id, :clinical_diagnosis_details, NOW(), NOW())";
-    const GET_HISTORY = "SELECT * FROM radiology AS r INNER JOIN radiology_request AS rr ON(r.radiology_id = rr.radiology_id) WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
+    const GET_HISTORY = "SELECT rr.clinical_diagnosis_details as diagnosis, r.modified_date as modified_date, r.status_id as status, r.treatment_id as treatment_id
+        FROM radiology AS r
+        INNER JOIN radiology_request AS rr ON(r.radiology_id = rr.radiology_id)
+        WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM radiology_request AS rr INNER JOIN radiology AS r ON
                                rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
                                r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
-                               WHERE r.status_id = :status_id AND rr.active_fg = :active_fg";
+                               WHERE r.status_id = :status_id AND rr.active_fg = :active_fg ORDER BY rr.created_date DESC";
     const GET_ALL_TEST = "SELECT * FROM radiology_request AS rr INNER JOIN radiology AS r ON
                           rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
                           r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
-                          WHERE rr.active_fg = :active_fg";
-    const GET_DETAILS = "SELECT * FROM radiology AS r INNER JOIN radiology_request as rr ON
-                         r.radiology_id = rr.radiology_id LEFT JOIN xray_no AS x ON x.radiology_id INNER JOIN treatment
-                         AS t on r.treatment_id = t.treatment_id WHERE t.treatment_id = :treatment_id";
-    const UPDATE_DETAILS = "UPDATE radiology_request SET clinical_diagnosis_details = :clinical_diagnosis_details,
-                            previous_operation = :previous_operation, any_known_allergies = :any_known_allergies,
-                            previous_xray = :previous_xray, xray_number = :xray_number, modified_date = NOW()
-                            WHERE radiology_id = :radiology_id";
+                          WHERE rr.active_fg = :active_fg ORDER BY rr.created_date DESC";
+    const GET_DETAILS = "SELECT * FROM radiology_request WHERE radiology_id IN (SELECT radiology_id FROM radiology WHERE treatment_id = :treatment_id)";
+    const GET_RADIOLOGY_VALS = "SELECT * FROM radiology WHERE treatment_id = :treatment_id";
+    const UPDATE_DETAILS = "UPDATE radiology_request SET previous_operation = :previous_operation, any_known_allergies = :any_known_allergies, previous_xray = :previous_xray, xray_number = :xray_number, modified_date = NOW() WHERE radiology_id = :radiology_id";
 }
 
 class RadiologySqlStatement{
-    const UPDATE = "UPDATE radiology SET lab_attendant_id = :lab_attendant_id, xray_case_id = :xray_case_id,
-                    xray_size_id = :xray_size_id, consultant_in_charge = :consultant_in_charge, checked_by = :checked_by,
-                    radiographers_note = :radiographers_note, radiologists_report = :radiologists_report, lmp = :lmp
-                    modified_date = NOW() WHERE radiology_id = :radiology_id";
+    const UPDATE = "UPDATE radiology SET lab_attendant_id = :lab_attendant_id, xray_case_id = :xray_case_id, ward_clinic_id = :ward_clinic_id, xray_size_id = :xray_size_id, consultant_in_charge = :consultant_in_charge, checked_by = :checked_by, status_id = :status_id, radiographers_note = :radiographers_note, radiologists_report = :radiologists_report, lmp = :lmp, modified_date = NOW() WHERE radiology_id = :radiology_id";
+}
+
+class XRaySqlStatement{
+    const UPDATE = "INSERT INTO xray_no (radiology_id, xray_number, casual_no, gp_no, ante_natal_no, created_date, modified_date) VALUES(:radiology_id, :xray_number, :casual_no, :gp_no, :ante_natal_no, NOW(), NOW()) ON DUPLICATE KEY UPDATE xray_number = :xray_number, casual_no = :casual_no, gp_no = :gp_no, ante_natal_no = :ante_natal_no, modified_date = NOW()";
 }
 
 class HaematologyRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO haematology (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
-    const GET_HISTORY = "SELECT * FROM haematology AS h WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t
-                         WHERE t.patient_id = :patient_id)";
+    const GET_HISTORY = "SELECT h.clinical_diagnosis_details as diagnosis, h.modified_date as modified_date, h.status_id as status, h.treatment_id as treatment_id FROM haematology AS h WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.status_id = :status_id
-                               AND h.active_fg = :active_fg";
-    const GET_ALL_TEST = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
-                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.active_fg = :active_fg";
+                               AND h.active_fg = :active_fg ORDER BY h.created_date DESC";
+    const GET_ALL_TEST = "SELECT * FROM haematology AS h
+        INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
+        INNER JOIN patient AS p ON t.patient_id = p.patient_id
+        WHERE h.active_fg = :active_fg
+        ORDER BY h.created_date DESC";
     const GET_DETAILS = "SELECT * FROM haematology AS h INNER JOIN treatment AS t on h.treatment_id = t.treatment_id
                          WHERE  h.treatment_id = :treatment_id";
-    const UPDATE_DETAILS = "UPDATE haematology SET clinical_diagnosis_details = :clinical_diagnosis_details,
-                            lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report,
-                            laboratory_ref = :laboratory_ref, modified_date = NOW() WHERE haematology_id = :haematology_id";
+    const UPDATE_DETAILS = "UPDATE haematology SET lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report, laboratory_ref = :laboratory_ref, status_id = :status_id, modified_date = NOW() WHERE haematology_id = :haematology_id";
 }
 
 class BloodTestSqlStatement {
@@ -671,7 +667,7 @@ class FilmAppearanceSqlStatement {
                  hypochromia = :hypochromia, sickle_cells = :sickle_cells, target_cells = :target_cells,
                  spherocytes = :spherocytes, nucleated_rbc = :nucleated_rbc, sickling_test = :sickling_test, modified_date = NOW()';
     const DELETE = 'DELETE FROM film_appearance WHERE haematology_id= :haematology_id';
-    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,created_date,modified_date FROM film_appearance f WHERE f.haematology_id = :haematology_id ORDER BY f.created_date DESC LIMIT 1';
+    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,created_date,modified_date FROM film_appearance f WHERE haematology_id IN (SELECT haematology_id FROM haematology WHERE treatment_id = :treatment_id) ORDER BY f.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT f.haematology_id,f.aniscocytosis,f.poikilocytosis,f.polychromasia,f.macrocytosis,f.microcytosis,f.hypochromia,f.sickle_cells,f.target_cells,f.spherocytes,f.nucleated_rbc,f.sickling_test,f.create_date,f.modified_date, h.haematology_id FROM haematology h, film_appearance f WHERE f.haematology_id=:haematology_id AND h.haematology_id=f.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE film_appearance SET aniscocytosis = :aniscocytosis,poikilocytosis = :poikilocytosis,polychromasia = :polychromasia,macrocytosis = :macrocytosis,microcytosis = :microcytosis,hypochromia = :hypochromia,sickle_cells =:sickle_cells,target_cells = :target_cells,spherocytes = :spherocytes,nucleated_rbc = :nucleated_rbc,sickling_test = :sickling_test, modified_date = NOW() WHERE haematology_id=:haematology_id';
 }
@@ -684,7 +680,7 @@ class DifferentialCountSqlStatement {
                  monocytes = :monocytes, eosinophils = :eosinophils, basophils = :basophils, widals_test = :widals_test,
                  blood_group = :blood_group, rhesus_factor = :rhesus_factor, genotype = :genotype, modified_date = NOW()';
     const DELETE = 'DELETE FROM differential_count WHERE haematology_id = :haematology_id';
-    const GET    = 'SELECT * FROM differential_count d WHERE d.haematology_id = :haematology_id ORDER BY d.create_date DESC LIMIT 1';
+    const GET    = 'SELECT * FROM differential_count d WHERE d.haematology_id IN (SELECT haematology_id FROM haematology WHERE treatment_id = :treatment_id) ORDER BY d.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT dc.polymorphs_neutrophils,dc.lymphocytes,dc.monocytes,dc.eosinophils,dc.basophils,dc.widals_test,dc.blood_group,dc.rhesus_factor,dc.genotype, dc.modified_date, h.haematology_id FROM haematology h, differential_count dc WHERE dc.haematology_id=:haematology_id AND h.haematology_id=dc.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE differential_count SET polymorphs_neutrophils = :polymorphs_neutrophils, lymphocytes = :lymphocytes, monocytes = :monocytes, eosinophils = :eosinophils, basophils = :basophils, widals_test = :widals_test, blood_group = :blood_group, rhesus_factor = :rhesus_factor, genotype = :genotype, modified_date = NOW() WHERE haematology_id = :haematology_id';
 
@@ -693,28 +689,31 @@ class DifferentialCountSqlStatement {
 class MicroscopyRequestSqlStatment{
     const ADD_REQ_INFO = "INSERT INTO urine (doctor_id, treatment_id, clinical_diagnosis_details, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :clinical_diagnosis_details, NOW(), NOW())";
-    const GET_HISTORY = "SELECT * FROM urine WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
+    const GET_HISTORY = "SELECT clinical_diagnosis_details as diagnosis, modified_date as modified_date, status_id as status, treatment_id as treatment_id FROM urine WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON u.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.status_id = :status_id
-                               AND u.active_fg = :active_fg";
+                               AND u.active_fg = :active_fg ORDER BY u.created_date DESC";
     const GET_ALL_TEST = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON u.treatment_id  = t.treatment_id
-                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.active_fg = :active_fg";
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.active_fg = :active_fg
+                          ORDER BY u.created_date DESC";
     const GET_DETAILS = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON t.treatment_id  WHERE u.treatment_id = :treatment_id";
 }
 
 class ChemicalPathologyRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO chemical_pathology_request (doctor_id, treatment_id, clinical_diagnosis, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :clinical_diagnosis, NOW(), NOW())";
-    const GET_HISTORY = "SELECT * FROM chemical_pathology_request WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
+    const GET_HISTORY = "SELECT clinical_diagnosis as diagnosis, modified_date as modified_date, status_id as status, treatment_id as treatment_id FROM chemical_pathology_request WHERE treatment_id IN SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t ON c.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.status_id = :status_id
-                               AND c.active_fg = :active_fg";
+                               AND c.active_fg = :active_fg  ORDER BY c.created_date DESC";
     const GET_ALL_TEST = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t ON c.treatment_id  = t.treatment_id
-                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.active_fg = :active_fg";
+                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE c.active_fg = :active_fg
+                          ORDER BY c.created_date DESC";
     const GET_DETAIL = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t on
                         c.treatment_id = t.treatment_id WHERE c.treatment_id = :treatment_id";
-    const GET_DETAILS = "SELECT c.cpreq_id, c.cpref_id, c.result FROM chemical_pathology_details AS c INNER JOIN
-                         chemical_pathology_request AS cr ON c.cpreq_id = cr.cpreq_id WHERE cr.treatment_id = :treatment_id";
+    const GET_DETAILS = "SELECT cpreq_id, treatment_id, laboratory_ref, laboratory_comment, clinical_diagnosis, created_date, doctor_id, lab_attendant_id, status_id FROM chemical_pathology_request WHERE treatment_id = :treatment_id";
+    const GET_VALUES = "SELECT cpref_id, result FROM chemical_pathology_details WHERE cpreq_id IN (SELECT cpreq_id FROM
+        chemical_pathology_request WHERE treatment_id = :treatment_id)";
     const DELETE = 'UPDATE chemical_pathology_details SET active_fg = 0, modified_date = NOW() WHERE cpreq_id = :cpreq_id AND cpref_id = :cpref_id';
     const ADD_VALUES = 'INSERT into chemical_pathology_details (cpreq_id, cpref_id, result, created_date, modified_date) VALUES :vals';
     const UPDATE_VALUES = 'UPDATE chemical_pathology_details SET result = :result, active_fg = :active_fg, modified_date = NOW() WHERE cpreq_id = :cpreq_id AND cpref_id = :cpref_id';
@@ -727,17 +726,24 @@ class ChemicalPathologyRequestSqlStatement{
 class VisualRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, NOW(), NOW())";
-    const GET_HISTORY = "SELECT * FROM visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
-    const GET_PATIENT_QUEUE = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON v.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.status_id = :status_id AND v.active_fg = :active_fg";
+    const GET_HISTORY = "SELECT modified_date as modified_date, status_id as status, treatment_id as treatment_id
+        FROM visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
+    const GET_PATIENT_QUEUE = "SELECT * FROM visual_skills_profile AS v
+        INNER JOIN treatment AS t ON v.treatment_id  = t.treatment_id
+        INNER JOIN patient AS p ON t.patient_id = p.patient_id
+        WHERE v.status_id = :status_id AND v.active_fg = :active_fg
+        ORDER BY v.created_date DESC";
     const GET_ALL_TEST = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON v.treatment_id  = t.treatment_id
-                          INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.active_fg = :active_fg";
+        INNER JOIN patient AS p ON t.patient_id = p.patient_id
+        WHERE v.active_fg = :active_fg
+        ORDER BY v.created_date DESC";
     const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE treatment_id = :treatment_id";
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
                             distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
                             pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
                             amplitude_of_accomodation = :amplitude_of_accomodation, modified_date = NOW(),
-                            status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE treatment_id = :treatment_id";
+                            status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE visual_profile_id = :visual_profile_id";
 }
 
 class AdmissionReqSqlStatement {
