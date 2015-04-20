@@ -54,7 +54,6 @@ class PatientModel extends BaseModel {
         $data[PARAMETER] = $parameter;
         $data[WILDCARD] = "%" . $parameter . "%";
 
-        //die(var_dump($data));
         $result = $this->conn->fetchAll($stmt, $data);
 
         return $result;
