@@ -60,7 +60,7 @@ define('PARAMETER', 'parameter');
 define('WILDCARD', 'wildcard');
 define('QUEUE', 'queue');
 define('LMT', 'LMT');
-define('GENERAL_QUEUE', 0);
+define('GENERAL_QUEUE', NULL);
 
 //LONG POLLING CONSTANTS
 define('POLLING_SLEEP_TIME', 5);

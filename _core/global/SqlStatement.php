@@ -164,8 +164,7 @@ class PatientQueueSqlStatement {
             INNER JOIN patient AS p
                 ON pq.patient_id = p.patient_id
         WHERE pq.active_fg = 1
-            AND p.active_fg = 1
-            AND pq.doctor_id = :doctor_id";
+            AND p.active_fg = 1";
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date)  AS LMT FROM patient_queue";
 
