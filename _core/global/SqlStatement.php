@@ -113,13 +113,16 @@ class PatientSqlStatement {
         const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
 
-        const SEARCH = "SELECT DISTINCT(p.patient_id), p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
+        const SEARCH = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p
                 LEFT JOIN patient_queue AS pq
                     ON p.patient_id = pq.patient_id
-            WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :parameter)
-            AND p.patient_id NOT IN
-                (SELECT pq.patient_id FROM patient_queue AS pq WHERE active_fg = 1)";
+            WHERE (surname LIKE :wildcard
+            OR firstname LIKE :wildcard
+            OR middlename LIKE :wildcard
+            OR regNo = :parameter)
+            AND(pq.active_fg IS NULL
+            OR pq.active_fg = 0)";
         const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
 
