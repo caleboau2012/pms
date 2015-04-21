@@ -167,8 +167,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 <tr>
                                     <td>Registration <br/>
                                         <div class="input-group">
-                                            <input name="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
-                                            <span class="btn btn-info input-group-addon" id="verify" onclick="verifyRegNo()">Verify</span>
+                                            <input list="regNos" name="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
+                                            <span class="btn btn-info input-group-addon" id="verify">Verify</span>
+                                            <datalist id="regNos"></datalist>
                                         </div>
                                     </td>
                                 </tr>

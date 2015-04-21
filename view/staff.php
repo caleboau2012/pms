@@ -9,6 +9,9 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: ../index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +32,7 @@ Crave::requireAll(UTIL);
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/print.css" media="print">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -68,9 +72,6 @@ Crave::requireAll(UTIL);
                     </ul>
                 </li>
             </ul>
-            <!--            <form class="navbar-form navbar-right">-->
-            <!--                <input type="text" class="form-control" placeholder="Search...">-->
-            <!--            </form>-->
         </div>
     </div>
 </nav>
@@ -101,26 +102,15 @@ Crave::requireAll(UTIL);
 </script>
 
 <script id="tmplPrint" type="text/html">
-    <div class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h1 class="panel-title">New User Created</h1>
-            </div>
-            <div class="panel-body">
-                <div class="pull-left">
-                    <div class="">
-                        <label for="username" class="label label-primary">Username</label>
-                        <span name="username" class="btn btn-default">{{username}}</span>
-                    </div>
-                </div>
-                <div class="pull-left">
-                    <div style="margin-left: 10px;">
-                        <label for="password" class="label label-info">Password</label>
-                        <span name="password" class="btn btn-default">{{password}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div style="padding: 10px;">
+        <p>
+            <b>Username: </b>
+            <span class="small"> {{username}}</span>
+        </p>
+        <p>
+            <b>Password: </b>
+            <span class="small"> {{password}}</span>
+        </p>
     </div>
 </script>
 

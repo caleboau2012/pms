@@ -3,22 +3,51 @@
  */
 var host = "http://localhost/pms/";
 
-function printElem(data){
-    var mywindow = window.open('', 'my div', 'height=400,width=600');
-    mywindow.document.write('<html><head><title>my div</title>');
-    /*optional stylesheet*/
-    mywindow.document.write('<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" type="text/css" />');
-    mywindow.document.write('</head><body >');
-    mywindow.document.write(data);
-    mywindow.document.write('</body></html>');
+function printElem(title, body, footer){
+    var data = '';
+    $.get(host + 'view/printout.php', function(html){
+        if(title != null) {
+            title = "<div class='panel-heading'><h2 class='panel-title'>" +
+            title + "</h2></div>";
+        }
+        else {
+            title = "";
+        }
 
-    mywindow.document.close(); // necessary for IE >= 10
-    mywindow.focus(); // necessary for IE >= 10
+        if(body != null) {
+            body = "<div class='panel-body'>" + body + "</div>";
+        }
+        else {
+            body = "";
+        }
 
-    mywindow.print();
-    mywindow.close();
+        if(footer != null) {
+            footer = "<div class='panel-footer'>" + footer + "</div>";
+        }
+        else {
+            var footer = "";
+        }
 
-    return true;
+        html = replaceAll("{{title}}", title, html);
+        html = replaceAll("{{body}}", body, html);
+        html = replaceAll("{{footer}}", footer, html);
+
+        var mywindow = window.open('', 'PMS', 'height=400,width=600');
+        mywindow.document.write('<html><head><title>PMS</title>');
+        /*optional stylesheet*/
+        mywindow.document.write('<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" type="text/css" />');
+        mywindow.document.write('</head><body >');
+        mywindow.document.write(html);
+        mywindow.document.write('</body></html>');
+
+        mywindow.document.close(); // necessary for IE >= 10
+        mywindow.focus(); // necessary for IE >= 10
+
+        //mywindow.print();
+        //mywindow.close();
+
+        return true;
+    });
 }
 
 
@@ -42,4 +71,12 @@ function toTitleCase(str) {
 
 function replaceAll(find, replace, str) {
     return str.replace(new RegExp(find, 'g'), replace);
+}
+
+function showAlert(message){
+    $('#alertMSG').html(message);
+    $('#alertMSG').parent().removeClass('hidden');
+    setTimeout(function(){
+        $('#alertMSG').parent().addClass('hidden');
+    }, 3000);
 }
