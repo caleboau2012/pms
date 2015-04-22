@@ -15,23 +15,58 @@ class PatientModel extends BaseModel {
     public function  InsertPatient ($PatientData){
         $sql = PatientSqlStatement::ADD;
         $result = $this->conn->execute($sql, $PatientData);
-       // $result = $this->conn->getLastInsertedId();
+        // $result = $this->conn->getLastInsertedId();
 
         return $result;
         //return $PatientData;
     }
 
     public function  UpdatePatientInfo ($newPatientData){
-        $sql = ProfileSqlStatement::UPDATE;
+        $sql = PatientSqlStatement::UPDATE;
         $result = $this->conn->execute($sql, $newPatientData);
         return $result;
     }
 
     public function UpdatePatientBasicInfo ($newPatientData){
-        $sql =ProfileSqlStatement::UPDATE_BASIC_INFO;
+        $sql =PatientSqlStatement::UPDATE_BASIC_INFO;
         $result = $this->conn->execute($sql, $newPatientData);
         return $result;
     }
+///////////////////
+
+    public function addEmergencyPatient (){
+        $sql = PatientSqlStatement::ADD_EMERGENCY;
+        $result = $this->conn->execute($sql, array());
+        $data2 = $this->conn->getLastInsertedId();
+
+        if ($data2){
+            $sql = PatientSqlStatement::UPDATE_EMER_REGNO;
+            $data3 = array(PatientTable::regNo=> 'EMER'.$data2, PatientTable::patient_id =>$data2);
+            $this->conn->execute($sql, $data3);
+            return $data2;
+        }
+
+    }
+
+    public function RegEmergencyPatient ($data){
+        $sql = EmergencySqlStatement::REG_EMERGENCY;
+        $result = $this->conn->execute($sql, array(PatientTable::patient_id=>$data));
+        return $this->conn->getLastInsertedId();
+    }
+
+    public function verifyEmergencyStatus ($data){
+        $sql = EmergencySqlStatement::VERIFY_EMERGENCY;
+        $result = $this->conn->execute($sql,array(PatientTable::patient_id=>$data));
+        return $result;
+    }
+
+    public function changeStatus($emergency, $status){
+        $sql = EmergencySqlStatement::CHANGE_STATUS;
+        $result = $this->conn->execute($sql,array(EmergencyTable::emergency_status_id=>$status, EmergencyTable::emergency_id=>$emergency));
+        return $result;
+    }
+
+/////////////////
 
 
     /*Fetch Operation*/

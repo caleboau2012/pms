@@ -74,7 +74,7 @@ if ($intent == 'search') {
 
         $patient_id = $_REQUEST[PatientQueueTable::patient_id];
         $doctor_id = (isset($_REQUEST[PatientQueueTable::doctor_id])) ? $_REQUEST[PatientQueueTable::doctor_id] : GENERAL_QUEUE;
-        
+
         $response = $usher->addPatient($patient_id, $doctor_id);
 
         if (is_array($response)) {
@@ -107,15 +107,10 @@ if ($intent == 'search') {
 } elseif ($intent == 'switchQueue') {
     if (isset($_REQUEST['patient_id'], $_REQUEST['to_doctor'], $_REQUEST['from_doctor'])) {
 
+        // die(var_dump($_REQUEST));
         $usher = new ArrivalController();
         $patient = $_REQUEST['patient_id'];
-        $to_doctor = $_REQUEST['to_doctor'];
-        $from_doctor = $_REQUEST['from_doctor'];
-
-        if ($from_doctor == $to_doctor) {
-            echo JsonResponse::error("Origin queue cannot be equal to destination queue!");
-            exit();
-        }
+        $to_doctor = empty($_REQUEST['to_doctor']) ? GENERAL_QUEUE : $_REQUEST['to_doctor'];
 
         //switch patient to doctor queue
         $response = $usher->switchQueue($patient, $to_doctor);

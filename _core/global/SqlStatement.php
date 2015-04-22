@@ -113,22 +113,27 @@ class PatientSqlStatement {
         const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
 
-        const SEARCH = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
+        const SEARCH = "SELECT DISTINCT(p.patient_id), p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p
                 LEFT JOIN patient_queue AS pq
                     ON p.patient_id = pq.patient_id
-            WHERE (surname LIKE :wildcard
-            OR firstname LIKE :wildcard
-            OR middlename LIKE :wildcard
-            OR regNo = :parameter)
-            AND(pq.active_fg IS NULL
-            OR pq.active_fg = 0)";
+            WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :parameter)
+            AND p.patient_id NOT IN
+                (SELECT pq.patient_id FROM patient_queue AS pq WHERE pq.active_fg = 1)";
         const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
 
         const GET_EXISTING_PATIENT_REG_NO = "SELECT regNo FROM patient order by regNo DESC";
 
         const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
+
+    const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, created_date, modified_date, active_fg)
+    VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', NULL, '', '', '', NULL, NOW(), NOW(), '1')";
+
+    const UPDATE_EMER_REGNO ="UPDATE patient SET regNo = :regNo WHERE patient_id = :patient_id ";
+
+    const UPDATE_BASIC_INFO = "UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()";
+
 }
 
 class PatientQueueSqlStatement {
@@ -164,8 +169,7 @@ class PatientQueueSqlStatement {
             INNER JOIN patient AS p
                 ON pq.patient_id = p.patient_id
         WHERE pq.active_fg = 1
-            AND p.active_fg = 1
-            AND pq.doctor_id = :doctor_id";
+            AND p.active_fg = 1";
 
     const GET_LAST_MODIFIED_TIME = "SELECT MAX(modified_date)  AS LMT FROM patient_queue";
 
@@ -884,8 +888,8 @@ class WardRefSqlStatement {
 
 class TreatmentSqlStatement {
 
-    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
-    VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments,  NOW(), NOW(), 1)";
+    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, treatment_status, active_fg)
+    VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments,  NOW(), NOW(),1, 1)";
 
 //    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, created_date, modified_date, active_fg)
 //    VALUES(:doctor_id, :patient_id, NOW(), NOW(), 1)";
@@ -898,5 +902,21 @@ class TreatmentSqlStatement {
 
 
     const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id=:patient_id";
+
+    const CHECK_TREATMENT = "SELECT treatment_id FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
+
+    const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
+
+}
+
+class EmergencySqlStatement {
+
+    const REG_EMERGENCY = "INSERT INTO emergency (emergency_id, patient_id, emergency_status_id, created_date, modified_date) VALUES (NULL, :patient_id, '1', NOW(), NOW())";
+
+    const VERIFY_EMERGENCY ="SELECT emergency_status_id FROM emergency WHERE patient_id=:patient_id ";
+
+    const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE emergency_id =:emergency_id ";
+
+    const GET_EMERGENCY = "SELECT * FROM emergency";
 
 }

@@ -13,7 +13,6 @@ $(document).ready(function(){
 function init(){
     $.get(host + "phase/admin/phase_admin.php?intent=getAllUsers", function(data){
         data = JSON.parse(data);
-
         var  html = "";
         for(var i = 0; i < data.data.length; i++){
             var obj = data.data[i];
@@ -44,9 +43,15 @@ function rapModal(e){
 function initModal(){
     $.get(host + "phase/admin/phase_admin.php?intent=getStaffDetails&userid=" + userid, function(data){
         data = JSON.parse(data);
-        name = data.data.surname + " " +
-            data.data.firstname + " " +
-                data.data.middlename;
+        console.log(data);
+        if(data.data.surname == null){
+            name = ""
+        }
+        else{
+            name = data.data.surname + " " +
+                data.data.firstname + " " +
+                    data.data.middlename;
+        }
         var availableRoles = data.data.roles.available;
         var existingRoles = data.data.roles.existing;
 
@@ -120,7 +125,7 @@ function addNewStaff(e){
                 }
                 else{
                     var printHTML = $('#tmplPrint').html().replace('{{username}}', regNo).replace('{{password}}', password);
-                    printElem(printHTML);
+                    printElem("Staff Credentials", printHTML, null);
                     $('#newStaff').popover('hide');
                     init();
                 }
@@ -156,12 +161,4 @@ function deleteRole(userid, permissionRoleID){
             showAlert(data.message);
             initModal();
     });
-}
-
-function showAlert(message){
-    $('#alertMSG').html(message);
-    $('#alertMSG').parent().removeClass('hidden');
-    setTimeout(function(){
-        $('#alertMSG').parent().addClass('hidden');
-    }, 3000);
 }

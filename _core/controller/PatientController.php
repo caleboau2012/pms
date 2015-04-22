@@ -67,7 +67,7 @@ class PatientController {
 
         );
 
-       // var_dump($data);
+        // var_dump($data);
 
         $result = $this->patient->InsertPatient($data);
 //        var_dump($result);
@@ -78,11 +78,63 @@ class PatientController {
 
     }
 
-    public function  EditPatientInfo ($data ){
+    public function addEmergencyPatient(){
 
-        $patient = new PatientModel();
+        return $this->patient->addEmergencyPatient();
+
+    }
+
+    public function addEmergencyPatientList($addEmerPat){
+
+        return $this->patient->RegEmergencyPatient($addEmerPat);
+
+    }
+
+    public function checkEmergencyStatus($patient_id){
+        return $this->patient->verifyEmergencyStatus ($patient_id);
+    }
+
+    public function changeEmergencyStatus($emergency, $status){
+        return $this->patient->changeStatus($emergency, $status);
+    }
+
+    public function  EditPatientInfo (
+        $surname, $firstname, $middlename, $regNo,
+        $home_address, $telephone, $sex, $height, $weight,
+        $birth_date, $nok_firstname, $nok_middlename,
+        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
+        $mother_status, $father_status, $marital_status, $no_of_children, $patient_id  ){
+
+        $data = array(
+
+            PatientTable::surname => $surname,
+            PatientTable::firstname => $firstname,
+            PatientTable::middlename => $middlename,
+            PatientTable::regNo => $regNo,
+            PatientTable::home_address => $home_address,
+            PatientTable::telephone => $telephone,
+            PatientTable::sex => $sex,
+            PatientTable::height => $height,
+            PatientTable::weight => $weight,
+            PatientTable::birth_date => $birth_date,
+            PatientTable::nok_firstname => $nok_firstname,
+            PatientTable::nok_middlename => $nok_middlename,
+            PatientTable::nok_surname => $nok_surname,
+            PatientTable::nok_address => $nok_address,
+            PatientTable::nok_telephone => $nok_telephone,
+            PatientTable::nok_relationship => $nok_relationship,
+            PatientTable::citizenship => $citizenship,
+            PatientTable::religion => $religion,
+            PatientTable::family_position => $family_position,
+            PatientTable::mother_status => $mother_status,
+            PatientTable::father_status=> $father_status,
+            PatientTable::marital_status => $marital_status,
+            PatientTable::no_of_children =>$no_of_children,
+            PatientTable::patient_id =>$patient_id
+        );
+
+        //$patient = new PatientModel();
         return $this->patient->UpdatePatientInfo($data);
-
 
     }
 
@@ -95,7 +147,7 @@ class PatientController {
 
     public function  retrievePatientInfo ($patient_id ){
 
-       return $this->patient->getPatientDetails($patient_id);
+        return $this->patient->getPatientDetails($patient_id);
 
     }
 
@@ -106,7 +158,7 @@ class PatientController {
     }
 
     public function  getExistingPatientRegNos(){
-         return $this->patient->getExistingPatientRegNos();
+        return $this->patient->getExistingPatientRegNos();
     }
 
     public function regNoExists($regNo){

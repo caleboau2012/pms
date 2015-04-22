@@ -11,8 +11,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
-Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'PharmacistModel'));
+Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController', 'PharmacistController'));
 
 
 if (isset($_REQUEST['intent'])) {
@@ -135,8 +135,22 @@ elseif  ($intent == 'startTreatment') {
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
+
+        // check if patient has treatment before, if so return existing treatment_id, otherwise, create ne treament id.
+        $hasTreatmentbefore = $newaddm->doesTreatmentExist ($patientid);
+
+        if (count($hasTreatmentbefore) < 0)
+        {
+            $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
+        }
 //        $admission_add = $newaddm->addTreatment1($doctorid, $patientid);
+        else{
+            //   echo print_r($hasTreatmentbefore);
+            //  echo print_r($hasTreatmentbefore [1]);
+            //  echo print_r($hasTreatmentbefore [0]);
+            //  echo print_r($hasTreatmentbefore [1]);
+            $admission_add= array('treatment_id' => $hasTreatmentbefore[TreatmentTable::treatment_id]);
+        }
     }
 
 
@@ -152,8 +166,66 @@ elseif  ($intent == 'startTreatment') {
         exit();
     }
 
+}
+elseif  ($intent == 'endTreatment') {
+
+    $treat = new TreatmentController();
+
+    $treatment_id ="";
+    $patientid ="";
+//    $consultation ="";
+//    $symptoms ="";
+//    $comments= "";
+//    $diagnosis ="";
+
+    if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
+
+        $treatment_id =$_REQUEST[TreatmentTable::treatment_id];
+        $patientid =$_REQUEST[TreatmentTable::patient_id];
+        $consultation ="";
+        $symptoms ="";
+        $comments= "";
+        $diagnosis ="";
+
+    }
+    else {
+        echo JsonResponse::error("things are not set");
+        exit();
+    }
+
+    $admission_end = null;
+
+    if (empty($treatment_id) || empty ($patientid) ){
+
+//        print_r($_REQUEST);
+        echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
+        exit();
+    }
+    else{
+
+        $newaddm = new TreatmentController();
+
+        $admission_end = $newaddm->endTreatment($treatment_id);
+
+    }
+
+    if(! $admission_end ){
+        echo print_r($admission_end);
+        echo JsonResponse::success(!$admission_end);
+        exit();
+
+    }
+    else {
+        echo print_r($admission_end);
+        echo JsonResponse::error("Error ending treatment process");
+        exit();
+
+    }
+
+
 
 }
+
 
 elseif  ($intent == 'submitTreatment') {
     $treat = new TreatmentController();
@@ -165,7 +237,7 @@ elseif  ($intent == 'submitTreatment') {
     $symptoms ="";
     $comments= "";
     $diagnosis ="";
-
+    $prescription ="";
 
 
     if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
@@ -177,6 +249,7 @@ elseif  ($intent == 'submitTreatment') {
         $comments= $_REQUEST[TreatmentTable::comments];
         $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
         $treatment_id =$_REQUEST['treatment_id'];
+        $prescription = $_REQUEST['prescription'];
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -187,28 +260,101 @@ elseif  ($intent == 'submitTreatment') {
 
     if (empty($treatment_id) || empty($doctorid) || empty ($patientid) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
 
-        print_r($_REQUEST);
+        //print_r($_REQUEST);
         echo JsonResponse::error("MANY filled, Ensure All fields are filled");
         exit();
     }
     else{
+//      print_r($_REQUEST);
+
         $newaddm = new TreatmentController();
         $admission_add = $newaddm->addTreatment2($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments, $treatment_id);
-    }
 
-    if($admission_add){
+        if ($admission_add){
+
+            foreach ($prescription as $somepre) {
+                $status = ACTIVE;
+                $mod = DOCTOR;
+                $pre  = new PharmacistController();
+                $pre->AddPrescription($somepre, $treatment_id, $status, $mod);
+                if(!$pre){
+                    exit;
+                }
+            }
+
+        }
+
+    }
+    if($admission_add && $pre){
         echo JsonResponse::success($admission_add);
         exit();
     } else {
 //        print_r($_REQUEST);
-        echo JsonResponse::error("Error add patient");
+        echo JsonResponse::error("Automatic Error creating treatment and prescription");
         exit();
         //otu
     }
 
 
 }
+// for starting a treatment for an emergency patient however, an emergency patient already has a patient id
+//it will return an emergency_id for the emergency patient.
 
+/*elseif  ($intent == 'startEmergencyTreatment') { // for starting a treatment for an emergency patient however, an emergency patient already has a patient id
+
+    $treat = new TreatmentController();
+
+    $doctorid ="";
+    $patientid ="";
+//    $consultation ="";
+//    $symptoms ="";
+//    $comments= "";
+//    $diagnosis ="";
+
+    if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
+
+        $doctorid =$_REQUEST[TreatmentTable::doctor_id];
+        $patientid =$_REQUEST[TreatmentTable::patient_id];
+        $consultation ="";
+        $symptoms ="";
+        $comments= "";
+        $diagnosis ="";
+
+    }
+    else {
+        echo JsonResponse::error("No data from view, needs patient and doctor id");
+        exit();
+    }
+
+    $startTreatment= null;
+
+    if (empty($doctorid) || empty ($patientid) ){
+
+//        print_r($_REQUEST);
+        echo JsonResponse::error("patient_id and doctor_id are not set");
+        exit();
+    }
+    else{
+
+        $startTreatment = new TreatmentController();
+        $startTreatment = $startTreatment->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
+//        $admission_add = $newaddm->addTreatment1($doctorid, $patientid);
+    }
+
+
+    if($startTreatment){
+        //var_dump($admission_add);
+        echo JsonResponse::success($admission_add);
+        exit();
+    } else {
+//        print_r($_REQUEST);
+//        echo'admission';
+//        var_dump($admission_add);
+        echo JsonResponse::error("Error starting treatment process");
+        exit();
+    }
+
+}*/
 
 elseif  ($intent == 'getTreatmentHistory') {
 
@@ -337,25 +483,25 @@ elseif  ($intent == 'logEncounter') {
 
 elseif  ($intent == 'getEncounterHistory') {
 
-        if (isset($_REQUEST['admission_id'])){
-            $admissionId = $_REQUEST['admission_id'];
-        }
-        else{
-            echo JsonResponse::error("patient_id not Set");
-            exit();
-        }
-
-        $treat = new TreatmentController();
-        $request_adm = $treat->getTreatmentHistory($admissionId);
-
-        if(is_array($request_adm)){
-            echo JsonResponse::success($request_adm);
-            exit();
-        } else {
-            echo JsonResponse::error("Could not get history. Please try again!");
-            exit();
-        }
+    if (isset($_REQUEST['admission_id'])){
+        $admissionId = $_REQUEST['admission_id'];
     }
+    else{
+        echo JsonResponse::error("patient_id not Set");
+        exit();
+    }
+
+    $treat = new TreatmentController();
+    $request_adm = $treat->getTreatmentHistory($admissionId);
+
+    if(is_array($request_adm)){
+        echo JsonResponse::success($request_adm);
+        exit();
+    } else {
+        echo JsonResponse::error("Could not get history. Please try again!");
+        exit();
+    }
+}
 
 
 elseif  ($intent == 'searchPatient') {
@@ -365,7 +511,7 @@ elseif  ($intent == 'searchPatient') {
 
     if (isset($_REQUEST['treatment_id']) ){  // change surname to what you thin should be set.
 
-       $patientName =$_REQUEST[''];
+        $patientName =$_REQUEST[''];
 
     }
     else {

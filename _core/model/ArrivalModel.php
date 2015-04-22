@@ -52,9 +52,16 @@ class ArrivalModel extends BaseModel {
     }
 
     public function getDoctorQueue($doctor_id) {
+        // die(var_dump($doctor_id));
         $stmt = PatientQueueSqlStatement::DOCTOR_QUEUE;
         $data = array();
-        $data[PatientQueueTable::doctor_id] = $doctor_id;
+        if ($doctor_id == GENERAL_QUEUE) {
+            $stmt .= " AND pq.doctor_id IS NULL";
+        } else {
+            $stmt .= " AND pq.doctor_id = :doctor_id";
+            $data[PatientQueueTable::doctor_id] = $doctor_id;
+        }
+
         $result = $this->conn->fetchAll($stmt, $data);
 
         return (sizeof($result) > 0) ? $result : false;
