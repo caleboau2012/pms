@@ -43,6 +43,10 @@ class UserController {
     }
 
     public function addUser($regNo, $passcode, $status = INACTIVE){
+        if (!Licence::withinUserLimit()) {
+            return false;
+        }
+
         if (!($regNo && $passcode)){
             return false;
         }

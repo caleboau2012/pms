@@ -1,9 +1,9 @@
 <?php
-    require_once '../global/_require.php';
+    // require_once '../global/_require.php';
 
-    Crave::requireAll(GLOBAL_VAR);
-    Crave::requireAll(UTIL);
-    Crave::requireFiles(MODEL, array('BaseModel'));
+    // Crave::requireAll(GLOBAL_VAR);
+    // Crave::requireAll(UTIL);
+    // Crave::requireFiles(MODEL, array('BaseModel'));
 
     class Licence extends BaseModel {
         public static function withinUserLimit(){
@@ -34,5 +34,4 @@
             return false;
         }
     }
-    var_dump(Licence::withinUserLimit());
 ?>
