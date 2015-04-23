@@ -3,11 +3,11 @@
  */
 Notification = {
     unread_count  : null,
-    alerted :      false,
+    alerted       :      false,
     AudioElement  : document.getElementById('audio-element'),
-    Constants: {
-        REQUEST_SUCCESS: 1,
-        REQUEST_ERROR: 2
+    Constants     : {
+        REQUEST_SUCCESS : 1,
+        REQUEST_ERROR   : 2
     },
     init: function(){
         Notification.getCount();
@@ -38,7 +38,7 @@ Notification = {
         * */
         setInterval(function(){
             Notification.checkout(Notification.unread_count);
-        }, 25000);
+        }, 15000);
     },
     displayCount: function(unread_count){
         if(unread_count == 0){
@@ -48,6 +48,6 @@ Notification = {
         }
     }
 };
-$(function(){
+(function(){
     Notification.init();
-});
+})();

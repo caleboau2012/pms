@@ -1,8 +1,7 @@
 <!--
-Notification sound
+    |-----Notification sound-------|
 -->
-<script src="../js/notification.js"></script>
-<audio class="hidden" id="audio-element">
+<audio id="audio-element">
     <source src="../sounds/notification.mp3" id="audio-src">
 </audio>
 <div class="container-fluid">
@@ -12,4 +11,4 @@ Notification sound
         </p>
     </div>
 </div>
-
+<script src="../js/notification.js"></script>
