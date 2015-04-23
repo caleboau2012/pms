@@ -18,9 +18,12 @@ Notification = {
         payload.count = curr_count;
         $.post(host + 'phase/phase_communication.php', payload, function(data){
             if(data.status == Notification.Constants.REQUEST_SUCCESS){
+                //only alert if there is a new message
+                if(Notification.unread_count < data.data.count){
+                    Notification.AudioElement.play();
+                }
                 Notification.unread_count = data.data.count;
                 Notification.displayCount(data.data.count);
-                Notification.AudioElement.play();
             }
         }, 'json');
     },
@@ -38,14 +41,16 @@ Notification = {
         * */
         setInterval(function(){
             Notification.checkout(Notification.unread_count);
-        }, 15000);
+        }, 20000);
     },
     displayCount: function(unread_count){
         if(unread_count == 0){
-            $("#msg_unread").addClass("invisible");
+            $(".message_unread").addClass("invisible");
         }else if(unread_count > 0){
-            $("#msg_unread").removeClass("invisible").html(unread_count);
+            $(".message_unread").removeClass("invisible").html(unread_count);
         }
+    //    update for message page
+        $('.unread-count').html(unread_count);
     }
 };
 (function(){

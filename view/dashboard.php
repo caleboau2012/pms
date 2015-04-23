@@ -52,7 +52,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <li>
                     <a href="mails.php">
                         <span class="fa fa-envelope"></span>
-                        <sup class="badge notification" id="msg_unread"></sup>
+                        <sup class="badge notification message_unread"></sup>
                     </a>
                 </li>
                 <li class="dropdown">
@@ -91,8 +91,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <div class="col-xs-3 text-center">
                             <a href="mails.php" class="dashboard-link">
                                 <img src="../images/messages.png" width="60" height="60">
+                                <sup class="badge notification message_unread"></sup>
                                 <div class="dashboard-desc">Message</div>
                             </a>
+
                         </div>
                         <?php
                         foreach (CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff) {
