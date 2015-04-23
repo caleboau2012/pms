@@ -654,6 +654,7 @@ class ExaminationRequestedTable {
     const modified_date              = 'modified_date';
     const active_fg                  = 'active_fg';
 }
+
 class EmergencyTable {
 
     const table_name                 = 'emergency';
@@ -664,3 +665,4 @@ class EmergencyTable {
     const modified_date              = 'modified_date';
 
 }
+

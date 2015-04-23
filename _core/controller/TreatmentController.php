@@ -28,9 +28,9 @@ class TreatmentController{
     public function addTreatment1($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments){
 //    public function addTreatment1($doctorId, $patientId){
 
-            $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
-                TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
-                TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments);
+        $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
+            TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
+            TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments);
 
 //var_dump($treatmentInfo);
 
@@ -39,16 +39,21 @@ class TreatmentController{
 
     public function addTreatment2($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments, $treatment_id){
         $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
-                               TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
-                               TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments, TreatmentTable::treatment_id => $treatment_id);
+            TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
+            TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments, TreatmentTable::treatment_id => $treatment_id);
 
         return $this->treatmentModel->addTreatment2($treatmentInfo);
     }
 
     public function doesTreatmentExist ($patientId){
-        $data = array(TreatmentTable::patient_id => $patientId);
+        $data = array(TreatmentTable::patient_id => $patientId );
         return $this->treatmentModel->checkForExistingTreatment ($data);
-        }
+    }
+
+    public function endTreatment ($treatmentinfo){
+        $data = array(TreatmentTable::treatment_id => $treatmentinfo );
+        return $this->treatmentModel->terminateTreatment($data);
+    }
 
     public function getTreatmentHistory($patientId){
         return $this->treatmentModel->getTreatmentHistory($patientId);
@@ -72,7 +77,7 @@ class TreatmentController{
 
     public function logEncounter($doctorId, $patientId, $admissionId, $comments){
         $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
-                      EncounterTable::admission_id => $admissionId, EncounterTable::comments => $comments);
+            EncounterTable::admission_id => $admissionId, EncounterTable::comments => $comments);
         return $this->treatmentModel->logEncounter($data);
     }
 }

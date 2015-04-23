@@ -58,6 +58,63 @@ function prepareData(patientID){
             .replace('{{weight}}', data.data.weight)
             .replace('{{birth}}', data.data.birth_date);
 
-        printElem(printHTML);
+        printElem("Patients Details", printHTML, null);
     });
+}
+
+$("#newPatientForm").on('submit', function(e){
+    e.preventDefault();
+
+    addPatient(this);
+});
+
+$("#naija").on('change', function () {
+    $('.non-naija').toggle();
+});
+
+function addPatient(form){
+    var citizenship = $('#naija').is(':checked')?"Nigeria":form.citizenship;
+    //console.log(citizenship);
+
+    $.post(host + "phase/arrival/phase_patient.php?intent=addPatient",
+        {
+            surname : form.surname.value,
+            firstname : form.firstname.value,
+            middlename : form.middlename.value,
+            regNo : form.regNo.value,
+            home_address : form.home_address.value,
+            telephone : form.telephone.value,
+            sex : form.sex.value,
+            height : form.height.value,
+            weight : form.weight.value,
+            birth_date : form.birth_date.value,
+            nok_firstname : form.nok_firstname.value,
+            nok_middlename : form.nok_middlename.value,
+            nok_surname : form.nok_surname.value,
+            nok_address : form.nok_address.value,
+            nok_telephone : form.nok_telephone.value,
+            nok_relationship  : form.nok_relationship.value,
+            citizenship : citizenship,
+            religion : form.religion.value,
+            family_position : form.family_position.value,
+            mother_status : form.mother_status.value,
+            father_status : form.father_status.value,
+            marital_status : form.marital_status.value,
+            no_of_children : form.no_of_children.value
+        },
+        function(data){
+            data = JSON.parse(data);
+            console.log(data);
+            if(data.data){
+                $('#newPatientModal').modal('hide');
+                init();
+            }
+            else{
+                alert('Sorry but something went wrong: ' + data.message)
+            }
+        }).fail(function(){
+            console.log('shing');
+        });
+
+    return false;
 }

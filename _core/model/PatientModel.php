@@ -15,7 +15,7 @@ class PatientModel extends BaseModel {
     public function  InsertPatient ($PatientData){
         $sql = PatientSqlStatement::ADD;
         $result = $this->conn->execute($sql, $PatientData);
-       // $result = $this->conn->getLastInsertedId();
+        // $result = $this->conn->getLastInsertedId();
 
         return $result;
         //return $PatientData;
@@ -35,11 +35,18 @@ class PatientModel extends BaseModel {
 ///////////////////
 
     public function addEmergencyPatient (){
-       $sql = PatientSqlStatement::ADD_EMERGENCY;
-       $result = $this->conn->execute($sql, array());
-       return $this->conn->getLastInsertedId();
+        $sql = PatientSqlStatement::ADD_EMERGENCY;
+        $result = $this->conn->execute($sql, array());
+        $data2 = $this->conn->getLastInsertedId();
 
-     }
+        if ($data2){
+            $sql = PatientSqlStatement::UPDATE_EMER_REGNO;
+            $data3 = array(PatientTable::regNo=> 'EMER'.$data2, PatientTable::patient_id =>$data2);
+            $this->conn->execute($sql, $data3);
+            return $data2;
+        }
+
+    }
 
     public function RegEmergencyPatient ($data){
         $sql = EmergencySqlStatement::REG_EMERGENCY;
@@ -53,11 +60,11 @@ class PatientModel extends BaseModel {
         return $result;
     }
 
-public function changeStatus($emergency, $status){
-    $sql = EmergencySqlStatement::CHANGE_STATUS;
-    $result = $this->conn->execute($sql,array(EmergencyTable::emergency_status_id=>$status, EmergencyTable::emergency_id=>$emergency));
-    return $result;
-}
+    public function changeStatus($emergency, $status){
+        $sql = EmergencySqlStatement::CHANGE_STATUS;
+        $result = $this->conn->execute($sql,array(EmergencyTable::emergency_status_id=>$status, EmergencyTable::emergency_id=>$emergency));
+        return $result;
+    }
 
 /////////////////
 
@@ -82,6 +89,7 @@ public function changeStatus($emergency, $status){
         $data[PARAMETER] = $parameter;
         $data[WILDCARD] = "%" . $parameter . "%";
 
+        //die(var_dump($data));
         $result = $this->conn->fetchAll($stmt, $data);
 
         return $result;

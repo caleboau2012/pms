@@ -141,7 +141,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> </h2>
+                    <h4 class="pull-left patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> </h4>
+                    <span class="pull-right">
+                        <button id="end" class="hidden btn btn-warning pull-right">End Session <span class="fa fa-close"></span></button>
+                    </span>
+                    <span class="clearfix"></span>
                 </div>
                 <div class="panel-body">
                     <p class="patient-RegNo"></p>
@@ -202,7 +206,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     <input type="text" class="form-control" name="diagnosis">
                                 </div>
                                 <br/>
-                                <button id="treatmentSubmit" type="submit" class="btn btn-primary">Submit</button>
+                                <div>
+                                    <input  name="admit" type="checkbox"> <small>Request Admission? <span class="fa fa-bed"></span></small>
+                                    <button id="treatmentSubmit" type="submit" class="btn btn-primary pull-right">Submit</button>
+                                </div>
                             </div>
                         </div>
                     </form>
@@ -303,7 +310,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
-<script src="../js/libs/masonry.js"></script>
 <script src="../js/treatment.js"></script>
 </body>
 </html>
