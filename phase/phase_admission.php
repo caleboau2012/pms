@@ -60,9 +60,7 @@ if ($intent == 'admitPatient') {
     if (isset($_REQUEST[TERM])) {
         $warden = new AdmissionController();
         $patient_details = $warden->searchPatients($_REQUEST[TERM]);
-//        if (is_array($patient_details)) {
         if(sizeof($patient_details) !== 0) {
-//            echo json_encode($patient_details);
             echo JsonResponse::success($patient_details);
             exit();
         } else {
@@ -106,7 +104,7 @@ if ($intent == 'admitPatient') {
 } elseif ($intent == 'logEncounter') {
     if (isset($_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $_REQUEST[AdmissionTable::patient_id])) {
         $personnel_id = CxSessionHandler::getItem(UserAuthTable::userid);
-        
+
         if (isset($_REQUEST[VITALS])) {
             $vitals_data = $_REQUEST[VITALS];
             $valid_vitals = VitalsController::validateVitals($vitals_data);
@@ -115,7 +113,7 @@ if ($intent == 'admitPatient') {
                 $vitals_data = $valid_vitals;
             } else {
                 echo JsonResponse::error("Invalid vitals data!");
-                exit();                
+                exit();
             }
         } else {
             $vitals_data = null;

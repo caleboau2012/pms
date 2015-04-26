@@ -872,18 +872,27 @@ class AdmissionSqlStatement {
 }
 
 class BedSqlStatement {
-    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id AND bed_status = 0";
+    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id AND bed_status = 0 AND active_fg = 1";
 
-    const VACATE = "UPDATE bed SET bed_status = 0 WHERE bed_id = :bed_id AND bed_status = 1";
+    const VACATE = "UPDATE bed SET bed_status = 0 WHERE bed_id = :bed_id AND bed_status = 1 AND active_fg = 1";
 
-    const BED_STATUS = "SELECT bed_status FROM bed WHERE bed_id = :bed_id";
+    const BED_STATUS = "SELECT bed_status FROM bed WHERE bed_id = :bed_id AND active_fg = 1";
 
+    const BED_EXISTS = "SELECT COUNT(*) AS count FROM bed WHERE bed_description = :bed_description AND active_fg = 1";
+
+    const NEW_BED = "INSERT INTO bed(bed_description, bed_status, ward_id, created_date, modified_date, active_fg) VALUES(:bed_description, 0, :ward_id, NOW(), NOW(), 1)";
 }
 
 class WardRefSqlStatement {
-    const GET_ALL = "SELECT ward_ref_id, description FROM ward_ref";
+    const GET_ALL = "SELECT ward_ref_id, description FROM ward_ref WHERE active_fg = 1";
 
-    const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id";
+    const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id AND active_fg = 1";
+
+    const WARD_EXISTS = "SELECT COUNT(*) AS count FROM ward_ref WHERE description = :description AND active_fg = 1";
+
+    const IS_VALID_WARD = "SELECT COUNT(*) AS count FROM ward_ref WHERE ward_ref_id = :ward_ref_id AND active_fg = 1";
+
+    const NEW_WARD = "INSERT INTO ward_ref(description, created_date, modified_date, active_fg) VALUES(:description, NOW(), NOW(), 1)";
 }
 
 class TreatmentSqlStatement {
