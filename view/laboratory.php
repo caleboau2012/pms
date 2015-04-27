@@ -212,6 +212,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     </div>
 </div>
 
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -221,5 +222,23 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js"></script>
+<a href="#" class="l-back-to-top">Back to top</a>
+<script>
+    var toTop = $(".l-back-to-top");
+
+    $(window).scroll(function(){
+        if($(this).scrollTop() > 200){
+            toTop.fadeIn();
+        }
+        else{
+            toTop.fadeOut();
+        }
+    });
+
+    toTop.click(function(event){
+        event.preventDefault();
+        $('body,html').animate({scrollTop : 0},800);
+    });
+</script>
 </body>
 </html>

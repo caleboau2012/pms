@@ -19,7 +19,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Admin Dashboard</title>
+    <title>System Backup & Restore</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
@@ -75,11 +75,22 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div class="container well">
     <div class="row">
         <div class="col-sm-8 col-sm-offset-2">
-            <h1 class="text-info">Database Backup and Restore</h1><hr>
+            <h1 class="text-info margin-buttom">Database Backup and Restore</h1>
 
-            <button class="btn btn-primary">Backup</button>
-            <button class="btn btn-primary">Restore</button>
-
+            <table class="table table-responsive">
+                <tbody>
+                <tr>
+                    <td>
+                        <button class="btn btn-primary">Backup</button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <button class="btn btn-primary">Restore</button>
+                    </td>
+                </tr>
+                </tbody>
+            </table>
         </div>
     </div>
 </div>
