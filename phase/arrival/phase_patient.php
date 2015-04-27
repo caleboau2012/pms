@@ -56,7 +56,7 @@ else if ($intent == 'getPatient') {
 
 }
 
-else if ($intent == 'addPatient') {
+else if ($intent == 'addPatient') { //working
     $patientController = new PatientController();
 
     $surname ="";
@@ -146,8 +146,10 @@ else if ($intent == 'addPatient') {
 
 }
 ////////////Used to add emergency patient
-else if ($intent == 'addEmergencyPatient') {
+else if ($intent == 'addEmergencyPatient') {  //working
     $patientController = new PatientController();
+
+
 
     $addEmerPat = $patientController->addEmergencyPatient();
 
@@ -157,8 +159,9 @@ else if ($intent == 'addEmergencyPatient') {
 
         if ($addEmerList){
 
-            $emergency_reg = 'EMER'. $addEmerList;
-            $emergencydata = array('patient_id'=>$addEmerPat,'emergency_reg'=>$emergency_reg);
+
+            $emergency_reg = EMER. $addEmerList;
+            $emergencydata = array(PatientTable::patient_id=>$addEmerPat, PatientTable::regNo=>$emergency_reg);
 
             echo JsonResponse::success($emergencydata);
             exit();
@@ -175,7 +178,7 @@ else if ($intent == 'addEmergencyPatient') {
 }
 
 ////////////////// upgrade emergency patient to Real patient
-else if ($intent == 'UpgradeEmergencyPatient') {
+else if ($intent == 'UpgradeEmergencyPatient') { //working
 
     $patientController = new PatientController();
 
@@ -274,12 +277,13 @@ else if ($intent == 'UpgradeEmergencyPatient') {
             // change status of emergency table of emergency patient from 1 to 2;
 
             //create new Editinfo for updating emergency to enable rollback functionality.
-
-            $emergencyreg ="EMER". $patient_id;
-            $change = $patientController->changeEmergencyStatus($emergencyreg, $status);
+            $status = 2;
+            $emergencyreg = $patient_id;
+            $change = $patientController->changeEmergencyStatus($emergencyreg, 2);
 
             if ($change){
 
+                var_dump($change);
                 echo JsonResponse::message(1, "Emergency Patient sucessfully upgraded");
                 exit();
             }

@@ -98,7 +98,8 @@ elseif  ($intent == 'requestAdmission') {
 
 }
 
-elseif  ($intent == 'startTreatment') {
+elseif  ($intent == 'startTreatment') { //working
+
 
     $treat = new TreatmentController();
 
@@ -113,10 +114,12 @@ elseif  ($intent == 'startTreatment') {
 
         $doctorid =$_REQUEST[TreatmentTable::doctor_id];
         $patientid =$_REQUEST[TreatmentTable::patient_id];
-        $consultation ="";
-        $symptoms ="";
-        $comments= "";
-        $diagnosis ="";
+        $consultation =" ";
+        $symptoms =" ";
+        $comments= " ";
+        $diagnosis =" ";
+
+
 
     }
     else {
@@ -139,8 +142,10 @@ elseif  ($intent == 'startTreatment') {
         // check if patient has treatment before, if so return existing treatment_id, otherwise, create ne treament id.
         $hasTreatmentbefore = $newaddm->doesTreatmentExist ($patientid);
 
-        if (count($hasTreatmentbefore) < 0)
+        if ($hasTreatmentbefore == 0)
         {
+
+
             $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
         }
 //        $admission_add = $newaddm->addTreatment1($doctorid, $patientid);
@@ -149,7 +154,9 @@ elseif  ($intent == 'startTreatment') {
             //  echo print_r($hasTreatmentbefore [1]);
             //  echo print_r($hasTreatmentbefore [0]);
             //  echo print_r($hasTreatmentbefore [1]);
-            $admission_add= array('treatment_id' => $hasTreatmentbefore[TreatmentTable::treatment_id]);
+            $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
+
+
         }
     }
 
@@ -159,15 +166,15 @@ elseif  ($intent == 'startTreatment') {
         echo JsonResponse::success($admission_add);
         exit();
     } else {
-//        print_r($_REQUEST);
+//        ($_REQUEST);
 //        echo'admission';
-//        var_dump($admission_add);
+        echo $admission_add;
         echo JsonResponse::error("Error starting treatment process");
         exit();
     }
 
 }
-elseif  ($intent == 'endTreatment') {
+elseif  ($intent == 'endTreatment') { //working
 
     $treat = new TreatmentController();
 
@@ -227,7 +234,7 @@ elseif  ($intent == 'endTreatment') {
 }
 
 
-elseif  ($intent == 'submitTreatment') {
+elseif  ($intent == 'submitTreatment') { //working
     $treat = new TreatmentController();
 
     $doctorid ="";
@@ -629,4 +636,7 @@ elseif($intent == 'labRequest'){
         echo JsonResponse::error("Please select a lab type");
         exit();
     }
+}
+else{
+    JsonResponse::error("No intent set");
 }

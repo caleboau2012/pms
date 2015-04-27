@@ -108,7 +108,18 @@ class PatientSqlStatement {
 
         const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient WHERE patient_id = :patient_id';
-        const UPDATE = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
+        const UPDATE_INFO = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
+
+        const UPDATE ="UPDATE patient SET surname =:surname, firstname =:firstname, middlename =:middlename,
+regNo =:regNo, home_address =:home_address, telephone =:telephone, sex =:sex, height =:height, weight =:weight,
+birth_date =:birth_date, nok_firstname =:nok_firstname, nok_middlename =:nok_middlename, nok_surname =:nok_surname,
+nok_address =:nok_address, nok_telephone =:nok_telephone, nok_relationship =:nok_relationship, citizenship =:citizenship,
+religion =:religion, family_position =:family_position, mother_status =:mother_status,
+father_status =:father_status,
+marital_status =:marital_status,
+no_of_children =:no_of_children,
+modified_date =NOW() WHERE patient_id =:patient_id
+";
 
         const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
@@ -128,7 +139,7 @@ class PatientSqlStatement {
         const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
 
     const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, created_date, modified_date, active_fg)
-    VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', NULL, '', '', '', NULL, NOW(), NOW(), '1')";
+                           VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', '1', '', '', '', '1', NOW(), NOW(), '1')";
 
     const UPDATE_EMER_REGNO ="UPDATE patient SET regNo = :regNo WHERE patient_id = :patient_id ";
 
@@ -924,7 +935,7 @@ class EmergencySqlStatement {
 
     const VERIFY_EMERGENCY ="SELECT emergency_status_id FROM emergency WHERE patient_id=:patient_id ";
 
-    const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE emergency_id =:emergency_id ";
+    const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE patient_id =:patient_id ";
 
     const GET_EMERGENCY = "SELECT * FROM emergency";
 

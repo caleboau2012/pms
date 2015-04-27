@@ -109,3 +109,7 @@ define('TERM', 'term'); //jQuery Autocomplete request parameter
 //BED CONSTANTS
 define('OCCUPIED', 1);
 define('VACANT', 0);
+
+//EMERGECY REG THINGS
+
+define ('EMER', 'EMER');

@@ -661,7 +661,7 @@ class EmergencyTable {
     const emergency_id              = 'emergency_id';
     const patient_id                = 'patient_id';
     const emergency_status_id       = 'emergency_status_id';
-    const create_date                = 'create_date';
+    const created_date                = 'created_date';
     const modified_date              = 'modified_date';
 
 }
