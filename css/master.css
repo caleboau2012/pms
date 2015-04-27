@@ -587,7 +587,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 .treatment .form-control{
     display: block;
-    width: 50%;
+    width: 30%;
     margin: 0 auto;
     vertical-align: middle;
 }

@@ -276,52 +276,29 @@ function addPatient(form){
 function emergency(){
     var id;
 
-    $.post(host + "phase/arrival/phase_patient.php?intent=addPatient",
-        {
-            surname : 'EMER',
-            firstname : 'EMER',
-            middlename : 'EMER',
-            regNo : 'EMER',
-            home_address : 'EMER',
-            telephone : 'EMER',
-            sex : 'Emer',
-            height : '0',
-            weight : '0',
-            birth_date : '0000-00-00',
-            nok_firstname : 'EMER',
-            nok_middlename : 'EMER',
-            nok_surname : 'EMER',
-            nok_address : 'EMER',
-            nok_telephone : 'EMER',
-            nok_relationship  : 9,
-            citizenship : 'EMER',
-            religion : 'EMER',
-            family_position : 0,
-            mother_status : 'EMER',
-            father_status : 'EMER',
-            marital_status : 'EMER',
-            no_of_children : 0
-        },
+    $.post(host + "phase/arrival/phase_patient.php?intent=addEmergencyPatient",
         function(data){
             console.log(data);
-            data = JSON.parse(data);
-            //console.log(data);
-            id = data.data;
+            if(data.status == 1){
+                data = data.data;
 
-            var patientHTML = "";
-            //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
-            patientHTML += $('#tmplPatients').html();
-            patientHTML = patientHTML.replace('{{status}}', 'panel-danger');
-            patientHTML = replaceAll('{{userid}}', '0', patientHTML);
-            patientHTML = replaceAll('{{patientid}}', id, patientHTML);
-            patientHTML = replaceAll('{{regNo}}', 'EMER' + id, patientHTML);
-            patientHTML = replaceAll('{{name}}', 'EMER' + id, patientHTML);
-            patientHTML = replaceAll('{{sex}}', '', patientHTML);
-            addToQueue(id);
+                id = data.patient_id;
 
-            $(".general").find('.drop').prepend(patientHTML);
-            draggableDropabble();
-        });
+                var patientHTML = "";
+                //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+                patientHTML += $('#tmplPatients').html();
+                patientHTML = patientHTML.replace('{{status}}', 'panel-danger');
+                patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+                patientHTML = replaceAll('{{patientid}}', id, patientHTML);
+                patientHTML = replaceAll('{{regNo}}', data.emergency_reg, patientHTML);
+                patientHTML = replaceAll('{{name}}', data.emergency_reg, patientHTML);
+                patientHTML = replaceAll('{{sex}}', '', patientHTML);
+                addToQueue(id);
+
+                $(".general").find('.drop').prepend(patientHTML);
+                draggableDropabble();
+            }
+        }, 'json');
 }
 
 function searchResult(patientDetails){
