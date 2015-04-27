@@ -47,22 +47,28 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             </button>
             <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right nav-pills">
-                <div class="dropdown navbar-right navbar-right-text pointer">
-                    <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                    <img src="../images/profile.png">
-                    <span>
-                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname) . ' ' . CxSessionHandler::getItem(ProfileTable::firstname)) ?>
-                    </span>
-                    <span class="caret"></span>
-                </span>
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="mails.php">
+                        <span class="fa fa-envelope"></span>
+                        <sup class="badge notification message_unread"></sup>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        <img src="../images/profile.png">
+                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
-                </div>
+                </li>
             </ul>
         </div>
+
     </div>
 </nav>
 
@@ -85,8 +91,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <div class="col-xs-3 text-center">
                             <a href="mails.php" class="dashboard-link">
                                 <img src="../images/messages.png" width="60" height="60">
+                                <sup class="badge notification message_unread"></sup>
                                 <div class="dashboard-desc">Message</div>
                             </a>
+
                         </div>
                         <?php
                         foreach (CxSessionHandler::getItem(StaffRoleTable::staff_role_id) as $staff) {
@@ -213,11 +221,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
 </div> <!-- /container -->
 
-<?php include('footer.php'); ?>
 
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/index.js"></script>
+<?php include('footer.php'); ?>
+
 </body>
 </html>

@@ -988,7 +988,15 @@ span#loader{
 .patient-queue.patient-queue--gray .patient-queue__header {
     color: #555555;
 }
-
+/*
+.notification
+*/
+.notification{
+    background: #D9534F;
+}
+.invisible{
+    visibility: hidden;
+}
 /*Footer*/
 #footer{
     margin: 1.5em 0 0;
