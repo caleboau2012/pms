@@ -122,6 +122,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </a>
                                 </div>
                             <?php
+                            } else if ($staff[StaffRoleTable::staff_role_id] == LABORATORY_CONDUCTOR){
+                                ?>
+                                <div class="col-xs-3 text-center">
+                                    <a href="laboratory.php" class="dashboard-link">
+                                        <img src="../images/laboratory-icon.png" width="60" height="60">
+
+                                        <div class="dashboard-desc">Laboratory</div>
+                                    </a>
+                                </div>
+                            <?php
                             }
                         }
                         ?>

@@ -222,7 +222,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js"></script>
-<a href="#" class="l-back-to-top">Back to top</a>
+<a href="#" class="l-back-to-top" style="display: none;">Back to top</a>
 <script>
     var toTop = $(".l-back-to-top");
 
@@ -239,6 +239,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
         event.preventDefault();
         $('body,html').animate({scrollTop : 0},800);
     });
+
 </script>
 </body>
 </html>

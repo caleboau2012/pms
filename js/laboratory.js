@@ -108,7 +108,8 @@ var Laboratory = {
 
                     });
                 }
-                $('#test_table tbody').empty().append(test_data);
+                $('#test_table tbody').empty().html(test_data);
+                $('table.dataTable').dataTable();
                 $('#pending .patient-queue__list').empty().append(pending);
             },
             error: function(){
@@ -183,12 +184,18 @@ var Laboratory = {
             type : request_type,
             data : data,
             url : url,
+            dataType : 'json',
             success: function(returnedData){
                 console.log(returnedData);
-
+                $('body,html').animate({scrollTop : 0}, 800);
+                if (returnedData.status == 3){
+                    $('div.page-header').append("<p class='alert alert-danger'>"+ returnedData.message +"</p>");
+                } else{
+                    $('div.page-header').append("<p class='alert alert-success'>"+ returnedData.message +"</p>");
+                }
             },
             error: function(){
-                console.log($data);
+                console.log('request failed');
             }
         });
     }
