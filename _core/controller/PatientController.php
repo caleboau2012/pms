@@ -138,6 +138,11 @@ class PatientController {
 
     }
 
+    public function  getEmergencyPatients (){
+        $patient = new PatientModel();
+        return $patient->getEmergencyPatients();
+    }
+
     public function  EditPatientBasicInfo ($data ){
 
         $patient = new PatientModel();

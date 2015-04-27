@@ -272,6 +272,7 @@ class PrescriptionSqlStatement{
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id";
     const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status WHERE prescription_id = :prescription_id";
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
+    const ADD_PRESCRIPTION = "INSERT INTO pres";
 }
 
 class DrugSqlStatement{

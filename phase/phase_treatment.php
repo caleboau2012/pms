@@ -285,14 +285,14 @@ elseif  ($intent == 'submitTreatment') { //working
                 $pre  = new PharmacistController();
                 $pre->AddPrescription($somepre, $treatment_id, $status, $mod);
                 if(!$pre){
-                    exit;
+                    exit();
                 }
             }
 
         }
 
     }
-    if($admission_add && $pre){
+    if($admission_add || $pre){
         echo JsonResponse::success($admission_add);
         exit();
     } else {

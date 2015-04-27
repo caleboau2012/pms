@@ -34,6 +34,19 @@ if ($intent == 'getAllPatients') {
     }
 
 }
+else if ($intent == 'getAllEmergencyPatient') {
+    $patientController = new PatientController();
+    $result = $patientController->getEmergencyPatients();
+    if(is_array($result)){
+        echo JsonResponse::success($result);
+        exit();
+    } else {
+        echo JsonResponse::error("Could not Find Emergency Patient. Please try again!");
+        exit();
+    }
+
+
+}
 else if ($intent == 'getPatient') {
     $patientController = new PatientController();
     if (isset($_REQUEST['patientId'])){

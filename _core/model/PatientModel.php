@@ -51,6 +51,12 @@ class PatientModel extends BaseModel {
 
     }
 
+    public function getEmergencyPatients (){
+        $sql = EmergencySqlStatement::GET_EMERGENCY;
+        $result = $this->conn->fetchAll($sql, array());
+        return $result;
+    }
+
     public function RegEmergencyPatient ($data){
         $sql = EmergencySqlStatement::REG_EMERGENCY;
         $result = $this->conn->execute($sql, array(PatientTable::patient_id=>$data));
