@@ -16,6 +16,7 @@ $view_bag = array();
 
 
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
+//var_dump($view_bag);
 
 if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
@@ -94,7 +95,7 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                                                 <input type="radio" <?php echo $disabled; ?> <?php
                                                 if(isset($view_bag['radiology']['xray_case_id'])){
                                                     echo ($view_bag['radiology']['xray_case_id'] == $label->getId()) ?  "checked='checked'" : '';
-                                                } ?> name="<?php echo 'data['.RadiologyTable::table_name.'][xray_case_id]'; ?>" value="<?php if(isset($view_bag['radiology']['xray_case_id'])) echo $view_bag['radiology']['xray_case_id']; ?>"/>
+                                                } ?> name="<?php echo 'data['.RadiologyTable::table_name.'][xray_case_id]'; ?>" value="<?php echo $label->getId(); ?>"/>
                                                 <?php echo $label->getLabel(); ?>
                                             </label>
                                         <?php } ?>

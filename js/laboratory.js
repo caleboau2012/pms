@@ -2,11 +2,6 @@
  * Created by Olaniyi on 3/11/15.
  */
 
-
-String.prototype.firstCharUpper = function(){
-    return this.substring(0, 1).toUpperCase() + this.toLowerCase().substring(1);
-}
-
 var Laboratory = {
     CONSTANTS:{
         FIVE: 'Pending',
@@ -109,8 +104,8 @@ var Laboratory = {
                     });
                 }
                 $('#test_table tbody').empty().html(test_data);
+                $('#pending .patient-queue__list').empty().html(pending);
                 $('table.dataTable').dataTable();
-                $('#pending .patient-queue__list').empty().append(pending);
             },
             error: function(){
                 console.log('failed');
@@ -184,18 +179,20 @@ var Laboratory = {
             type : request_type,
             data : data,
             url : url,
-            dataType : 'json',
+            dataType: 'json',
             success: function(returnedData){
                 console.log(returnedData);
                 $('body,html').animate({scrollTop : 0}, 800);
                 if (returnedData.status == 3){
                     $('div.page-header').append("<p class='alert alert-danger'>"+ returnedData.message +"</p>");
                 } else{
-                    $('div.page-header').append("<p class='alert alert-success'>"+ returnedData.message +"</p>");
+                    $('div.page-header').append("<p class='alert alert-success'>"+ returnedData.data +"</p>");
                 }
             },
-            error: function(){
-                console.log('request failed');
+            error: function(data){
+                console.log(data.responseText)
+                $('body,html').animate({scrollTop : 0}, 800);
+                $('div.page-header').append("<p class='alert alert-danger'>Update not Successful</p>");
             }
         });
     }
