@@ -28,7 +28,7 @@ class PatientModel extends BaseModel {
     }
 
     public function UpdatePatientBasicInfo ($newPatientData){
-        $sql =PatientSqlStatement::UPDATE_BASIC_INFO;
+        $sql = PatientSqlStatement::UPDATE_BASIC_INFO;
         $result = $this->conn->execute($sql, $newPatientData);
         return $result;
     }
@@ -112,10 +112,6 @@ class PatientModel extends BaseModel {
     public function isRegNumExisting($regNo){
         $data = array(PatientTable::regNo => strtoupper($regNo));
         $response = $this->conn->fetch(PatientSqlStatement::IS_REG_EXISTING, $data);
-        if($response['result'] > 0){
-            return true;
-        } else {
-            return false;
-        }
+        return $response['result'] > 0;
     }
 }
