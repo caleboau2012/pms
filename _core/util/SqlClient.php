@@ -100,7 +100,6 @@ class SqlClient {
             return false;
 
         foreach($vars as $key){
-            echo substr($key, 1) . "<br>";
             if(!array_key_exists(substr($key, 1), $data)){
                 return false;
             }

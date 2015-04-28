@@ -46,7 +46,7 @@ $list_of_staff = $userController->getAllUsers();
                 <li>
                     <a href="mails.php">
                         <span class="fa fa-envelope"></span>
-                        <sup class="badge notification" id="msg_unread"></sup>
+                        <sup class="badge notification message_unread"></sup>
                     </a>
                 </li>
                 <li class="dropdown">

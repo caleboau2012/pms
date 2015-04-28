@@ -21,7 +21,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 $lab = new LaboratoryController();
 $view_bag = array();
 $view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
-//var_dump($view_bag);
 
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';

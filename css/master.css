@@ -439,6 +439,10 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     max-height: 15em;
     overflow-y: auto;
 }
+
+.margin-buttom {
+    margin-bottom: 50px;
+}
 .p-panel{
     background: #FFFFFF;
 }
@@ -583,7 +587,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 .treatment .form-control{
     display: block;
-    width: 50%;
+    width: 30%;
     margin: 0 auto;
     vertical-align: middle;
 }
@@ -996,4 +1000,18 @@ span#loader{
 /*Footer*/
 #footer{
     margin: 1.5em 0 0;
+}
+
+.l-back-to-top {
+    position: fixed;
+    right: 1.875em;
+    bottom: 60px;
+    padding: 0.4375em 0.875em;
+    background: #326294;
+    border-radius: 0.25em;
+}
+
+.l-back-to-top, .l-back-to-top:hover {
+    color: #fff;
+    text-decoration: none;
 }

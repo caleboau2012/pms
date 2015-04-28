@@ -108,7 +108,18 @@ class PatientSqlStatement {
 
         const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient WHERE patient_id = :patient_id';
-        const UPDATE = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
+        const UPDATE_INFO = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
+
+        const UPDATE ="UPDATE patient SET surname =:surname, firstname =:firstname, middlename =:middlename,
+regNo =:regNo, home_address =:home_address, telephone =:telephone, sex =:sex, height =:height, weight =:weight,
+birth_date =:birth_date, nok_firstname =:nok_firstname, nok_middlename =:nok_middlename, nok_surname =:nok_surname,
+nok_address =:nok_address, nok_telephone =:nok_telephone, nok_relationship =:nok_relationship, citizenship =:citizenship,
+religion =:religion, family_position =:family_position, mother_status =:mother_status,
+father_status =:father_status,
+marital_status =:marital_status,
+no_of_children =:no_of_children,
+modified_date =NOW() WHERE patient_id =:patient_id
+";
 
         const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
@@ -126,6 +137,14 @@ class PatientSqlStatement {
         const GET_EXISTING_PATIENT_REG_NO = "SELECT regNo FROM patient order by regNo DESC";
 
         const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
+
+    const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, created_date, modified_date, active_fg)
+                           VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', '1', '', '', '', '1', NOW(), NOW(), '1')";
+
+    const UPDATE_EMER_REGNO ="UPDATE patient SET regNo = :regNo WHERE patient_id = :patient_id ";
+
+    const UPDATE_BASIC_INFO = "UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()";
+
 }
 
 class PatientQueueSqlStatement {
@@ -253,6 +272,7 @@ class PrescriptionSqlStatement{
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id";
     const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status WHERE prescription_id = :prescription_id";
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
+    const ADD_PRESCRIPTION = "INSERT INTO pres";
 }
 
 class DrugSqlStatement{
@@ -864,24 +884,33 @@ class AdmissionSqlStatement {
 }
 
 class BedSqlStatement {
-    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id AND bed_status = 0";
+    const OCCUPY = "UPDATE bed SET bed_status = 1 WHERE bed_id = :bed_id AND bed_status = 0 AND active_fg = 1";
 
-    const VACATE = "UPDATE bed SET bed_status = 0 WHERE bed_id = :bed_id AND bed_status = 1";
+    const VACATE = "UPDATE bed SET bed_status = 0 WHERE bed_id = :bed_id AND bed_status = 1 AND active_fg = 1";
 
-    const BED_STATUS = "SELECT bed_status FROM bed WHERE bed_id = :bed_id";
+    const BED_STATUS = "SELECT bed_status FROM bed WHERE bed_id = :bed_id AND active_fg = 1";
 
+    const BED_EXISTS = "SELECT COUNT(*) AS count FROM bed WHERE bed_description = :bed_description AND active_fg = 1";
+
+    const NEW_BED = "INSERT INTO bed(bed_description, bed_status, ward_id, created_date, modified_date, active_fg) VALUES(:bed_description, 0, :ward_id, NOW(), NOW(), 1)";
 }
 
 class WardRefSqlStatement {
-    const GET_ALL = "SELECT ward_ref_id, description FROM ward_ref";
+    const GET_ALL = "SELECT ward_ref_id, description FROM ward_ref WHERE active_fg = 1";
 
-    const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id";
+    const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id AND active_fg = 1";
+
+    const WARD_EXISTS = "SELECT COUNT(*) AS count FROM ward_ref WHERE description = :description AND active_fg = 1";
+
+    const IS_VALID_WARD = "SELECT COUNT(*) AS count FROM ward_ref WHERE ward_ref_id = :ward_ref_id AND active_fg = 1";
+
+    const NEW_WARD = "INSERT INTO ward_ref(description, created_date, modified_date, active_fg) VALUES(:description, NOW(), NOW(), 1)";
 }
 
 class TreatmentSqlStatement {
 
-    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, active_fg)
-    VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments,  NOW(), NOW(), 1)";
+    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, consultation, symptoms, diagnosis, comments, created_date, modified_date, treatment_status, active_fg)
+    VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments,  NOW(), NOW(),1, 1)";
 
 //    const ADD_TREATMENT1 = "INSERT INTO treatment (doctor_id, patient_id, created_date, modified_date, active_fg)
 //    VALUES(:doctor_id, :patient_id, NOW(), NOW(), 1)";
@@ -894,5 +923,21 @@ class TreatmentSqlStatement {
 
 
     const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id=:patient_id";
+
+    const CHECK_TREATMENT = "SELECT treatment_id FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
+
+    const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
+
+}
+
+class EmergencySqlStatement {
+
+    const REG_EMERGENCY = "INSERT INTO emergency (emergency_id, patient_id, emergency_status_id, created_date, modified_date) VALUES (NULL, :patient_id, '1', NOW(), NOW())";
+
+    const VERIFY_EMERGENCY ="SELECT emergency_status_id FROM emergency WHERE patient_id=:patient_id ";
+
+    const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE patient_id =:patient_id ";
+
+    const GET_EMERGENCY = "SELECT * FROM emergency";
 
 }

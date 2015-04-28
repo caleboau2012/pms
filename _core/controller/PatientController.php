@@ -67,7 +67,7 @@ class PatientController {
 
         );
 
-       // var_dump($data);
+        // var_dump($data);
 
         $result = $this->patient->InsertPatient($data);
 //        var_dump($result);
@@ -99,11 +99,11 @@ class PatientController {
     }
 
     public function  EditPatientInfo (
-                $surname, $firstname, $middlename, $regNo,
-                $home_address, $telephone, $sex, $height, $weight,
-                $birth_date, $nok_firstname, $nok_middlename,
-                $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-                $mother_status, $father_status, $marital_status, $no_of_children, $patient_id  ){
+        $surname, $firstname, $middlename, $regNo,
+        $home_address, $telephone, $sex, $height, $weight,
+        $birth_date, $nok_firstname, $nok_middlename,
+        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
+        $mother_status, $father_status, $marital_status, $no_of_children, $patient_id  ){
 
         $data = array(
 
@@ -138,6 +138,11 @@ class PatientController {
 
     }
 
+    public function  getEmergencyPatients (){
+        $patient = new PatientModel();
+        return $patient->getEmergencyPatients();
+    }
+
     public function  EditPatientBasicInfo ($data ){
 
         $patient = new PatientModel();
@@ -147,7 +152,7 @@ class PatientController {
 
     public function  retrievePatientInfo ($patient_id ){
 
-       return $this->patient->getPatientDetails($patient_id);
+        return $this->patient->getPatientDetails($patient_id);
 
     }
 
@@ -158,7 +163,7 @@ class PatientController {
     }
 
     public function  getExistingPatientRegNos(){
-         return $this->patient->getExistingPatientRegNos();
+        return $this->patient->getExistingPatientRegNos();
     }
 
     public function regNoExists($regNo){

@@ -8,10 +8,17 @@ $(document).ready(function(){
 });
 
 function init(){
+    $.get((host + 'phase/arrival/phase_patient.php?intent=getRegNos'), function(data){
+        if(data.status == 1){
+            for(var i = 0; i < data.data.length; i++){
+                $('#regNos').append("<option>" + data.data[i].regNo + "</option>");
+            }
+        }
+    }, 'json');
 
     $('#search-form').on('submit', function(e){
         e.preventDefault();
-    })
+    });
 
     $("input[name='search']").autocomplete({
         source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
@@ -34,6 +41,19 @@ function init(){
             "</div>" )
             .appendTo( ul );
     };
+
+
+    $('#verify').click(function(e){
+        e.preventDefault();
+        $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $('#regNo').val()), function(data){
+            console.log(data);
+            if(data.status == 2){
+                showAlert(data.message);
+            }
+        }, 'json').fail(function(e){
+            console.log(e.responseText);
+        });
+    });
 
     $.get(host + "phase/arrival/phase_patient_arrival.php?intent=loadQueue", function(data){
         data = JSON.parse(data);
@@ -113,7 +133,7 @@ function init(){
             patientHTML = patientHTML.replace('{{status}}', panel);
             patientHTML = replaceAll('{{userid}}', '0', patientHTML);
             patientHTML = replaceAll('{{patientid}}', data[j].patient_id, patientHTML);
-            patientHTML = replaceAll('{{regNo}}', data[j].regNo + data[j].patient_id, patientHTML);
+            patientHTML = replaceAll('{{regNo}}', data[j].regNo, patientHTML);
             patientHTML = replaceAll('{{name}}', patientName + data[j].patient_id, patientHTML);
             patientHTML = replaceAll('{{sex}}', data[j].sex, patientHTML);
         }
@@ -173,29 +193,6 @@ function addToQueue(patient){
     });
 }
 
-//function addToGenQueue(patient){
-//    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToGeneralQueue&patient_id=' + patient), function(data){
-//        //console.log('Adding to Gen Queue');
-//        //console.log(data);
-//    });
-//}
-
-//function addToDoctor(patient, doctor){
-//    //console.log(patient, doctor);
-//
-//    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToDoctor&patient_id=' + patient + '&doctor_id=' + doctor), function(data){
-//        //console.log('Adding to Doctor Queue');
-//        //console.log(data);
-//    });
-//}
-//
-//function returnToGenQueue(patient){
-//    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=returnToGenQueue&patient_id=' + patient), function(data){
-//        //console.log('Returning to Gen Queue');
-//        //console.log(data);
-//    });
-//}
-
 function removeFromQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id=' + patient), function(data){
         //console.log(data);
@@ -252,7 +249,7 @@ function addPatient(form){
         },
     function(data){
         data = JSON.parse(data);
-        //console.log(data);
+        console.log(data);
 
         var patientHTML = "";
         patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
@@ -279,52 +276,29 @@ function addPatient(form){
 function emergency(){
     var id;
 
-    $.post(host + "phase/arrival/phase_patient.php?intent=addPatient",
-        {
-            surname : 'EMER',
-            firstname : 'EMER',
-            middlename : 'EMER',
-            regNo : 'EMER',
-            home_address : 'EMER',
-            telephone : 'EMER',
-            sex : 'Emer',
-            height : '0',
-            weight : '0',
-            birth_date : '0000-00-00',
-            nok_firstname : 'EMER',
-            nok_middlename : 'EMER',
-            nok_surname : 'EMER',
-            nok_address : 'EMER',
-            nok_telephone : 'EMER',
-            nok_relationship  : 9,
-            citizenship : 'EMER',
-            religion : 'EMER',
-            family_position : 0,
-            mother_status : 'EMER',
-            father_status : 'EMER',
-            marital_status : 'EMER',
-            no_of_children : 0
-        },
+    $.post(host + "phase/arrival/phase_patient.php?intent=addEmergencyPatient",
         function(data){
-            //console.log(data);
-            data = JSON.parse(data);
-            //console.log(data);
-            id = data.data;
+            console.log(data);
+            if(data.status == 1){
+                data = data.data;
 
-            var patientHTML = "";
-            //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
-            patientHTML += $('#tmplPatients').html();
-            patientHTML = patientHTML.replace('{{status}}', 'panel-danger');
-            patientHTML = replaceAll('{{userid}}', '0', patientHTML);
-            patientHTML = replaceAll('{{patientid}}', id, patientHTML);
-            patientHTML = replaceAll('{{regNo}}', 'EMER' + id, patientHTML);
-            patientHTML = replaceAll('{{name}}', 'EMER' + id, patientHTML);
-            patientHTML = replaceAll('{{sex}}', '', patientHTML);
-            addToQueue(id);
+                id = data.patient_id;
 
-            $(".general").find('.drop').prepend(patientHTML);
-            draggableDropabble();
-        });
+                var patientHTML = "";
+                //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+                patientHTML += $('#tmplPatients').html();
+                patientHTML = patientHTML.replace('{{status}}', 'panel-danger');
+                patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+                patientHTML = replaceAll('{{patientid}}', id, patientHTML);
+                patientHTML = replaceAll('{{regNo}}', data.emergency_reg, patientHTML);
+                patientHTML = replaceAll('{{name}}', data.emergency_reg, patientHTML);
+                patientHTML = replaceAll('{{sex}}', '', patientHTML);
+                addToQueue(id);
+
+                $(".general").find('.drop').prepend(patientHTML);
+                draggableDropabble();
+            }
+        }, 'json');
 }
 
 function searchResult(patientDetails){
@@ -342,7 +316,3 @@ function searchResult(patientDetails){
     $(".general").find('.drop').prepend(patientHTML);
     draggableDropabble();
 }
-
-//function randomID(){
-//    return Math.floor((Math.random() * 1000));
-//}

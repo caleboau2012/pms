@@ -34,12 +34,18 @@ Treatment = {
         };
 
         $('body').delegate('.patient', 'click', function(e){
+            $('.patient').removeClass('panel-warning').addClass('panel-success');
+            $(this).removeClass('panel-success').addClass('panel-warning');
             Treatment.startTreatment(this);
         });
 
         $(document.addTreatmentForm).on('submit', function(e){
             e.preventDefault();
             Treatment.submitTreatment(this);
+        });
+
+        $('#end').click(function(e){
+            Treatment.endTreatment();
         });
 
         $(document.requestTestForm).on('submit', function(e){
@@ -101,10 +107,9 @@ Treatment = {
         });
     },
     getPatientQueue: function(){
-        var url = host + "phase/phase_treatment.php?intent=getPatientQueue&doctorid=" + Treatment.CONSTANTS.doctorid;
+        var url = host + "phase/arrival/phase_patient_arrival.php?intent=loadDoctorQueue&doctorid=" + Treatment.CONSTANTS.doctorid;
         $.getJSON(url, function(data){
             data = data.data;
-            //console.log(data);
 
             for(i = 0; i < data.length; i++){
                 var currentYear = new Date().getFullYear();
@@ -129,7 +134,23 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
-            //console.log(data);
+            console.log(data);
+            $('.treatment-ID').html(data.data.treatment_id.treatment_id);
+            Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
+            $('.patient-name').html($(patient).find('.patientName').html());
+            $('.patient-RegNo').html($(patient).find('.patientRegNo').html());
+            $('.patient-Sex').html($(patient).find('.patientSex').html());
+            $('.patient-Age').html($(patient).find('.patientAge').html());
+            $('.patient-ID').html($(patient).find('.patientid').html());
+        });
+        $('#end').removeClass('hidden');
+        $('.well').removeClass('hidden');
+    },
+    endTreatment: function(){
+        var url = host + "phase/phase_treatment.php?intent=endTreatment&treatment_id=" + Treatment.CONSTANTS.treatmentid
+            + "&patient_id=" + $('.patient-ID').html();
+        $.getJSON(url, function (data) {
+            console.log(data);
             $('.treatment-ID').html(data.data);
             Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
             $('.patient-name').html($(patient).find('.patientName').html());
@@ -138,8 +159,10 @@ Treatment = {
             $('.patient-Age').html($(patient).find('.patientAge').html());
             $('.patient-ID').html($(patient).find('.patientid').html());
         });
-        patient.remove();
-        $('.well').removeClass('hidden');
+        Treatment.removeFromQueue($('.patient-ID').html());
+        //$('.patient-name').html("Please Select a Patient from the Queue <span class='fa fa-long-arrow-right'></span> ");
+        //$('#end').addClass('hidden');
+        //$('.well').addClass('hidden');
     },
     submitTreatment: function(data){
         var prescription = [];
@@ -148,7 +171,20 @@ Treatment = {
             prescription.push($(this).text());
         });
 
-        var url = host + "phase/phase_treatment.php";
+        console.log(data.admit.checked);
+
+        var url = host + "phase/phase_admission_request.php?treatment_id=" + Treatment.CONSTANTS.treatmentid +
+            "&intent=requestAdmission";
+
+        if(data.admit.checked){
+            $.get(url, function(data){
+                console.log(data);
+            }).fail(function(e){
+                console.log(e.responseText);
+            });
+        }
+
+        url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "submitTreatment",
             treatment_id: Treatment.CONSTANTS.treatmentid,
@@ -161,7 +197,8 @@ Treatment = {
             prescription: prescription
         }, function(data){
             console.log(data);
-            Treatment.removeFromQueue($('.patient-ID').html());
+
+            //showModal(data.message);
         })
     },
     removeFromQueue: function (patient){

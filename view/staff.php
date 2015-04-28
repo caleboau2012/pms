@@ -9,6 +9,9 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
+if(!isset($_SESSION[UserAuthTable::userid])){
+    header("Location: ../index.php");
+}
 ?>
 
 <!DOCTYPE html>
@@ -29,6 +32,7 @@ Crave::requireAll(UTIL);
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
+    <link rel="stylesheet" href="../css/print.css" media="print">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -49,28 +53,29 @@ Crave::requireAll(UTIL);
             </button>
             <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right">
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
                 <li><a href="patients.php">Patients</a></li>
                 <li><a href="#" class="label-default">Staff</a></li>
                 <li><a href="#">Config</a></li>
-                <li class="dropdown navbar-right-text pointer">
-                    <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                    <img src="../images/profile.png">
-                    <span>
+                <li>
+                    <a href="mails.php">
+                        <span class="fa fa-envelope"></span>
+                        <sup class="badge notification message_unread"></sup>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        <img src="../images/profile.png">
                         <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
                         <span class="caret"></span>
-                     </span>
-                    </span>
+                    </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
                 </li>
             </ul>
-            <!--            <form class="navbar-form navbar-right">-->
-            <!--                <input type="text" class="form-control" placeholder="Search...">-->
-            <!--            </form>-->
         </div>
     </div>
 </nav>
@@ -101,26 +106,15 @@ Crave::requireAll(UTIL);
 </script>
 
 <script id="tmplPrint" type="text/html">
-    <div class="container">
-        <div class="panel panel-primary">
-            <div class="panel-heading">
-                <h1 class="panel-title">New User Created</h1>
-            </div>
-            <div class="panel-body">
-                <div class="pull-left">
-                    <div class="">
-                        <label for="username" class="label label-primary">Username</label>
-                        <span name="username" class="btn btn-default">{{username}}</span>
-                    </div>
-                </div>
-                <div class="pull-left">
-                    <div style="margin-left: 10px;">
-                        <label for="password" class="label label-info">Password</label>
-                        <span name="password" class="btn btn-default">{{password}}</span>
-                    </div>
-                </div>
-            </div>
-        </div>
+    <div style="padding: 10px;">
+        <p>
+            <b>Username: </b>
+            <span class="small"> {{username}}</span>
+        </p>
+        <p>
+            <b>Password: </b>
+            <span class="small"> {{password}}</span>
+        </p>
     </div>
 </script>
 
@@ -236,5 +230,8 @@ Crave::requireAll(UTIL);
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/admin/staff.js"></script>
+
+<?php include('footer.php'); ?>
+
 </body>
 </html>

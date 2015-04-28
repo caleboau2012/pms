@@ -22,16 +22,29 @@ if (isset($_REQUEST['intent'])) {
 }
 
 if ($intent == 'getAllPatients') {
-        $patientController = new PatientController();
-        $patient_list = $patientController->retrieveAllPatientInfo();
+    $patientController = new PatientController();
+    $patient_list = $patientController->retrieveAllPatientInfo();
 
-        if(is_array($patient_list)){
-            echo JsonResponse::success($patient_list);
-            exit();
-        } else {
-            echo JsonResponse::error("Could not Find any Patient. Please try again!");
-            exit();
-        }
+    if(is_array($patient_list)){
+        echo JsonResponse::success($patient_list);
+        exit();
+    } else {
+        echo JsonResponse::error("Could not Find any Patient. Please try again!");
+        exit();
+    }
+
+}
+else if ($intent == 'getAllEmergencyPatient') {
+    $patientController = new PatientController();
+    $result = $patientController->getEmergencyPatients();
+    if(is_array($result)){
+        echo JsonResponse::success($result);
+        exit();
+    } else {
+        echo JsonResponse::error("Could not Find Emergency Patient. Please try again!");
+        exit();
+    }
+
 
 }
 else if ($intent == 'getPatient') {
@@ -56,7 +69,7 @@ else if ($intent == 'getPatient') {
 
 }
 
-else if ($intent == 'addPatient') {
+else if ($intent == 'addPatient') { //working
     $patientController = new PatientController();
 
     $surname ="";
@@ -85,7 +98,7 @@ else if ($intent == 'addPatient') {
 
     if (isset($_REQUEST['surname'])){  // change surname to what you thin should be set.
 
-       // var_dump($_REQUEST);
+        // var_dump($_REQUEST);
 
         $surname =$_REQUEST[PatientTable::surname];
         $firstname =$_REQUEST[PatientTable::firstname];
@@ -146,27 +159,28 @@ else if ($intent == 'addPatient') {
 
 }
 ////////////Used to add emergency patient
-else if ($intent == 'addEmergencyPatient') {
+else if ($intent == 'addEmergencyPatient') {  //working
     $patientController = new PatientController();
+
+
 
     $addEmerPat = $patientController->addEmergencyPatient();
 
     if($addEmerPat){
 
-     $addEmerList = $patientController->addEmergencyPatientList( $addEmerPat);
+        $addEmerList = $patientController->addEmergencyPatientList( $addEmerPat);
 
         if ($addEmerList){
 
 
+            $emergency_reg = EMER. $addEmerList;
+            $emergencydata = array(PatientTable::patient_id=>$addEmerPat, PatientTable::regNo=>$emergency_reg);
 
-            $emergency_reg = 'EMER'. $addEmerList;
-            $emergencydata = array('patient_id'=>$addEmerPat,'emergency_reg'=>$emergency_reg);
-
-        echo JsonResponse::success($emergencydata);
-        exit();
+            echo JsonResponse::success($emergencydata);
+            exit();
         }
         else{
-          echo  JsonResponse::error("Error registering to emergency list");
+            echo  JsonResponse::error("Error registering to emergency list");
         }
     }
     else {
@@ -177,7 +191,7 @@ else if ($intent == 'addEmergencyPatient') {
 }
 
 ////////////////// upgrade emergency patient to Real patient
-else if ($intent == 'UpgradeEmergencyPatient') {
+else if ($intent == 'UpgradeEmergencyPatient') { //working
 
     $patientController = new PatientController();
 
@@ -257,7 +271,7 @@ else if ($intent == 'UpgradeEmergencyPatient') {
         $patientUp = null;
 
         if(empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
-          ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status)){
+            ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status)){
 
             //print_r($_REQUEST);
             echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
@@ -276,14 +290,15 @@ else if ($intent == 'UpgradeEmergencyPatient') {
             // change status of emergency table of emergency patient from 1 to 2;
 
             //create new Editinfo for updating emergency to enable rollback functionality.
-
-            $emergencyreg ="EMER". $patient_id;
-            $change = $patientController->changeEmergencyStatus($emergencyreg, $status);
+            $status = 2;
+            $emergencyreg = $patient_id;
+            $change = $patientController->changeEmergencyStatus($emergencyreg, 2);
 
             if ($change){
 
-            echo JsonResponse::message(1, "Emergency Patient sucessfully upgraded");
-            exit();
+                var_dump($change);
+                echo JsonResponse::message(1, "Emergency Patient sucessfully upgraded");
+                exit();
             }
 
         } else {
@@ -297,10 +312,11 @@ else if ($intent == 'UpgradeEmergencyPatient') {
     else{
         echo JsonResponse::error("Patient not set");
     }
+   //
 
-    //
+}
 
-} elseif($intent == 'getRegNos'){
+ elseif($intent == 'getRegNos'){
     $regNos = $patientController->getExistingPatientRegNos();
     if(is_array($regNos)){
         echo JsonResponse::success($regNos);

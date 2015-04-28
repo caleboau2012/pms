@@ -17,7 +17,7 @@ class AdmissionController {
             $response = array();
 
             $response[P_STATUS] = STATUS_OK;
-            
+
             if (sizeof($feedback) > 0) {
                 $response[P_DATA] = $feedback;
             } else {
@@ -51,9 +51,9 @@ class AdmissionController {
     }
 
     public function admitPatient($patient_id, $treatment_id, $admitted_by, $bed_id, $comments) {
-        
+
         $feedback = array();
-        
+
         $admitted = AdmissionController::isAdmitted($patient_id);
         if ($admitted) {
             $feedback[P_STATUS] = STATUS_ERROR;
@@ -62,7 +62,7 @@ class AdmissionController {
             return $feedback;
         }
 
-        $occupied = AdmissionController::isOccupied($bed_id);
+        $occupied = WardController::isOccupied($bed_id);
         if ($occupied) {
             $feedback[P_STATUS] = STATUS_ERROR;
             $feedback[P_MESSAGE] = "Bed already occupied!";
@@ -110,7 +110,7 @@ class AdmissionController {
         return $feedback;
     }
 
-    
+
     public function dischargePatient($patient_id, $discharged_by) {
         $admission_model = new AdmissionModel();
 
@@ -129,13 +129,6 @@ class AdmissionController {
         $feedback = $admission_model->isAdmitted($patient_id);
 
         return $feedback;
-    }
-
-    public static function isOccupied($bed_id) {
-        $bed_model = new BedModel($bed_id);
-        $feedback = $bed_model->getStatus();
-
-        return ($feedback == OCCUPIED);
     }
 
     public function searchPatients($parameter) {
