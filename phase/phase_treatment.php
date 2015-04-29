@@ -249,6 +249,8 @@ elseif  ($intent == 'submitTreatment') { //working
 
     if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
 
+//        print_r($_REQUEST);
+//        die();
         $doctorid =$_REQUEST[TreatmentTable::doctor_id];
         $patientid =$_REQUEST[TreatmentTable::patient_id];
         $consultation =$_REQUEST[TreatmentTable::consultation];

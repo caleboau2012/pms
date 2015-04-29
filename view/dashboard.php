@@ -140,6 +140,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </a>
                                 </div>
                             <?php
+                            }else if($staff[StaffRoleTable::staff_role_id] == ADMISSION_OFFICER) {
+                                ?>
+                                <div class="col-xs-3 text-center">
+                                    <a href="admission.php" class="dashboard-link">
+                                        <img src="../images/arrival.png">
+
+                                        <div class="dashboard-desc">Admission</div>
+                                    </a>
+                                </div>
+                            <?php
                             }
                         }
                         ?>
@@ -189,17 +199,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </a>
                                 </div>
 
-                            <?php
-                            }else if($staff[StaffRoleTable::staff_role_id] == ADMISSION_OFFICER) {
-                                $administrator = true;
-                                ?>
-                                <div class="col-xs-3 text-center">
-                                    <a href="admission.php" class="dashboard-link">
-                                        <img src="../images/arrival.png">
-
-                                        <div class="dashboard-desc">Admission</div>
-                                    </a>
-                                </div>
                             <?php
                             }
                         }

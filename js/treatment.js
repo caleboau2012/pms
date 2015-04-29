@@ -115,15 +115,25 @@ Treatment = {
                 var currentYear = new Date().getFullYear();
                 var age = currentYear - parseInt(data[i].birth_date.split('-')[0]);
 
+                if (data[i].regNo.substr(0, 4) == 'EMER') {
+                    panel = "panel-danger";
+                    patientName = data[i].regNo;
+                    sex = "";
+                }
+                else {
+                    panel = "panel-success";
+                    patientName = toTitleCase(data[i].surname) + " " + toTitleCase(data[i].firstname) + " " + toTitleCase(data[i].middlename);
+                    sex = data[i].sex;
+                }
+
                 var patientHTML = "";
-                patientName = toTitleCase(data[i].surname) + " " + toTitleCase(data[i].firstname) + " " + toTitleCase(data[i].middlename);
                 patientHTML += $('#tmplPatients').html();
-                patientHTML = patientHTML.replace('{{status}}', 'panel-success');
+                patientHTML = patientHTML.replace('{{status}}', panel);
                 patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
                 patientHTML = replaceAll('{{patientid}}', data[i].patient_id, patientHTML);
                 patientHTML = replaceAll('{{regNo}}', data[i].regNo, patientHTML);
                 patientHTML = replaceAll('{{name}}', patientName, patientHTML);
-                patientHTML = replaceAll('{{sex}}', data[i].sex, patientHTML);
+                patientHTML = replaceAll('{{sex}}', sex, patientHTML);
                 patientHTML = replaceAll('{{Age}}', age, patientHTML);
 
                 $('.patients').append(patientHTML);
@@ -134,7 +144,7 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
-            console.log(data);
+            //console.log(data);
             $('.treatment-ID').html(data.data.treatment_id.treatment_id);
             Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
             $('.patient-name').html($(patient).find('.patientName').html());

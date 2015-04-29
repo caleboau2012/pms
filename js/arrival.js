@@ -42,7 +42,6 @@ function init(){
             .appendTo( ul );
     };
 
-
     $('#verify').click(function(e){
         e.preventDefault();
         $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $('#regNo').val()), function(data){
@@ -83,23 +82,23 @@ function init(){
 
                 var patientHTML = "";
                 for (var j = 0; j < obj.queue.length; j++) {
-                    if (obj.queue[j].regNo == 'EMER') {
+                    if (obj.queue[j].regNo.substr(0, 4) == 'EMER') {
                         panel = "panel-danger";
-                        patientName = toTitleCase(obj.queue[j].surname) + obj.queue[j].patient_id;
-                        regNo = (obj.queue[j].surname).toUpperCase() + obj.queue[j].patient_id;
+                        patientName = obj.queue[j].regNo;
+                        sex = "";
                     }
                     else {
                         panel = "panel-success";
                         patientName = toTitleCase(obj.queue[j].surname) + " " + toTitleCase(obj.queue[j].firstname) + " " + toTitleCase(obj.queue[j].middlename);
-                        regNo = obj.queue[j].regNo;
+                        sex = obj.queue[j].sex;
                     }
                     patientHTML += $('#tmplPatients').html();
                     patientHTML = patientHTML.replace('{{status}}', panel);
                     patientHTML = replaceAll('{{userid}}', obj.userid, patientHTML);
                     patientHTML = replaceAll('{{patientid}}', obj.queue[j].patient_id, patientHTML);
-                    patientHTML = replaceAll('{{regNo}}', regNo, patientHTML);
+                    patientHTML = replaceAll('{{regNo}}', obj.queue[j].regNo, patientHTML);
                     patientHTML = replaceAll('{{name}}', patientName, patientHTML);
-                    patientHTML = replaceAll('{{sex}}', obj.queue[j].sex, patientHTML);
+                    patientHTML = replaceAll('{{sex}}', sex, patientHTML);
 
                 }
 
@@ -124,18 +123,23 @@ function init(){
             return;
 
         for (var j = 0; j < data.length; j++) {
-            if (data[j].regNo == 'EMER')
+            if (data[j].regNo.substr(0, 4) == 'EMER'){
                 panel = "panel-danger";
-            else
+                patientName = data[j].regNo;
+                sex = "";
+            }
+            else{
                 panel = "panel-success";
-            patientName = toTitleCase(data[j].surname) + " " + toTitleCase(data[j].firstname) + " " + toTitleCase(data[j].middlename);
+                patientName = toTitleCase(data[j].surname) + " " + toTitleCase(data[j].firstname) + " " + toTitleCase(data[j].middlename);
+                sex = data[j].sex;
+            }
             patientHTML += $('#tmplPatients').html();
             patientHTML = patientHTML.replace('{{status}}', panel);
             patientHTML = replaceAll('{{userid}}', '0', patientHTML);
             patientHTML = replaceAll('{{patientid}}', data[j].patient_id, patientHTML);
             patientHTML = replaceAll('{{regNo}}', data[j].regNo, patientHTML);
-            patientHTML = replaceAll('{{name}}', patientName + data[j].patient_id, patientHTML);
-            patientHTML = replaceAll('{{sex}}', data[j].sex, patientHTML);
+            patientHTML = replaceAll('{{name}}', patientName, patientHTML);
+            patientHTML = replaceAll('{{sex}}', sex, patientHTML);
         }
 
         $(".general").find('.drop').html(patientHTML);
@@ -209,7 +213,6 @@ function switchQueue(patient, fromDoctor, toDoctor){
 
 $("#newPatientForm").on('submit', function(e){
     e.preventDefault();
-
     addPatient(this);
 });
 
@@ -220,55 +223,67 @@ $("#naija").on('change', function () {
 function addPatient(form){
     var citizenship = $('#naija').is(':checked')?"Nigeria":form.citizenship;
     //console.log(citizenship);
+    $('#loader').removeClass('hidden');
 
-    $.post(host + "phase/arrival/phase_patient.php?intent=addPatient",
-        {
-            surname : form.surname.value,
-            firstname : form.firstname.value,
-            middlename : form.middlename.value,
-            regNo : form.regNo.value,
-            home_address : form.home_address.value,
-            telephone : form.telephone.value,
-            sex : form.sex.value,
-            height : form.height.value,
-            weight : form.weight.value,
-            birth_date : form.birth_date.value,
-            nok_firstname : form.nok_firstname.value,
-            nok_middlename : form.nok_middlename.value,
-            nok_surname : form.nok_surname.value,
-            nok_address : form.nok_address.value,
-            nok_telephone : form.nok_telephone.value,
-            nok_relationship  : form.nok_relationship.value,
-            citizenship : citizenship,
-            religion : form.religion.value,
-            family_position : form.family_position.value,
-            mother_status : form.mother_status.value,
-            father_status : form.father_status.value,
-            marital_status : form.marital_status.value,
-            no_of_children : form.no_of_children.value
-        },
-    function(data){
-        data = JSON.parse(data);
+    $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $('#regNo').val()), function(data){
         console.log(data);
+        $('#loader').addClass('hidden');
+        if(data.status == 2){
+            showAlert(data.message);
+        }
+        else{
+            $.post(host + "phase/arrival/phase_patient.php?intent=addPatient",
+                {
+                    surname : form.surname.value,
+                    firstname : form.firstname.value,
+                    middlename : form.middlename.value,
+                    regNo : form.regNo.value,
+                    home_address : form.home_address.value,
+                    telephone : form.telephone.value,
+                    sex : form.sex.value,
+                    height : form.height.value,
+                    weight : form.weight.value,
+                    birth_date : form.birth_date.value,
+                    nok_firstname : form.nok_firstname.value,
+                    nok_middlename : form.nok_middlename.value,
+                    nok_surname : form.nok_surname.value,
+                    nok_address : form.nok_address.value,
+                    nok_telephone : form.nok_telephone.value,
+                    nok_relationship  : form.nok_relationship.value,
+                    citizenship : citizenship,
+                    religion : form.religion.value,
+                    family_position : form.family_position.value,
+                    mother_status : form.mother_status.value,
+                    father_status : form.father_status.value,
+                    marital_status : form.marital_status.value,
+                    no_of_children : form.no_of_children.value
+                },
+                function(data){
+                    data = JSON.parse(data);
+                    console.log(data);
 
-        var patientHTML = "";
-        patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
-        patientHTML += $('#tmplPatients').html();
-        patientHTML = patientHTML.replace('{{status}}', 'panel-success');
-        patientHTML = replaceAll('{{userid}}', '0', patientHTML);
-        patientHTML = replaceAll('{{patientid}}', data.data, patientHTML);
-        patientHTML = replaceAll('{{regNo}}', form.regNo.value, patientHTML);
-        patientHTML = replaceAll('{{name}}', patientName, patientHTML);
-        patientHTML = replaceAll('{{sex}}', form.sex.value, patientHTML);
-        addToQueue(data.data);
+                    var patientHTML = "";
+                    patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
+                    patientHTML += $('#tmplPatients').html();
+                    patientHTML = patientHTML.replace('{{status}}', 'panel-success');
+                    patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+                    patientHTML = replaceAll('{{patientid}}', data.data, patientHTML);
+                    patientHTML = replaceAll('{{regNo}}', form.regNo.value, patientHTML);
+                    patientHTML = replaceAll('{{name}}', patientName, patientHTML);
+                    patientHTML = replaceAll('{{sex}}', form.sex.value, patientHTML);
+                    addToQueue(data.data);
 
-        $(".general").find('.drop').prepend(patientHTML);
-        $('#newPatientModal').modal('hide');
-        draggableDropabble();
+                    $(".general").find('.drop').prepend(patientHTML);
+                    $('#newPatientModal').modal('hide');
+                    draggableDropabble();
 
-    }).fail(function(){
-            console.log('shing');
-        });
+                }).fail(function(){
+                    console.log('shing');
+                });
+        }
+    }, 'json').fail(function(e){
+        console.log(e.responseText);
+    });
 
     return false;
 }
@@ -278,7 +293,6 @@ function emergency(){
 
     $.post(host + "phase/arrival/phase_patient.php?intent=addEmergencyPatient",
         function(data){
-            console.log(data);
             if(data.status == 1){
                 data = data.data;
 
@@ -290,8 +304,8 @@ function emergency(){
                 patientHTML = patientHTML.replace('{{status}}', 'panel-danger');
                 patientHTML = replaceAll('{{userid}}', '0', patientHTML);
                 patientHTML = replaceAll('{{patientid}}', id, patientHTML);
-                patientHTML = replaceAll('{{regNo}}', data.emergency_reg, patientHTML);
-                patientHTML = replaceAll('{{name}}', data.emergency_reg, patientHTML);
+                patientHTML = replaceAll('{{regNo}}', data.regNo, patientHTML);
+                patientHTML = replaceAll('{{name}}', data.regNo, patientHTML);
                 patientHTML = replaceAll('{{sex}}', '', patientHTML);
                 addToQueue(id);
 

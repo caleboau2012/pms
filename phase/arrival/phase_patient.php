@@ -317,6 +317,7 @@ else if ($intent == 'UpgradeEmergencyPatient') { //working
 }
 
  elseif($intent == 'getRegNos'){
+     $patientController = new PatientController();
     $regNos = $patientController->getExistingPatientRegNos();
     if(is_array($regNos)){
         echo JsonResponse::success($regNos);
@@ -328,6 +329,7 @@ else if ($intent == 'UpgradeEmergencyPatient') { //working
 } elseif($intent == 'verifyRegNo') {
     $regNo = $_REQUEST['regNo'];
     if($regNo){
+        $patientController = new PatientController();
         if(!$patientController->regNoExists($regNo)){
             echo JsonResponse::success("Registration number does not exist");
             exit();
