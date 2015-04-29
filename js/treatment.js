@@ -87,18 +87,9 @@ Treatment = {
         $('#prescriptions').append(drugHTML);
     },
     searchResult: function(patientDetails){
-        var patientHTML = "";
-        //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
-        patientHTML += $('#tmplPatients').html();
-        patientHTML = patientHTML.replace('{{status}}', 'panel-success');
-        patientHTML = replaceAll('{{userid}}', '0', patientHTML);
-        patientHTML = replaceAll('{{patientid}}', patientDetails.patient_id, patientHTML);
-        patientHTML = replaceAll('{{regNo}}', patientDetails.regNo, patientHTML);
-        patientHTML = replaceAll('{{name}}', patientDetails.value, patientHTML);
-        patientHTML = replaceAll('{{sex}}', patientDetails.sex, patientHTML);
-
         Treatment.addToQueue(patientDetails.patient_id);
-        $('.patients').prepend(patientHTML);
+        $('.patients').empty();
+        Treatment.getPatientQueue();
     },
     addToQueue: function (patient){
         $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToQueue&patient_id='
@@ -155,6 +146,7 @@ Treatment = {
         });
         $('#end').removeClass('hidden');
         $('.well').removeClass('hidden');
+        $('.at').click();
     },
     endTreatment: function(){
         var url = host + "phase/phase_treatment.php?intent=endTreatment&treatment_id=" + Treatment.CONSTANTS.treatmentid
@@ -175,13 +167,14 @@ Treatment = {
         //$('.well').addClass('hidden');
     },
     submitTreatment: function(data){
+        $('#loader').removeClass('hidden');
         var prescription = [];
         $('#prescriptions li').each(function(index){
             //console.log(index + ": " + $(this).text());
-            prescription.push($(this).text());
+            prescription.push($(this).text().substring(0, $(this).text().length - 1));
         });
 
-        console.log(data.admit.checked);
+        console.log(prescription);
 
         var url = host + "phase/phase_admission_request.php?treatment_id=" + Treatment.CONSTANTS.treatmentid +
             "&intent=requestAdmission";
@@ -205,11 +198,17 @@ Treatment = {
             comments: data.comment.value,
             diagnosis: data.diagnosis.value,
             prescription: prescription
-        }, function(data){
+        }, function(response){
             console.log(data);
-
-            //showModal(data.message);
-        })
+            $('#loader').addClass('hidden');
+            if(response.status == 1){
+                showAlert("Done, please end the session if you are done");
+                $(data)[0].reset();
+            }
+            else{
+                showAlert(response.message);
+            }
+        }, 'json')
     },
     removeFromQueue: function (patient){
         $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
@@ -252,8 +251,8 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            console.log(data);
-        })
+            showAlert(data.data);
+        }, 'json')
     },
     getLabHistory: function(type){
         var url = host + "phase/phase_treatment.php";
@@ -285,7 +284,7 @@ Treatment = {
                         "<td>" + data[i].diagnosis + "</td>" +
                         "<td>" + data[i].modified_date + "</td>" +
                         "<td>" + status + "</td>" +
-                        "<td><button class='btn btn-sm btn-default'>View</button></td>" +
+                        "<td><a target='_blank' href='' class='btn btn-sm btn-default'>View</a></td>" +
                     "</tr>";
                 }
 

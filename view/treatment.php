@@ -157,6 +157,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <span class="patient-ID hidden"></span>
                     <span class="treatment-ID hidden"></span>
                     <span class="patient-Age"></span>
+                    <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <span id="alertMSG"></span>
+                    </div>
                 </div>
             </div>
 
@@ -212,8 +217,8 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <br/>
                                 <div>
                                     <input  name="admit" type="checkbox">
-                                    <small>Request Admission? <span class="fa fa-bed"></span></small>
-                                    <button id="treatmentSubmit" type="submit" class="btn btn-primary pull-right">Submit</button>
+                                    <small>Request Admission? <span class="fa fa-bed"></span><span class="fa fa-spinner fa-spin hidden" id="loader"></span></small>
+                                    <button id="treatmentSubmit" type="submit" class="btn btn-sm btn-primary pull-right">Submit</button>
                                 </div>
                             </div>
                         </div>

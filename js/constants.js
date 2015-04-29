@@ -78,5 +78,6 @@ function showAlert(message){
     $('#alertMSG').parent().removeClass('hidden');
     setTimeout(function(){
         $('#alertMSG').parent().addClass('hidden');
-    }, 3000);
+    }, 10000);
+    location.href="#alertMSG";
 }
