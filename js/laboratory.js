@@ -190,7 +190,7 @@ var Laboratory = {
                 }
             },
             error: function(data){
-                console.log(data.responseText)
+                console.log(data.responseText);
                 $('body,html').animate({scrollTop : 0}, 800);
                 $('div.page-header').append("<p class='alert alert-danger'>Update not Successful</p>");
             }
