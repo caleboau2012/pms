@@ -188,6 +188,9 @@ var Laboratory = {
                 } else{
                     $('div.page-header').append("<p class='alert alert-success'>"+ returnedData.data +"</p>");
                 }
+                if($('#status').attr('value') ==  7){
+                    location.reload();
+                }
             },
             error: function(data){
                 console.log(data.responseText);

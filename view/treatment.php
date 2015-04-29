@@ -211,7 +211,8 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 </div>
                                 <br/>
                                 <div>
-                                    <input  name="admit" type="checkbox"> <small>Request Admission? <span class="fa fa-bed"></span></small>
+                                    <input  name="admit" type="checkbox">
+                                    <small>Request Admission? <span class="fa fa-bed"></span></small>
                                     <button id="treatmentSubmit" type="submit" class="btn btn-primary pull-right">Submit</button>
                                 </div>
                             </div>

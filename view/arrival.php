@@ -52,6 +52,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <ul class="nav navbar-nav navbar-right nav-pills">
                 <li><a href="#" data-toggle="modal" data-target="#newPatientModal">New Patient</a></li>
                 <li><a href="#" onclick="emergency()"><span class="text-danger">Emergency</span></a></li>
+                <li>
+                    <a href="mails.php">
+                        <span class="fa fa-envelope"></span>
+                        <sup class="badge notification message_unread"></sup>
+                    </a>
+                </li>
                 <div class="dropdown navbar-right navbar-right-text pointer">
             <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                 <img src="../images/profile.png">
@@ -371,5 +377,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../js/constants.js"></script>
 <script src="../js/libs/masonry.js"></script>
 <script src="../js/arrival.js"></script>
+<?php include('footer.php'); ?>
 </body>
 </html>

@@ -50,8 +50,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <nav class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
-                    aria-expanded="false" aria-controls="navbar">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -59,26 +58,26 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             </button>
             <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
-        <div id="navbar" class="navbar-collapse collapse">
-            <ul class="nav navbar-nav navbar-right nav-pills">
-                <div class="dropdown navbar-right navbar-right-text pointer">
-                    <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                    <img src="../images/profile.png">
-                    <span>
-                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname) . ' ' . CxSessionHandler::getItem(ProfileTable::firstname)) ?>
-                    </span>
-                    <span class="caret"></span>
-                </span>
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="mails.php">
+                        <span class="fa fa-envelope"></span>
+                        <sup class="badge notification message_unread"></sup>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        <img src="../images/profile.png">
+                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+                        <span class="caret"></span>
+                    </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
-                </div>
+                </li>
             </ul>
-            <form class="treatment navbar-form">
-                <div class="search form-inline">
-                    <input type="text" class="form-control" name="search" placeholder="Search Returning Patients...">
-                </div>
-            </form>
         </div>
     </div>
 </nav>
@@ -131,7 +130,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 </div>
                 <div id="success" class="alert alert-success">Your Changes are Saved</div>
                 <div class="panel-body">
-                    <table id="test_table" class="table table-stripped table--bordered dataTable">
+                    <table id="test_table" class="table table-stripped table-responsive dataTable">
                         <thead>
                         <tr>
                             <th>S/N</th>
@@ -241,5 +240,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     });
 
 </script>
+<?php include('footer.php'); ?>
 </body>
 </html>
