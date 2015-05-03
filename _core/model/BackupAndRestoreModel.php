@@ -4,9 +4,9 @@ class BackupAndRestoreModel{
 
     public function backupDB(){
         $path = dirname(__FILE__);
-        $username = 'root';
-        $password = 'admin';
-        $databasename = 'pms';
+        $username = DB_USERNAME;
+        $password = DB_PASSWORD;
+        $databasename = DBNAME;
 
         $now = str_replace(":", "", date("Y-m-d H:i:s"));
         $outputFilename = 'backup' . '-' . $now . '.sql';
@@ -24,11 +24,11 @@ class BackupAndRestoreModel{
     public function restoreDB($sqlDumpFile){
         $dumpFile = $this->uploadDumpFile($sqlDumpFile);
         if($dumpFile){
-            $username = 'root';
-            $password = 'admin';
-            $databasename = 'pms';
+            $username = DB_USERNAME;
+            $password = DB_PASSWORD;
+            $databasename = DBNAME;
 
-            $cmd = "mysql -u $username -p$password $databasename < $dumpFile";
+            $cmd = "mysql -u $username -p$password --databases $databasename < $dumpFile";
             $ret = shell_exec($cmd);
 
             return $ret == 0;
