@@ -114,4 +114,9 @@ class PatientModel extends BaseModel {
         $response = $this->conn->fetch(PatientSqlStatement::IS_REG_EXISTING, $data);
         return $response['result'] > 0;
     }
+
+    public function getPatientByTreatmentId($treatmentId){
+        $data = array(TreatmentTable::treatment_id => $treatmentId);
+        return $this->conn->fetch(PatientSqlStatement::GET_BY_TMT_ID, $data);
+    }
 }

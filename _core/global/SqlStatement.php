@@ -145,6 +145,8 @@ modified_date =NOW() WHERE patient_id =:patient_id
 
     const UPDATE_BASIC_INFO = "UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()";
 
+    const GET_BY_TMT_ID = "SELECT surname, middlename, firstname, regNo, sex FROM patient WHERE patient_id IN (SELECT patient_id FROM treatment WHERE treatment_id = :treatment_id)";
+
 }
 
 class PatientQueueSqlStatement {

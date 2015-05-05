@@ -1,6 +1,6 @@
 /*BEGIN---jQuery code snippets to set cursor position in textarea field---BEGIN*/
 jQuery.fn.setSelection = function(selectionStart, selectionEnd) {
-    if(this.lengh == 0) return this;
+    if(this.length == 0) return this;
     input = this[0];
  
     if (input.createTextRange) {

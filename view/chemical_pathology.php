@@ -3,7 +3,7 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
 Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
@@ -12,24 +12,125 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 $lab = new LaboratoryController();
 $view_bag = array();
-$view_bag = $lab->getLabDetails($_POST['labType'], $_POST['treatment_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id']);
+$patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
+//var_dump($view_bag);
 
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
 ?>
 
+<html lang="en" xmlns="http://www.w3.org/1999/html">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../favicon.ico">
+
+    <title>Chemical Pathology</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
+    <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="../css/master.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
 <body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top">
+    <div class="container-fluid">
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
+        </div>
+        <div class="navbar-collapse collapse navbar-right">
+            <ul class="nav navbar-nav">
+                <li>
+                    <a href="mails.php">
+                        <span class="fa fa-envelope"></span>
+                        <sup class="badge notification message_unread"></sup>
+                    </a>
+                </li>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        <img src="../images/profile.png">
+                        <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
+                        <span class="caret"></span>
+                    </a>
+                    <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
+                        <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<script id="tmplPatients" type="text/html">
+    <div class="panel {{status}} patient">
+        <div class="panel-heading" role="tab" id="heading{{patientid}}">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
+                   href="#collapse{{patientid}}" aria-expanded="false" aria-controls="collapse{{patientid}}">
+                    {{regNo}}
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{patientid}}" class="panel-collapse collapse" role="tabpanel"
+             aria-labelledby="heading{{patientid}}">
+            <div class="panel-body">
+                <p>{{name}}</p>
+
+                <p>{{sex}}</p>
+                <span class="patientid" hidden>{{patientid}}</span>
+                <span class="doctorid" hidden>{{userid}}</span>
+            </div>
+        </div>
+    </div>
+</script>
+
+<script id="tmplDoctor" type="text/html">
+    <div class="col-sm-4 col-md-3">
+        <div class="panel {{online_status}} doctor">
+            <div class="panel-heading" userid="{{userid}}">
+                <h2 class="panel-title">Dr. {{DoctorName}}</h2>
+            </div>
+            <div class="panel-body patients">
+                <span class="to_doctor" hidden>{{userid}}</span>
+
+                <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">
+                </div>
+            </div>
+        </div>
+    </div>
+</script>
+
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 well">
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title"><?php echo $_POST['surname'] .' '. $_POST['firstname'].' '. $_POST['middlename'];  ?></h2>
+                    <h2 class="panel-title"><span style="text-transform: uppercase"><?php echo $patient['surname']; ?></span> <?php echo $patient['middlename'].' '. $patient['firstname'];  ?></h2>
                 </div>
                 <div class="panel-body">
-                    <p><?php echo $_POST['regNo']; ?></p>
-                    <span><?php echo $_POST['sex']; ?></span>
+                    <p><?php echo $patient['regNo']; ?></p>
+                    <span><?php echo $patient['sex']; ?></span>
                     <span></span>
                 </div>
             </div>
@@ -45,7 +146,6 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
 
                         <div class="row">
                             <div class="page-header">
-                                <a id="back" href="#" class="btn btn-default btn-sm" style="float: left;margin-right: 10px;margin-top: 5px; margin-left: 20px;">← Go Back</a>
                                 <h2 class="page-header__title">Chemical Pathology</h2>
                             </div>
 
@@ -211,4 +311,4 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
 </body>
-
+</html>

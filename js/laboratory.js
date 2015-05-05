@@ -33,10 +33,10 @@ var Laboratory = {
             history.go(0);
 
         });
-        $('body').delegate('.action, a.pending', 'click', function(e){
+        /*$('body').delegate('a.pending', 'click', function(e){
             e.preventDefault();
             Laboratory.getLabDetails(this);
-        });
+        });*/
     },
 
     ajaxRequest:function(url, data, request_type){
@@ -78,7 +78,7 @@ var Laboratory = {
                             action = "View";
                             test_data += "<td>" + Laboratory.CONSTANTS.SEVEN + "</td>";
                         }
-                        test_data += '<td><a data-ref='+Laboratory.selectedOption()+'.php';
+                        test_data += '<td><a target="_blank" href='+Laboratory.selectedOption()+'.php?labType='+Laboratory.selectedOption()+'&treatment_id='+this.treatment_id;
                         test_data += ' data-id='+this.treatment_id + ' data-status='+this.status_id + ' data-regNo='+this.regNo + ' data-sex='+this.sex;
                         test_data += ' data-surname='+this.surname;
                         test_data += ' data-firstname='+this.firstname;
@@ -88,7 +88,7 @@ var Laboratory = {
                         test_data += "<td>" + this.created_date + "</td>";
                         test_data += "</tr>";
 
-                        pending += '<a data-ref='+Laboratory.selectedOption()+'.php';
+                        pending += '<a target="_blank" href='+Laboratory.selectedOption()+'.php?labType='+Laboratory.selectedOption()+'&treatment_id='+this.treatment_id;
                         pending += ' data-id='+this.treatment_id + ' data-status='+this.status_id + ' data-regNo='+this.regNo + ' data-sex='+this.sex;
                         pending += ' data-surname='+this.surname;
                         pending += ' data-firstname='+this.firstname;
@@ -166,12 +166,12 @@ var Laboratory = {
             $(test).attr('data-sex')
         );
 //        console.log(data);
-        $('#mainContent').load($(test).attr('data-ref'), data, function(response, status, xhr){
+        /*$('#mainContent').load($(test).attr('data-ref'), data, function(response, status, xhr){
             if (status == 'error'){
                 var msg = 'there is error on this page';
                 $('#mainContent').html(msg + xhr.status + " " + xhr.statusText);
             }
-        }).fadeIn('slow');
+        }).fadeIn('slow');*/
     },
 
     updateLabDetails: function(url, data, request_type){
