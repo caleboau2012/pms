@@ -237,14 +237,14 @@ elseif  ($intent == 'endTreatment') { //working
 elseif  ($intent == 'submitTreatment') { //working
     $treat = new TreatmentController();
 
-    $doctorid ="";
-    $patientid ="";
-    $treatment_id="";
-    $consultation ="";
-    $symptoms ="";
-    $comments= "";
-    $diagnosis ="";
-    $prescription ="";
+    $doctorid =" ";
+    $patientid =" ";
+    $treatment_id=" ";
+    $consultation =" ";
+    $symptoms =" ";
+    $comments= " ";
+    $diagnosis =" ";
+    $prescription =" ";
 
 
     if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
@@ -267,7 +267,7 @@ elseif  ($intent == 'submitTreatment') { //working
 
     $admission_add = null;
 
-    if (empty($treatment_id) || empty($doctorid) || empty ($patientid) || empty ($consultation) || empty ($symptoms) || empty ($diagnosis) || empty ($comments)){
+    if (isset($treatment_id) || isset($doctorid) || isset ($patientid) || isset ($consultation) || isset ($symptoms) || isset ($diagnosis) || isset ($comments)){
 
         //print_r($_REQUEST);
         echo JsonResponse::error("MANY filled, Ensure All fields are filled");

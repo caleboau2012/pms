@@ -95,6 +95,7 @@ else if ($intent == 'addPatient') { //working
     $father_status="";
     $marital_status="";
     $no_of_children="";
+    $occupation="";
 
     if (isset($_REQUEST['surname'])){  // change surname to what you thin should be set.
 
@@ -123,6 +124,7 @@ else if ($intent == 'addPatient') { //working
         $father_status=$_REQUEST[PatientTable::father_status];
         $marital_status=$_REQUEST[PatientTable::marital_status];
         $no_of_children=$_REQUEST[PatientTable::no_of_children];
+        $occupation =$_REQUEST[PatientTable::occupation];
 
     }
     else {
@@ -133,7 +135,7 @@ else if ($intent == 'addPatient') { //working
     $patientadd = null;
 
     if (empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
-        ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status)){
+        ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status) || empty ($occupation)){
 
         print_r($_REQUEST);
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
@@ -145,7 +147,7 @@ else if ($intent == 'addPatient') { //working
             $home_address, $telephone, $sex, $height, $weight,
             $birth_date, $nok_firstname, $nok_middlename,
             $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-            $mother_status, $father_status, $marital_status, $no_of_children );
+            $mother_status, $father_status, $marital_status, $no_of_children, $occupation );
     }
 
     if($patientadd){
@@ -219,6 +221,7 @@ else if ($intent == 'UpgradeEmergencyPatient') { //working
     $father_status="";
     $marital_status="";
     $no_of_children="";
+    $occupation="";
 
     if (isset($_REQUEST[PatientTable::patient_id])){  // change surname to what you thin should be set.
 
@@ -256,6 +259,8 @@ else if ($intent == 'UpgradeEmergencyPatient') { //working
             $father_status=$_REQUEST[PatientTable::father_status];
             $marital_status=$_REQUEST[PatientTable::marital_status];
             $no_of_children=$_REQUEST[PatientTable::no_of_children];
+            $occupation =$_REQUEST[PatientTable::occupation];
+
 
         }
 
@@ -271,7 +276,7 @@ else if ($intent == 'UpgradeEmergencyPatient') { //working
         $patientUp = null;
 
         if(empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
-            ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status)){
+            ||empty($citizenship)||empty($religion)||empty($mother_status)||empty($father_status)||empty($marital_status) || empty ($occupation)){
 
             //print_r($_REQUEST);
             echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
@@ -283,7 +288,7 @@ else if ($intent == 'UpgradeEmergencyPatient') { //working
                 $home_address, $telephone, $sex, $height, $weight,
                 $birth_date, $nok_firstname, $nok_middlename,
                 $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-                $mother_status, $father_status, $marital_status, $no_of_children, $patient_id );
+                $mother_status, $father_status, $marital_status, $no_of_children,$occupation, $patient_id );
         }
 
         if($patientUp){

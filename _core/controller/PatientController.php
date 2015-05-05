@@ -33,7 +33,7 @@ class PatientController {
         $home_address, $telephone, $sex, $height, $weight,
         $birth_date, $nok_firstname, $nok_middlename,
         $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-        $mother_status, $father_status, $marital_status, $no_of_children )
+        $mother_status, $father_status, $marital_status, $no_of_children, $occupation )
     {
 
 
@@ -62,7 +62,8 @@ class PatientController {
             PatientTable::mother_status => $mother_status,
             PatientTable::father_status=> $father_status,
             PatientTable::marital_status => $marital_status,
-            PatientTable::no_of_children =>$no_of_children
+            PatientTable::no_of_children =>$no_of_children,
+            PatientTable::occupation => $occupation
 
 
         );
@@ -103,7 +104,7 @@ class PatientController {
         $home_address, $telephone, $sex, $height, $weight,
         $birth_date, $nok_firstname, $nok_middlename,
         $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-        $mother_status, $father_status, $marital_status, $no_of_children, $patient_id  ){
+        $mother_status, $father_status, $marital_status, $no_of_children, $occupation, $patient_id  ){
 
         $data = array(
 
@@ -130,7 +131,9 @@ class PatientController {
             PatientTable::father_status=> $father_status,
             PatientTable::marital_status => $marital_status,
             PatientTable::no_of_children =>$no_of_children,
+            PatientTable::occupation => $occupation,
             PatientTable::patient_id =>$patient_id
+
         );
 
         //$patient = new PatientModel();

@@ -102,9 +102,9 @@ class PermissionRoleSqlStatement {
 
 class PatientSqlStatement {
         const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship,
-                                          citizenship,  religion,  family_position,  mother_status,  father_status,    marital_status,  no_of_children, created_date, modified_date)
+                                          citizenship,  religion,  family_position,  mother_status,  father_status,    marital_status,  no_of_children, occupation, created_date, modified_date )
                                  VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, :nok_firstname, :nok_middlename, :nok_surname, :nok_address, :nok_telephone, :nok_relationship,
-                                          :citizenship,  :religion,  :family_position,  :mother_status,  :father_status,    :marital_status,  :no_of_children, NOW(), NOW() )';
+                                          :citizenship,  :religion,  :family_position,  :mother_status,  :father_status,    :marital_status,  :no_of_children, :occupation, NOW(), NOW()  )';
 
         const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient WHERE patient_id = :patient_id';
@@ -118,6 +118,7 @@ religion =:religion, family_position =:family_position, mother_status =:mother_s
 father_status =:father_status,
 marital_status =:marital_status,
 no_of_children =:no_of_children,
+occupation =:occupation,
 modified_date =NOW() WHERE patient_id =:patient_id
 ";
 
@@ -138,8 +139,8 @@ modified_date =NOW() WHERE patient_id =:patient_id
 
         const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
 
-    const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, created_date, modified_date, active_fg)
-                           VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', '1', '', '', '', '1', NOW(), NOW(), '1')";
+    const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, occupation, created_date, modified_date, active_fg)
+                           VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', '1', '', '', '', '1', '', NOW(), NOW(), '1')";
 
     const UPDATE_EMER_REGNO ="UPDATE patient SET regNo = :regNo WHERE patient_id = :patient_id ";
 
