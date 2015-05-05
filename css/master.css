@@ -1015,3 +1015,47 @@ span#loader{
     color: #fff;
     text-decoration: none;
 }
+
+/* Room management*/
+.room-page-content{
+    min-height: 500px;
+    margin-top: 0.5em;
+}
+.room-overview{
+    padding: 1.5em;
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+}
+.room-overview__heading{
+    color: #555;
+}
+.room-overview__heading h2, .room-overview__heading h3{
+    margin: 0;
+}
+.room-bed-list{
+    background: #ffffff;
+    border: 1px solid #e3e3e3;
+    min-height: 300px;
+    padding: 1em;
+}
+
+.bed-list__default-text, .bed-list__empty {
+    width: 50%;
+    margin: 7em auto 0;
+}
+.room-bed-list-item{
+    margin: 1em 0;
+    border: solid thin #DAE1E7;
+    padding: 0.5em;
+    border-radius: 4px;
+    box-shadow: 1px 1px 5px #eee;
+}
+.room-bed-name{
+    margin: 0;
+}
+.bed-list-divider{
+    margin-top: 5px;
+    margin-bottom: 5px;
+    border: 0;
+    border-top: 1px solid #eee;
+}

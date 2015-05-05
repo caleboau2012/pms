@@ -49,6 +49,7 @@ $wards = $admission->loadWards();
                         <sup class="badge notification message_unread"></sup>
                     </a>
                 </li>
+                <li><a href="room-management.php"><span class="fa fa-cog">&nbsp;</span>Manage</a> </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                         <img src="../images/profile.png">
