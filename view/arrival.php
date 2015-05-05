@@ -84,6 +84,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <div class="panel {{status}} patient">
         <div class="panel-heading" role="tab" id="heading{{patientid}}">
             <h4 class="panel-title">
+                <button type="button" class="close remove-patient"><span class="fa fa-close"></span></button>
                 <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
                    href="#collapse{{patientid}}" aria-expanded="false" aria-controls="collapse{{patientid}}">
                     {{regNo}}
@@ -94,15 +95,15 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <div class="panel-body">
                 <p>{{name}}</p>
                 <p>{{sex}}</p>
-                <span class="patientid" hidden>{{patientid}}</span>
-                <span class="doctorid" hidden>{{userid}}</span>
+                <span class="patientid hidden">{{patientid}}</span>
+                <span class="doctorid hidden">{{userid}}</span>
             </div>
         </div>
     </div>
 </script>
 
 <script id="tmplDoctor" type="text/html">
-    <div class="col-sm-4 col-md-3">
+    <div class="col-sm-6 col-md-4">
         <div class="panel {{online_status}} doctor">
             <div class="panel-heading" userid="{{userid}}">
                 <h2 class="panel-title">Dr. {{DoctorName}}</h2>
@@ -118,7 +119,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
 <div class="container-fluid page">
     <div class="row">
-        <div class="col-sm-3 col-md-2">
+        <div class="col-sm-4 col-md-3">
             <div class="panel panel-default doctor general">
                 <div class="panel-heading">
                     <h2 class="panel-title">General Queue</h2>
@@ -130,7 +131,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 col-md-10">
+        <div class="col-sm-8 col-md-9">
             <div id="masonry" class="row">
             </div>
         </div>
@@ -171,11 +172,18 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Registration <br/>
-                                        <div class="input-group">
-                                            <input list="regNos" name="<?php echo PatientTable::regNo ?>" id="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
-                                            <span class="btn btn-info input-group-addon" id="verify">Verify</span>
-                                            <datalist id="regNos"></datalist>
+                                    <td class="form-inline">
+                                        <div class="pull-left">
+                                            Registration <br/>
+                                            <div class="input-group">
+                                                <input list="regNos" name="<?php echo PatientTable::regNo ?>" id="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
+                                                <span class="btn btn-info input-group-addon" id="verify">Verify</span>
+                                                <datalist id="regNos"></datalist>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            Occupation <br/>
+                                            <input name="<?php echo PatientTable::occupation ;?>" class="form-control" required/>
                                         </div>
                                     </td>
                                 </tr>

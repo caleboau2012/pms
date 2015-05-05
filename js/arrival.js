@@ -198,8 +198,9 @@ function addToQueue(patient){
 }
 
 function removeFromQueue(patient){
-    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id=' + patient), function(data){
-        //console.log(data);
+    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id=' + patient.find('.patientid').html()), function(data){
+        console.log(data);
+        patient.remove();
     });
 }
 
@@ -238,6 +239,7 @@ function addPatient(form){
                     firstname : form.firstname.value,
                     middlename : form.middlename.value,
                     regNo : form.regNo.value,
+                    occupation: form.occupation.value,
                     home_address : form.home_address.value,
                     telephone : form.telephone.value,
                     sex : form.sex.value,
@@ -330,3 +332,8 @@ function searchResult(patientDetails){
     $(".general").find('.drop').prepend(patientHTML);
     draggableDropabble();
 }
+
+$('body').delegate('.remove-patient .fa', 'click', function(e){
+    $patient = $(this).parent().parent().parent().parent();
+    removeFromQueue($patient);
+});

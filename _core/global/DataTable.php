@@ -97,6 +97,7 @@ class PatientTable{
     const create_date       = 'created_date';
     const modified_date     = 'modified_date';
     const active_fg         = 'active_fg';
+    const occupation        = 'occupation';
 }
 
 class PatientQueueTable {
