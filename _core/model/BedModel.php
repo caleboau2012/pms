@@ -21,6 +21,17 @@ class BedModel extends BaseModel {
         return $result;
     }
 
+    public function delete() {
+        if ($this->bed_id == NULL) {
+            return false;
+        }
+        $stmt = BedSqlStatement::DELETE;
+        $data = array(BedTable::bed_id  =>  $this->bed_id);
+
+        $result = $this->conn->execute($stmt, $data, true);
+        return $result;
+    }
+
     public function occupy() {
         $stmt = BedSqlStatement::OCCUPY;
 

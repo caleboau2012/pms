@@ -68,7 +68,23 @@ if ($intent == 'loadWards') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
-} else {
+} elseif ($intent == 'deleteBed') {
+    // die(var_dump($_POST));
+    if (isset($_POST[BedTable::bed_id])) {
+        $warden = new WardController();
+        $response = $warden->deleteBed($_POST[BedTable::bed_id]);
+        if (is_array($response)) {
+            echo JsonResponse::error($response[P_MESSAGE]);
+            exit();
+        } else {
+            echo JsonResponse::message(STATUS_OK, "Bed successfully deleted!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
+}else {
     echo JsonResponse::error("Invalid intent!");
     exit();
 }

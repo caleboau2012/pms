@@ -898,6 +898,8 @@ class BedSqlStatement {
     const BED_EXISTS = "SELECT COUNT(*) AS count FROM bed WHERE bed_description = :bed_description AND active_fg = 1";
 
     const NEW_BED = "INSERT INTO bed(bed_description, bed_status, ward_id, created_date, modified_date, active_fg) VALUES(:bed_description, 0, :ward_id, NOW(), NOW(), 1)";
+
+    const DELETE = "UPDATE bed SET active_fg = 0 WHERE bed_id = :bed_id AND bed_status != 1";
 }
 
 class WardRefSqlStatement {

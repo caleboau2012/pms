@@ -77,4 +77,26 @@ class WardController {
 
         return $feedback;
     }
+
+    public function deleteBed($bed_id) {
+        $bed = new BedModel($bed_id);
+        $bed_status = $bed->getStatus();
+        if ($bed_status == OCCUPIED) {
+            $response = array(
+                P_STATUS    =>  STATUS_ERROR,
+                P_MESSAGE   =>  "Cannot remove bed that is currently occupied!"
+            );
+            return $response;
+        }
+        $feedback = $bed->delete();
+        if (!$feedback) {
+            $response = array(
+                P_STATUS    =>  STATUS_ERROR,
+                P_MESSAGE   =>  "Unable to delete bed!"
+            );
+            return $response;
+        }
+
+        return $feedback;
+    }
 }
