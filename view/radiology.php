@@ -192,7 +192,7 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                                         <?php foreach ($movement_list->getList() as $label){?>
                                             <label class="test-label col-sm-1">
                                                 <!--<input type="radio" class="form" name="<?php /*RadiologyTable::table_name.'['.RadiologyTable::xray_case_id.']'; */?>">-->
-                                                <input type="radio" <?php echo $disabled; ?> <?php
+                                                <input class="radi" type="radio" <?php echo $disabled; ?> <?php
                                                 if(isset($view_bag['radiology']['xray_case_id'])){
                                                     echo ($view_bag['radiology']['xray_case_id'] == $label->getId()) ?  "checked='checked'" : '';
                                                 } ?> name="<?php echo 'data['.RadiologyTable::table_name.'][xray_case_id]'; ?>" value="<?php echo $label->getId(); ?>"/>
@@ -306,5 +306,13 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
+<script type="text/javascript">
+
+    $("input[name='data[radiology][lmp]']").attr('disabled', 'disabled');
+    $("input[name='data[radiology][xray_case_id]']:last").click(function(){
+        $("input[name='data[radiology][lmp]']").attr('disabled', ! this.checked)
+    });
+
+</script>
 </body>
 </html>
