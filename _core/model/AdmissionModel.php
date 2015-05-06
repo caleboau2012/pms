@@ -2,7 +2,7 @@
 class AdmissionModel extends BaseModel {
     public function requestAdmission($treatment_id) {
         $stmt = AdmissionReqSqlStatement::REQUEST_ADMISSION;
-        
+
         $data = array();
         $data[AdmissionReqTable::treatment_id] = $treatment_id;
 
@@ -13,7 +13,7 @@ class AdmissionModel extends BaseModel {
 
     public function dismissRequest($treatment_id) {
         $stmt = AdmissionReqSqlStatement::DISMISS_REQUEST;
-        
+
         $data = array();
         $data[AdmissionReqTable::treatment_id] = $treatment_id;
 
@@ -40,7 +40,7 @@ class AdmissionModel extends BaseModel {
         $data[WILDCARD] = "%" . $parameter . "%";
 
         $result = $this->conn->fetchAll($stmt, $data);
-        
+
         return $result;
     }
 
@@ -54,13 +54,13 @@ class AdmissionModel extends BaseModel {
 
             $data = $admission_data;
             unset($data[AdmissionBedTable::bed_id]);
-            
+
             $admitted = $this->conn->execute($stmt, $data, true);
 
             $admission_id = $this->conn->getLastInsertedId();
 
             if ($admitted) {
-                // Assign patient bed                
+                // Assign patient bed
                 $stmt = AdmissionSqlStatement::ASSIGN_BED;
 
                 $data = array();
@@ -102,6 +102,52 @@ class AdmissionModel extends BaseModel {
         }
     }
 
+    public function switchBed($admission_id, $bed_id) {
+        $begin = $this->conn->beginTransaction();
+        if ($begin) {
+            // Vacate previous admission bed
+            $stmt = AdmissionSqlStatement::VACATE_ADMISSION_BED;
+            $data = array(AdmissionBedTable::admission_id =>  $admission_id);
+
+            $vacated = $this->conn->execute($stmt, $data, true);
+            if ($vacated) {
+                // Remove admission bed assignment
+                $stmt = AdmissionSqlStatement::REMOVE_BED_ASSIGNMENT;
+                $data = array(AdmissionBedTable::admission_id =>  $admission_id);
+
+                $removed = $this->conn->execute($stmt, $data, true);
+                if ($removed) {
+                    // Make new admission bed assignment
+                    $stmt = AdmissionSqlStatement::ASSIGN_BED;
+                    $data = array(
+                        AdmissionBedTable::admission_id =>  $admission_id,
+                        AdmissionBedTable::bed_id       =>  $bed_id
+                    );
+
+                    $assigned = $this->conn->execute($stmt, $data);
+                    if ($assigned) {
+                        // Occupy new admission bed
+                        $bed = new BedModel($bed_id, $this->conn);
+                        $occupied = $bed->occupy();
+                        if ($occupied) {
+                            $this->conn->commit();
+                            return true;
+                        } else {
+                            $this->conn->rollBack();
+                        }
+                    } else {
+                        $this->conn->rollBack();
+                    }
+                } else {
+                    $this->conn->rollBack();
+                }
+            } else {
+                $this->conn->rollBack();
+            }
+        }
+        return false;
+    }
+
     public function logEncounter($encounter_data) {
         $begin = $this->conn->beginTransaction();
 
@@ -128,7 +174,7 @@ class AdmissionModel extends BaseModel {
 
                     $vitals_model = new VitalsModel($vitals_data, $this->conn);
                     $vitals_added = $vitals_model->add();
-                    
+
                     //var_dump($vitals_data, $vitals_added);
                     if ($vitals_added) {
                         //Vitals added successfully...Commit database transactions
@@ -159,9 +205,9 @@ class AdmissionModel extends BaseModel {
         $admission_details = AdmissionModel::getAdmissionDetails($discharge_data[AdmissionTable::patient_id]);
         $admission_id = $admission_details[AdmissionTable::admission_id];
         $bed_id = $admission_details[AdmissionBedTable::bed_id];
-        
+
         $begin = $this->conn->beginTransaction();
-        
+
         if ($begin) {
             // Discharge patient...Set admission active flag to INACTIVE
             $stmt = AdmissionSqlStatement::DISCHARGE;
@@ -169,9 +215,9 @@ class AdmissionModel extends BaseModel {
             $data = array();
             $data[AdmissionTable::admission_id] = $admission_id;
             $data[AdmissionTable::discharged_by] = $discharge_data[AdmissionTable::discharged_by];
-            
-            $discharged = $this->conn->execute($stmt, $data, true);            
-            
+
+            $discharged = $this->conn->execute($stmt, $data, true);
+
             if ($discharged) {
                 //Remove bed assignments
                 $stmt = AdmissionSqlStatement::REMOVE_FROM_BED;
@@ -184,7 +230,7 @@ class AdmissionModel extends BaseModel {
                 if ($removed) {
                     $bed_model = new BedModel($bed_id, $this->conn);
                     $vacated = $bed_model->vacate();
-                    
+
                     if ($vacated) {
                         $this->conn->commit();
                         return true;
@@ -209,7 +255,7 @@ class AdmissionModel extends BaseModel {
         $admission_model = new AdmissionModel();
 
         $stmt = AdmissionSqlStatement::GET_ADMISSION_DETAILS;
-        
+
         $data = array();
         $data[AdmissionTable::patient_id] = $patient_id;
 

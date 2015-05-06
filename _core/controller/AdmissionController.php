@@ -92,6 +92,31 @@ class AdmissionController {
         return $feedback;
     }
 
+    public function switchBed($admission_id, $bed_id) {
+        $admission_model = new AdmissionModel();
+
+        $bed = new BedModel($bed_id);
+        $bed_status = $bed->getStatus();
+        if ($bed_status == OCCUPIED) {
+            $response = array(
+                P_STATUS    =>  STATUS_ERROR,
+                P_MESSAGE   =>  "Cannot assign bed that is currently occupied!"
+            );
+            return $response;
+        }
+
+        $feedback = $admission_model->switchBed($admission_id, $bed_id);
+        if (!$feedback) {
+            $response = array(
+                P_STATUS    =>  STATUS_ERROR,
+                P_MESSAGE   =>  "Unable to assign bed!"
+            );
+            return $response;
+        }
+
+        return $feedback;
+    }
+
     public function logEncounter($personnel_id, $patient_id, $admission_id, $comments, $vitals_data) {
         $admission_model = new AdmissionModel();
 

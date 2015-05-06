@@ -841,6 +841,10 @@ class AdmissionSqlStatement {
 
     const REMOVE_FROM_BED = "UPDATE admission_bed SET active_fg = 0 WHERE admission_id = :admission_id AND bed_id = :bed_id AND active_fg = 1";
 
+    const VACATE_ADMISSION_BED = "UPDATE bed SET bed_status = 0 WHERE bed_id IN (SELECT bed_id FROM admission_bed WHERE admission_id = :admission_id AND admission_bed.active_fg = 1)";
+
+    const REMOVE_BED_ASSIGNMENT = "UPDATE admission_bed SET active_fg = 0 WHERE admission_id = :admission_id AND active_fg = 1";
+
     const GET_ADMISSION_DETAILS = "SELECT ad.admission_id, adb.bed_id
         FROM admission AS ad
             INNER JOIN admission_bed AS adb

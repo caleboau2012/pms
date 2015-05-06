@@ -133,6 +133,21 @@ if ($intent == 'admitPatient') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
+} elseif ($intent == 'switchBed') {
+    if (isset($_POST[AdmissionBedTable::admission_id], $_POST[AdmissionBedTable::bed_id])) {
+        $warden = new AdmissionController();
+        $response = $warden->switchBed($_POST[AdmissionBedTable::admission_id], $_POST[AdmissionBedTable::bed_id]);
+        if (is_array($response)) {
+            echo JsonResponse::error($response[P_MESSAGE]);
+            exit();
+        } else {
+            echo JsonResponse::message(STATUS_OK, "Bed successfully assigned!");
+            exit();
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
 } else {
     echo JsonResponse::error("Invalid intent!");
     exit();
