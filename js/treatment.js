@@ -61,6 +61,10 @@ Treatment = {
             Treatment.getLabHistory("radiology");
         });
 
+        $('.vi').click(function(){
+            Treatment.getVitals();
+        });
+
         $('#type').change(function(e){
             Treatment.getLabHistory(this.value);
         });
@@ -265,6 +269,7 @@ Treatment = {
                 data = data.data;
                 var html = "";
                 for(var i = 0; i < data.length; i++){
+                    console.log(data[i]);
                     var status;
                     switch(data[i].status){
                         case '5':
@@ -284,14 +289,56 @@ Treatment = {
                         "<td>" + data[i].diagnosis + "</td>" +
                         "<td>" + data[i].modified_date + "</td>" +
                         "<td>" + status + "</td>" +
-                        "<td><a target='_blank' href='' class='btn btn-sm btn-default'>View</a></td>" +
+                        "<td><a target='_blank' href='" +
+                            host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
+                            "' class='btn btn-sm btn-default'>View</a>" +
+                        "</td>" +
                     "</tr>";
                 }
 
                 $('.table-data').html(html);
                 $('.lab-history .dataTable').dataTable();
             }
-        }, 'json')
+        }, 'json');
+    },
+    getVitals: function(){
+        var url = host + "phase/phase_vitals.php";
+        $.post(url, {
+            intent: "getVitals",
+            patient_id: $('.patient-ID').html()
+        }, function(data){
+            console.log(data);
+            //if(data.status == 1){
+            //    data = data.data;
+            //    var html = "";
+            //    for(var i = 0; i < data.length; i++){
+            //        var status;
+            //        switch(data[i].status){
+            //            case '5':
+            //                status = "Pending";
+            //                break;
+            //            case '6':
+            //                status = "Processing";
+            //                break;
+            //            case '7':
+            //                status = "Completed";
+            //                break;
+            //            default :
+            //                status = "No status put in";
+            //        }
+            //        html += "<tr>" +
+            //            "<td>" + (i + 1) + "</td>" +
+            //            "<td>" + data[i].diagnosis + "</td>" +
+            //            "<td>" + data[i].modified_date + "</td>" +
+            //            "<td>" + status + "</td>" +
+            //            "<td><a target='_blank' href='' class='btn btn-sm btn-default'>View</a></td>" +
+            //        "</tr>";
+            //    }
+            //
+            //    $('.table-data').html(html);
+            //    $('.lab-history .dataTable').dataTable();
+            //}
+        }, 'json');
     }
 };
 
@@ -300,11 +347,13 @@ function switchTabs(tab, t){
     $('.request-test').addClass('hidden');
     $('.treatment-history').addClass('hidden');
     $('.lab-history').addClass('hidden');
+    $('.vitals').addClass('hidden');
     $('.' + tab).removeClass('hidden');
     $('.at').removeClass('active');
     $('.rt').removeClass('active');
     $('.th').removeClass('active');
     $('.lh').removeClass('active');
+    $('.vi').removeClass('active');
     $('.' + t).addClass('active');
 }
 

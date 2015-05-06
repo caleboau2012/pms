@@ -166,9 +166,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             </div>
 
             <div class="well">
-                <ol class="treatment-nav nav nav-tabs nav-justified">
-                    <li class="at active" onclick="switchTabs('add-treatment', 'at')"><a href="#">Add Treatment</a></li>
+                <ol class="treatment-nav nav nav-pills nav-justified">
+                    <li class="at active" onclick="switchTabs('add-treatment', 'at')"><a href="#">Treat Patient</a></li>
                     <li class="rt" onclick="switchTabs('request-test', 'rt')"><a href="#">Request Test</a></li>
+                    <li class="vi" onclick="switchTabs('vitals', 'vi')"><a href="#">Vitals</a></li>
                     <li class="th" onclick="switchTabs('treatment-history', 'th')"><a href="#">Treatment History</a></li>
                     <li class="lh" onclick="switchTabs('lab-history', 'lh')"><a href="#">Lab History</a></li>
                 </ol>
@@ -184,6 +185,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             </div>
                             <br/>
                             <div class="col-sm-6">
+                                <br>
                                 <div class="center-block"><label>Comments:</label>
                                     <textarea class="form-control" name="comment"></textarea>
                                 </div>
@@ -205,6 +207,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 </div>
                             </div>
                             <div class="col-sm-6">
+                                <br>
                                 <div class="center-block">
                                     <label>Symptoms:</label>
                                     <textarea type="text" class="form-control" name="symptoms"></textarea>
@@ -295,6 +298,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             </tfoot>
                         </table>
                     </div>
+                </div>
+                <div class="vitals hidden">
+                    <br/>
+                    <ul class="list-group history">
+                    </ul>
+                    <!--                    <button class="btn btn-info">Load More</button>-->
                 </div>
             </div>
         </div>

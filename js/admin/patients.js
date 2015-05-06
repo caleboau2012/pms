@@ -82,6 +82,7 @@ function addPatient(form){
             firstname : form.firstname.value,
             middlename : form.middlename.value,
             regNo : form.regNo.value,
+            occupation: form.occupation.value,
             home_address : form.home_address.value,
             telephone : form.telephone.value,
             sex : form.sex.value,

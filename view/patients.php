@@ -196,10 +196,18 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Registration <br/>
-                                        <div class="input-group">
-                                            <input name="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
-                                            <span class="btn btn-info input-group-addon" id="verify" onclick="verifyRegNo()">Verify</span>
+                                    <td class="form-inline">
+                                        <div class="pull-left">
+                                            Registration <br/>
+                                            <div class="input-group">
+                                                <input list="regNos" name="<?php echo PatientTable::regNo ?>" id="<?php echo PatientTable::regNo ?>" class="form-control" placeholder='Registration No' aria-describedby="verify">
+                                                <span class="btn btn-info input-group-addon" id="verify">Verify</span>
+                                                <datalist id="regNos"></datalist>
+                                            </div>
+                                        </div>
+                                        <div class="pull-left">
+                                            Occupation <br/>
+                                            <input name="<?php echo PatientTable::occupation ;?>" class="form-control" required/>
                                         </div>
                                     </td>
                                 </tr>
@@ -382,6 +390,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <span id="loader" class="fa fa-spinner fa-spin hidden"></span>
                     <button class="btn btn-primary" type="submit">Add Patient</button>
                 </div>
             </form>
