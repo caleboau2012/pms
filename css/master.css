@@ -1050,8 +1050,12 @@ span#loader{
     border-radius: 4px;
     box-shadow: 1px 1px 5px #eee;
 }
+.room-bed-list-item:hover{
+    box-shadow: 1px 1px 3px #B3B0B0;
+}
 .room-bed-name{
     margin: 0;
+    text-transform: capitalize;
 }
 .bed-list-divider{
     margin-top: 5px;

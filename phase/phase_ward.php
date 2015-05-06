@@ -1,4 +1,5 @@
 <?php
+error_reporting(0);
 require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);

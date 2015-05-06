@@ -96,32 +96,32 @@ $wards = $ward->loadWards();
             </div>
             <div class="col-sm-6">
                 <div class="room-bed-list">
-                        <div class="bed-list__default-text">
-                            <h2 class="text-center text-muted">
-                                Select ward from the left pane
-                            </h2>
-                        </div>
-<!--                    <div>-->
-<!--                        <button class="btn btn-sm btn-primary pull-right hidden bed-add__action"><span class="fa fa-plus">&nbsp;</span>Add Bed</button>-->
-<!--                        <div class="clearfix"></div>-->
-<!--                        <div class="bed-list-items">-->
-<!--                            <div class="col-xs-6 col-sm-4">-->
-<!--                                <div class="room-bed-list-item">-->
-<!--                                    <h3 class="room-bed-name text-primary pull-left">Bed 1</h3>-->
-<!--                                    <p class="small text-muted pull-right pointer bed-list-delete">-->
-<!--                                        <span class="fa fa-remove text-danger fa-2x">&nbsp;</span>-->
-<!--                                    </p>-->
-<!--                                    <div class="clearfix"></div>-->
-<!--                                    <div class="bed-list-divider"></div>-->
-<!--                                    <p class="small text-muted">-->
-<!--                                        Occupied by PMS002-->
-<!--                                    </p>-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            -->
-<!--                        </div>-->
-<!---->
-<!--                    </div>-->
+                    <div class="bed-list__default-text">
+                        <h2 class="text-center text-muted">
+                            Select ward from the left pane
+                        </h2>
+                    </div>
+                    <!--                    <div>-->
+                    <!--                        <button class="btn btn-sm btn-primary pull-right hidden bed-add__action"><span class="fa fa-plus">&nbsp;</span>Add Bed</button>-->
+                    <!--                        <div class="clearfix"></div>-->
+                    <!--                        <div class="bed-list-items">-->
+                    <!--                            <div class="col-xs-6 col-sm-4">-->
+                    <!--                                <div class="room-bed-list-item">-->
+                    <!--                                    <h3 class="room-bed-name text-primary pull-left">Bed 1</h3>-->
+                    <!--                                    <p class="small text-muted pull-right pointer bed-list-delete">-->
+                    <!--                                        <span class="fa fa-remove text-danger fa-2x">&nbsp;</span>-->
+                    <!--                                    </p>-->
+                    <!--                                    <div class="clearfix"></div>-->
+                    <!--                                    <div class="bed-list-divider"></div>-->
+                    <!--                                    <p class="small text-muted">-->
+                    <!--                                        Occupied by PMS002-->
+                    <!--                                    </p>-->
+                    <!--                                </div>-->
+                    <!--                            </div>-->
+                    <!--                            -->
+                    <!--                        </div>-->
+                    <!---->
+                    <!--                    </div>-->
                 </div>
             </div>
 
@@ -254,9 +254,21 @@ $wards = $ward->loadWards();
 </div>
 
 <!--  MODAL FORM-->
-<div>
-
-</div>
+<div class="modal fade" id="room-modal">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title">Modal title</h4>
+            </div>
+            <div class="modal-body">
+                <p>One fine body&hellip;</p>
+            </div>
+            <div class="modal-footer">
+            </div>
+        </div><!-- /.modal-content -->
+    </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
 
 <!--  -->
 <script src='../js/bootstrap/jquery.min.js'></script>

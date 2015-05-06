@@ -21,7 +21,8 @@ Room = {
         SELECTED_WARD: false,
         SELECTED_BED_ID: false,
         SELECTED_BED: false,
-        ACTIVE_OUT_PATIENT: {}
+        ACTIVE_OUT_PATIENT: {},
+        ROOM_MODAL : $('#room-modal')
     },
     init: function(){
         $('.adm-menu').click(function(){
@@ -126,7 +127,7 @@ Room = {
         payload.intent = "loadBeds";
         payload.ward_id = $(ward).attr("data-ward-id");
         $.getJSON(host + 'phase/phase_ward.php', payload, function(data){
-            var button = "<button class='btn btn-sm btn-primary pull-right bed-add__action'><span class='fa fa-plus'>&nbsp;</span>Add Bed</button>" +
+            var button = "<button class='btn btn-sm btn-primary pull-right bed-add__action' data-ward-id =" + $(ward).attr('data-ward-id') + "><span class='fa fa-plus'>&nbsp;</span>Add Bed</button>" +
                 "<div class='clearfix'></div>";
             var content  = "";
             if(data.status == Room.CONSTANTS.REQUEST_SUCCESS){
@@ -156,7 +157,7 @@ Room = {
                 //    temporary to show empty bed
                 content = "<div class='bed-list__empty'><h3 class='text-info text-center'>" + data.message + "</h3></div>";
             }
-                /*Display content*/
+            /*Display content*/
             $('.room-bed-list').html(button + content);
             /*
              * Adding actions*/
@@ -168,11 +169,15 @@ Room = {
                     Room.showDeleteBedAction(this, false);
                 }
             );
-
+            /*
+             * Attach new bed form action*/
+            $(".bed-add__action").click(function () {
+                Room.addBedForm($(this));
+            });
         });
         //make ward active
-            $('li.ward').removeClass('list-group-item-success');
-            $(ward).addClass('list-group-item-success');
+        $('li.ward').removeClass('list-group-item-success');
+        $(ward).addClass('list-group-item-success');
         //if(!Room.deactivate){
         //    $('#step-1').addClass('active');
         //    $('#step-2').removeClass('active');
@@ -215,13 +220,65 @@ Room = {
             $(object).find(".bed-list-delete").addClass("invisible");
         }
     },
-    addBed: function(bed){
+    addBedForm: function(bed_object){
+        $(".modal-title").html("Add New Bed");
+        $(".modal-body").html(
+            "<p class='text-info'>Enter Bed description</p><form> " +
+            "<input type='text' class='form-control' id='bed_description' placeholder='Bed description'>" +
+            "</form"
+        );
+        $(".modal-footer").html(
+            "<button class='btn btn-primary btn-sm' id='bed-add-action'><span class='fa fa-plus'>&nbsp;</span>Add bed</button>"
+        );
+        Room.GLOBAL.ROOM_MODAL.modal("show");
+
+        Room.GLOBAL.ROOM_MODAL.on("hidden.bs.modal", function (e) {
+        //    reset Modal
+        });
+
+        /*Set action*/
+        $("#bed-add-action").click(function () {
+            if($("#bed_description").val() !== ""){
+                Room.addBed(bed_object.attr("data-ward-id"), $("#bed_description").val());
+            }
+        });
+
+    },
+    addBed: function(ward, bed){
         payload = {};
-        payload.ward_id = 1;
-        payload.bed_description = 2;
-        $.post(host + "phase/phase_ward.php", function (data) {
+        payload.intent = "newBed";
+        payload.ward_id = ward;
+        payload.bed_description = bed;
+        $.post(host + "phase/phase_ward.php", payload, function (data) {
+           if(data.status == Room.CONSTANTS.REQUEST_SUCCESS){
+               console.log(data);
+               /*
+               * Append new bed*/
+               /*
+               * */
+                var content = "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
+               "<h3 class='room-bed-name text-primary pull-left'>"+ bed +"</h3>" +
+               "<p class='text-muted pull-right pointer bed-list-delete invisible'><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
+               "<div class='clearfix'></div>" +
+               "<div class='bed-list-divider'></div>" +
+               "<p class='small text-muted'>Occupied by None</p>" +
+               "</div></div>";
+               $('.room-bed-list').append(content);
+               $(".room-bed-list-item").hover(
+                   function() {
+                       Room.showDeleteBedAction(this, true);
+                   },
+                   function () {
+                       Room.showDeleteBedAction(this, false);
+                   }
+               );
+               Room.GLOBAL.ROOM_MODAL.modal("hide");
+           }else if(data.status == Room.CONSTANTS.REQUEST_ERROR){
+               console.log(data);
+           }
+        }, "json").fail(function (data) {
             console.log(data);
-        })
+        });
 
     }
 };
