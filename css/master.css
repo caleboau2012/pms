@@ -1063,3 +1063,8 @@ span#loader{
     border: 0;
     border-top: 1px solid #eee;
 }
+.ward-item{
+    font-weight: 500;
+    cursor: pointer;
+    text-transform: capitalize;
+}

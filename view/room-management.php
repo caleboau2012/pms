@@ -76,15 +76,15 @@ $wards = $ward->loadWards();
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="pull-left">Wards</h4>
-                        <button class="btn btn-sm btn-default pull-right"><span class="fa fa-plus">&nbsp;</span>Add Ward</button>
+                        <button class="btn btn-sm btn-default pull-right" id="new-ward-action"><span class="fa fa-plus">&nbsp;</span>Add Ward</button>
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
-                        <ul class="list-group">
+                        <ul class="list-group ward-list-items">
                             <?php
                             foreach($wards as $ward){
                                 ?>
-                                <li class="pointer list-group-item ward" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
+                                <li class="list-group-item ward-item ward text-primary" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
                                     <?php echo $ward['description'] ?>
                                 </li>
                             <?php
