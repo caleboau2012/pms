@@ -99,4 +99,28 @@ class WardController {
 
         return $feedback;
     }
+
+    public function deleteWard($ward_id) {
+        $ward = new WardModel($ward_id);
+        if (!$ward->isEmpty()) {
+            $response = array(
+                P_STATUS    =>  STATUS_ERROR,
+                P_MESSAGE   =>  "Cannot delete ward that contains occupied beds!"
+            );
+
+            return $response;
+        }
+
+        $feedback = $ward->delete();
+        if (!$feedback) {
+            $response = array(
+                P_STATUS    =>  STATUS_ERROR,
+                P_MESSAGE   =>  "Unable to delete ward!"
+            );
+
+            return $response;
+        }
+
+        return $feedback;
+    }
 }

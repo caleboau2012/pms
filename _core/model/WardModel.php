@@ -18,6 +18,61 @@ class WardModel extends BaseModel {
         return $result;
     }
 
+    public function delete() {
+        $data = array(BedTable::ward_id =>  $this->ward_id);
+
+        if (!$this->isEmpty()) {
+            // Ward contains occupied beds, delete fails!
+            return false;
+        }
+
+
+        $begin = $this->conn->beginTransaction();
+        if ($begin) {
+            $ward_empty = true;
+
+            if ($this->hasBeds()) {
+                // Delete all beds in the ward
+                $stmt = WardRefSqlStatement::DELETE_WARD_BEDS;
+                $ward_empty = $this->conn->execute($stmt, $data, true);
+            }
+
+            if ($ward_empty) {
+                // Delete ward
+                $stmt = WardRefSqlStatement::DELETE_WARD;
+                $ward_deleted = $this->conn->execute($stmt, $data, true);
+                if ($ward_deleted) {
+                    $this->conn->commit();
+                    return true;
+                } else {
+                    $this->conn->rollBack();
+                }
+            } else {
+                $this->conn->rollBack();
+            }
+        }
+
+        return false;
+    }
+
+    public function isEmpty() {
+        $stmt = WardRefSqlStatement::IS_EMPTY_WARD;
+        $data = array(BedTable::ward_id =>  $this->ward_id);
+
+        $result = $this->conn->fetch($stmt, $data);
+
+        return ($result[COUNT] == 0);
+    }
+
+    public function hasBeds() {
+        $stmt = WardRefSqlStatement::HAS_BEDS;
+        $data = array(BedTable::ward_id =>  $this->ward_id);
+
+        $result = $this->conn->fetch($stmt, $data);
+
+        return ($result[COUNT] > 0);
+    }
+
     public static function getAll() {
         $ward_model = new WardModel();
 

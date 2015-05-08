@@ -911,11 +911,19 @@ class WardRefSqlStatement {
 
     const GET_WARD_BEDS = "SELECT bed_id, bed_description, bed_status, ward_id FROM bed WHERE ward_id = :ward_id AND active_fg = 1";
 
+    const HAS_BEDS = "SELECT COUNT(*) AS count FROM bed WHERE ward_id = :ward_id AND active_fg = 1";
+
     const WARD_EXISTS = "SELECT COUNT(*) AS count FROM ward_ref WHERE description = :description AND active_fg = 1";
 
     const IS_VALID_WARD = "SELECT COUNT(*) AS count FROM ward_ref WHERE ward_ref_id = :ward_ref_id AND active_fg = 1";
 
+    const IS_EMPTY_WARD = "SELECT COUNT(*) AS count FROM bed WHERE ward_id = :ward_id AND bed_status = 1 AND active_fg = 1";
+
     const NEW_WARD = "INSERT INTO ward_ref(description, created_date, modified_date, active_fg) VALUES(:description, NOW(), NOW(), 1)";
+
+    const DELETE_WARD_BEDS = "UPDATE bed SET active_fg = 0 WHERE ward_id = :ward_id AND active_fg = 1";
+
+    const DELETE_WARD = "UPDATE ward_ref SET active_fg = 0 WHERE ward_ref_id = :ward_id AND active_fg = 1";
 }
 
 class TreatmentSqlStatement {
