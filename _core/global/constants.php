@@ -42,6 +42,7 @@ define('ROASTER_CREATOR', 15);
 define('ADMISSION_OFFICER', 16);
 define('HAEMATOLOGY_CONDUCTOR', 17);
 define ('LABORATORY_CONDUCTOR', 18);
+define ('BACKUP_OFFICER', 21);
 
 //Staff Permission
 define('READ_ONLY', 1);

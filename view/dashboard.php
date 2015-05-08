@@ -200,6 +200,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 </div>
 
                             <?php
+                            } else if ($staff[StaffRoleTable::staff_role_id] == BACKUP_OFFICER){
+                                $administrator = true;
+                                ?>
+                                <div class="col-xs-3 text-center">
+                                    <a id="backup" href="#" class="dashboard-link">
+                                        <img src="../images/backup.png" width="60" height="60">
+                                        <div class="dashboard-desc">System Backup</div>
+                                    </a>
+                                </div>
+                            <?php
                             }
                         }
                         if(!$administrator){
@@ -225,6 +235,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/index.js"></script>
+<script src="../js/backup_restore.js" type="application/javascript"></script>
 <?php include('footer.php'); ?>
 
 </body>

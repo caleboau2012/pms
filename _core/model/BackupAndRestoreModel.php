@@ -4,6 +4,7 @@ class BackupAndRestoreModel{
 
     public function backupDB(){
         $path = dirname(__FILE__);
+        $host = DB_HOST;
         $username = DB_USERNAME;
         $password = DB_PASSWORD;
         $databasename = DBNAME;
@@ -14,6 +15,8 @@ class BackupAndRestoreModel{
         $outputFilename = $path . '/' . $outputFilename;
 
         //Dump the MySQL database
+//        $cmd = 'mysqldump --allow-keywords --opt -u$username' .!empty($password) ? ' -p'.$password : null .' '. $databasename .' > '. $outputFilename;
+//        $cmd = 'C:\wamp\bin\mysql\mysql5.6.17\bin\mysqldump.exe --allow-keywords --opt -h '. $host . '-u '. $username .' -p'. $password .' '. $databasename .' > '. $outputFilename;
         $cmd = 'mysqldump -u '. $username .' -p'. $password .' '. $databasename .' > '. $outputFilename;
         $ret = shell_exec($cmd);
 
