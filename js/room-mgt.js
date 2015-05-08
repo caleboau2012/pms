@@ -2,50 +2,29 @@
  * Created by olajuwon on 2/20/2015.
  */
 Room = {
-    deactivate : false,
     CONSTANTS: {
         REQUEST_SUCCESS: 1,
-        REQUEST_ERROR: 2,
-        IN_PATIENT_VIEW : 2,
-        OUT_PATIENT_VIEW: 1,
-        DONE_WITH_PATIENT: 3,
-        NOT_DONE_WITH_PATIENT: 4
+        REQUEST_ERROR: 2
     },
     GLOBAL:{
-        ACTIVE_PATIENT: false,
-        ACTIVE_PATIENT_ID: false,
-        ADMITTED_BY: false,
-        Room_REQ_ID: false,
-        TREATMENT_ID: false,
-        SELECTED_WARD_ID: false,
-        SELECTED_WARD: false,
-        SELECTED_BED_ID: false,
-        SELECTED_BED: false,
-        ACTIVE_OUT_PATIENT: {},
         ROOM_MODAL : $('#room-modal')
     },
     init: function(){
         $('.adm-menu').click(function(){
             Room.switchMenu(this);
         });
-
         //default page view
         Room.wardView();
+        Room.setupWardActions();
 
-        //Attach click on ward
-        $('.ward').click(function(){
-            Room.getWardAvailableBeds(this);
-        });
         //
         $('#assignPatient').unbind('click').bind('click', function(){
             Room.assignPatient(this);
         });
-
         /*ward action*/
         $("#new-ward-action").click(function () {
             Room.addWardForm();
         });
-
     },
     switchMenu : function(obj){
         $('.adm-menu').removeClass('active');
@@ -73,41 +52,44 @@ Room = {
         })  ;
     },
     getWardAvailableBeds: function(ward){
-        payload = {};
-        payload.intent = "loadBeds";
-        payload.ward_id = $(ward).attr("data-ward-id");
-        $.getJSON(host + 'phase/phase_ward.php', payload, function(data){
-            var button = "<button class='btn btn-sm btn-primary pull-right bed-add__action' data-ward-id =" + $(ward).attr('data-ward-id') + "><span class='fa fa-plus'>&nbsp;</span>Add Bed</button>" +
-                "<div class='clearfix'></div>";
-            var content  = "";
-            if(data.status == Room.CONSTANTS.REQUEST_SUCCESS){
-                content = "<div class='room-bed-list-items'>";
-                $(data.data).each(function () {
-                    content += "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
-                    "<h3 class='room-bed-name text-primary pull-left'>"+ this.bed_description +"</h3>" +
-                    "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id="+ this.bed_id +"><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
-                    "<div class='clearfix'></div>" +
-                    "<div class='bed-list-divider'></div>" +
-                    "<p class='small text-muted'>Occupied by PMS002</p>" +
+        if(ward) {
+            payload = {};
+            payload.intent = "loadBeds";
+            payload.ward_id = $(ward).attr("data-ward-id");
+            $.getJSON(host + 'phase/phase_ward.php', payload, function (data) {
+                var ward_name = "<div class='col-sm-8'><h3 class='no-margin text-muted text-capitalize'>" + $(ward).attr("data-ward-name") + "</h3></div>";
+                var button = "<div class='col-sm-4'><button class='btn btn-sm btn-primary pull-right bed-add__action' data-ward-id =" + $(ward).attr('data-ward-id') + "><span class='fa fa-plus'>&nbsp;</span>Add Bed</button>" +
+                    "</div><div class='clearfix'></div><div class='bed-list-divider'></div>";
+                var content = "";
+                if (data.status == Room.CONSTANTS.REQUEST_SUCCESS) {
+                    content = "<div class='room-bed-list-items'>";
+                    $(data.data).each(function () {
+                        content += "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
+                        "<h3 class='room-bed-name text-primary pull-left'>" + this.bed_description + "</h3>" +
+                        "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id=" + this.bed_id + "><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
+                        "<div class='clearfix'></div>" +
+                        "<div class='bed-list-divider'></div>" +
+                        "<p class='small text-muted'>Occupied by PMS002</p>" +
+                        "</div></div>";
+                    });
+                    content += "</div><div class='clearfix'></div>";
+                } else if (data.status == Room.CONSTANTS.REQUEST_ERROR) {
+                    //    temporary to show empty bed
+                    content = "<div class='room-bed-list-items'>" +
+                    "<div class='bed-list__empty'><h3 class='text-info text-center'>" + data.message + "</h3>" +
                     "</div></div>";
-                });
-                content += "</div>";
-            }else if(data.status == Room.CONSTANTS.REQUEST_ERROR){
-                //    temporary to show empty bed
-                content = "<div class='room-bed-list-items'>" +
-                "<div class='bed-list__empty'><h3 class='text-info text-center'>" + data.message + "</h3>" +
-                "</div></div>";
-            }
-            /*Display content*/
-            $('.room-bed-list').html(button + content);
-            /*
-             * Adding actions*/
-            Room.setupBedActions();
+                }
+                /*Display content*/
+                $('.room-bed-list').html(ward_name + button + content);
+                /*
+                 * Adding actions*/
+                Room.setupBedActions();
 
-        });
-        //make ward active
-        $('li.ward').removeClass('list-group-item-success');
-        $(ward).addClass('list-group-item-success');
+            });
+            //make ward active
+            $('li.ward').removeClass('list-group-item-success');
+            $(ward).addClass('list-group-item-success');
+        }
     },
     setupBedActions: function () {
         $(".room-bed-list-item").hover(
@@ -129,11 +111,39 @@ Room = {
             Room.deleteBed(this);
         });
     },
+    setupWardActions: function () {
+        $(".ward-item").hover(
+            function() {
+                Room.showDeleteWardAction(this, true);
+            },
+            function () {
+                Room.showDeleteWardAction(this, false);
+            }
+        );
+        $('.ward-list-name').click(function () {
+                Room.getWardAvailableBeds($(this).parent());
+            });
+        /*
+         * Delete ward action*/
+        $(".ward-list-delete").click(function (e) {
+            if(confirm("Are you sure you want to delete " + $(this).attr("data-ward-name"))){
+                Room.deleteWard(this);
+            }
+            return false;
+        });
+    },
     showDeleteBedAction: function(object, state){
         if(state){
             $(object).find(".bed-list-delete").removeClass("invisible");
         }else if(!state){
             $(object).find(".bed-list-delete").addClass("invisible");
+        }
+    },
+    showDeleteWardAction: function(object, state){
+        if(state){
+            $(object).find(".ward-list-delete").removeClass("invisible");
+        }else if(!state){
+            $(object).find(".ward-list-delete").addClass("invisible");
         }
     },
     addBedForm: function(bed_object){
@@ -194,19 +204,23 @@ Room = {
                  * Append new ward*/
                 /*
                  * */
-                var content = "<li class='pointer list-group-item ward-item ward text-primary' data-ward-id="+ -2 +">" +
-                    ward +"</li>";
-                $(".ward-list-items").append(content);
-                $('.ward').click(function(){
-                    Room.getWardAvailableBeds(this);
-                });
+                var content = "<li class='list-group-item ward-item ward text-primary' data-ward-id="+ data.data.ward_ref_id +" data-ward-name='"+ ward +"'>" +
+                    "<div class='pull-left ward-list-name'>" + ward +"</div>" +
+                    "<p class='text-muted pull-right pointer ward-list-delete invisible' data-ward-name ='" + ward + "' data-ward-id = '"+ data.data.ward_ref_id +"'> <span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
+                    "<div class='clearfix'></div></li>";
+                if($(".ward-item").length == 0){
+                    $('.ward-list-items').html(content);
+                    Room.setupWardActions();
+                }else{
+                    $('.ward-list-items').append(content);
+                    Room.setupWardActions();
+                }
                 Room.GLOBAL.ROOM_MODAL.modal("hide");
             }else if(data.status == Room.CONSTANTS.REQUEST_ERROR){
                 $("#response-msg").html(data.message + "&nbsp;&nbsp;");
             }
             $("#is-loading").addClass("hidden");
         }, "json");
-
     },
     addBed: function(ward, bed){
         $("#is-loading").removeClass("hidden");
@@ -222,17 +236,17 @@ Room = {
                  * */
                 var content = "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
                     "<h3 class='room-bed-name text-primary pull-left'>"+ bed +"</h3>" +
-                    "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id="+ -2 +"><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
+                    "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id="+ data.data.bed_id +"><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
                     "<div class='clearfix'></div>" +
                     "<div class='bed-list-divider'></div>" +
                     "<p class='small text-muted'>Occupied by None</p>" +
                     "</div></div>";
                 if($(".room-bed-list-item").length == 0){
                     $('.room-bed-list-items').html(content);
-                    Room.setupBedActions();
+                    Room.setupWardActions();
                 }else{
                     $('.room-bed-list-items').append(content);
-                    Room.setupBedActions();
+                    Room.setupWardActions();
                 }
                 Room.GLOBAL.ROOM_MODAL.modal("hide");
             }else if(data.status == Room.CONSTANTS.REQUEST_ERROR){
@@ -242,7 +256,20 @@ Room = {
         }, "json");
 
     },
+    deleteWard: function(ward){
+
+        payload = {};
+        payload.intent = "deleteWard";
+        payload.ward_ref_id = $(ward).attr("data-ward-id");
+        $.post(host + "phase/phase_ward.php", payload, function (data) {
+            if(data.status == Room.CONSTANTS.REQUEST_SUCCESS){
+                $(".room-bed-list").html("<div class='bed-list__default-text'><h2 class='text-center text-muted'>Select ward from the left pane</h2></div>");
+                $(ward).parent().remove();
+            }
+        }, "json");
+    },
     deleteBed: function(bed){
+        $(".ward-item").unbind("click");
         payload = {};
         payload.intent = "deleteBed";
         payload.bed_id = $(bed).attr("data-bed-id");
