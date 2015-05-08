@@ -6,20 +6,32 @@ var Restore = {
     init: function(){
         var payload = {
             intent : 'backup'
-        }
+        };
 
-        $("#backup").on('click', function(e){
+        $("#backup").popover({
+            placement: 'top',
+            content : "Database Successfully Backup",
+            animation : true,
+            trigger: 'click'
+        });
+
+        $("#backup").unbind('click').bind('click', function(e){
             e.preventDefault();
             Restore.serverRequest(host + Restore.URL.uri, payload, function(data){
                 console.log(data);
+                if (data.status == 1) {
+                    $("#backup").popover('show');
+                    setTimeout(function (){
+                        $('#backup').popover('hide');
+                    }, 6000);
+                }
             }, 'GET');
-        });
 
+        });
     },
 
     serverRequest: function(url, param, callback, request_type){
         if (request_type == 'POST') {
-            /*console.log("Request..." + request_type);*/
             $.post(url, param, function(data){
                 if (typeof callback == 'function') {
                     callback(JSON.parse(data));

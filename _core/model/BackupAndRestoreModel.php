@@ -4,7 +4,8 @@ class BackupAndRestoreModel{
 
     public function backupDB(){
         $path = dirname(__FILE__);
-        $host = DB_HOST;
+//        $path = "../../db";
+//        $host = DB_HOST;
         $username = DB_USERNAME;
         $password = DB_PASSWORD;
         $databasename = DBNAME;
