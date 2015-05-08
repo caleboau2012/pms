@@ -43,11 +43,11 @@ if ($intent == 'loadWards') {
     if (isset($_POST[WardRefTable::description])) {
         $warden = new WardController();
         $response = $warden->createWard($_POST[WardRefTable::description]);
-        if (is_array($response)) {
+        if (is_array($response) and isset($response[P_STATUS]) and $response[P_STATUS] == STATUS_ERROR) {
             echo JsonResponse::error($response[P_MESSAGE]);
             exit();
         } else {
-            echo JsonResponse::message(STATUS_OK, "Ward successfully created!");
+            echo JsonResponse::success($response);
             exit();
         }
     } else {
@@ -58,11 +58,11 @@ if ($intent == 'loadWards') {
     if (isset($_POST[BedTable::ward_id], $_POST[BedTable::bed_description])) {
         $warden = new WardController();
         $response = $warden->createBed($_POST[BedTable::ward_id], $_POST[BedTable::bed_description]);
-        if (is_array($response)) {
+        if (is_array($response) and isset($response[P_STATUS]) and $response[P_STATUS] == STATUS_ERROR) {
             echo JsonResponse::error($response[P_MESSAGE]);
             exit();
         } else {
-            echo JsonResponse::message(STATUS_OK, "Bed successfully created!");
+            echo JsonResponse::success($response);
             exit();
         }
     } else {

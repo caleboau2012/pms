@@ -13,6 +13,11 @@ class WardModel extends BaseModel {
 
         if ($result) {
             $this->ward_id = $this->conn->getLastInsertedId();
+            $response_data = array(
+                WardRefTable::ward_ref_id   =>  $this->ward_id
+            );
+
+            return $response_data;
         }
 
         return $result;

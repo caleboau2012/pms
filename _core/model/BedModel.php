@@ -16,6 +16,13 @@ class BedModel extends BaseModel {
         $result = $this->conn->execute($stmt, $data, true);
         if ($result) {
             $this->bed_id = $this->conn->getLastInsertedId();
+            // Return ward_id and bed_id of newly created bed
+            $response_data = array(
+                BedTable::ward_id   =>  $ward_id,
+                BedTable::bed_id    =>  $this->bed_id
+            );
+
+            return $response_data;
         }
 
         return $result;
