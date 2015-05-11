@@ -1083,3 +1083,8 @@ span#loader{
     top: 10px;
     cursor: pointer;
 }
+
+.restore-shadow {
+    border-radius: 5px;
+    border: 1px solid lightslategray;
+}

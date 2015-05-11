@@ -7,7 +7,8 @@ class BackupAndRestoreModel{
         $hostname = DB_HOST;
         $username = DB_USERNAME;
         $password = DB_PASSWORD;
-        $databasename = DBNAME;
+        $databasename = 'blog';
+//        $databasename = DBNAME;
 
         $now = str_replace(":", "", date("Y-m-d H:i:s"));
         $outputFilename = 'backup' . '-' . $now . '.sql';
@@ -29,7 +30,7 @@ class BackupAndRestoreModel{
         if($dumpFile){
             $username = DB_USERNAME;
             $password = DB_PASSWORD;
-            $databasename = DBNAME;
+            $databasename = 'blog';
 
             $cmd = "mysql -u $username -p$password < $dumpFile";
             $ret = shell_exec($cmd);

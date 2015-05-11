@@ -27,14 +27,12 @@
 
 <div class="container">
     <div class="row">
-        <div id="top-margin" class="col-sm-6 col-sm-offset-3 well">
+        <div id="top-margin" class="col-sm-6 col-sm-offset-3 well restore-shadow">
             <h2>System Restore</h2><hr>
 
-            <h5>Select File</h5>
-            <select id="restore" name="restore" class="form-control">
-                <option value=""></option>
-            </select>
-            <button type="submit" class="form-margin btn btn-primary pull-right">Restore</button>
+            <h5>Choose File</h5>
+            <input type="file" name="fileToUpload" class="form-control"/>
+            <button type="submit" id="restore" class="form-margin btn btn-primary pull-right">Restore</button>
         </div>
     </div>
 </div>
@@ -42,5 +40,7 @@
 <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="js/bootstrap/jquery-ui.min.js"></script>
 <script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/constants.js"></script>
+<script src="js/backup_restore.js"></script>
 </body>
 </html>
