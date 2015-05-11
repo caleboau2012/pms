@@ -81,3 +81,12 @@ function showAlert(message){
     }, 10000);
     location.href="#alertMSG";
 }
+
+function showSuccess(message){
+    $('#successMSG').html(message);
+    $('#successMSG').parent().removeClass('hidden');
+    setTimeout(function(){
+        $('#successMSG').parent().addClass('hidden');
+    }, 10000);
+    location.href="#successMSG";
+}

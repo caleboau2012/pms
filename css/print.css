@@ -1,0 +1,11 @@
+body {
+    margin-top: 0;
+}
+@media print {
+    .navbar {
+        display: block;
+        background-color: #222222;
+        color: #ffffff;
+        border-width:1px !important;
+    }
+}

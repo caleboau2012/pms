@@ -5,7 +5,7 @@
  * Date: 2/16/2015
  * Time: 1:10 PM
  */
-require_once '../_core/global/_require.php';
+require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
@@ -27,12 +27,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <title>Admin Dashboard</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/master.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/print.css" media="print">
+    <link href="../../css/master.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../css/print.css" media="print">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -51,7 +51,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
+            <a class="navbar-brand" href="../dashboard.php">Patient Management System</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
@@ -59,19 +59,19 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <li><a href="#" class="label-default">Staff</a></li>
                 <li><a href="#">Config</a></li>
                 <li>
-                    <a href="mails.php">
+                    <a href="../mails.php">
                         <span class="fa fa-envelope"></span>
                         <sup class="badge notification message_unread"></sup>
                     </a>
                 </li>
                 <li class="dropdown">
                     <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                        <img src="../images/profile.png">
+                        <img src="../../images/profile.png">
                         <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
-                        <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
+                        <li role="presentation"><a href="../dashboard.php">Dashboard</a></li>
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
                 </li>
@@ -225,11 +225,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
-<script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
-<script src="../js/bootstrap/jquery.dataTables.js"></script>
-<script src="../js/bootstrap/bootstrap.min.js"></script>
-<script src="../js/constants.js"></script>
-<script src="../js/admin/staff.js"></script>
+<script src="../../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../../js/bootstrap/jquery.dataTables.js"></script>
+<script src="../../js/bootstrap/bootstrap.min.js"></script>
+<script src="../../js/constants.js"></script>
+<script src="../../js/admin/staff.js"></script>
 
 <?php include('footer.php'); ?>
 

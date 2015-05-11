@@ -156,6 +156,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 aria-hidden="true">&times;</span></button>
                         <span id="alertMSG"></span>
                     </div>
+                    <div class="alert hidden alert-success alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <span id="successMSG"></span>
+                    </div>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
                             <h2 class="panel-title">Profile</h2>

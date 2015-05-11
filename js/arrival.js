@@ -49,6 +49,9 @@ function init(){
             if(data.status == 2){
                 showAlert(data.message);
             }
+            else if(data.status == 1){
+                showSuccess(data.data);
+            }
         }, 'json').fail(function(e){
             console.log(e.responseText);
         });
@@ -174,14 +177,6 @@ function patientDrop(e, ui){
     console.log('Moving: ' + patient + ' From: ' + fromDoctor + ' To: ' + toDoctor)
 
     $(source).find('.doctorid').html(toDoctor);
-
-    //if((toDoctor == '') && (fromDoctor))
-    //    console.log('Moving ' + patient + ' from ' + fromDoctor + ' to ' + toDoctor);
-    //else if(fromDoctor)
-    //    console.log('switching');
-    //else if(toDoctor == '')
-    //    console.log('adding to gen queue');
-    //    //addToGenQueue(patient);
 
     switchQueue(patient, fromDoctor, toDoctor);
 

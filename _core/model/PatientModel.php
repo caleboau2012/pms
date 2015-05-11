@@ -65,13 +65,13 @@ class PatientModel extends BaseModel {
 
     public function verifyEmergencyStatus ($data){
         $sql = EmergencySqlStatement::VERIFY_EMERGENCY;
-        $result = $this->conn->execute($sql,array(PatientTable::patient_id=>$data));
+        $result = $this->conn->fetch($sql,array(PatientTable::patient_id=>$data));
         return $result;
     }
 
     public function changeStatus($emergency, $status){
         $sql = EmergencySqlStatement::CHANGE_STATUS;
-        echo 'status' . $status;
+       // echo 'status' . $status;
         $result = $this->conn->execute($sql,array(EmergencyTable::emergency_status_id=>$status, EmergencyTable::patient_id=>$emergency));
         return $result;
     }

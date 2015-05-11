@@ -106,8 +106,7 @@ class PatientSqlStatement {
                                  VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, :nok_firstname, :nok_middlename, :nok_surname, :nok_address, :nok_telephone, :nok_relationship,
                                           :citizenship,  :religion,  :family_position,  :mother_status,  :father_status,    :marital_status,  :no_of_children, :occupation, NOW(), NOW()  )';
 
-        const GET = 'SELECT surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
-                                    FROM patient WHERE patient_id = :patient_id';
+        const GET = 'SELECT * FROM patient WHERE patient_id = :patient_id';
         const UPDATE_INFO = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
 
         const UPDATE ="UPDATE patient SET surname =:surname, firstname =:firstname, middlename =:middlename,
@@ -953,7 +952,7 @@ class EmergencySqlStatement {
 
     const REG_EMERGENCY = "INSERT INTO emergency (emergency_id, patient_id, emergency_status_id, created_date, modified_date) VALUES (NULL, :patient_id, '1', NOW(), NOW())";
 
-    const VERIFY_EMERGENCY ="SELECT emergency_status_id FROM emergency WHERE patient_id=:patient_id ";
+    const VERIFY_EMERGENCY ="SELECT * FROM emergency WHERE patient_id=:patient_id ";
 
     const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE patient_id =:patient_id ";
 

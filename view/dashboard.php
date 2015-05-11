@@ -186,7 +186,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 $administrator = true;
                                 ?>
                                 <div class="col-xs-3  text-center">
-                                    <a href="staff.php" class="dashboard-link">
+                                    <a href="admin/staff.php" class="dashboard-link">
                                         <img src="../images/file-edit.png">
 
                                         <div class="dashboard-desc">Admin Access</div>
