@@ -26,11 +26,12 @@ if ($intent == 'backup') {
     }
 
 } elseif($intent == 'restore'){
-    $dumpFile = isset($_FILES['fileToUpload']['tmp_name']) ? $_FILES['fileToUpload']['tmp_name'] : NULL;
+    $dumpFileName = isset($_FILES['fileToUpload']['name']) ? $_FILES['fileToUpload']['name'] : NULL;
+    $dumpFileTmpName = isset($_FILES['fileToUpload']['tmp_name']) ? $_FILES['fileToUpload']['tmp_name'] : NULL;
 
-    if($dumpFile){
+    if($dumpFileName){
         $restore = new BackupAndRestoreModel();
-        $response = $restore->restoreDB($dumpFile);
+        $response = $restore->restoreDB($dumpFileName, $dumpFileTmpName);
 
         if($response){
             echo JsonResponse::success("System Restore Successful!");
