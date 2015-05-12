@@ -65,181 +65,278 @@ $wards = $admission->loadWards();
         </div>
     </div>
 </nav>
+<div class="navbar-offset"></div>
 
 <div class="container-fluid">
-<div class="row">
-    <div class="adm-page-content" id="out-patient-view">
-        <div class="col-sm-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    Pending Request
-                </div>
-                <div class="panel-body pending-list">
-                    <img src="../images/loading.gif">
-                </div>
-            </div>
-        </div>
-        <div class="col-sm-9 patient-content">
-            <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
-            <div id="patient-panel" class="panel panel-primary hidden">
-                <div class="panel-heading">
-                    <div id="request-heading">
-
-                    </div>
-                </div>
-                <div class="panel-body">
-                    <div class="col-sm-4">
-                        <div class="well well-sm">
-                            <div class="div-rounded" id="step-1"><span class="fa fa-road"></span> </div>
-                            <!--                                <p class="small text-muted text-center">Select ward below</p>-->
-                            <ul class="list-group">
-                                <?php
-                                foreach($wards as $ward){
-                                    ?>
-                                    <li class="pointer list-group-item ward" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
-                                        <?php echo $ward['description'] ?>
-                                    </li>
-                                <?php
-                                }
-                                ?>
-                            </ul>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="well well-sm">
-                            <div class="div-rounded" id="step-2"><span class="fa fa-bed"></span></div>
-                            <!--  <p class="small text-warning text-center">select bed below</p>-->
-                            <div id="bed-list">
-                                <h3 class="text-muted text-center"><br/>&larr;Select ward<br/><br/><br/></h3>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-4">
-                        <div class="well well-sm">
-                            <div class="div-rounded" id="step-3"><span class="fa fa-check"></span> </div>
-                            <p class="small text-warning text-center"><br/></p>
-                            <h3 class="text-warning text-center text-capitalize hidden" id="ward_chosen"></h3>
-                            <div class="thin-separator hidden"></div>
-                            <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
-                            <div id="response" class="text-center center-block">
-                                <span id="loader" class="fa fa-spinner fa-spin hidden"></span>
-                                <div id="response_msg"></div>
-                            </div>
-                            <button class="btn btn-primary form-control hidden" id="assignPatient">ASSIGN</button>
-                            <div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-<!---
-    ----IN-PATIENT
-        ----------    View
--->
-<div class="adm-page-content" id="in-patient-view">
     <div class="row">
-        <div class="col-sm-3">
-            <div class="panel panel-primary">
-                <div class="panel-heading">
-                    <form id="in-patient-form">
-                        <input id = "patient_query" class="form-control" placeholder="Search for in-patients">
-                    </form>
-                </div>
-                <div class="panel-body in-patient-list">
-                    <div id="in-patient-result">
-                        <h2 class="text-muted text-center">Hit enter to get patient</h2>
+        <div class="adm-page-content" id="out-patient-view">
+            <div class="col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        Pending Request
+                    </div>
+                    <div class="panel-body pending-list">
+                        <img src="../images/loading.gif">
                     </div>
                 </div>
             </div>
-        </div>
+            <div class="col-sm-6 patient-content">
+                <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
+                <div id="patient-panel" class="panel panel-primary hidden">
+                    <div class="panel-heading">
+                        <div id="request-heading">
 
-        <div class="col-sm-9">
-            <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
-            <div id="active_in_patient" class="in-patient-content">
-                <div id="in-patient-identity">
-                    <span class="fa fa-pulse fa-spin"></span>
-                </div>
-                <div class="col-sm-8">
-                    <div class="well well-sm">
-                        <div class="div-rounded encounter-icon">
-                            <span class="fa fa-stethoscope"></span>
                         </div>
-                        <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
-                        <form id="log_encounter">
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="temp">Tempertaure</label>
-                                    <input type="text" class="form-control" id="temp" name="temp">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="pulse">Pulse</label>
-                                    <input type="text" id="pulse" class="form-control" name="pulse">
+                    </div>
+                    <div class="panel-body">
+                        <div class="col-sm-4">
+                            <div class="well well-sm">
+                                <div class="div-rounded step-1"><span class="fa fa-road"></span> </div>
+                                <!--                                <p class="small text-muted text-center">Select ward below</p>-->
+                                <ul class="list-group admitted-out-patients_ward">
+                                    <?php
+                                    foreach($wards as $ward){
+                                        ?>
+                                        <li class="pointer list-group-item ward" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
+                                            <?php echo $ward['description'] ?>
+                                        </li>
+                                    <?php
+                                    }
+                                    ?>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="well well-sm">
+                                <div class="div-rounded step-2"><span class="fa fa-bed"></span></div>
+                                <!--  <p class="small text-warning text-center">select bed below</p>-->
+                                <div id="bed-list">
+                                    <h3 class="text-muted text-center"><br/>&larr;Select ward<br/><br/><br/></h3>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="respiratory_rate">Respiratoty Rate</label>
-                                    <input type="text" class="form-control" id="respiratory_rate" name="respiratory_rate">
+                        </div>
+                        <div class="col-sm-4">
+                            <div class="well well-sm">
+                                <div class="div-rounded step-3"><span class="fa fa-check"></span> </div>
+                                <p class="small text-warning text-center"><br/></p>
+                                <h3 class="text-warning text-center text-capitalize hidden" id="ward_chosen"></h3>
+                                <div class="thin-separator hidden"></div>
+                                <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
+                                <div id="response" class="text-center center-block">
+                                    <span id="loader" class="fa fa-spinner fa-spin hidden"></span>
+                                    <div id="response_msg"></div>
                                 </div>
-                                <div class="col-sm-6">
-                                    <label for="blood_pressure">Blood Pressure</label>
-                                    <input type="text" class="form-control" id = "blood_pressure" name="blood_pressure">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="height">Height</label>
-                                    <input type="text" class="form-control" id="height" name="height">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="weight">Weight</label>
-                                    <input type="text" class="form-control" id="weight" name="weight">
+                                <button class="btn btn-primary form-control hidden" id="assignPatient">ASSIGN</button>
+                                <div>
                                 </div>
                             </div>
-                            <div class="form-group">
-                                <div class="col-sm-12">
-                                    <label for="comment">Comment</label>
-                                    <textarea class="form-control" id="comment" name="comment"></textarea>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="bmi">BMI</label>
-                                    <input type="text" class="form-control" id="bmi" name="bmi">
-                                </div>
-                                <div class="col-sm-6">
-                                    <br/>
-                                    <input type="submit" class="btn btn-primary">
-                                </div>
-                            </div>
-
-                        </form>
-                        <div class="clearfix"></div>
-                        <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
-                        <div class="text-center" id="log_encounter_response"></div>
+                        </div>
                     </div>
                 </div>
-                <div class="col-sm-2 col-sm-offset-1">
-                    <div>
-                        <br/><br/><br/>
-                        <div class="div-rounded encounter-icon">
-                            <span class="fa fa-user-plus"></span>
-                        </div>
-                        <div class="text-center" id="discharge_patient_content">
-                            <button class="btn btn-warning" id="discharge_patient">Discharge</button>
-                            <div id="discharge_patient_error" class="text-danger"></div>
-                        </div>
-
+            </div>
+            <div class="col-sm-3">
+                <div class="room-overview">
+                    <div class="room-overview__heading">
+                        <h2 class="text-center"><span class="fa fa-history"></span></h2>
+                        <h3 class="text-center">Overview</h3>
                     </div>
+                    <p>
+                        <span class="fa fa-university text-danger">&nbsp;</span>
+                        20 Wards
+                    </p>
+                    <p>
+                        <span class="fa fa-bed text-danger">&nbsp;</span>
+                        200 Beds
+                    </p>
+                    <p>
+                        <span class="fa fa-bed text-success">&nbsp;</span>
+                        30 Available Beds
+                    </p>
                 </div>
-                <div class="clearfix"></div>
             </div>
         </div>
     </div>
-</div>
+    <!---
+        ----IN-PATIENT
+            ----------    View
+    -->
+    <div class="adm-page-content" id="in-patient-view">
+        <div class="row">
+            <div class="col-sm-3">
+                <div class="panel panel-primary">
+                    <div class="panel-heading">
+                        <form id="in-patient-form">
+                            <input id = "patient_query" class="form-control" placeholder="Search for in-patients">
+                        </form>
+                    </div>
+                    <div class="panel-body in-patient-list">
+                        <div id="in-patient-result">
+                            <h2 class="text-muted text-center">Hit enter to get patient</h2>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-sm-6">
+                <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
+                <div id="active_in_patient" class="in-patient-content hidden">
+                    <div id="in-patient-identity">
+                        <span class="fa fa-pulse fa-spin"></span>
+                    </div>
+
+                    <ul class="nav nav-tabs">
+                        <li class="active"><a href="#home-tab" data-toggle="tab">Details</a></li>
+                        <li><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
+                        <li><a href="#vitals-tab" data-toggle="tab"> <span class="fa fa-stethoscope">&nbsp;</span>Add Vitals</a></li>
+                    </ul>
+                    <div id="myTabContent" class="tab-content">
+                        <div class="tab-pane fade adm-tab-pane active in" id="home-tab">
+                            <br/>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore enim est eum quae quo.
+                        </div>
+                        <div class="tab-pane fade adm-tab-pane active in" id="switch-tab">
+                            <br/>
+                            <div class="panel-body">
+                                <div class="col-sm-4">
+                                    <div class="well well-sm">
+                                        <div class="div-rounded step-1 active"><span class="fa fa-road"></span> </div>
+                                        <!--                                <p class="small text-muted text-center">Select ward below</p>-->
+                                        <ul class="list-group admitted-patients-in-ward">
+                                            <?php
+                                            foreach($wards as $ward){
+                                                ?>
+                                                <li class="pointer list-group-item ward" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
+                                                    <?php echo $ward['description'] ?>
+                                                </li>
+                                            <?php
+                                            }
+                                            ?>
+                                        </ul>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="well well-sm">
+                                        <div class="div-rounded step-2"><span class="fa fa-bed"></span></div>
+                                        <!--  <p class="small text-warning text-center">select bed below</p>-->
+                                        <div id="in-patient-bed-list">
+                                            <h3 class="text-muted text-center"><br>←Select ward<br><br><br></h3>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="well well-sm assign-patient-column">
+                                        <div class="div-rounded step-3"><span class="fa fa-check"></span> </div>
+                                        <p class="small text-warning text-center"><br></p>
+                                        <h3 class="text-warning text-center text-capitalize hidden" id="ward_chosen"></h3>
+                                        <div class="thin-separator hidden"></div>
+                                        <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
+                                        <div id="response" class="text-center center-block">
+                                            <span id="switch-loader" class="fa fa-spinner fa-spin hidden fa-2x"></span>
+                                            <div id="switch-response_msg"></div>
+                                        </div>
+                                        <button class="btn btn-primary form-control hidden" id="switchPatient"><span class="fa fa-refresh">&nbsp;</span>Switch</button>
+                                        <div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="tab-pane fade adm-tab-pane" id="vitals-tab">
+                            <!--                                <div class="div-rounded encounter-icon">-->
+                            <!--                                    <span class="fa fa-stethoscope"></span>-->
+                            <!--                                </div>-->
+                            <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
+                            <form id="log_encounter">
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="temp">Tempertaure</label>
+                                        <input type="text" class="form-control" id="temp" name="temp">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="pulse">Pulse</label>
+                                        <input type="text" id="pulse" class="form-control" name="pulse">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="respiratory_rate">Respiratoty Rate</label>
+                                        <input type="text" class="form-control" id="respiratory_rate" name="respiratory_rate">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="blood_pressure">Blood Pressure</label>
+                                        <input type="text" class="form-control" id = "blood_pressure" name="blood_pressure">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="height">Height</label>
+                                        <input type="text" class="form-control" id="height" name="height">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <label for="weight">Weight</label>
+                                        <input type="text" class="form-control" id="weight" name="weight">
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <label for="comment">Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment"></textarea>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="bmi">BMI</label>
+                                        <input type="text" class="form-control" id="bmi" name="bmi">
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <br/>
+                                        <input type="submit" class="btn btn-primary">
+                                    </div>
+                                </div>
+
+                            </form>
+                            <div class="clearfix"></div>
+                            <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
+                            <div class="text-center" id="log_encounter_response"></div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+                </div>
+            </div>
+            <div class="col-sm-3">
+                <div class="room-overview">
+                    <div class="room-overview__heading">
+                        <h2 class="text-center"><span class="fa fa-history"></span></h2>
+                        <h3 class="text-center">Overview</h3>
+                    </div>
+                    <p>
+                        <span class="fa fa-university text-danger">&nbsp;</span>
+                        20 Wards
+                    </p>
+                    <p>
+                        <span class="fa fa-bed text-danger">&nbsp;</span>
+                        200 Beds
+                    </p>
+                    <p>
+                        <span class="fa fa-bed text-success">&nbsp;</span>
+                        30 Available Beds
+                    </p>
+                </div>
+                <div class="hidden">
+                    <br/>
+                    <!--Shown when a ptient is selected-->
+                    <div class="div-rounded encounter-icon">
+                        <span class="fa fa-user-plus"></span>
+                    </div>
+                    <div class="text-center" id="discharge_patient_content">
+                        <button class="btn btn-warning" id="discharge_patient">Discharge</button>
+                        <div id="discharge_patient_error" class="text-danger"></div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 <!--  -->

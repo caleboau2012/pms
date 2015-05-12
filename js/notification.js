@@ -41,7 +41,7 @@ Notification = {
         * */
         setInterval(function(){
             Notification.checkout(Notification.unread_count);
-        }, 30000);
+        }, 300000);
     },
     displayCount: function(unread_count){
         if(unread_count == 0){

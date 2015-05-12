@@ -61,6 +61,9 @@ textarea{
 ---END OF EDIT BOOTSTRAP
 */
 
+.navbar-offset{
+    height: 10px;
+}
 .navbar-right-text{
     padding: 1em;
     color: #428BCA;
@@ -700,7 +703,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 /*ADMISSION MODULE*/
 .pending-list, .in-patient-list{
-    height: 58em;
+    height: 25em;
     max-height: 58em;
     overflow-y: auto;
 }
@@ -726,13 +729,13 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     color: #FFF;
     margin-bottom: 0.2em;
 }
-.div-rounded.active#step-1{
+.div-rounded.active.step-1{
     background: #8A6D3B;
 }
-.div-rounded.active#step-2{
+.div-rounded.active.step-2{
     background: #BE7070;
 }
-.div-rounded.active#step-3, .encounter-icon {
+.div-rounded.active.step-3, .encounter-icon {
     background: #87C988;
 }
 .thin-separator{
@@ -752,6 +755,9 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 #in-patient-content{
     margin: 0 auto;
 }
+.adm-tab-pane{
+    min-height: 25em;
+}
 
 span#loader{
    font-size: 2em;
@@ -765,7 +771,7 @@ span#loader{
 }
 .in-patient-content{
     background: #ffffff;
-    padding-bottom: 3em;
+    padding: 0 1em 3em;
 }
 #in-patient-identity{
     padding: 1em 1em 2em;
@@ -1074,7 +1080,7 @@ span#loader{
 
 #top-margin {
     margin-top: 90px;
-}}
+}
 .no-margin{
     margin: 0;
 }
