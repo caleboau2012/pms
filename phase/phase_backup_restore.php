@@ -42,7 +42,7 @@ if ($intent == 'getFiles') {
 } elseif($intent == 'restore'){
     $dumpFileName = isset($_FILES['fileToUpload']['name']) ? $_FILES['fileToUpload']['name'] : NULL;
     $dumpFileTmpName = isset($_FILES['fileToUpload']['tmp_name']) ? $_FILES['fileToUpload']['tmp_name'] : NULL;
-
+    var_dump($_FILES);
     if($dumpFileName){
 //        $restore = new BackupAndRestoreModel();
         $restore = new BackupAndRestoreController();

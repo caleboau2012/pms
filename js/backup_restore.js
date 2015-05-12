@@ -14,14 +14,21 @@ var Restore = {
         });
 
        backup.unbind('click').bind('click', function(e){
-            e.preventDefault();
+//            e.preventDefault();
             Restore.serverRequest(host + Restore.URL.uri, Restore.payload('backup'), function(data){
-                console.log(data);
+//                console.log(data);
                 if (data.status == 1) {
                     backup.popover('show');
                     setTimeout(function (){
                         backup.popover('hide');
                     }, 6000);
+
+                    var download = $("a#download");
+                    download.attr('href', data.data);
+                    download.attr('download', 'pms.sql');
+                    download.click();
+//                    download.trigger("click");
+                    return false;
                 }
             }, 'GET');
 

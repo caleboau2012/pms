@@ -29,10 +29,11 @@
     <div class="row">
         <div id="top-margin" class="col-sm-6 col-sm-offset-3 well restore-shadow">
             <h2>System Restore</h2><hr>
-
-            <h5>Choose File</h5>
-            <input type="file" name="fileToUpload" class="form-control"/>
-            <button type="submit" id="restore" class="form-margin btn btn-primary pull-right">Restore</button>
+            <form method="post" name="restore" enctype="multipart/form-data" action="phase/phase_backup_restore.php?intent=restore">
+                <h5>Choose File</h5>
+                <input type="file" name="fileToUpload" class="form-control" />
+                <button type="submit" id="restore" class="form-margin btn btn-primary pull-right">Restore</button>
+            </form>
         </div>
     </div>
 </div>

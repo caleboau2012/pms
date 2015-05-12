@@ -204,10 +204,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 $administrator = true;
                                 ?>
                                 <div class="col-xs-3 text-center">
-                                    <a id="backup" href="#" class="dashboard-link">
+                                    <a id="backup" href="#download" class="dashboard-link">
                                         <img src="../images/backup.png" width="60" height="60">
                                         <div class="dashboard-desc">System Backup</div>
                                     </a>
+                                    <a id="download" hidden="hidden">Download</a>
                                 </div>
                             <?php
                             }
