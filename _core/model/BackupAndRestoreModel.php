@@ -72,9 +72,16 @@ class BackupAndRestoreModel{
         $pos = strpos($path, 'pms');
         $path = substr($path, 0, $pos+3) . '/backup';
 
-        $files = scandir($path);
+        $files = scandir($path, SCANDIR_SORT_DESCENDING);
+        $result = array();
 
-        return $files;
+        foreach($files as $file){
+            if(is_file($path.'/'.$file)){
+                array_push($result, $file);
+            }
+        }
+
+        return $result;
     }
 
 }
