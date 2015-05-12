@@ -185,12 +185,12 @@ $wards = $admission->loadWards();
                     </div>
 
                     <ul class="nav nav-tabs">
-                        <li class="active"><a href="#home-tab" data-toggle="tab">Details</a></li>
-                        <li><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
+                        <li><a href="#home-tab" data-toggle="tab">Details</a></li>
+                        <li class="active"><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
                         <li><a href="#vitals-tab" data-toggle="tab"> <span class="fa fa-stethoscope">&nbsp;</span>Add Vitals</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
-                        <div class="tab-pane fade adm-tab-pane active in" id="home-tab">
+                        <div class="tab-pane fade adm-tab-pane" id="home-tab">
                             <br/>
                             Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore enim est eum quae quo.
                         </div>
