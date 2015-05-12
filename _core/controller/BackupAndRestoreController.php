@@ -17,8 +17,12 @@ class BackupAndRestoreController {
         return $this->systemBackupAndRestore->backupDB();
     }
 
-    public function restoreDB($sqlDumpFileName, $sqlDumpFileTmpName){
-        return $this->systemBackupAndRestore->restoreDB($sqlDumpFileName, $sqlDumpFileTmpName);
+    public function restoreDB($sqlDumpFile){
+        return $this->systemBackupAndRestore->restoreDB($sqlDumpFile);
+    }
+
+    public function uploadDumpFile($sqlDumpFileName, $sqlDumpFileTmpName){
+        return $this->systemBackupAndRestore->uploadDumpFile($sqlDumpFileName, $sqlDumpFileTmpName);
     }
 
     public function getFiles(){

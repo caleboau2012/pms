@@ -1,6 +1,13 @@
 <?php
 
 class BackupAndRestoreModel{
+    private $path;
+
+    public function __construct(){
+        $path = dirname(__FILE__);
+        $pos = strpos($path, 'pms');
+        $path = substr($path, 0, $pos+3) . '/backup';
+    }
 
     public function backupDB(){
         $path = dirname(__FILE__);
@@ -28,13 +35,12 @@ class BackupAndRestoreModel{
         return "";
     }
 
-    public function restoreDB($sqlDumpFileName, $sqlDumpFileTmpName){
-        $dumpFile = $this->uploadDumpFile($sqlDumpFileName, $sqlDumpFileTmpName);
-
-        if($dumpFile){
+    public function restoreDB($sqlDumpFile){
+        if($sqlDumpFile){
             $username = DB_USERNAME;
             $password = DB_PASSWORD;
             $databasename = DBNAME;
+            $dumpFile = $this->path . '/' . $sqlDumpFile;
 
             $cmd = "mysql -u $username -p$password < $dumpFile";
             $ret = shell_exec($cmd);
@@ -45,9 +51,8 @@ class BackupAndRestoreModel{
         return false;
     }
 
-    private function uploadDumpFile($sqlDumpFileName, $sqlDumpFileTmpName){
-//        $target_dir = "/var/www/html/pms/restore/";
-        $target_dir = $_SERVER['DOCUMENT_ROOT'] . "/restore/";
+    public function uploadDumpFile($sqlDumpFileName, $sqlDumpFileTmpName){
+        $target_dir = $this->path . '/';
         $target_file = $target_dir . basename($sqlDumpFileName);
 
         //check file type
@@ -55,28 +60,24 @@ class BackupAndRestoreModel{
 
         //check if file exists
         if(file_exists($target_file)){
-            return $target_file;
+            return true;
         }
 
         if($file_type == 'sql'){
             if(move_uploaded_file($sqlDumpFileTmpName, $target_file)){
-                return $target_file;
+                return true;
             }
         }
 
-        return "";
+        return false;
     }
 
     public function getFiles(){
-        $path = dirname(__FILE__);
-        $pos = strpos($path, 'pms');
-        $path = substr($path, 0, $pos+3) . '/backup';
-
-        $files = scandir($path, SCANDIR_SORT_DESCENDING);
+        $files = scandir($this->path, SCANDIR_SORT_DESCENDING);
         $result = array();
 
         foreach($files as $file){
-            if(is_file($path.'/'.$file)){
+            if(is_file($this->path.'/'.$file)){
                 array_push($result, $file);
             }
         }
