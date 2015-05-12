@@ -13,8 +13,22 @@ if (isset($_REQUEST['intent'])) {
     exit();
 }
 
-if ($intent == 'backup') {
-    $backup = new BackupAndRestoreModel();
+if ($intent == 'getFiles') {
+//    $backup = new BackupAndRestoreModel();
+    $backup = new BackupAndRestoreController();
+    $response = $backup->getFiles();
+
+    if(is_array($response)){
+        echo JsonResponse::success($response);
+        exit();
+    } else {
+        echo JsonResponse::error('No backup files');
+        exit();
+    }
+
+} elseif ($intent == 'backup') {
+//    $backup = new BackupAndRestoreModel();
+    $backup = new BackupAndRestoreController();
     $response = $backup->backupDB();
 
     if($response){
@@ -30,7 +44,8 @@ if ($intent == 'backup') {
     $dumpFileTmpName = isset($_FILES['fileToUpload']['tmp_name']) ? $_FILES['fileToUpload']['tmp_name'] : NULL;
 
     if($dumpFileName){
-        $restore = new BackupAndRestoreModel();
+//        $restore = new BackupAndRestoreModel();
+        $restore = new BackupAndRestoreController();
         $response = $restore->restoreDB($dumpFileName, $dumpFileTmpName);
 
         if($response){

@@ -5,10 +5,12 @@ class BackupAndRestoreModel{
     public function backupDB(){
         $path = dirname(__FILE__);
         $hostname = DB_HOST;
-        $username = DB_USERNAME;
-        $password = DB_PASSWORD;
-        $databasename = 'blog';
+//        $username = DB_USERNAME;
+        $username = 'root';
+//        $password = DB_PASSWORD;
+        $password = 'admin';
 //        $databasename = DBNAME;
+        $databasename = 'pms';
 
         $now = str_replace(":", "", date("Y-m-d H:i:s"));
         $outputFilename = 'backup' . '-' . $now . '.sql';
@@ -22,6 +24,8 @@ class BackupAndRestoreModel{
 
         if($ret == 0)
             return $outputFilename;
+
+        return "";
     }
 
     public function restoreDB($sqlDumpFileName, $sqlDumpFileTmpName){
@@ -30,7 +34,7 @@ class BackupAndRestoreModel{
         if($dumpFile){
             $username = DB_USERNAME;
             $password = DB_PASSWORD;
-            $databasename = 'blog';
+            $databasename = DBNAME;
 
             $cmd = "mysql -u $username -p$password < $dumpFile";
             $ret = shell_exec($cmd);
@@ -61,6 +65,16 @@ class BackupAndRestoreModel{
         }
 
         return "";
+    }
+
+    public function getFiles(){
+        $path = dirname(__FILE__);
+        $pos = strpos($path, 'pms');
+        $path = substr($path, 0, $pos+3) . '/backup';
+
+        $files = scandir($path);
+
+        return $files;
     }
 
 }
