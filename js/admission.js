@@ -10,6 +10,7 @@ Admission = {
         OUT_PATIENT_VIEW: 1,
         DONE_WITH_OUT_PATIENT: 3,
         NOT_DONE_WITH_OUT_PATIENT: 4,
+        DISCHARGE_IN_PATIENT: 7,
         DONE_WITH_IN_PATIENT: 5,
         NOT_DONE_WITH_IN_PATIENT: 6,
         BED_OCCUPIED : 1,
@@ -17,6 +18,7 @@ Admission = {
     },
     GLOBAL:{
         ACTIVE_PATIENT: false,
+        ACTIVE_IN_PATIENT: false,
         ACTIVE_PATIENT_ID: false,
         ACTIVE_IN_PATIENT_BED_ID: false,
         ADMITTED_BY: false,
@@ -332,6 +334,10 @@ Admission = {
 
         }else if(state == Admission.CONSTANTS.NOT_DONE_WITH_IN_PATIENT){
             Admission.deactivate = false;
+        }else if(state == Admission.CONSTANTS.DISCHARGE_IN_PATIENT){
+            $(".discharge-container").addClass("hidden");
+            $(Admission.GLOBAL.ACTIVE_IN_PATIENT).remove();
+            Admission.deactivate = true;
         }
     },
     prepareAdmissionAssign: function () {
@@ -353,7 +359,7 @@ Admission = {
                 }else if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                     content = "<ul class='patients-queue list-group'>";
                     data.data.forEach(function(record){
-                        content += "<li class='list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
+                        content += "<li class='text-capitalize list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
                         record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
                     });
                     content += "</ul>";
@@ -369,10 +375,14 @@ Admission = {
         }
     }
     ,attendToInPatient: function(patient){
+        //remove patient from search queue
+        Admission.deactivate = false;
+        Admission.GLOBAL.ACTIVE_IN_PATIENT = patient;
         //setup selected in patient
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-patient-id");
         Admission.GLOBAL.PATIENT_ADMISSION_ID = $(patient).attr("data-admission-id");
-        patient_identity = "<h2 class='text-primary'>"+ $(patient).attr('data-patient-name') + "</h2>";
+        Admission.GLOBAL.ACTIVE_PATIENT_ID = $(patient).attr('data-patient-id');
+        patient_identity = "<h2 class='text-primary text-capitalize'>"+ $(patient).attr('data-patient-name') + "</h2>";
         patient_identity += "<p>" + $(patient).attr('data-regNo') +"</p>";
         patient_identity += "<p class='small text-capitalize'>Requested by " + $(patient).attr('data-doctor') +"</p>";
         $('#in-patient-identity').html(patient_identity);
@@ -398,6 +408,7 @@ Admission = {
         });
         $("#empty_active_in_patient").addClass("hidden");
         $(".in-patient-content").removeClass("hidden");
+        $(".discharge-container").removeClass("hidden");
     },
     prepareAdmissionSwitch: function () {
         $('.assign-patient-column #ward_chosen').html(Admission.GLOBAL.SELECTED_WARD).removeClass('hidden');
@@ -441,13 +452,23 @@ Admission = {
     dischargePatient: function(){
         payload = {};
         payload.intent = 'dischargePatient';
-        payload.patient_id = Admission.GLOBAL.ACTIVE_OUT_PATIENT.patient_id;
+        payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
+            var response_msg;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                $('#discharge_patient_content').html("<h2 class='text-success'>" + data.message +"</h2>");
+                response_msg = '<br/><div class="alert alert-dismissible alert-success text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '<h4>' + data.message +'</h4>' +
+                    '</div>';
+                $("#discharge_patient_response").html(response_msg);
+                Admission.resetAction(Admission.CONSTANTS.DISCHARGE_IN_PATIENT)
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
-                $('#discharge_patient_error').html("<h4>" + data.message +"</h4>");
+                response_msg = '<div class="alert alert-dismissible alert-danger text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '' + data.message +'' +
+                    '</div>';
+                $("#discharge_patient_response").html(response_msg);
             }
         });
     }

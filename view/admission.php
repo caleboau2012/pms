@@ -325,18 +325,17 @@ $wards = $admission->loadWards();
                         30 Available Beds
                     </p>
                 </div>
-                <div class="hidden">
+                <div class="discharge-container hidden">
                     <br/>
                     <!--Shown when a ptient is selected-->
                     <div class="div-rounded encounter-icon">
                         <span class="fa fa-user-plus"></span>
                     </div>
                     <div class="text-center" id="discharge_patient_content">
-                        <button class="btn btn-warning" id="discharge_patient">Discharge</button>
-                        <div id="discharge_patient_error" class="text-danger"></div>
+                        <button class="btn btn-warning" id="discharge_patient">Discharge</button><br/><br/>
                     </div>
-
                 </div>
+                <div id="discharge_patient_response" class="text-danger"> </div>
             </div>
         </div>
     </div>

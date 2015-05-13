@@ -4,7 +4,9 @@
 Room = {
     CONSTANTS: {
         REQUEST_SUCCESS: 1,
-        REQUEST_ERROR: 2
+        REQUEST_ERROR: 2,
+        BED_OCCUPIED : 1,
+        BED_VACANT : 0
     },
     GLOBAL:{
         ROOM_MODAL : $('#room-modal')
@@ -64,13 +66,23 @@ Room = {
                 if (data.status == Room.CONSTANTS.REQUEST_SUCCESS) {
                     content = "<div class='room-bed-list-items'>";
                     $(data.data).each(function () {
-                        content += "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
-                        "<h3 class='room-bed-name text-primary pull-left'>" + this.bed_description + "</h3>" +
-                        "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id=" + this.bed_id + "><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
-                        "<div class='clearfix'></div>" +
-                        "<div class='bed-list-divider'></div>" +
-                        "<p class='small text-muted'>Occupied by PMS002</p>" +
-                        "</div></div>";
+                        if(this.bed_status == Room.CONSTANTS.BED_OCCUPIED) {
+                            content += "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item room-bed-list-item-occupied'>" +
+                            "<h3 class='room-bed-name text-primary pull-left'>" + this.bed_description + "</h3>" +
+                            "<br/><br/>" +
+                            "<div class='clearfix'></div>" +
+                                //"<div class='bed-list-divider'></div>" +
+                                //"<p class='small text-muted'>Occupied</p>" +
+                            "</div></div>";
+                        }
+                        else if(this.bed_status == Room.CONSTANTS.BED_VACANT) {
+                            content += "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
+                            "<h3 class='room-bed-name text-primary pull-left'>" + this.bed_description + "</h3>" +
+                            "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-name='" + this.bed_description +"' data-bed-id=" + this.bed_id + "><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
+                            "<div class='clearfix'></div>" +
+                                //"<div class='bed-list-divider'></div>" +
+                            "</div></div>";
+                        }
                     });
                     content += "</div><div class='clearfix'></div>";
                 } else if (data.status == Room.CONSTANTS.REQUEST_ERROR) {
@@ -107,8 +119,12 @@ Room = {
         });
         /*
          * Delete bed action*/
-        $(".bed-list-delete").click(function () {
-            Room.deleteBed(this);
+        $(".bed-list-delete").click(function (e) {
+            $("#new-ward-response").empty();
+            if(confirm("Are you sure you want to delete " + $(this).attr("data-bed-name"))){
+                Room.deleteBed(this);
+            }
+            return false;
         });
     },
     setupWardActions: function () {
@@ -121,11 +137,13 @@ Room = {
             }
         );
         $('.ward-list-name').click(function () {
-                Room.getWardAvailableBeds($(this).parent());
-            });
+            $("#new-ward-response").empty();
+            Room.getWardAvailableBeds($(this).parent());
+        });
         /*
          * Delete ward action*/
         $(".ward-list-delete").click(function (e) {
+            $("#new-ward-response").empty();
             if(confirm("Are you sure you want to delete " + $(this).attr("data-ward-name"))){
                 Room.deleteWard(this);
             }
@@ -257,7 +275,6 @@ Room = {
 
     },
     deleteWard: function(ward){
-
         payload = {};
         payload.intent = "deleteWard";
         payload.ward_ref_id = $(ward).attr("data-ward-id");
@@ -265,6 +282,12 @@ Room = {
             if(data.status == Room.CONSTANTS.REQUEST_SUCCESS){
                 $(".room-bed-list").html("<div class='bed-list__default-text'><h2 class='text-center text-muted'>Select ward from the left pane</h2></div>");
                 $(ward).parent().remove();
+            }else if(data.status == Room.CONSTANTS.REQUEST_ERROR){
+                var response = '<div class="alert alert-dismissible alert-danger text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '' + data.message +'' +
+                    '</div>';
+                $("#new-ward-response").html(response);
             }
         }, "json");
     },

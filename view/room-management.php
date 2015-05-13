@@ -80,6 +80,7 @@ $wards = $ward->loadWards();
                         <div class="clearfix"></div>
                     </div>
                     <div class="panel-body">
+                        <div id="new-ward-response"></div>
                         <ul class="list-group ward-list-items">
                             <?php
                             foreach($wards as $ward){
