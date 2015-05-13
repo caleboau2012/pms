@@ -72,7 +72,7 @@ if ($intent == 'getFiles') {
         } else {
             echo JsonResponse::error("Could Not Upload File. Try Again Later!");
             exit();
-        }
+    }
     } else {
         echo JsonResponse::error("Please select a .sql file!");
         exit();

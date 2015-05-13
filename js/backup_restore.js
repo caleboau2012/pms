@@ -3,46 +3,6 @@ var Restore = {
         uri : "phase/phase_backup_restore.php"
     },
 
-    init: function(){
-
-        var backup = $("#backup");
-        backup.popover({
-            placement: 'top',
-            content : "Database Successfully Backup",
-            animation : true,
-            trigger: 'click'
-        });
-
-       backup.unbind('click').bind('click', function(e){
-//            e.preventDefault();
-            Restore.serverRequest(host + Restore.URL.uri, Restore.payload('backup'), function(data){
-//                console.log(data);
-                if (data.status == 1) {
-                    backup.popover('show');
-                    setTimeout(function (){
-                        backup.popover('hide');
-                    }, 6000);
-
-                    var download = $("a#download");
-                    download.attr('href', data.data);
-                    download.attr('download', 'pms.sql');
-                    download.click();
-//                    download.trigger("click");
-                    return false;
-                }
-            }, 'GET');
-
-        });
-
-        var restore = $("#restore");
-        restore.unbind('click').bind('click', function(e){
-            e.preventDefault();
-            Restore.serverRequest(host + Restore.URL.uri, Restore.payload('restore'), function(data){
-                console.log(data);
-            })
-        });
-    },
-
     serverRequest: function(url, param, callback, request_type){
         if (request_type == 'POST') {
             $.post(url, param, function(data){
@@ -67,6 +27,12 @@ var Restore = {
         return {
             intent : intent
         }
+    },
+
+    init: function(){
+        Restore.serverRequest(host + Restore.URL.uri, Restore.payload('getFiles'), function(data){
+            console.log(data);
+        });
     }
 }
 
