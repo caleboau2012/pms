@@ -168,7 +168,7 @@ class PatientQueueSqlStatement {
             AND ua.status = 1
             AND ua.active_fg = 1";
 
-    const OFFLINE_DOCTORS_WITH_QUEUE = "SELECT ua.userid, ua.online_status, p.surname, p.firstname, p.middlename
+    const OFFLINE_DOCTORS_WITH_QUEUE = "SELECT DISTINCT(ua.userid), ua.online_status, p.surname, p.firstname, p.middlename
         FROM patient_queue AS pq
             INNER JOIN profile AS p
                 ON pq.doctor_id = p.userid

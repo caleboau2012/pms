@@ -1,6 +1,6 @@
 <?php
 //DATABASE CONFIGURATION
-define('DB_HOST', '10.81.2.122');
+define('DB_HOST', '10.81.2.107');
 //define('DB_HOST', 'localhost');
 define('DBNAME', 'pms');
 define('DB_USERNAME', 'pms');
