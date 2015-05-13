@@ -5,7 +5,7 @@ class VitalsModel extends BaseModel {
         $this->vitals_data = $vitals_data;
         $this->conn = ($conn == NULL) ? $this->conn : $conn;
         $this->vitals_id = $vitals_id;
-    } 
+    }
 
     public function add() {
         $stmt = VitalsSqlStatement::ADD;
@@ -23,12 +23,12 @@ class VitalsModel extends BaseModel {
 
     public function getVitals($patient_id) {
         $stmt = VitalsSqlStatement::GET_VITALS;
-        
+
         $data = array();
         $data[VitalsTable::patient_id] = $patient_id;
 
         $result = $this->conn->fetchAll($stmt, $data);
 
-        return $result;
+        return sizeof($result) > 0 ? $result : false;
     }
 }

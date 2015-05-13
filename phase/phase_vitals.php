@@ -1,6 +1,6 @@
-<?php 
+<?php
 
-require_once '../../_core/global/_require.php';
+require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
@@ -15,21 +15,21 @@ if (isset($_REQUEST['intent'])) {
 }
 
 if ($intent == 'addVitals') {
-    if (isset($_REQUEST[VitalsTable::patient_id], $_REQUEST[VITALS])) {
+    if (isset($_POST[VitalsTable::patient_id], $_POST[VITALS])) {
         $added_by = CxSessionHandler::getItem(UserAuthTable::userid);
 
-        $vitals_data = $_REQUEST[VITALS];
+        $vitals_data = $_POST[VITALS];
         $valid_vitals = VitalsController::validateVitals($vitals_data);
 
-        
+
         if (is_array($valid_vitals)) {
             $vitals_data = $valid_vitals;
         } else {
             echo JsonResponse::error("Invalid vitals data!");
-            exit();                
+            exit();
         }
 
-        $vitals_data[VitalsTable::patient_id] = $_REQUEST[VitalsTable::patient_id];
+        $vitals_data[VitalsTable::patient_id] = $_POST[VitalsTable::patient_id];
 
         $nurse = new VitalsController();
 
@@ -37,7 +37,7 @@ if ($intent == 'addVitals') {
 
         if ($response) {
             echo JsonResponse::message(STATUS_OK, "Vitals added successfully!");
-            exit();            
+            exit();
         } else {
             echo JsonResponse::error("Unable to add vitals!");
             exit();
@@ -52,8 +52,13 @@ if ($intent == 'addVitals') {
         $response = $nurse->getVitals($_REQUEST[VitalsTable::patient_id]);
 
         if (is_array($response)) {
-            echo JsonResponse::success($response);
-            exit();
+            if (isset($response[P_STATUS])) {
+                echo JsonResponse::error($response[P_MESSAGE]);
+                exit();
+            } else {
+                echo JsonResponse::success($response);
+                exit();
+            }
         } else {
             echo JsonResponse::error("Unable to retrieve vitals!");
             exit();
