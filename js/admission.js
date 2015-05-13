@@ -11,7 +11,9 @@ Admission = {
         DONE_WITH_OUT_PATIENT: 3,
         NOT_DONE_WITH_OUT_PATIENT: 4,
         DONE_WITH_IN_PATIENT: 5,
-        NOT_DONE_WITH_IN_PATIENT: 6
+        NOT_DONE_WITH_IN_PATIENT: 6,
+        BED_OCCUPIED : 1,
+        BED_VACANT : 0
     },
     GLOBAL:{
         ACTIVE_PATIENT: false,
@@ -24,6 +26,7 @@ Admission = {
         SELECTED_WARD_ID: false,
         SELECTED_WARD: false,
         SELECTED_BED_ID: false,
+        LOADED_BED_ID: false,
         SELECTED_BED: false,
         ACTIVE_OUT_PATIENT: {}
     },
@@ -48,7 +51,7 @@ Admission = {
         });
         //
         $('#assignPatient').unbind('click').bind('click', function(){
-            Admission.assignPatient(this);
+            Admission.assignPatient();
         });
         $('#switchPatient').unbind('click').bind('click', function(){
             Admission.switchPatient();
@@ -106,7 +109,7 @@ Admission = {
                 }else{
                     content = "<ul class='patients-queue list-group'>";
                     data.data.forEach(function(record){
-                        content += "<li class='list-group-item pointer patient patient-pill' data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor-id = " + record.doctor_id +" data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_req_id + " data-regNo = "+ record.regNo +">" +
+                        content += "<li class='list-group-item pointer patient patient-pill text-capitalize' data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor-id = " + record.doctor_id +" data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_req_id + " data-regNo = "+ record.regNo +">" +
                         record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
                     });
                     content += "</ul>";
@@ -122,20 +125,18 @@ Admission = {
         });
     },
     attendToPatient: function(patient){
-        if(!Admission.GLOBAL.ACTIVE_PATIENT){
-            Admission.resetAction(Admission.CONSTANTS.NOT_DONE_WITH_PATIENT);
-            Admission.deactivate = false;
-            Admission.GLOBAL.ACTIVE_PATIENT = patient;
-            Admission.GLOBAL.ACTIVE_PATIENT_ID = $(patient).attr('data-patient-id');
-            Admission.GLOBAL.ADMITTED_BY = $(patient).attr('data-doctor-id');
-            Admission.GLOBAL.ADMISSION_REQ_ID = $(patient).attr('data-admission-id');
-            Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
-            $('#empty_active').hide();
-            $('#patient-panel').removeClass('hidden');
-            content = "<h2 class='panel-title'>" + $(patient).attr('data-patient-name') +"</h2>";
-            content += "<p>" + $(patient).attr('data-regNum') +"</p>";
-            $('#request-heading').html(content);
-        }
+        Admission.resetAction(Admission.CONSTANTS.NOT_DONE_WITH_PATIENT);
+        Admission.deactivate = false;
+        Admission.GLOBAL.ACTIVE_PATIENT = patient;
+        Admission.GLOBAL.ACTIVE_PATIENT_ID = $(patient).attr('data-patient-id');
+        Admission.GLOBAL.ADMITTED_BY = $(patient).attr('data-doctor-id');
+        Admission.GLOBAL.ADMISSION_REQ_ID = $(patient).attr('data-admission-id');
+        Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
+        $('#empty_active').hide();
+        $('#patient-panel').removeClass('hidden');
+        content = "<h2 class='panel-title text-capitalize'>" + $(patient).attr('data-patient-name') +"</h2>";
+        content += "<p>" + $(patient).attr('data-regNum') +"</p>";
+        $('#request-heading').html(content);
     },
     getWardAvailableBeds: function(ward, call_back){
         if(!Admission.deactivate){
@@ -160,63 +161,69 @@ Admission = {
         }
     },
     prepareOutPatientBedList : function(data, ward){
+
+        //reset response msg
+        $("#assign-response").empty();
         if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
             content = "<p class='small text-muted text-center'>select bed below</p>";
-            content = "<ol class='list-group'>";
+            content = "<ol class='list-group out-patient-bed-list-items'>";
             data.data.forEach(function(record){
-                content += "<li class='bed-item list-group-item pointer' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
+                if(record.bed_status == Admission.CONSTANTS.BED_VACANT){
+                    content += "<li class='bed-item list-group-item pointer text-capitalize' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
+                }
             });
             content +="</ol>";
             $('#bed-list').html(content);
             $('.bed-item').click(function(){
-                Admission.activateBed(this);
-                Admission.GLOBAL.SELECTED_BED = $(this).html();
-                Admission.selectAvailableBed($(this).attr("data-ward"), $(this).attr("data-bed-id"), Admission.prepareAdmissionAssign);
+                Admission.selectAvailableBed(this, Admission.prepareAdmissionAssign);
             });
+            Admission.validatedBedLists("bed-list");
         }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
             //    temporary to show empty bed
-            $('#bed-list').html("<h3 class='text-muted text-center'>" + data.message + "</h3>");
+            $('#bed-list').html("<h3 class='text-danger text-center'>" + data.message + "</h3>");
         }
         Admission.GLOBAL.SELECTED_WARD = $(ward).html();
     },
     prepareInPatientBedList : function(data, ward){
+        $("#switch-response").empty();
         if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
             content = "<p class='small text-muted text-center'>select bed below</p>";
             content = "<ol class='list-group in-patient-bed-list-items'>";
             data.data.forEach(function(record){
                 if(record.bed_id == Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID){
-                    $(".step-2").addClass("active");
-                    content += "<li class='bed-item list-group-item list-group-item-success pointer' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
-                }else{
+                    content += "<li class='list-group-item list-group-item-success' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
+                }else if(record.bed_status == Admission.CONSTANTS.BED_VACANT){
                     content += "<li class='bed-item list-group-item pointer' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
+                }else if(record.bed_status == Admission.CONSTANTS.BED_OCCUPIED){
+                    content += "<li class='list-group-item list-group-item-muted disabled pointer' data-ward-id = " + record.ward_id +" data-bed-id = "+ record.bed_id +">" + record.bed_description +"</li>"
                 }
+                $(".step-2").addClass("active");
+
             });
             content +="</ol>";
             $('#in-patient-bed-list').html(content);
             $('.bed-item').click(function(){
-                Admission.activateBed(this);
-                Admission.GLOBAL.SELECTED_BED = $(this).html();
-                Admission.GLOBAL.SELECTED_BED_ID = $(this).attr("data-bed-id");
-                Admission.selectAvailableBed($(this).attr("data-bed-id"), $(this).attr("data-ward-id"), Admission.prepareAdmissionSwitch);
+                Admission.selectAvailableBed(this, Admission.prepareAdmissionSwitch);
             });
         }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
             //    temporary to show empty bed
-            $('#bed-list').html("<h3 class='text-muted text-center'>" + data.message + "</h3>");
+            $('#in-patient-bed-list').html("<h3 class='text-muted text-center'>" + data.message + "</h3>");
         }
         //select the active bed if any
         Admission.GLOBAL.SELECTED_WARD = $(ward).html();
     },
-    activateBed: function(bed){
-        if(!Admission.deactivate){
-            $(".bed-item").removeClass("list-group-item-success");
-            $(bed).addClass("list-group-item-success");
+    validatedBedLists: function (content_id) {
+        if($("#" + content_id).find("ol").html() == ""){
+            $("#" + content_id).html("<h3 class='text-danger text-center'>No vacant bed in this ward</h3>");
         }
     },
-    selectAvailableBed: function(bed, ward, call_back){
+    selectAvailableBed: function(bed, call_back){
         if(!Admission.deactivate){
             $('.step-2').addClass('active');
-            Admission.GLOBAL.SELECTED_BED_ID = bed;
-            Admission.GLOBAL.SELECTED_WARD_ID = ward;
+            $(".bed-item").removeClass("list-group-item-success");
+            $(bed).addClass("list-group-item-success");
+            Admission.GLOBAL.SELECTED_BED = $(bed).html();
+            Admission.GLOBAL.SELECTED_BED_ID = $(bed).attr("data-bed-id");
             call_back();
         }
     },
@@ -228,18 +235,31 @@ Admission = {
             payload.bed_id = Admission.GLOBAL.SELECTED_BED_ID;
             payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
             payload.treatment_id = Admission.GLOBAL.TREATMENT_ID;
+            var response_msg = "";
             $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
                 $('#loader').addClass('hidden');
                 if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
-                    $('#response_msg').html("<p class='text-danger'>" + data.message +"</p>");
+                    response_msg = '<div class="alert alert-dismissible alert-danger text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '' + data.message +'' +
+                    '</div>';
+                    $('#assign-response').html(response_msg);
                 }else if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                     Admission.deactivate = true;
                     $('.step-3').addClass('active');
-                    $('#response_msg').html("<p class='text-success'>" + data.message +"</p>");
+                    response_msg = '<div class="alert alert-dismissible alert-success text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '' + data.message +'' +
+                    '</div>';
+                    $('#assign-response').html(response_msg);
                     Admission.resetAction(Admission.CONSTANTS.DONE_WITH_OUT_PATIENT);
                 }
             }).fail(function(data){
-                console.log(data.responseText);
+                response_msg = '<div class="alert alert-dismissible alert-danger text-center">' +
+                ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                'Unfortunately this transaction cannot be completed at the moment. Please, try again' +
+                '</div>';
+                $('#assign-response').html(response_msg);
             });
         }
     },
@@ -249,19 +269,31 @@ Admission = {
             payload = {};
             payload.intent = "switchBed";
             payload.bed_id = Admission.GLOBAL.SELECTED_BED_ID;
-            payload.admission_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
+            payload.admission_id = Admission.GLOBAL.PATIENT_ADMISSION_ID;
             $.post(host + 'phase/phase_admission.php', payload, function(data){
                 $('#switch-loader').addClass('hidden');
-                //console.log(data);
+                var response_msg = "";
                 if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
-                    $('#switch-response_msg').html("<p class='text-danger'>" + data.message +"</p>");
+                    response_msg = '<div class="alert alert-dismissible alert-danger text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '' + data.message +'' +
+                    '</div>';
+                    $('#switch-response_msg').html(response_msg);
                 }else if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                     $('.step-3').addClass('active');
-                    $('#switch-response_msg').html("<p class='text-success'>" + data.message +"</p>");
+                    response_msg = '<div class="alert alert-dismissible alert-success text-center">' +
+                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                    '' + data.message +'' +
+                    '</div>';
+                    $('#switch-response_msg').html(response_msg);
                     Admission.resetAction(Admission.CONSTANTS.DONE_WITH_IN_PATIENT);
                 }
             }, "json").fail(function(data){
-                console.log(data.responseText);
+                response_msg = '<div class="alert alert-dismissible alert-danger text-center">' +
+                ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                'Unfortunately, this transaction cannot be completed at the moment. Please, try again' +
+                '</div>';
+                $('#switch-response_msg').html(response_msg);
             });
         }
     },
@@ -285,14 +317,21 @@ Admission = {
             $('.step-3').removeClass('active');
             $('.step-2').removeClass('active');
         }else if(state == Admission.CONSTANTS.DONE_WITH_IN_PATIENT){
+            //updated patient bed id
+            Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = Admission.GLOBAL.SELECTED_BED_ID;
+            $(".admitted-patients-in-ward li").each(function () {
+                if($(this).attr("data-ward-id") == Admission.GLOBAL.SELECTED_WARD_ID){
+                    //get bed of the patient
+                    $(this).trigger("click");
+                    return false;
+                }
 
+            });
             //hide switch button
             $("#switchPatient").addClass("hidden");
 
         }else if(state == Admission.CONSTANTS.NOT_DONE_WITH_IN_PATIENT){
-            console.log("Not done with in patient");
             Admission.deactivate = false;
-
         }
     },
     prepareAdmissionAssign: function () {
@@ -309,13 +348,12 @@ Admission = {
         if(query !== ''){
             payload.term = query;
             $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
-                console.log(data);
                 if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
                     $('#in-patient-result').html("<h4 class='text-muted text-center'>"+ data.message +"</h4>")
                 }else if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                     content = "<ul class='patients-queue list-group'>";
                     data.data.forEach(function(record){
-                        content += "<li class='list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = " + record.doctor +" data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
+                        content += "<li class='list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
                         record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
                     });
                     content += "</ul>";
@@ -336,6 +374,7 @@ Admission = {
         Admission.GLOBAL.PATIENT_ADMISSION_ID = $(patient).attr("data-admission-id");
         patient_identity = "<h2 class='text-primary'>"+ $(patient).attr('data-patient-name') + "</h2>";
         patient_identity += "<p>" + $(patient).attr('data-regNo') +"</p>";
+        patient_identity += "<p class='small text-capitalize'>Requested by " + $(patient).attr('data-doctor') +"</p>";
         $('#in-patient-identity').html(patient_identity);
 
         $(".admitted-patients-in-ward li").click(function(){
@@ -347,7 +386,6 @@ Admission = {
 
     },
     getPatientRoomDetails: function(patient){
-        console.log($(patient).attr("data-bed-id"));
         //set patient bed id
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-bed-id");
 

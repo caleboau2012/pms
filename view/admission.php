@@ -89,6 +89,7 @@ $wards = $admission->loadWards();
                         </div>
                     </div>
                     <div class="panel-body">
+                        <div id="assign-response"></div>
                         <div class="col-sm-4">
                             <div class="well well-sm">
                                 <div class="div-rounded step-1"><span class="fa fa-road"></span> </div>
@@ -97,7 +98,7 @@ $wards = $admission->loadWards();
                                     <?php
                                     foreach($wards as $ward){
                                         ?>
-                                        <li class="pointer list-group-item ward" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
+                                        <li class="pointer list-group-item ward text-capitalize" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
                                             <?php echo $ward['description'] ?>
                                         </li>
                                     <?php
@@ -124,7 +125,7 @@ $wards = $admission->loadWards();
                                 <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
                                 <div id="response" class="text-center center-block">
                                     <span id="loader" class="fa fa-spinner fa-spin hidden"></span>
-                                    <div id="response_msg"></div>
+                                    <!--                                    <div id="response_msg"></div>-->
                                 </div>
                                 <button class="btn btn-primary form-control hidden" id="assignPatient">ASSIGN</button>
                                 <div>
@@ -197,6 +198,7 @@ $wards = $admission->loadWards();
                         <div class="tab-pane fade adm-tab-pane active in" id="switch-tab">
                             <br/>
                             <div class="panel-body">
+                                <div id="switch-response_msg"></div>
                                 <div class="col-sm-4">
                                     <div class="well well-sm">
                                         <div class="div-rounded step-1 active"><span class="fa fa-road"></span> </div>
@@ -205,7 +207,7 @@ $wards = $admission->loadWards();
                                             <?php
                                             foreach($wards as $ward){
                                                 ?>
-                                                <li class="pointer list-group-item ward" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
+                                                <li class="pointer list-group-item ward text-capitalize" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
                                                     <?php echo $ward['description'] ?>
                                                 </li>
                                             <?php
@@ -232,13 +234,14 @@ $wards = $admission->loadWards();
                                         <h3 class="text-warning text-center text-capitalize hidden" id="bed_chosen"></h3>
                                         <div id="response" class="text-center center-block">
                                             <span id="switch-loader" class="fa fa-spinner fa-spin hidden fa-2x"></span>
-                                            <div id="switch-response_msg"></div>
+                                            <!--                                            <div id="switch-response_msg"></div>-->
                                         </div>
                                         <button class="btn btn-primary form-control hidden" id="switchPatient"><span class="fa fa-refresh">&nbsp;</span>Switch</button>
                                         <div>
                                         </div>
                                     </div>
                                 </div>
+                                <div class="clearfix"></div>
                             </div>
                         </div>
                         <div class="tab-pane fade adm-tab-pane" id="vitals-tab">

@@ -774,7 +774,7 @@ span#loader{
     padding: 0 1em 3em;
 }
 #in-patient-identity{
-    padding: 1em 1em 2em;
+    padding: 0.1em 0.5em 1em;
 }
 #encounter_history{
     height: 32em;
@@ -1088,6 +1088,14 @@ span#loader{
     position: relative;
     top: 10px;
     cursor: pointer;
+}
+.admitted-patients-in-ward, .admitted-out-patients_ward, .out-patient-bed-list-items, .in-patient-bed-list-items{
+    max-height: 200px;
+    overflow-y: auto;
+}
+#switch-response_msg, #assign-response{
+    width: 75%;
+    margin: 0 auto;
 }
 
 .restore-shadow {
