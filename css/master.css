@@ -1105,3 +1105,20 @@ background: #F4F4F4;
     border-radius: 5px;
     border: 1px solid lightslategray;
 }
+
+/*In-Patient*/
+#in-patient-form{
+    position: relative;
+}
+.btn-search{
+    position: absolute;
+    outline: none;
+    border: none;
+    background: transparent;
+    top: 1px;
+    right: 1px;
+}
+.btn-search:active, .btn-search:focus{
+    outline: none !important;
+    border: none;
+}
