@@ -332,3 +332,44 @@ $('body').delegate('.remove-patient .fa', 'click', function(e){
     $patient = $(this).parent().parent().parent().parent();
     removeFromQueue($patient);
 });
+
+function openVitalsModal(e){
+    //console.log($(e).parent().children());
+    var data = $(e).parent().children();
+    $('#patientName').text($(data[0]).text());
+    $('#patientRegNo').text($(data[2]).text());
+    document.vitalsForm.patient_id.value =  $(data[3]).text();
+    $('#vitalsModal').modal('show');
+}
+
+$(document.vitalsForm).on('submit', function(e){
+    e.preventDefault();
+    var data = {};
+    data.intent = "addVitals";
+    data.patient_id = this.patient_id.value;
+    data.vitals = {};
+
+    data.vitals.temp = this.temp.value;
+    data.vitals.pulse = this.pulse.value;
+    data.vitals.respiratory_rate = this.respiratory_rate.value;
+    data.vitals.blood_pressure = this.blood_pressure.value;
+    data.vitals.height = this.height.value;
+    data.vitals.weight = this.weight.value;
+    data.vitals.bmi = this.bmi.value;
+
+    $('#loading').removeClass('hidden');
+
+    $.post(host + 'phase/phase_vitals.php', data, function(data){
+        console.log(data);
+        if(data.status == 1){
+            showSuccess(data.message);
+        }else{
+            showAlert(data.message);
+        }
+        $('#loading').removeClass('hidden');
+    }, 'json').fail(function(data){
+        $('#loading').addClass('hidden');
+        //$('#response').text(data.responseText).removeClass('hidden');
+        console.log(data.responseText);
+    });
+});

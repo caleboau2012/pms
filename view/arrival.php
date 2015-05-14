@@ -95,8 +95,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <div class="panel-body">
                 <p>{{name}}</p>
                 <p>{{sex}}</p>
+                <p class="hidden">{{regNo}}</p>
                 <span class="patientid hidden">{{patientid}}</span>
                 <span class="doctorid hidden">{{userid}}</span>
+                <button class="btn btn-success btn-block" onclick="openVitalsModal(this)">Vitals</button>
             </div>
         </div>
     </div>
@@ -138,7 +140,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
 </div>
 
-<!-- Modal -->
+<!-- New Patient Modal -->
 <div class="modal fade" id="newPatientModal" tabindex="-1" role="dialog" aria-labelledby="newPatientModal"
      aria-hidden="true">
     <div class="modal-dialog">
@@ -154,12 +156,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     <div class="alert hidden alert-danger alert-dismissable" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <span id="alertMSG"></span>
+                        <span class="alertMSG"></span>
                     </div>
                     <div class="alert hidden alert-success alert-dismissable" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <span id="successMSG"></span>
+                        <span class="successMSG"></span>
                     </div>
                     <div class="panel panel-primary">
                         <div class="panel-heading">
@@ -379,6 +381,89 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
 </div>
 
+<!-- Vitals Modal -->
+<div class="modal fade" id="vitalsModal" tabindex="-1" role="dialog" aria-labelledby="vitalsModal"
+     aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <h4 class="modal-title">Add Vitals of Patient</h4>
+            </div>
+            <div class="modal-body">
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title" id="patientName"></h2>
+                    <p id="patientRegNo"></p>
+                </div>
+                <div class="panel-body">
+                    <div class="div-rounded encounter-icon">
+                        <span class="fa fa-stethoscope"></span>
+                    </div>
+                    <form name="vitalsForm">
+                        <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <span class="alertMSG"></span>
+                        </div>
+                        <div class="alert hidden alert-success alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <span class="successMSG"></span>
+                        </div>
+                        <div class="form-group">
+                            <input class="hidden" name="<?php echo PatientTable::patient_id;?>">
+                            <div class="col-sm-6">
+                                <label for="temp">Temperature</label>
+                                <input type="text" class="form-control" name="temp">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="pulse">Pulse</label>
+                                <input type="text" class="form-control" name="pulse">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="respiratory_rate">Respiratoty Rate</label>
+                                <input type="text" class="form-control" name="respiratory_rate">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="blood_pressure">Blood Pressure</label>
+                                <input type="text" class="form-control" name="blood_pressure">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="height">Height</label>
+                                <input type="text" class="form-control" name="height">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="weight">Weight</label>
+                                <input type="text" class="form-control" name="weight">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="bmi">BMI</label>
+                                <input type="text" class="form-control" id="bmi" name="bmi">
+                            </div>
+                            <div class="col-sm-6">
+                                <br>
+                                <input type="submit" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                    <div id="loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
+                    <div class="text-center hidden" id="response"><p class="text-danger">undefined</p></div>
+                </div>
+            </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

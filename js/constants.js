@@ -74,19 +74,19 @@ function replaceAll(find, replace, str) {
 }
 
 function showAlert(message){
-    $('#alertMSG').html(message);
-    $('#alertMSG').parent().removeClass('hidden');
+    $('.alertMSG').html(message);
+    $('.alertMSG').parent().removeClass('hidden');
     setTimeout(function(){
-        $('#alertMSG').parent().addClass('hidden');
+        $('.alertMSG').parent().addClass('hidden');
     }, 10000);
     location.href="#alertMSG";
 }
 
 function showSuccess(message){
-    $('#successMSG').html(message);
-    $('#successMSG').parent().removeClass('hidden');
+    $('.successMSG').html(message);
+    $('.successMSG').parent().removeClass('hidden');
     setTimeout(function(){
-        $('#successMSG').parent().addClass('hidden');
+        $('.successMSG').parent().addClass('hidden');
     }, 10000);
     location.href="#successMSG";
 }

@@ -252,7 +252,7 @@ $wards = $admission->loadWards();
                             <form id="log_encounter">
                                 <div class="form-group">
                                     <div class="col-sm-6">
-                                        <label for="temp">Tempertaure</label>
+                                        <label for="temp">Temperature</label>
                                         <input type="text" class="form-control" id="temp" name="temp">
                                     </div>
                                     <div class="col-sm-6">
