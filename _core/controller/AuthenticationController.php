@@ -77,6 +77,11 @@ class AuthenticationController {
         $user_progress_status = $user_model->getStatus($userid);
     }
 
+    public static function autoLogout($inactive_users) {
+        $user_model = new UserModel();
+        $user_model->autoLogout($inactive_users);
+    }
+
     /*public function userRoles($userid) {
         $user_model = new UserModel();
         $user_roles = $user_model->getUserRoles($userid);

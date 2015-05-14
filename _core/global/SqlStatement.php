@@ -46,6 +46,8 @@ class UserAuthSqlStatement {
 
         const FLAG_USER_OFFLINE = 'UPDATE user_auth SET online_status = 0 WHERE userid=:userid';
 
+        const AUTO_LOGOUT = 'UPDATE user_auth SET online_status = 0 WHERE userid IN (:inactive_users)';
+
         const GET_BY_REGNO = 'SELECT userid FROM user_auth WHERE regNo=:regNo';
 
         const GET_STATUS = "SELECT status FROM user_auth WHERE userid = :userid";

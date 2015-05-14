@@ -69,6 +69,23 @@ class UserModel extends BaseModel {
         return $result;
     }
 
+    public function autoLogout($inactive_users) {
+        $stmt = UserAuthSqlStatement::AUTO_LOGOUT;
+        $_inactive = '';
+        foreach ($inactive_users as $userid) {
+            $_inactive = $_inactive . $userid . ', ';
+        }
+
+        // remove the last ', ' from the end of the string
+        $_inactive = substr($_inactive, 0, -2);
+
+        $data = array(
+            'inactive_users'    =>  $_inactive
+        );
+
+        $this->conn->execute($stmt, $data);
+    }
+
     public function getUserDetails($userid) {
         $stmt = UserAuthSqlStatement::GET_USER_BY_ID;
         $data = array();
