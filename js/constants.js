@@ -90,3 +90,19 @@ function showSuccess(message){
     }, 10000);
     location.href="#successMSG";
 }
+
+var Util = {};
+Util.RESOURCE = {
+    pingerURL       :   "http://localhost/pms/phase/phase_lookout.php?intent=markPresence",
+    pingInterval    :   60000
+
+}
+
+Util.markPresence = function() {
+    $.get(host + "phase/phase_lookout.php?intent=markPresence");
+}
+
+Util.startPinger = function() {
+    Util.markPresence();
+    setInterval(function(){Util.markPresence();}, Util.RESOURCE.pingInterval);
+}
