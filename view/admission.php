@@ -167,8 +167,8 @@ $wards = $admission->loadWards();
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <form id="in-patient-form">
-                            <input id = "patient_query" class="form-control" placeholder="Search by name or number">
-                            <button class="btn btn-search" type="submit"><span class="fa fa-search text-muted">&nbsp;</span></button>
+                            <input id = "patient_query" class="form-control search-input" placeholder="Search by name or number">
+                            <button class="btn btn-search" type="submit"><span class="fa fa-search text-primary">&nbsp;</span></button>
                         </form>
                     </div>
                     <div class="panel-body in-patient-list">
