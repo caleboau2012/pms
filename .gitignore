@@ -5,4 +5,4 @@ test.php
 _resource/communication_logs/*.msg
 _core/global/config.php
 t.txt
-
+*.sess
