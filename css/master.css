@@ -1106,6 +1106,42 @@ background: #F4F4F4;
     border: 1px solid lightslategray;
 }
 
+.restore-margin {
+    margin-top: 20px;
+    color: slategrey;
+}
+
+.restore-addon {
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1;
+    color: #555;
+    text-align: center;
+    width: 1%;
+    white-space: nowrap;
+    vertical-align: middle;
+    display: table-cell;
+}
+
+.backup-title {
+    color: #428bca;
+    margin-bottom: 10px;
+}
+
+#upload_frame {
+    display:none;
+    height:0;
+    width:0;
+}
+#msg {
+    background-color:#FFE07E;
+    border-radius:5px;
+    padding:5px;
+    display:none;
+    width:200px;
+    font:italic 13px/18px arial,sans-serif;
+}
+
 /*In-Patient*/
 #in-patient-form{
     position: relative;

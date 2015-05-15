@@ -40,7 +40,7 @@ if ($intent == 'getFiles') {
     }
 
 } elseif($intent == 'restore'){
-    $dumpFileName = $_REQUEST['file'];
+    $dumpFileName = $_FILES['file']['name'];
 
     if($dumpFileName){
         $restore = new BackupAndRestoreController();
@@ -61,6 +61,8 @@ if ($intent == 'getFiles') {
 } elseif($intent == 'upload'){
     $dumpFileName = isset($_FILES['fileToUpload']['name']) ? $_FILES['fileToUpload']['name'] : NULL;
     $dumpFileTmpName = isset($_FILES['fileToUpload']['tmp_name']) ? $_FILES['fileToUpload']['tmp_name'] : NULL;
+
+    var_dump($dumpFileName);
 
     if($dumpFileName){
         $restore = new BackupAndRestoreController();

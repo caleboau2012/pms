@@ -27,13 +27,39 @@
 
 <div class="container">
     <div class="row">
-        <div id="top-margin" class="col-sm-6 col-sm-offset-3 well restore-shadow">
-            <h2>System Restore</h2><hr>
-            <form method="post" name="restore" enctype="multipart/form-data" action="phase/phase_backup_restore.php?intent=restore">
-                <h5>Choose File</h5>
-                <input type="file" name="fileToUpload" class="form-control" />
-                <button type="submit" id="restore" class="form-margin btn btn-primary pull-right">Restore</button>
-            </form>
+        <div class="col-sm-6 col-sm-offset-3 well restore-shadow">
+            <iframe id="upload_frame" name="upload_frame" src="" hidden="hidden"></iframe>
+            <div class="col-sm-12">
+                <h2>System Restore</h2><hr>
+                <form name="form" id="form" action="phase/phase_backup_restore.php?intent=upload" enctype="multipart/form-data" method="post">
+                    <h5>Choose File</h5>
+                    <div class="input-group">
+                        <input id="file" type="file" name="fileToUpload" class="form-control col-sm-12" />
+                        <span class="restore-addon"><input type="submit" name="Upload" value="Upload" class="btn btn-default"/></span>
+                    </div>
+                    <p id="success" class="col-sm-10 text-success text-center">File Upload Successful</p>
+                    <button id="restore" class="form-margin btn btn-primary pull-right">Restore</button>
+                </form>
+            </div>
+            <div class="col-sm-12 restore-margin">
+                <p class="text-center">. . . or Restore From</p>
+            </div>
+            <div class="col-sm-12">
+                <table class="table table-responsive table-striped">
+                    <thead>
+                        <tr>
+                            <th>S/N</th>
+                            <th>Backup Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody id="filesToRestore">
+                        <tr>
+                            <td></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>

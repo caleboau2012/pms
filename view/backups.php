@@ -79,7 +79,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-6 col-sm-offset-3 well">
-            <h2>Backup Files</h2>
+            <h2 class="backup-title">Backup Files</h2>
             <table class="table table-responsive">
                 <thead>
                 <tr>
@@ -88,7 +88,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
                     <th>Download</th>
                 </tr>
                 </thead>
-                <tbody>
+                <tbody id="backup">
                 <tr>
                     <td></td>
                 </tr>
