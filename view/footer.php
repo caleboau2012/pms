@@ -12,3 +12,4 @@
     </div>
 </div>
 <script src="../js/notification.js"></script>
+<script type="text/javascript" src="../js/pinger.js"></script>

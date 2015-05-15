@@ -229,6 +229,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../../js/bootstrap/bootstrap.min.js"></script>
 <script src="../../js/constants.js"></script>
+<script type="text/javascript" src="../../js/pinger.js"></script>
 <script src="../../js/admin/staff.js"></script>
 
 <?php include('footer.php'); ?>
