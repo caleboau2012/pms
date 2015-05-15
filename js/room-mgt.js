@@ -71,8 +71,6 @@ Room = {
                             "<h3 class='room-bed-name text-primary pull-left'>" + this.bed_description + "</h3>" +
                             "<br/><br/>" +
                             "<div class='clearfix'></div>" +
-                                //"<div class='bed-list-divider'></div>" +
-                                //"<p class='small text-muted'>Occupied</p>" +
                             "</div></div>";
                         }
                         else if(this.bed_status == Room.CONSTANTS.BED_VACANT) {
@@ -80,7 +78,6 @@ Room = {
                             "<h3 class='room-bed-name text-primary pull-left'>" + this.bed_description + "</h3>" +
                             "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-name='" + this.bed_description +"' data-bed-id=" + this.bed_id + "><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
                             "<div class='clearfix'></div>" +
-                                //"<div class='bed-list-divider'></div>" +
                             "</div></div>";
                         }
                     });
@@ -167,14 +164,20 @@ Room = {
     addBedForm: function(bed_object){
         $(".modal-title").html("Add New Bed");
         $(".modal-body").html(
-            "<p class='text-info'>Enter Bed description</p><form> " +
+            "<p class='text-info'>Enter Bed description1</p>" +
+            "<form id='bed-add-action'> " +
             "<input type='text' required class='form-control' id='bed_description' placeholder='Bed description'>" +
-            "</form"
+            "<div class='modal-form-fix'>" +
+            "<button class='btn btn-primary btn-sm' type='submit'><span class='fa fa-plus'>&nbsp;</span>Add bed</button>" +
+            "<br/><img src='../images/loading.gif' id='is-loading' class='hidden'>" +
+            "<p id='response-msg' class='text-danger small'></p>" +
+            "</div>" +
+            "</form>"
         );
-        $(".modal-footer").html(
-            "<span id='response-msg' class='text-danger'></span><img src='../images/loading.gif' id='is-loading' class='hidden'>" +
-            "<button class='btn btn-primary btn-sm' id='bed-add-action'><span class='fa fa-plus'>&nbsp;</span>Add bed</button>"
-        );
+        Room.GLOBAL.ROOM_MODAL.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
         Room.GLOBAL.ROOM_MODAL.modal("show");
 
         Room.GLOBAL.ROOM_MODAL.on("hidden.bs.modal", function (e) {
@@ -182,8 +185,10 @@ Room = {
         });
 
         /*Set action*/
-        $("#bed-add-action").click(function () {
-            if($("#bed_description").val() !== ""){
+        $("#bed-add-action").on("submit", function (e) {
+            e.preventDefault();
+            var bed_desc = $("#bed_description").val();
+            if(bed_desc !== ""){
                 Room.addBed(bed_object.attr("data-ward-id"), $("#bed_description").val());
             }
         });
@@ -192,18 +197,25 @@ Room = {
     addWardForm: function(){
         $(".modal-title").html("Add New Ward");
         $(".modal-body").html(
-            "<p class='text-info'>Enter Ward description</p><form> " +
+            "<p class='text-info'>Enter Ward description</p>" +
+            "<form id='ward-add-action'> " +
             "<input type='text' required class='form-control' id='ward_description' placeholder='Ward description'>" +
-            "</form"
+            "<div class='modal-form-fix'>" +
+            "<button class='btn btn-primary btn-sm' type='submit'><span class='fa fa-plus'>&nbsp;</span>Add Ward</button>" +
+            "<br/><img src='../images/loading.gif' id='is-loading' class='hidden'>" +
+            "<p id='response-msg' class='text-danger small'></p>" +
+            "</div>" +
+            "</form>"
         );
-        $(".modal-footer").html(
-            "<span id='response-msg' class='text-danger'></span><img src='../images/loading.gif' id='is-loading' class='hidden'>" +
-            "<button class='btn btn-primary btn-sm' id='ward-add-action'><span class='fa fa-plus'>&nbsp;</span>Add ward</button>"
-        );
+        Room.GLOBAL.ROOM_MODAL.modal({
+            backdrop: 'static',
+            keyboard: false
+        });
         Room.GLOBAL.ROOM_MODAL.modal("show");
 
         /*Set action*/
-        $("#ward-add-action").click(function () {
+        $("#ward-add-action").click(function (e) {
+            e.preventDefault();
             var ward_desc = $("#ward_description").val();
             if(ward_desc !== ""){
                 Room.addWard(ward_desc);
@@ -242,6 +254,8 @@ Room = {
     },
     addBed: function(ward, bed){
         $("#is-loading").removeClass("hidden");
+        $("#response-msg").empty();
+
         payload = {};
         payload.intent = "newBed";
         payload.ward_id = ward;
@@ -256,15 +270,13 @@ Room = {
                     "<h3 class='room-bed-name text-primary pull-left'>"+ bed +"</h3>" +
                     "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id="+ data.data.bed_id +"><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
                     "<div class='clearfix'></div>" +
-                    "<div class='bed-list-divider'></div>" +
-                    "<p class='small text-muted'>Occupied by None</p>" +
-                    "</div></div>";
+                    "</div></div></div>";
                 if($(".room-bed-list-item").length == 0){
                     $('.room-bed-list-items').html(content);
-                    Room.setupWardActions();
+                    Room.setupBedActions();
                 }else{
                     $('.room-bed-list-items').append(content);
-                    Room.setupWardActions();
+                    Room.setupBedActions();
                 }
                 Room.GLOBAL.ROOM_MODAL.modal("hide");
             }else if(data.status == Room.CONSTANTS.REQUEST_ERROR){

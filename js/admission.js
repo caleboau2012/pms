@@ -106,7 +106,6 @@ Admission = {
         $.getJSON(host + 'phase/phase_admission_request.php', payload, function(data){
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 if(data.data === undefined){
-                    console.log(data.message);
                     $('.pending-list').html("<h2 class='text-center text-muted'>" + data.message + "</h2>");
                 }else{
                     content = "<ul class='patients-queue list-group'>";
@@ -127,18 +126,25 @@ Admission = {
         });
     },
     attendToPatient: function(patient){
-        Admission.resetAction(Admission.CONSTANTS.NOT_DONE_WITH_PATIENT);
         Admission.deactivate = false;
         Admission.GLOBAL.ACTIVE_PATIENT = patient;
         Admission.GLOBAL.ACTIVE_PATIENT_ID = $(patient).attr('data-patient-id');
         Admission.GLOBAL.ADMITTED_BY = $(patient).attr('data-doctor-id');
         Admission.GLOBAL.ADMISSION_REQ_ID = $(patient).attr('data-admission-id');
         Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
-        $('#empty_active').hide();
-        $('#patient-panel').removeClass('hidden');
+        //$('#empty_active').hide();
+        //$('#patient-panel').removeClass('hidden');
         content = "<h2 class='panel-title text-capitalize'>" + $(patient).attr('data-patient-name') +"</h2>";
         content += "<p>" + $(patient).attr('data-regNum') +"</p>";
         $('#request-heading').html(content);
+
+        $( "#patient-panel" ).animate({
+            opacity: 0
+        }, 500, "linear", function() {
+            Admission.resetAction(Admission.CONSTANTS.NOT_DONE_WITH_OUT_PATIENT);
+            $('#empty_active').hide();
+            $('#patient-panel').removeClass('hidden').css("opacity", 1);
+        });
     },
     getWardAvailableBeds: function(ward, call_back){
         if(!Admission.deactivate){
@@ -315,9 +321,15 @@ Admission = {
         }else if(state == Admission.CONSTANTS.NOT_DONE_WITH_OUT_PATIENT) {
             $('#ward_chosen').empty().addClass('hidden');
             $('#bed_chosen').empty().addClass('hidden');
+            $('.thin-separator').empty().addClass('hidden');
             $('#assignPatient').addClass('hidden');
             $('.step-3').removeClass('active');
             $('.step-2').removeClass('active');
+            $(".admitted-out-patients_ward li").each(function () {
+               $(this).removeClass("list-group-item-success");
+            });
+            $(".bed-item").removeClass("list-group-item-success");
+            $("#assign-response").empty();
         }else if(state == Admission.CONSTANTS.DONE_WITH_IN_PATIENT){
             //updated patient bed id
             Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = Admission.GLOBAL.SELECTED_BED_ID;
