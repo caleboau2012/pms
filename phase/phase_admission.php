@@ -70,6 +70,20 @@ if ($intent == 'admitPatient') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
+} elseif ($intent == 'searchPatientsJQueryUI') {
+    if (isset($_REQUEST[TERM])) {
+        $warden = new AdmissionController();
+        $patient_details = $warden->searchPatients($_REQUEST[TERM]);
+        if(sizeof($patient_details) !== 0) {
+            echo json_encode($patient_details);
+            exit();
+        } else {
+            echo JsonResponse::error("No admitted patients match the search parameter!");
+        }
+    } else {
+        echo JsonResponse::error("Incomplete request parameters!");
+        exit();
+    }
 } elseif ($intent == 'getPatients') {
     $response = AdmissionController::getPatients();
     if (is_array($response)) {

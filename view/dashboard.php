@@ -103,7 +103,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             if ($staff[StaffRoleTable::staff_role_id] == DOCTOR) {
                                 ?>
                                 <div class="col-xs-3  text-center">
-                                    <a href="treatment.php" class="dashboard-link">
+                                    <a href="treatment/out-patient.php" class="dashboard-link">
                                         <img src="../images/medical_consultants.png" width="60">
 
                                         <div class="dashboard-desc">Doctor</div>
