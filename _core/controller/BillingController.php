@@ -17,7 +17,7 @@ class BillingController {
         return $this->systemBilling->unbilledTreatment();
     }
 
-    public function treatmentDetails($treatment_id) {
-        return $this->systemBilling->treatmentDetails($treatment_id);
+    public function getDetails($treatment_id) {
+        return $this->systemBilling->getDetails($treatment_id);
     }
 }

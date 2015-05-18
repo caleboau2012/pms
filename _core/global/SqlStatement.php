@@ -960,11 +960,31 @@ class TreatmentSqlStatement {
                                 ON t.patient_id = p.patient_id
                                 WHERE t.treatment_status = 2 AND t.bill_status = 1";
 
-    const TREATMENT_DETAILS = "SELECT t.consultation, t.symptoms, t.diagnosis, t.comments, DATEDIFF(ad.exit_date, ad.entry_date) AS days_spent, p.prescription AS drugs_taken, t.treatment_id, t.patient_id
-                                FROM treatment t
-                                LEFT JOIN admission ad ON (t.treatment_id = ad.treatment_id)
-                                LEFT JOIN prescription p ON (t.treatment_id = p.treatment_id)
-                                WHERE t.treatment_status = 2 AND t.bill_status = 1 AND t.treatment_id = :treatment_id";
+    const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
+                            FROM admission
+                            WHERE active_fg = 1 AND treatment_id = :treatment_id";
+
+    const PRESCRIPTION = "SELECT prescription FROM prescription
+                            WHERE status = 1 AND treatment_id = :treatment_id";
+
+    const BLOODTEST = "SELECT haematology_id FROM haematology
+                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+
+    const URINETEST = "SELECT urine_id FROM urine
+                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+
+    const VISUALTEST = "SELECT visual_profile_id FROM visual_skills_profile
+                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+
+    const CHEMICALTEST = "SELECT cpreq_id FROM chemical_pathology_request
+                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+
+    const PARATEST = "SELECT preq_id FROM parasitology_req
+                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+
+    const RADIOLOGYTEST = "SELECT radiology_id FROM radiology
+                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+
 
 }
 
