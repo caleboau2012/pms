@@ -1098,11 +1098,13 @@ background: #F4F4F4;
     max-height: 350px;
     overflow-y: auto;
 }
-#switch-response_msg, #assign-response{
+#switch-response_msg, #assign-response, #log_encounter_response {
     width: 75%;
     margin: 0 auto;
 }
-
+#log_encounter_response{
+    margin-top: 0.5em;
+}
 .restore-shadow {
     border-radius: 5px;
     border: 1px solid lightslategray;

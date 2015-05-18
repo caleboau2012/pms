@@ -71,7 +71,9 @@ Admission = {
 
         });
         $('#discharge_patient').unbind('click').bind('click', function(){
-            Admission.dischargePatient();
+            if(confirm("Are you sure you want to discharge this patient")){
+                Admission.dischargePatient();
+            }
         });
 
     },
@@ -326,7 +328,7 @@ Admission = {
             $('.step-3').removeClass('active');
             $('.step-2').removeClass('active');
             $(".admitted-out-patients_ward li").each(function () {
-               $(this).removeClass("list-group-item-success");
+                $(this).removeClass("list-group-item-success");
             });
             $(".bed-item").removeClass("list-group-item-success");
             $("#assign-response").empty();
@@ -430,11 +432,13 @@ Admission = {
         $("#switchPatient").removeClass("hidden");
     },
     logEncounter: function(){
+        $('#log_encounter_response').empty();
         $('#log_encounter_loading').removeClass('hidden');
+
         payload = {};
         payload.intent = 'logEncounter';
-        payload.admission_id = Admission.GLOBAL.ACTIVE_OUT_PATIENT.admission_id;
-        payload.patient_id = Admission.GLOBAL.ACTIVE_OUT_PATIENT.patient_id;
+        payload.admission_id = Admission.GLOBAL.PATIENT_ADMISSION_ID;
+        payload.patient_id =  Admission.GLOBAL.ACTIVE_PATIENT_ID;
         payload.comments = $('#comment').val();
         payload.vitals = {};
 
@@ -447,16 +451,24 @@ Admission = {
         payload.vitals.bmi = $('#bmi').val();
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
+            var response;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                $('#log_encounter_response').html("<p class='text-success'>" + data.message +"</p>");
+                response = '<div class="alert alert-dismissible alert-success text-center">' +
+                ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                '' + data.message +'' +
+                '</div>';
+                $('#log_encounter_response').html(response);
                 $('#log_encounter').trigger('reset');
                 $('#log_encounter_loading').addClass('hidden');
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
+                response = '<div class="alert alert-dismissible alert-danger text-center">' +
+                ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                '' + data.message +'' +
+                '</div>';
                 $('#log_encounter_loading').addClass('hidden');
-                $('#log_encounter_response').html("<p class='text-danger'>" + data.data +"</p>");
+                $('#log_encounter_response').html(response);
 
             }
-
         }).fail(function(data){
             console.log(data);
         });
@@ -470,16 +482,16 @@ Admission = {
             var response_msg;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response_msg = '<br/><div class="alert alert-dismissible alert-success text-center">' +
-                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                    '<h4>' + data.message +'</h4>' +
-                    '</div>';
+                ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                '<h4>' + data.message +'</h4>' +
+                '</div>';
                 $("#discharge_patient_response").html(response_msg);
                 Admission.resetAction(Admission.CONSTANTS.DISCHARGE_IN_PATIENT)
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
                 response_msg = '<div class="alert alert-dismissible alert-danger text-center">' +
-                    ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                    '' + data.message +'' +
-                    '</div>';
+                ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+                '' + data.message +'' +
+                '</div>';
                 $("#discharge_patient_response").html(response_msg);
             }
         });

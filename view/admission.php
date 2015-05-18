@@ -33,6 +33,7 @@ $wards = $admission->loadWards();
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>
+                <span class="sr-only">Toggle navigation</span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
@@ -92,7 +93,7 @@ $wards = $admission->loadWards();
                         <div id="assign-response"></div>
                         <div class="col-sm-4">
                             <div class="well well-sm">
-                                <div class="div-rounded step-1"><span class="fa fa-road"></span> </div>
+                                <div class="div-rounded step-1"><span class="fa fa-university "></span> </div>
                                 <!--                                <p class="small text-muted text-center">Select ward below</p>-->
                                 <ul class="list-group admitted-out-patients_ward">
                                     <?php
@@ -189,7 +190,7 @@ $wards = $admission->loadWards();
                     <ul class="nav nav-tabs">
                         <li><a href="#home-tab" data-toggle="tab">Details</a></li>
                         <li class="active"><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
-                        <li><a href="#vitals-tab" data-toggle="tab"> <span class="fa fa-stethoscope">&nbsp;</span>Add Vitals</a></li>
+                        <li><a href="#vitals-tab" data-toggle="tab"> <span class="fa fa-stethoscope">&nbsp;</span>Log Encounter</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade adm-tab-pane" id="home-tab">
@@ -202,7 +203,7 @@ $wards = $admission->loadWards();
                                 <div id="switch-response_msg"></div>
                                 <div class="col-sm-4">
                                     <div class="well well-sm">
-                                        <div class="div-rounded step-1 active"><span class="fa fa-road"></span> </div>
+                                        <div class="div-rounded step-1 active"><span class="fa fa-university"></span> </div>
                                         <!--                                <p class="small text-muted text-center">Select ward below</p>-->
                                         <ul class="list-group admitted-patients-in-ward">
                                             <?php
@@ -250,6 +251,8 @@ $wards = $admission->loadWards();
                             <!--                                    <span class="fa fa-stethoscope"></span>-->
                             <!--                                </div>-->
                             <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
+                            <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin fa-2x"></span> </div>
+                            <div class="text-center" id="log_encounter_response"></div>
                             <form id="log_encounter">
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -282,26 +285,26 @@ $wards = $admission->loadWards();
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <div class="col-sm-12">
-                                        <label for="comment">Comment</label>
-                                        <textarea class="form-control" id="comment" name="comment"></textarea>
-                                    </div>
-                                </div>
-                                <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="bmi">BMI</label>
                                         <input type="text" class="form-control" id="bmi" name="bmi">
                                     </div>
+
+                                </div>
+                                <div class="form-group">
                                     <div class="col-sm-6">
-                                        <br/>
-                                        <input type="submit" class="btn btn-primary">
+                                        <label for="comment">Comment</label>
+                                        <textarea class="form-control" id="comment" name="comment"></textarea>
                                     </div>
                                 </div>
 
+                                <div class="col-sm-offset-5 col-sm-3">
+                                    <br/>
+                                    <input type="submit" class="btn btn-lg btn-primary">
+                                </div>
                             </form>
                             <div class="clearfix"></div>
-                            <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
-                            <div class="text-center" id="log_encounter_response"></div>
+
                         </div>
                     </div>
                     <div class="clearfix"></div>
