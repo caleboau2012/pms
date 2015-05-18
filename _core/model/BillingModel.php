@@ -9,7 +9,7 @@ class BillingModel extends BaseModel {
         if ($admitted){
             return $admitted;
         } else {
-            return "No admission";
+            return array('days_spent' => "No admission");
         }
     }
 
@@ -18,7 +18,9 @@ class BillingModel extends BaseModel {
         $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION, $data);
         if($prescription) {
             return $prescription;
-        } else {return 'No Drug Prescribed';}
+        } else {
+            return array('prescription'  => 'No Drug Prescribed');
+        }
     }
 
     private function getTest($treatment_id) {
@@ -53,7 +55,7 @@ class BillingModel extends BaseModel {
         if($test){
             return $test;
         } else {
-            return 'No test';
+            return array('test'  => 'No Test');
         }
     }
 
@@ -62,8 +64,8 @@ class BillingModel extends BaseModel {
     }
 
     public function getDetails($treatment_id) {
-        $details = $this->getDaysSpent($treatment_id);
-        $details = $this->getPrescription($treatment_id);
+        $details['days_spent'] = $this->getDaysSpent($treatment_id);
+        $details['prescription'] = $this->getPrescription($treatment_id);
         $details['test'] = $this->getTest($treatment_id);
 
         return $details;
