@@ -307,37 +307,34 @@ Treatment = {
             intent: "getVitals",
             patient_id: $('.patient-ID').html()
         }, function(data){
-            console.log(data);
-            //if(data.status == 1){
-            //    data = data.data;
-            //    var html = "";
-            //    for(var i = 0; i < data.length; i++){
-            //        var status;
-            //        switch(data[i].status){
-            //            case '5':
-            //                status = "Pending";
-            //                break;
-            //            case '6':
-            //                status = "Processing";
-            //                break;
-            //            case '7':
-            //                status = "Completed";
-            //                break;
-            //            default :
-            //                status = "No status put in";
-            //        }
-            //        html += "<tr>" +
-            //            "<td>" + (i + 1) + "</td>" +
-            //            "<td>" + data[i].diagnosis + "</td>" +
-            //            "<td>" + data[i].modified_date + "</td>" +
-            //            "<td>" + status + "</td>" +
-            //            "<td><a target='_blank' href='' class='btn btn-sm btn-default'>View</a></td>" +
-            //        "</tr>";
-            //    }
-            //
-            //    $('.table-data').html(html);
-            //    $('.lab-history .dataTable').dataTable();
-            //}
+            //console.log(data);
+            $('.vitals ul').empty();
+            if(data.status == 1){
+                data = data.data;
+                var html = "";
+                for(var i = 0; i < data.length; i++){
+                    var patientHTML = "";
+                    patientHTML += $('#tmplVitals').html();
+                    patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
+                    patientHTML = replaceAll('{{id}}', i, patientHTML);
+                    patientHTML = replaceAll('{{created_date}}', data[i].created_date, patientHTML);
+                    patientHTML = replaceAll('{{blood_pressure}}', data[i].blood_pressure, patientHTML);
+                    patientHTML = replaceAll('{{bmi}}', data[i].bmi, patientHTML);
+                    patientHTML = replaceAll('{{pulse}}', data[i].pulse, patientHTML);
+                    patientHTML = replaceAll('{{respiratory_rate}}', data[i].respiratory_rate, patientHTML);
+                    patientHTML = replaceAll('{{temp}}', data[i].temp, patientHTML);
+                    patientHTML = replaceAll('{{weight}}', data[i].weight, patientHTML);
+                    patientHTML = replaceAll('{{height}}', data[i].height, patientHTML);
+                    patientHTML = replaceAll('{{encounter_id}}', data[i].encounter_id, patientHTML);
+                    patientHTML = replaceAll('{{patient_id}}', data[i].patient_id, patientHTML);
+
+                    //console.log(patientHTML);
+                    $('.vitals ul').append(patientHTML);
+                }
+            }
+            else if(data.status == 2){
+                $('.vitals ul').html("<li class='list-group-item'>" + data.message + "</li>");
+            }
         }, 'json');
     }
 };

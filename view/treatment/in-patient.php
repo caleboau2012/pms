@@ -126,20 +126,27 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     </li>
 </script>
 
-<script id="tmplDoctor" type="text/html">
-    <div class="col-sm-4 col-md-3">
-        <div class="panel {{online_status}} doctor">
-            <div class="panel-heading" userid="{{userid}}">
-                <h2 class="panel-title">Dr. {{DoctorName}}</h2>
-            </div>
-            <div class="panel-body patients">
-                <span class="to_doctor" hidden>{{userid}}</span>
-
-                <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">
-                </div>
+<script id="tmplVitals" type="text/html">
+    <li class="list-group-item">
+        <a class="collapsed" data-toggle="collapse" data-parent="#vitals{{userid}}"
+           href="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">
+            <b>Date:</b> {{created_date}}
+        </a>
+        <div id="collapse{{id}}" class="panel-collapse collapse" role="tabpanel"
+             aria-labelledby="heading{{id}}">
+            <div class="panel-body">
+                <p><b>Blood Pressure:</b> {{blood_pressure}}</p>
+                <p><b>BMI:</b> {{bmi}}</p>
+                <p><b>Pulse:</b> {{pulse}}</p>
+                <p><b>Respiratory Rate:</b> {{respiratory_rate}}</p>
+                <p><b>Temperature:</b> {{temp}}</p>
+                <p><b>Weight:</b> {{weight}}</p>
+                <p><b>Height:</b> {{height}}</p>
+                <span class="encounter_id" hidden>{{encounter_id}}</span>
+                <span class="patient_id" hidden>{{patient_id}}</span>
             </div>
         </div>
-    </div>
+    </li>
 </script>
 
 <div class="container-fluid">
@@ -304,7 +311,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 </div>
                 <div class="vitals hidden">
                     <br/>
-                    <ul class="list-group history">
+                    <ul class="list-group">
                     </ul>
                     <!--                    <button class="btn btn-info">Load More</button>-->
                 </div>
