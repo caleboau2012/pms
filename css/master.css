@@ -754,7 +754,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 /*ADMISSION MODULE*/
 .pending-list, .in-patient-list{
-    height: 25em;
+    height: 30em;
     max-height: 58em;
     overflow-y: auto;
 }
@@ -1184,4 +1184,9 @@ background: #F4F4F4;
 .modal-form-fix{
     margin-top: 0.3em;
     text-align: center;
+}
+
+/* Billing */
+.test span{
+    margin: 0 10px;
 }

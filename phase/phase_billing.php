@@ -31,7 +31,7 @@ if ($intent == 'unbilled_treatments') {
 
     $response = $details->getDetails($id);
 
-    if (is_array($response) && !empty($response)) {
+    if (is_array($response) || !empty($response)) {
         echo JsonResponse::success($response);
         exit();
     } else {

@@ -57,6 +57,29 @@ Crave::requireAll(UTIL);
     </div>
 </nav>
 
+<script id="tmplPatients" type="text/html">
+    <div class="panel {{status}} patient pointer">
+        <div class="panel-heading" role="tab" id="heading{{id}}">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{id}}"
+                   href="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">
+                    {{regNo}}
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{patientid}}">
+            <div class="panel-body">
+                <p>{{name}}</p>
+                <p class="name hidden">{{name}}</p>
+                <p class="regNo hidden">{{regNo}}</p>
+                <span class="treatment_id hidden">{{treatment_id}}</span>
+                <span class="treatment_status hidden">{{treatment_status}}</span>
+                <span class="bill_status hidden">{{bill_status}}</span>
+            </div>
+        </div>
+    </div>
+</script>
+
 <div class="container-fluid">
     <div class="row">
         <!--   Bill management -->
@@ -65,11 +88,11 @@ Crave::requireAll(UTIL);
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <form id="search-patient-form">
-                            <input id = "patient_query" class="form-control" placeholder="Search...">
+                            <input id="patient_query" class="form-control" placeholder="Search...">
                         </form>
                     </div>
                     <div class="panel-body in-patient-list">
-                        <div id="unbilled-patient">
+                        <div id="unbilled-patients">
                             <h2 class="text-muted text-center">No Unbilled Patient</h2>
                         </div>
                     </div>
@@ -81,8 +104,12 @@ Crave::requireAll(UTIL);
                     <div class="div-rounded encounter-icon">
                         <span class="fa fa-money"></span>
                     </div>
-                    <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
-                    <form id="bill" class="bill table-responsive">
+                    <p id="patientRegNo" class="text-center h3"></p>
+                    <p id="patientName" class="text-center h4"></p>                    <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
+                    <div class="h2 none text-center">
+                        <span class="fa fa-arrow-circle-o-left"></span> Please select a patient to bill
+                    </div>
+                    <form id="bill" class="bill hidden table-responsive">
                         <table class="table table-stripped">
                             <thead>
                             <tr>
@@ -93,69 +120,28 @@ Crave::requireAll(UTIL);
                             <tbody>
                             <tr>
                                 <td><input class="form-control" name="item[{{0}}]" value="{{Constant Item 0}}" disabled></td>
-                                <td><input class="form-control" name="amount[{{0}}]"></td>
+                                <td><input class="form-control amount" type="number" name="amount[{{0}}]"></td>
                             </tr>
                             <tr>
                                 <td><input class="form-control" name="item[{{1}}]" value="{{Constant Item 1}}" disabled></td>
-                                <td><input class="form-control" name="amount[{{1}}]"></td>
+                                <td><input class="form-control amount" type="number" name="amount[{{1}}]"></td>
                             </tr>
-                            <tr>
-                                <td><input class="form-control" name="item[{{2}}]"></td>
-                                <td><input class="form-control" name="amount[{{2}}]"></td>
-                            </tr>
-                            <tr><td colspan="2"><button type="button" class="btn btn-primary btn-sm pull-right">Add More <span class="fa fa-angle-down"></span></button></td></tr>
                             </tbody>
                             <tfoot>
                             <tr>
+                                <td colspan="2">
+                                    <button type="button" id="add_more" class="btn btn-primary btn-sm pull-right">
+                                        Add More
+                                        <span class="fa fa-angle-down"></span>
+                                    </button>
+                                </td>
+                            </tr>
+                            <tr>
                                 <th>Total</th>
-                                <th>{{total amount}}</th>
+                                <th id="total">0.00</th>
                             </tr>
                             </tfoot>
                         </table>
-<!--                        <div class="form-group">-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <p class="text-center">Item 1</p>-->
-<!--                            </div>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <input type="text" id="pulse" class="form-control" name="pulse">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <label for="respiratory_rate">Respiratoty Rate</label>-->
-<!--                                <input type="text" class="form-control" id="respiratory_rate" name="respiratory_rate">-->
-<!--                            </div>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <label for="blood_pressure">Blood Pressure</label>-->
-<!--                                <input type="text" class="form-control" id = "blood_pressure" name="blood_pressure">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <label for="height">Height</label>-->
-<!--                                <input type="text" class="form-control" id="height" name="height">-->
-<!--                            </div>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <label for="weight">Weight</label>-->
-<!--                                <input type="text" class="form-control" id="weight" name="weight">-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <div class="col-sm-12">-->
-<!--                                <label for="comment">Comment</label>-->
-<!--                                <textarea class="form-control" id="comment" name="comment"></textarea>-->
-<!--                            </div>-->
-<!--                        </div>-->
-<!--                        <div class="form-group">-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <label for="bmi">BMI</label>-->
-<!--                                <input type="text" class="form-control" id="bmi" name="bmi">-->
-<!--                            </div>-->
-<!--                            <div class="col-sm-6">-->
-<!--                                <br/>-->
-<!--                                <input type="submit" class="btn btn-primary">-->
-<!--                            </div>-->
-<!--                        </div>-->
 
                     </form>
                     <div class="clearfix"></div>
@@ -166,21 +152,24 @@ Crave::requireAll(UTIL);
             <div class="col-sm-3">
                 <div class="room-overview">
                     <div class="room-overview__heading">
-                        <h2 class="text-center"><span class="fa fa-history"></span></h2>
+                        <h2 class="text-center"><span class="fa fa-database"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <p>
-                        <span class="fa fa-university text-danger">&nbsp;</span>
-                        20 Wards
-                    </p>
-                    <p>
-                        <span class="fa fa-bed text-danger">&nbsp;</span>
-                        200 Beds
-                    </p>
-                    <p>
-                        <span class="fa fa-bed text-success">&nbsp;</span>
-                        30 Available Beds
-                    </p>
+                    <div class="one hidden">
+                        <br>
+                        <p class="text-center">
+                            <span class="fa fa-history"></span>
+                            <span id="days_spent"></span>
+                        </p>
+                        <p>
+                            <p class="h4 text-center">Prescribed Drugs</p>
+                            <div id="prescription"></div>
+                        </p>
+                        <p class="text-center">
+                            <p class="h4 text-center">Lab Tests Performed</p>
+                            <p id="test" class="test text-center"></p>
+                        </p>
+                    </div>
                     <div>
                         <br/><br/>
                         <div class="text-center" id="discharge_patient_content">
