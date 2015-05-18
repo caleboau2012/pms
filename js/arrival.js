@@ -366,7 +366,7 @@ $(document.vitalsForm).on('submit', function(e){
         }else{
             showAlert(data.message);
         }
-        $('#loading').removeClass('hidden');
+        $('#loading').addClass('hidden');
     }, 'json').fail(function(data){
         $('#loading').addClass('hidden');
         //$('#response').text(data.responseText).removeClass('hidden');
