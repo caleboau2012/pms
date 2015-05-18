@@ -434,7 +434,6 @@ Admission = {
     logEncounter: function(){
         $('#log_encounter_response').empty();
         $('#log_encounter_loading').removeClass('hidden');
-
         payload = {};
         payload.intent = 'logEncounter';
         payload.admission_id = Admission.GLOBAL.PATIENT_ADMISSION_ID;
@@ -442,20 +441,18 @@ Admission = {
         payload.comments = $('#comment').val();
         payload.vitals = {};
 
-        payload.vitals.temp = $('#temp').val();
-        payload.vitals.pulse = $('#pulse').val();
-        payload.vitals.respiratory_rate = $('#respiratory_rate').val();
-        payload.vitals.blood_pressure = $('#blood_pressure').val();
-        payload.vitals.height = $('#height').val();
-        payload.vitals.weight = $('#weight').val();
-        payload.vitals.bmi = $('#bmi').val();
+        $("#log_encounter input").each(function () {
+            if($(this).val() !== "" && $(this).attr("name") !== "comments"){
+                payload.vitals[$(this).attr("name")] = $(this).val();
+            }
+        });
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
             var response;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response = '<div class="alert alert-dismissible alert-success text-center">' +
                 ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                '' + data.message +'' +
+                '<strong>' + data.message +'</strong>' +
                 '</div>';
                 $('#log_encounter_response').html(response);
                 $('#log_encounter').trigger('reset');
@@ -463,14 +460,18 @@ Admission = {
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
                 response = '<div class="alert alert-dismissible alert-danger text-center">' +
                 ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                '' + data.message +'' +
+                '<strong>' + data.message +'</strong><br/> Ensure to enter appropriate values' +
                 '</div>';
                 $('#log_encounter_loading').addClass('hidden');
                 $('#log_encounter_response').html(response);
-
             }
         }).fail(function(data){
-            console.log(data);
+            response = '<div class="alert alert-dismissible alert-danger text-center">' +
+            ' <button type="button" class="close" data-dismiss="alert">×</button>' +
+            'Unfortunately, an unexpected occur, Please try again' +
+            '</div>';
+            $('#log_encounter_loading').addClass('hidden');
+            $('#log_encounter_response').html(response);
         });
     },
     dischargePatient: function(){

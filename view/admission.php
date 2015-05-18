@@ -294,7 +294,7 @@ $wards = $admission->loadWards();
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="comment">Comment</label>
-                                        <textarea class="form-control" id="comment" name="comment"></textarea>
+                                        <textarea class="form-control" id="comment" name="comment" required></textarea>
                                     </div>
                                 </div>
 

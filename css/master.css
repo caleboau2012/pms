@@ -1077,6 +1077,8 @@ background: #F4F4F4;
 .ward-list-items{
     max-height: 30em;
     overflow: auto;
+    cursor: pointer;
+
 }
 .ward-item{
     font-weight: 500;
@@ -1092,7 +1094,6 @@ background: #F4F4F4;
 .ward-list-name{
     position: relative;
     top: 10px;
-    cursor: pointer;
 }
 .admitted-patients-in-ward, .admitted-out-patients_ward, .out-patient-bed-list-items, .in-patient-bed-list-items{
     max-height: 350px;

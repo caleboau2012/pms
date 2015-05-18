@@ -121,7 +121,6 @@ Room = {
             if(confirm("Are you sure you want to delete " + $(this).attr("data-bed-name"))){
                 Room.deleteBed(this);
             }
-            return false;
         });
     },
     setupWardActions: function () {
@@ -132,14 +131,15 @@ Room = {
             function () {
                 Room.showDeleteWardAction(this, false);
             }
-        );
-        $('.ward-list-name').click(function () {
-            $("#new-ward-response").empty();
-            Room.getWardAvailableBeds($(this).parent());
-        });
+        ).click(function () {
+                $("#new-ward-response").empty();
+                Room.getWardAvailableBeds(this);
+            });
         /*
+         /*
          * Delete ward action*/
         $(".ward-list-delete").click(function (e) {
+            $(this).parent().unbind("click");
             $("#new-ward-response").empty();
             if(confirm("Are you sure you want to delete " + $(this).attr("data-ward-name"))){
                 Room.deleteWard(this);
@@ -268,7 +268,7 @@ Room = {
                  * */
                 var content = "<div class='col-xs-6 col-sm-4'><div class='room-bed-list-item'>" +
                     "<h3 class='room-bed-name text-primary pull-left'>"+ bed +"</h3>" +
-                    "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-id="+ data.data.bed_id +"><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
+                    "<p class='text-muted pull-right pointer bed-list-delete invisible' data-bed-name='"+ bed +"' data-bed-id="+ data.data.bed_id +"><span class='fa fa-remove fa-2x text-danger'>&nbsp;</span></p>" +
                     "<div class='clearfix'></div>" +
                     "</div></div></div>";
                 if($(".room-bed-list-item").length == 0){
@@ -304,7 +304,6 @@ Room = {
         }, "json");
     },
     deleteBed: function(bed){
-        $(".ward-item").unbind("click");
         payload = {};
         payload.intent = "deleteBed";
         payload.bed_id = $(bed).attr("data-bed-id");
@@ -312,6 +311,7 @@ Room = {
             if(data.status == Room.CONSTANTS.REQUEST_SUCCESS){
                 $(bed).parent().parent().remove();
             }
+
         }, "json");
     }
 };
