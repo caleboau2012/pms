@@ -179,7 +179,7 @@ class PharmacistOutgoingDrugTable{
 }
 
 class TreatmentTable{
-    const table_name = 'drug_inventory';
+    const table_name = 'treatment';
 
     const treatment_id      = 'treatment_id';
     const doctor_id         = 'doctor_id';
@@ -190,6 +190,8 @@ class TreatmentTable{
     const diagnosis         = 'diagnosis';
     const created_date      = 'created_date';
     const modified_date     = 'modified_date';
+    const treatment_status  = 'treatment_status';
+    const bill_status       = 'bill_status';
     const active_fg         = 'active_fg';
     const status_id         = 'status_id';          /*I think a status would be needed in this table.*/
 }

@@ -38,12 +38,12 @@
                         <span class="restore-addon"><input type="submit" name="Upload" value="Upload" class="btn btn-default"/></span>
                     </div>
                     <p id="success" class="col-sm-10 text-success text-center">File Upload Successful</p>
-                    <button id="restore" class="form-margin btn btn-primary pull-right">Restore</button>
+<!--                    <button id="restore" class="form-margin btn btn-primary pull-right">Restore</button>-->
                 </form>
             </div>
-            <div class="col-sm-12 restore-margin">
-                <p class="text-center">. . . or Restore From</p>
-            </div>
+<!--            <div class="col-sm-12 restore-margin">-->
+<!--                <p class="text-center">. . . or Restore From</p>-->
+<!--            </div>-->
             <div class="col-sm-12">
                 <table class="table table-responsive table-striped">
                     <thead>

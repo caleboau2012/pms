@@ -39,7 +39,7 @@ var Restore = {
                     tableData += "<td>"+ item.substring(7, 17).split("-").reverse().join("/") +"</td>";
                     tableData += "<td><a href=";
                     tableData += "../backup/"+item;
-                    tableData += " download='pms.sql'>Download</a>";
+                    tableData += " download="+item+">Download</a>";
                     if (index == 9){
                         return false;
                     }
@@ -55,7 +55,7 @@ var Restore = {
                 $.each(data.data, function(index, item){
                     files_to_restore += "<tr><td>"+ (index+1) +"</td>";
                     files_to_restore += "<td>"+ item.substring(7, 17).split("-").reverse().join("/") +"</td>";
-                    files_to_restore += "<td><a href=";
+                    files_to_restore += "<td><a class='a_restore' data-ref=";
                     files_to_restore += "backup/"+item;
                     files_to_restore += ">Restore</a>";
                     if (index == 9){
@@ -75,10 +75,24 @@ var Restore = {
            $('#success').show();
        });
         return false;
+    },
+
+    fileRestore: function() {
+        Restore.serverRequest(host + Restore.URL.uri, Restore.payload('restore'), function(data){
+            console.log(data);
+        });
     }
 }
 
 $(document).ready(function(){
     Restore.init();
     Restore.fileUpload();
+
+    $('.a_restore').on('click', function(){
+        $(this).each(function(e){
+            e.preventDefault();
+            Restore.fileRestore();
+        });
+    });
+
 })

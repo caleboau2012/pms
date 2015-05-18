@@ -954,6 +954,18 @@ class TreatmentSqlStatement {
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
+    const UNBILLED_TREATMENT = "SELECT p.surname, p.firstname, p.middlename, t.treatment_status, t.bill_status, t.treatment_id
+                                FROM treatment t
+                                LEFT JOIN patient p
+                                ON t.patient_id = p.patient_id
+                                WHERE t.treatment_status = 2 AND t.bill_status = 1";
+
+    const TREATMENT_DETAILS = "SELECT t.consultation, t.symptoms, t.diagnosis, t.comments, DATEDIFF(ad.exit_date, ad.entry_date) AS days_spent, p.prescription AS drugs_taken, t.treatment_id, t.patient_id
+                                FROM treatment t
+                                LEFT JOIN admission ad ON (t.treatment_id = ad.treatment_id)
+                                LEFT JOIN prescription p ON (t.treatment_id = p.treatment_id)
+                                WHERE t.treatment_status = 2 AND t.bill_status = 1 AND t.treatment_id = :treatment_id";
+
 }
 
 class EmergencySqlStatement {
