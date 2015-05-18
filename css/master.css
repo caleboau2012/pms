@@ -56,7 +56,58 @@ textarea{
     padding: 2em;
 
 }
+/*
+System setup
+*/
+#setup-container{
+    background: #fff;
+    border: solid thin #e3e3e3;
+    min-height: 500px;
+    width: 500px;
+    margin: 3em auto 0;
+}
+#setup-heading{
+    padding: 0.5em;
+}
+.steps{
+    padding: 0.7em;
+    font-weight: 500;
+    border-width:19px 0 19px 10px;
+    border-left: solid thin #FCFCFC;
+    position: relative;
+    background: -webkit-linear-gradient(180deg,  #FAFAFA, #DEE2FF); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(180deg, #FAFAFA, #DEE2FF); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(180deg, #FAFAFA, #DEE2FF); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(180deg, #FAFAFA, #DEE2FF); /* Standard syntax */;
+}
 
+.setup-nav-active::after{
+    position: absolute;
+    right: -20px;
+    top: 0;
+    content: "";
+    width: 0;
+    height: 0;
+    border-top: 22px solid transparent;
+    border-bottom: 18px solid transparent;
+    border-left: 20px solid #126BB8;
+    z-index: 100;
+}
+#setup-nav{
+    background: #FAFAFA;
+    box-shadow: 0 1px 2px #E5E5E5;
+    margin-bottom: 1.5em;
+}
+.setup-nav-active{
+    background: #126BB8;
+    color: #fff;
+}
+.steps_content{
+    padding: 1em;
+}
+.form-setup label{
+    font-weight: 500;
+}
 /*
 ---END OF EDIT BOOTSTRAP
 */

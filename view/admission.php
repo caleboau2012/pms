@@ -187,10 +187,10 @@ $wards = $admission->loadWards();
                         <span class="fa fa-pulse fa-spin"></span>
                     </div>
 
-                    <ul class="nav nav-tabs">
+                    <ul class="nav nav-tabs nav-pills nav-justified">
                         <li><a href="#home-tab" data-toggle="tab">Details</a></li>
                         <li class="active"><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
-                        <li><a href="#vitals-tab" data-toggle="tab"> <span class="fa fa-stethoscope">&nbsp;</span>Log Encounter</a></li>
+                        <li><a href="#vitals-tab" data-toggle="tab">Log Encounter</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade adm-tab-pane" id="home-tab">
