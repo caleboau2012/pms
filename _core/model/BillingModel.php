@@ -62,8 +62,8 @@ class BillingModel extends BaseModel {
     }
 
     public function getDetails($treatment_id) {
-        $details['days_spent'] = $this->getDaysSpent($treatment_id);
-        $details['prescription'] = $this->getPrescription($treatment_id);
+        $details = $this->getDaysSpent($treatment_id);
+        $details = $this->getPrescription($treatment_id);
         $details['test'] = $this->getTest($treatment_id);
 
         return $details;
