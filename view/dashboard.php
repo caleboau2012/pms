@@ -150,6 +150,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </a>
                                 </div>
                             <?php
+                            }else if($staff[StaffRoleTable::staff_role_id] == BILLING_OFFICER) {
+                                ?>
+                                <div class="col-xs-3 text-center">
+                                    <a href="billing.php" class="dashboard-link">
+                                        <img src="../images/billing.png" width="60" height="60">
+
+                                        <div class="dashboard-desc">Billing</div>
+                                    </a>
+                                </div>
+                            <?php
                             }
                         }
                         ?>
@@ -233,7 +243,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
-<script src="../js/bootstrap/popover.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/index.js"></script>
 <script src="../js/backup_restore.js" type="application/javascript"></script>
