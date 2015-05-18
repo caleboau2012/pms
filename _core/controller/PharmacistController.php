@@ -7,16 +7,12 @@ class PharmacistController{
         $this->pharmacy = new PharmacistModel();
     }
 
+    public function addDrugUnits($unit, $symbol){
+        return $this->pharmacy->addDrugUnits($unit);
+    }
+
     public function getPatientQueue(){
         return $this->pharmacy->getPatientQueue(DRUG_UNCLEARED);
-    }
-
-    public function getInPatientQueue(){
-        return $this->pharmacy->getInPatientQueue();
-    }
-
-    public function getOutPatientQueue(){
-        return $this->pharmacy->getOutPatientQueue();
     }
 
     public function getPrescription($treatmentId){

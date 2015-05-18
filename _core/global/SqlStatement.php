@@ -967,3 +967,4 @@ class EmergencySqlStatement {
     const GET_EMERGENCY = "SELECT * FROM emergency";
 
 }
+

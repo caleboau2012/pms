@@ -2,20 +2,13 @@
 
 class PharmacistModel extends BaseModel{
 
+    public function addDrugUnits($unit){
+        return true;
+    }
+
     public function getPatientQueue($status){
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_QUEUE, array(PrescriptionTable::status => $status));
     }
-
-
-    public function getInPatientQueue(){
-        return;
-    }
-
-
-    public function getOutPatientQueue(){
-        return;
-    }
-
 
     public function getPrescription($treatmentId){
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_PRESCRIPTION, array(PrescriptionTable::treatment_id => $treatmentId));
