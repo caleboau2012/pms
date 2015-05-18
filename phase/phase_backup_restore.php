@@ -40,7 +40,7 @@ if ($intent == 'getFiles') {
     }
 
 } elseif($intent == 'restore'){
-    $dumpFileName = $_FILES['file']['name'];
+    $dumpFileName = $_REQUEST['file'];
 
     if($dumpFileName){
         $restore = new BackupAndRestoreController();

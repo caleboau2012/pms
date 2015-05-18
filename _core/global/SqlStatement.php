@@ -954,7 +954,7 @@ class TreatmentSqlStatement {
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
-    const UNBILLED_TREATMENT = "SELECT p.surname, p.firstname, p.middlename, t.treatment_status, t.bill_status, t.treatment_id
+    const UNBILLED_TREATMENT = "SELECT p.surname, p.firstname, p.middlename, p.regNo, t.treatment_status, t.bill_status, t.treatment_id
                                 FROM treatment t
                                 LEFT JOIN patient p
                                 ON t.patient_id = p.patient_id
