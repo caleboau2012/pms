@@ -16,12 +16,10 @@ if (isset($_REQUEST['intent'])) {
 
 $rootUser = isset($_REQUEST['rootUser']) ? $_REQUEST['rootUser'] : "";
 $rootPass = isset($_REQUEST['rootPass']) ? $_REQUEST['rootPass'] : "";
+$setup = new SystemSetupController($rootUser, $rootPass);
 
 
 if ($intent == 'initialSetup') {
-    /*echo $rootPass;
-    echo $rootUser;*/
-    $setup = new SystemSetupController($rootUser, $rootPass);
     $result = $setup->setup();
 
     if($result){
