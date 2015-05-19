@@ -985,6 +985,9 @@ class TreatmentSqlStatement {
     const RADIOLOGYTEST = "SELECT radiology_id FROM radiology
                             WHERE status_id = 7 AND treatment_id = :treatment_id";
 
+    const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, created_date)
+                            VALUES (:item, :amount, :treatment_id, NOW())";
+
 
 }
 

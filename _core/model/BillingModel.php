@@ -70,4 +70,11 @@ class BillingModel extends BaseModel {
 
         return $details;
     }
+
+    public function postBills($data) {
+        $this->conn->execute(TreatmentSqlStatement::POSTBILLS, $data);
+        $res = $this->conn->getLastInsertedId();
+
+        return $res;
+    }
 }

@@ -20,4 +20,8 @@ class BillingController {
     public function getDetails($treatment_id) {
         return $this->systemBilling->getDetails($treatment_id);
     }
+
+    public function postBills ($data) {
+        return $this->systemBilling->postBills($data);
+    }
 }

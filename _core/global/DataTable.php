@@ -669,3 +669,11 @@ class EmergencyTable {
 
 }
 
+class ConstantBillsTable {
+    const table_name            = 'constant_bills';
+    const constant_bill_id      = 'constant_bills_id';
+    const item                  = 'item';
+    const amount                = 'amount';
+    const treatment_id          = 'treatment_id';
+    const created_date          = 'created_date';
+}

@@ -10,7 +10,7 @@ Crave::requireFiles(CONTROLLER, array('BillingController'));
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
 } else {
-    echo JsonResponse::error('Intent no set!');
+    echo JsonResponse::error('Intent not set!');
     exit();
 }
 
@@ -38,4 +38,24 @@ if ($intent == 'unbilled_treatments') {
         echo JsonResponse::error('Details Unavailable');
         exit();
     }
+} elseif ($intent == 'post_bills') {
+    $bill = new BillingController();
+    if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['item']) && isset($_REQUEST['amount'])) {
+        $data['item'] = $_REQUEST[ConstantBillsTable::item];
+        $data['amount'] = $_REQUEST[ConstantBillsTable::amount];
+        $data['treatment_id'] = $_REQUEST[ConstantBillsTable::treatment_id];
+
+        $post = $bill->postBills($data);
+
+        if ($post) {
+            echo JsonResponse::success("Billing is Successful");
+        } else {
+            echo JsonResponse::error('Billing is not Successful');
+        }
+
+    } else {
+        echo JsonResponse::error('Bills are not completely set');
+        exit();
+    }
+
 }
