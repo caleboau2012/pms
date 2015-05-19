@@ -2,16 +2,21 @@
 class SystemSetupController{
     private $systemSetupModel;
 
-    public function __construct(){
-        $this->systemSetupModel = new SystemSetupModel();
+    public function __construct($name, $pass){
+        $this->systemSetupModel = new SystemSetupModel($name, $pass);
     }
 
-    public function createDB($sqlDumpFile){
-        return $this->systemSetupModel->createDB($sqlDumpFile);
-    }
-
-    public function createDBUser($username, $password){
-        return $this->systemSetupModel->createDBUser($username, $password);
+    public function setup(){
+        try{
+            if(!$this->systemSetupModel->createDB())
+                throw new Exception('Could not create DB');
+            if(!$this->systemSetupModel->createDBUser())
+                throw new Exception('Could not create DB user');
+            return true;
+        } catch (Exception $e){
+//            var_dump($e->getMessage());
+            return false;
+        }
     }
 
     public function createAdminUser($username, $password, $confirmPassword){

@@ -1003,3 +1003,7 @@ class EmergencySqlStatement {
 
 }
 
+class SystemSetupSqlStatment {
+    const CREATE_DB = "CREATE DATABASE IF NOT EXISTS pms";
+    const CREATE_DB_USER = "GRANT ALL ON pms.* TO ':username'@'localhost' IDENTIFIED AS ':password'";
+}
