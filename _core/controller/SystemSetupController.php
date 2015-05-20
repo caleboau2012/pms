@@ -6,20 +6,23 @@ class SystemSetupController{
         $this->systemSetupModel = new SystemSetupModel($name, $pass);
     }
 
-    public function setup(){
+    public function setup($username, $password, $confirmPassword){
         try{
             if(!$this->systemSetupModel->createDB())
                 throw new Exception('Could not create DB');
             if(!$this->systemSetupModel->createDBUser())
                 throw new Exception('Could not create DB user');
             return true;
+            if(!$this->createAdminUser($username, $password, $confirmPassword))
+                throw new Exception('Could not create an Admin User');
         } catch (Exception $e){
-//            var_dump($e->getMessage());
-            return false;
+            return array('result' => false, 'message' => $e->getMessage());
         }
+
+        return array('result' => true, 'message' => 'System setup successful');
     }
 
-    public function createAdminUser($username, $password, $confirmPassword){
+    private function createAdminUser($username, $password, $confirmPassword){
         if($password == $confirmPassword)
             return $this->systemSetupModel->createAdminUser($username, $password);
         return false;

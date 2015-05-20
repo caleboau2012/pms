@@ -20,26 +20,16 @@ $setup = new SystemSetupController($rootUser, $rootPass);
 
 
 if ($intent == 'initialSetup') {
-    $result = $setup->setup();
+    $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : "";
+    $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : "";
+    $confirm_password = isset($_REQUEST['confirmPassword']) ? $_REQUEST['confirmPassword'] : "";
+    $response = $setup->setup($username, $password, $confirm_password);
 
-    if($result){
-        echo JsonResponse::success('Successful!');
+    if($response['result']){
+        echo JsonResponse::success($response['message']);
         exit;
     } else {
-        echo JsonResponse::error('Unsuccessful!');
-        exit;
-    }
-} elseif ($intent == 'createAdmin') {
-    $username = $_REQUEST['username'];
-    $password = $_REQUEST['password'];
-    $confirm_password = $_REQUEST['confirmPassword'];
-    $result = $setup->createAdminUser($username, $password, $confirm_password);
-
-    if($result){
-        echo JsonResponse::success('Successfully created admin user');
-        exit;
-    } else {
-        echo JsonResponse::error('Error creating admin user');
+        echo JsonResponse::error($response['message']);
         exit;
     }
 } elseif($intent == 'addHospitalInfo'){
