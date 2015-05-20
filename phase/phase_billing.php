@@ -40,21 +40,27 @@ if ($intent == 'unbilled_treatments') {
     }
 } elseif ($intent == 'post_bills') {
     $bill = new BillingController();
-    if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['item']) && isset($_REQUEST['amount'])) {
-        $data['item'] = $_REQUEST[ConstantBillsTable::item];
-        $data['amount'] = $_REQUEST[ConstantBillsTable::amount];
-        $data['treatment_id'] = $_REQUEST[ConstantBillsTable::treatment_id];
+    if (isset($_REQUEST['treatment_id'])) {
+        if (isset($_REQUEST['item']) && isset($_REQUEST['amount'])) {
+            for ($i = 0; $i < count($_REQUEST['item']); $i++){
+                $data['item'] = $_REQUEST[ConstantBillsTable::item][$i];
+                $data['amount'] = $_REQUEST[ConstantBillsTable::amount][$i];
+                $data['treatment_id'] = $_REQUEST[ConstantBillsTable::treatment_id];
 
-        $post = $bill->postBills($data);
+                $post = $bill->postBills($data);
+            }
+            if ($post) {
+                echo JsonResponse::success("Billing is Successful");
+            } else {
+                echo JsonResponse::error('Billing is not Successful');
+            }
 
-        if ($post) {
-            echo JsonResponse::success("Billing is Successful");
         } else {
-            echo JsonResponse::error('Billing is not Successful');
+            echo JsonResponse::error("Either item or amount is not entered or both");
         }
 
     } else {
-        echo JsonResponse::error('Bills are not completely set');
+        echo JsonResponse::error('Treatment Id is not set');
         exit();
     }
 
