@@ -5,8 +5,8 @@ class BackupAndRestoreModel{
 
     public function __construct(){
         $this->path = dirname(__FILE__);
-        $pos = strpos($this->path, 'pms');
-        $this->path = substr($this->path, 0, $pos+3) . '/backup';
+        $pos = strpos($this->path, PROJECT_NAME);
+        $this->path = substr($this->path, 0, $pos + strlen(PROJECT_NAME)) . '/backup';
     }
 
     public function backupDB(){

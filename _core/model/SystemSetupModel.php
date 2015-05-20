@@ -2,8 +2,13 @@
 class SystemSetupModel{
     private $pdo;
     private $has_error = false;
+    private $path;
 
     public function __construct($name, $pass){
+        $this->path = dirname(__FILE__);
+        $pos = strpos($this->path, PROJECT_NAME);
+        $this->path = substr($this->path, 0, $pos + strlen(PROJECT_NAME)) . '/_resource/pms.sql';
+
         try{
             $this->pdo = new PDO('mysql:host=localhost;', $name, $pass);
         } catch(PDOException $e){
@@ -12,8 +17,8 @@ class SystemSetupModel{
         }
     }
 
-    public function createDB($sqlDumpFile = 'pms.sql'){
-        $query = file_get_contents($sqlDumpFile);
+    public function createDB(){
+        $query = file_get_contents($this->path);
         $pds = $this->pdo->prepare($query);
         $check = $pds->execute(array());
 
