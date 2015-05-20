@@ -12,7 +12,6 @@ class SystemSetupModel{
         try{
             $this->pdo = new PDO('mysql:host=localhost;', $name, $pass);
         } catch(PDOException $e){
-            echo 'Error tinz oo';
             $this->has_error = true;
         }
     }
@@ -27,47 +26,51 @@ class SystemSetupModel{
 
     // This method creates a db user using config data
     public function createDBUser(){
-        $param = array('username' => DB_USERNAME, 'password' => DB_PASSWORD);
-
-        $pds = $this->pdo->prepare(SystemSetupSqlStatment::CREATE_DB_USER);
-        return $pds->execute($param);
+        $username = ':username'; $password = ':password';
+        $sql = str_replace($username, DB_USERNAME, SystemSetupSqlStatment::CREATE_DB_USER);
+        $sql = str_replace($password, DB_PASSWORD, $sql);
+        $pds = $this->pdo->prepare($sql);
+        $check = $pds->execute(array());
+        return $check;
     }
 
     public function createAdminUser($regNo, $passcode){
+        $dbname = DBNAME;
         $host = DB_HOST;
         $username = DB_USERNAME;
         $password = DB_PASSWORD;
-        $dbname = DBNAME;
+        $prepend = "USE $dbname;";
         $params = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => 1);
         $sql = UserAuthSqlStatement::ADD;
 
         try{
-            $pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
-            $pdo->beginTransaction();
+            unset($this->pdo);
+            $this->pdo = new PDO("mysql:host=$host;dbname=$dbname", $username, $password);
+            $this->pdo->beginTransaction();
             // Add admin user to user_auth table
-            $pds = $pdo->prepare($sql);
-            $check = $pds->execute($params);
-            if (!$check){
+            $pds = $this->pdo->prepare($sql);
+            $pds->execute($params);
+            if (!$pds->rowCount()){
                 throw new Exception('Could Not Add Admin User');
             }
 
             // Give admin user admin role
             unset($sql); unset($params);
-            $userid = $pdo->lastInsertId();
+            $userid = $this->pdo->lastInsertId();
             $sql = PermissionRoleSqlStatement::ADD_STAFF_ROLE;
             $params = array(PermissionRoleTable::userid => $userid,
                             PermissionRoleTable::staff_permission_id => READ_WRITE,
                             PermissionRoleTable::staff_role_id => ADMINISTRATOR);
-            $pds = $pdo->prepare($sql);
+            $pds = $this->pdo->prepare($sql);
             $check = $pds->execute($params);
-            if (!$check){
+            if (!$pds->rowCount()){
                 throw new Exception('Could Not Add Admin Role to Admin User');
             }
-            $pdo->commit();
+            $this->pdo->commit();
             return true;
         } catch (PDOException $e){
-            $pdo->rollBack();
-            return false;
+            $this->pdo->rollBack();
+            throw new Exception($e->getMessage());
         }
     }
 

@@ -20,16 +20,37 @@ $setup = new SystemSetupController($rootUser, $rootPass);
 
 
 if ($intent == 'initialSetup') {
-    $username = isset($_REQUEST['username']) ? $_REQUEST['username'] : "";
-    $password = isset($_REQUEST['password']) ? $_REQUEST['password'] : "";
-    $confirm_password = isset($_REQUEST['confirmPassword']) ? $_REQUEST['confirmPassword'] : "";
-    $response = $setup->setup($username, $password, $confirm_password);
+    $regNo = isset($_REQUEST['regNo']) ? $_REQUEST['regNo'] : "";
+    $passcode = isset($_REQUEST['passcode']) ? $_REQUEST['passcode'] : "";
+    $confirm_passcode = isset($_REQUEST['confirmPasscode']) ? $_REQUEST['confirmPasscode'] : "";
 
-    if($response['result']){
-        echo JsonResponse::success($response['message']);
+    if($passcode && $passcode == $confirm_passcode){
+
+        $response = $setup->setup($regNo, $passcode);
+
+        if($response['result']){
+            echo JsonResponse::success($response['message']);
+            exit;
+        } else {
+            echo JsonResponse::error($response['message']);
+            exit;
+        }
+
+    } else {
+        echo JsonResponse::error('Check passcode');
+        exit;
+    }
+} elseif ($intent == 'createAdmin') {
+    $username = $_REQUEST['username'];
+    $password = $_REQUEST['password'];
+    $confirm_password = $_REQUEST['confirmPassword'];
+    $result = $setup->createAdminUser($username, $password, $confirm_password);
+
+    if($result){
+        echo JsonResponse::success('Successfully created admin user');
         exit;
     } else {
-        echo JsonResponse::error($response['message']);
+        echo JsonResponse::error('Error creating admin user');
         exit;
     }
 } elseif($intent == 'addHospitalInfo'){
