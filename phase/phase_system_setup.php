@@ -37,7 +37,7 @@ if ($intent == 'initialSetup') {
         }
 
     } else {
-        echo JsonResponse::error('Check passcode');
+        echo JsonResponse::error('Admin password do not match');
         exit;
     }
 } elseif ($intent == 'createAdmin') {

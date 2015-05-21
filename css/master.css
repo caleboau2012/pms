@@ -69,6 +69,12 @@ System setup
 #setup-heading{
     padding: 0.5em;
 }
+#setup-heading h4{
+    font-size: 30px;
+    margin: 0;
+    color: #126BB8;
+    text-transform: uppercase;
+}
 .steps{
     padding: 0.7em;
     font-weight: 500;
@@ -93,10 +99,23 @@ System setup
     border-left: 20px solid #126BB8;
     z-index: 100;
 }
+.setup-nav-completed{
+    background: #126BB8;
+    color: #fff;
+}
 #setup-nav{
     background: #FAFAFA;
     box-shadow: 0 1px 2px #E5E5E5;
     margin-bottom: 1.5em;
+}
+.progress-stripped-fix{
+    margin-top: 0.08em;
+    height: 5px;
+    border-radius: 0;
+    background: -webkit-linear-gradient(180deg,  #FAFAFA, #DEE2FF); /* For Safari 5.1 to 6.0 */
+    background: -o-linear-gradient(180deg, #FAFAFA, #DEE2FF); /* For Opera 11.1 to 12.0 */
+    background: -moz-linear-gradient(180deg, #FAFAFA, #DEE2FF); /* For Firefox 3.6 to 15 */
+    background: linear-gradient(180deg, #FAFAFA, #DEE2FF); /* Standard syntax */;
 }
 .setup-nav-active{
     background: #126BB8;
@@ -107,6 +126,27 @@ System setup
 }
 .form-setup label{
     font-weight: 500;
+}
+#completed_output{
+    padding: 1.5em;
+    width: 90%;
+    margin: 0 auto;
+}
+#completed_inner{
+    border-style: dashed;
+    border-width: thin;
+    border-color: #eeeeee;
+    padding: 1em;
+}
+a#add-unit:hover, a#add-unit:focus, a#add-unit:active, {
+    text-decoration: none;
+}
+ol#units-list{
+    padding: 4px 9px 4px 25px;
+    background: rgba(164, 184, 220, 0.11);
+}
+ol#units-list li{
+    color: #101010;
 }
 /*
 ---END OF EDIT BOOTSTRAP
@@ -759,11 +799,11 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     overflow-y: auto;
 }
 /*.pending-list li.list-group-item{*/
-    /*color: #2F6EA4;*/
-    /*margin: 0.25em 0;*/
-    /*border-radius: 0.3em;*/
-    /*box-shadow: 0px 1px 1px #9CB2C4;*/
-    /*font-size: 1.1em;*/
+/*color: #2F6EA4;*/
+/*margin: 0.25em 0;*/
+/*border-radius: 0.3em;*/
+/*box-shadow: 0px 1px 1px #9CB2C4;*/
+/*font-size: 1.1em;*/
 /*}*/
 .patient-content{
     background: #F5F5F5;
@@ -798,7 +838,8 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     padding: 0.3em;
 }
 #response{
-
+    width: 75%;
+    margin: 0 auto;
 }
 #bed_chosen{
     margin-bottom: 0.3em;
@@ -811,7 +852,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 
 span#loader{
-   font-size: 2em;
+    font-size: 2em;
 }
 .patient-pill{
     color: #2F6EA4;
@@ -964,7 +1005,7 @@ span#loader{
     -ms-user-select: none;
     user-select: none;
 }
- .patient-queue__item:hover {
+.patient-queue__item:hover {
     background: #f2f2f2;
 }
 .patient-queue__item.is-focused {
@@ -1109,7 +1150,7 @@ span#loader{
     box-shadow: 1px 1px 5px #eee;
 }
 .room-bed-list-item-occupied{
-background: #F4F4F4;
+    background: #F4F4F4;
 }
 .room-bed-list-item:hover{
     box-shadow: 1px 1px 3px #B3B0B0;
