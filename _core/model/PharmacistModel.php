@@ -2,8 +2,14 @@
 
 class PharmacistModel extends BaseModel{
 
-    public function addDrugUnits($unit){
-        return true;
+    public function addDrugUnits($unitSymbolArray){
+        $stmt = PrescriptionSqlStatement::ADD_UNITS;
+        foreach($unitSymbolArray as $obj){
+            $unit = $obj['unit']; $symbol = $obj['symbol'];
+            $stmt .= "('$unit', '$symbol'), ";
+        }
+        $stmt = rtrim($stmt, " ,");
+        return $this->conn->execute($stmt, $unitSymbolArray);
     }
 
     public function getPatientQueue($status){

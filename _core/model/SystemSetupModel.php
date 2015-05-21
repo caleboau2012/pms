@@ -27,7 +27,7 @@ class SystemSetupModel{
     // This method creates a db user using config data
     public function createDBUser(){
         $username = ':username'; $password = ':password';
-        $sql = str_replace($username, DB_USERNAME, SystemSetupSqlStatment::CREATE_DB_USER);
+        $sql = str_replace($username, DB_USERNAME, SystemSetupSqlStatement::CREATE_DB_USER);
         $sql = str_replace($password, DB_PASSWORD, $sql);
         $pds = $this->pdo->prepare($sql);
         $check = $pds->execute(array());
@@ -39,7 +39,6 @@ class SystemSetupModel{
         $host = DB_HOST;
         $username = DB_USERNAME;
         $password = DB_PASSWORD;
-        $prepend = "USE $dbname;";
         $params = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => 1);
         $sql = UserAuthSqlStatement::ADD;
 
@@ -62,7 +61,7 @@ class SystemSetupModel{
                             PermissionRoleTable::staff_permission_id => READ_WRITE,
                             PermissionRoleTable::staff_role_id => ADMINISTRATOR);
             $pds = $this->pdo->prepare($sql);
-            $check = $pds->execute($params);
+            $pds->execute($params);
             if (!$pds->rowCount()){
                 throw new Exception('Could Not Add Admin Role to Admin User');
             }

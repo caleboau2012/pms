@@ -79,6 +79,18 @@ if ($intent == 'initialSetup') {
         echo JsonResponse::error('Updating hospital information unsuccessful');
         exit;
     }
+} elseif($intent == 'addDrugUnits'){
+    $values = $_REQUEST['values'];
+    $units = new PharmacistController();
+    $result = $units->addDrugUnits($values);
+
+    if($result){
+        echo JsonResponse::success('Successfully added drug units.');
+        exit;
+    } else {
+        echo JsonResponse::error('Adding of drug units unsuccessful.');
+        exit;
+    }
 } else {
     echo JsonResponse::error("Invalid intent!");
     exit();

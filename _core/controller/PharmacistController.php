@@ -7,8 +7,8 @@ class PharmacistController{
         $this->pharmacy = new PharmacistModel();
     }
 
-    public function addDrugUnits($unit, $symbol){
-        return $this->pharmacy->addDrugUnits($unit);
+    public function addDrugUnits($unitSymbolArray){
+        return $this->pharmacy->addDrugUnits($unitSymbolArray);
     }
 
     public function getPatientQueue(){

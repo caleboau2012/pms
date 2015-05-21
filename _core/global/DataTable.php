@@ -661,10 +661,10 @@ class ExaminationRequestedTable {
 class EmergencyTable {
 
     const table_name                 = 'emergency';
-    const emergency_id              = 'emergency_id';
-    const patient_id                = 'patient_id';
-    const emergency_status_id       = 'emergency_status_id';
-    const created_date                = 'created_date';
+    const emergency_id               = 'emergency_id';
+    const patient_id                 = 'patient_id';
+    const emergency_status_id        = 'emergency_status_id';
+    const created_date               = 'created_date';
     const modified_date              = 'modified_date';
 
 }
@@ -676,4 +676,14 @@ class ConstantBillsTable {
     const amount                = 'amount';
     const treatment_id          = 'treatment_id';
     const created_date          = 'created_date';
+}
+
+class HospitalInfoTable{
+    const table_name = 'hospital_info';
+
+    const hospital_info_id = 'hospital_info_id';
+    const name             = 'name';
+    const address          = 'address';
+    const created_date     = 'created_date';
+    const modified_date    = 'modified_date';
 }

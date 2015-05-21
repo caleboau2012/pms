@@ -279,6 +279,7 @@ class PrescriptionSqlStatement{
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
     const ADD_PRESCRIPTION = "INSERT INTO prescription (prescription_id, prescription, treatment_id, status, modified_by, created_date, modified_date, active_fg)
      VALUES (NULL, :prescription, :treatment_id, :status, :modified_by, NOW(), NOW(), '1')";
+    const ADD_UNITS = "INSERT INTO unit_ref (unit, symbol) VALUES ";
 }
 
 class DrugSqlStatement{
@@ -1003,7 +1004,11 @@ class EmergencySqlStatement {
 
 }
 
-class SystemSetupSqlStatment {
-    const CREATE_DB = "CREATE DATABASE IF NOT EXISTS pms";
+class SystemSetupSqlStatement {
     const CREATE_DB_USER = "GRANT ALL ON pms.* TO ':username'@'localhost' IDENTIFIED BY ':password'";
+}
+
+class HospitalInfoSqlStatement {
+    const ADD = "INSERT INTO hospital_info (name, address, created_date, modified_date) VALUES (:name, :address, NOW(), NOW())";
+    const UPDATE = "UPDATE hospital_info SET name = :name, address = :address, modified_date = NOW()";
 }
