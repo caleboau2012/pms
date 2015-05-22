@@ -989,6 +989,9 @@ class TreatmentSqlStatement {
     const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, created_date)
                             VALUES (:item, :amount, :treatment_id, NOW())";
 
+    const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
+                                    WHERE treatment_id = :treatment_id";
+
 
 }
 

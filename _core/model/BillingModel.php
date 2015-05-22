@@ -77,4 +77,8 @@ class BillingModel extends BaseModel {
 
         return $res;
     }
+
+    public function billTreatment($treatment_id) {
+        return $this->conn->execute(TreatmentSqlStatement::UPDATE_BILL_TREATMENT, $treatment_id);
+    }
 }

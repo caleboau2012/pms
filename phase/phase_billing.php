@@ -50,13 +50,17 @@ if ($intent == 'unbilled_treatments') {
                 $post = $bill->postBills($data);
             }
             if ($post) {
+                $bill->billTreatment(array('treatment_id' => $data['treatment_id']));
                 echo JsonResponse::success("Billing is Successful");
+                exit();
             } else {
                 echo JsonResponse::error('Billing is not Successful');
+                exit();
             }
 
         } else {
             echo JsonResponse::error("Either item or amount is not entered or both");
+            exit();
         }
 
     } else {
