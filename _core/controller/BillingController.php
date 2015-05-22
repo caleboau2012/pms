@@ -28,4 +28,8 @@ class BillingController {
     public function addBillingItems($billAmountArray){
         return $this->systemBilling->addBillingItems($billAmountArray);
     }
+
+    public function getBillItems(){
+        return $this->systemBilling->getBillItems();
+    }
 }

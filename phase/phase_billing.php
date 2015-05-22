@@ -68,4 +68,19 @@ if ($intent == 'unbilled_treatments') {
         exit();
     }
 
+} elseif ($intent == 'getBillItems'){
+    $billItems = new BillingController();
+    $result = $billItems->getBillItems();
+
+    if($result && is_array($result)){
+        echo JsonResponse::success($result);
+        exit;
+    } else {
+        echo JsonResponse::error("Could not fetch bill items");
+        exit;
+    }
+} else {
+    echo JsonResponse::error("Invalid intent!");
+    exit();
 }
+

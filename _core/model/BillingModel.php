@@ -87,4 +87,8 @@ class BillingModel extends BaseModel {
         $stmt = rtrim($stmt, " ,");
         return $this->conn->execute($stmt, array());
     }
+
+    public function getBillItems(){
+        return $this->conn->fetchAll(BillingSqlStatement::GET_BILLABLES, array());
+    }
 }
