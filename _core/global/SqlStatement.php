@@ -1015,3 +1015,7 @@ class HospitalInfoSqlStatement {
     const ADD = "INSERT INTO hospital_info (name, address, created_date, modified_date) VALUES (:name, :address, NOW(), NOW())";
     const UPDATE = "UPDATE hospital_info SET name = :name, address = :address, modified_date = NOW()";
 }
+
+class BillingSqlStatement{
+    const ADD_BILLABLES = "INSERT INTO billables (bill, amount) VALUES ";
+}

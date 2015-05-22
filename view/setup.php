@@ -1,3 +1,8 @@
+<?php
+if (file_exists("../_resource/setup")){
+    header("Location: ../index.php");
+};
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -95,31 +100,35 @@
             </div>
             <div class="steps_content hidden" id="step-2_content">
                 <form class="form-horizontal form-setup" id="step_two_form">
+                    <input type="hidden" name="intent" value="addHospitalInfo">
+
+                    <h4 class="text-info text-center">Hospital Info</h4>
                     <div class="form-group">
-                        <label for="root_user" class="col-sm-4 control-label">Hospital Name</label>
+                        <label for="hos_name" class="col-sm-4 control-label">Hospital Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="root_user">
+                            <input type="text" class="form-control" id="hos_name" required>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="root_password" class="col-sm-4 control-label">Hospital Address</label>
+                        <label for="hos_add" class="col-sm-4 control-label">Hospital Address</label>
                         <div class="col-sm-8">
-                            <textarea class="form-control" id="root_password"></textarea>
+                            <textarea class="form-control" id="hos_add" required></textarea>
                         </div>
                     </div>
-                    <div class="form-group">
-                        <div class="col-sm-offset-4 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Proceed</button>
+
+                    <h4 class="text-info text-center" style="margin: 10px;">Hospital Drug units</h4>
+                    <p class="small text-danger text-center" id="step-2-response"></p>
+
+                    <div class="form-group step-2-form-group">
+                        <label for="drug_unit" class="col-sm-4 control-label">Drug Unit</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="drug_unit">
                         </div>
                     </div>
-                </form>
-            </div>
-            <div class="steps_content hidden" id="step-3_content">
-                <form class="form-horizontal form-setup" id="step_three_form">
-                    <div class="form-group">
-                        <label class="col-sm-4 control-label">Units</label>
+                    <div class="form-group step-2-form-group">
+                        <label for="drug_symbol" class="col-sm-4 control-label">Drug Symbol</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="unitField">
+                            <input type="text" class="form-control" id="drug_symbol">
                             <a href="#" class="text-primary small" id="add-unit" title="Enter each units used, then click on the add more">Add unit</a>
                             <ol class="text-muted small" id="units-list">
                                 <p class="small text-muted text-center units-indicator">No unit added yet</p>
@@ -133,12 +142,43 @@
                     </div>
                 </form>
             </div>
+            <div class="steps_content hidden" id="step-3_content">
+                <h4 class="text-center text-info" style="margin: 0; margin-bottom: 0.5em;">
+                    Add the basic hospital bills
+                </h4>
+                <form class="form-horizontal form-setup" id="step_three_form">
+                    <div class="form-group bill-form-group" id="bill-name-input">
+                        <label for="bill-name" class="col-sm-4 control-label">Bill Name</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="bill-name">
+                            <p class="small text-danger form-response" id="bill-name-response"></p>
+
+                        </div>
+                    </div>
+                    <div class="form-group bill-form-group" id="bill-cost-input">
+                        <label for="bill-cost" class="col-sm-4 control-label">Bill Cost</label>
+                        <div class="col-sm-8">
+                            <input type="text" class="form-control" id="bill-cost">
+                            <p class="small text-danger form-response" id="bill-cost-response"></p>
+                            <a href="#" class="text-primary small" id="add-bill">Add Bill</a>
+                            <ol class="text-muted small" id="bill-list">
+                                <p class="small text-muted text-center units-indicator">No bill added yet</p>
+                            </ol>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-4 col-sm-10">
+                            <button type="submit" class="btn btn-primary disabled" id="add-bill-btn">Proceed</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
             <div class="steps_content hidden" id="step-4_content">
                 <div class="bg-primary" id="completed_output">
                     <div id="completed_inner" class="text-center">
                         <h2 class="text-center">Setup Completed!</h2>
-                        <p class="text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit.</p>
-                        <button class="btn btn-success btn-lg">Get Started</button>
+                        <p class="text-center">You are one-click away from completing the setup; click on the button below</p>
+                        <button class="btn btn-success btn-lg" id="get-started">Get Started</button>
                     </div>
                 </div>
             </div>

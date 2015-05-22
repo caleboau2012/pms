@@ -25,7 +25,7 @@ class BillingController {
         return $this->systemBilling->postBills($data);
     }
 
-    public function billTreatment($treatment_id) {
-        return $this->systemBilling->billTreatment($treatment_id);
+    public function addBillingItems($billAmountArray){
+        return $this->systemBilling->addBillingItems($billAmountArray);
     }
 }

@@ -7,7 +7,7 @@ class SystemSetupModel{
     public function __construct($name, $pass){
         $this->path = dirname(__FILE__);
         $pos = strpos($this->path, PROJECT_NAME);
-        $this->path = substr($this->path, 0, $pos + strlen(PROJECT_NAME)) . '/_resource/pms.sql';
+        $this->path = substr($this->path, 0, $pos + strlen(PROJECT_NAME)) . '/_resource/';
 
         try{
             $this->pdo = new PDO('mysql:host=localhost;', $name, $pass);
@@ -17,7 +17,7 @@ class SystemSetupModel{
     }
 
     public function createDB(){
-        $query = file_get_contents($this->path);
+        $query = file_get_contents($this->path.'pms.sql');
         $pds = $this->pdo->prepare($query);
         $check = $pds->execute(array());
 
@@ -71,6 +71,10 @@ class SystemSetupModel{
             $this->pdo->rollBack();
             throw new Exception($e->getMessage());
         }
+    }
+
+    public function setupComplete(){
+        return touch($this->path.'setup');
     }
 
 }

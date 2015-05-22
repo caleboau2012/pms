@@ -78,7 +78,13 @@ class BillingModel extends BaseModel {
         return $res;
     }
 
-    public function billTreatment($treatment_id) {
-        return $this->conn->execute(TreatmentSqlStatement::UPDATE_BILL_TREATMENT, $treatment_id);
+    public function addBillingItems($billAmountArray){
+        $stmt = BillingSqlStatement::ADD_BILLABLES;
+        foreach($billAmountArray as $obj){
+            $billable = $obj['bill']; $amount = $obj['amount'];
+            $stmt .= "('$billable', '$amount'), ";
+        }
+        $stmt = rtrim($stmt, " ,");
+        return $this->conn->execute($stmt, array());
     }
 }
