@@ -104,12 +104,14 @@ Crave::requireAll(UTIL);
                     <div class="div-rounded encounter-icon">
                         <span class="fa fa-money"></span>
                     </div>
-                    <p id="patientRegNo" class="text-center h3"></p>
-                    <p id="patientName" class="text-center h4"></p>                    <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
+                    <div id="print-header">
+                        <p id="patientRegNo" class="text-center h3"></p>
+                        <p id="patientName" class="text-center h4"></p>
+                    </div>
                     <div class="h2 none text-center">
                         <span class="fa fa-arrow-circle-o-left"></span> Please select a patient to bill
                     </div>
-                    <form id="bill" class="bill hidden table-responsive">
+                    <form id="bill" name="bill" class="bill hidden table-responsive">
                         <table class="table table-stripped">
                             <thead>
                             <tr>
@@ -119,11 +121,11 @@ Crave::requireAll(UTIL);
                             </thead>
                             <tbody>
                             <tr>
-                                <td><input class="form-control" name="item[{{0}}]" value="{{Constant Item 0}}" disabled></td>
+                                <td><input class="form-control item" name="item[{{0}}]" value="{{Constant Item 0}}" disabled></td>
                                 <td><input class="form-control amount" type="number" name="amount[{{0}}]"></td>
                             </tr>
                             <tr>
-                                <td><input class="form-control" name="item[{{1}}]" value="{{Constant Item 1}}" disabled></td>
+                                <td><input class="form-control item" name="item[{{1}}]" value="{{Constant Item 1}}" disabled></td>
                                 <td><input class="form-control amount" type="number" name="amount[{{1}}]"></td>
                             </tr>
                             </tbody>
@@ -172,9 +174,9 @@ Crave::requireAll(UTIL);
                     </div>
                     <div>
                         <br/><br/>
-                        <div class="text-center" id="discharge_patient_content">
-                            <button class="btn btn-success" id="discharge_patient">Print</button>
-                            <div id="discharge_patient_error" class="text-danger"></div>
+                        <div class="text-center">
+                            <button class="btn btn-success bill hidden" id="print">Print</button>
+                            <div id="print_error" class="text-danger"></div>
                         </div>
 
                     </div>

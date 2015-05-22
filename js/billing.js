@@ -3,7 +3,9 @@
  */
 Billing = {
     CONSTANTS: {
-        treatment_id: 0
+        treatment_id: 0,
+        REQUEST_SUCCESS : 1,
+        REQUEST_ERROR   : 2
     },
     init: function(){
         Billing.getQueue();
@@ -20,6 +22,9 @@ Billing = {
         $('#add_more').click(function(e){
             Billing.addMore();
         })
+        $('#print').click(function(e){
+            Billing.endBilling(document.bill);
+        });
     },
     getQueue: function(){
         var url = host + "phase/phase_billing.php?intent=unbilled_treatments";
@@ -90,7 +95,7 @@ Billing = {
     addMore: function(){
         var count = $('tbody').children().length;
         var html = '<tr>' +
-            '<td><input class="form-control" name="item[{{' +
+            '<td><input class="form-control item" name="item[{{' +
                 count +
                 '}}]"></td>' +
             '<td><input class="form-control amount" type="number" name="amount[{{' +
@@ -104,7 +109,7 @@ Billing = {
             intent: 'details',
             treatment_id: Billing.CONSTANTS.treatment_id
         }, function(data){
-            console.log(data);
+            //console.log(data);
             $('#test').empty();
             $('#days_spent').text(data.data.days_spent.days_spent);
             var prescriptionHTML = "";
@@ -118,14 +123,60 @@ Billing = {
             }
             $('#prescription').html(prescriptionHTML);
 
-            if(data.data.test.visual_test !== 'undefined'){
+            if(data.data.test.visual_test){
                 $('#test').append("<p>Visual Test</p>")
             }
-            if(data.data.test.chemical_test !== 'undefined'){
+            if(data.data.test.chemical_test){
                 $('#test').append("<p>Chemical Test</p>")
             }
-            if(data.data.test.radiology_test !== 'undefined'){
+            if(data.data.test.radiology_test){
                 $('#test').append("<p>Radiology Test</p>")
+            }
+            if(data.data.test.urine_test){
+                $('#test').append("<p>Urine Test</p>")
+            }
+            if(data.data.test.parasitology_test){
+                $('#test').append("<p>Parasitology Test</p>")
+            }
+            if(data.data.test.blood_test){
+                $('#test').append("<p>Haematology Test</p>")
+            }
+            if(data.data.test.test){
+                $('#test').append("<p>No Test Performed</p>")
+            }
+        });
+    },
+    endBilling: function(form){
+        var items = [];
+        var amounts = [];
+
+        var bill = $('#bill');
+
+        $(bill).find(".item").each(function(index){
+            items.push($(this).val());
+            $(this).attr('value', $(this).val());
+        });
+
+        $(bill).find(".amount").each(function(index){
+            amounts.push($(this).val());
+            $(this).attr('value', $(this).val());
+        });
+
+        $.getJSON(host + 'phase/phase_billing.php', {
+            intent: 'post_bills',
+            treatment_id: Billing.CONSTANTS.treatment_id,
+            item: items,
+            amount: amounts
+        }, function(data){
+            console.log({
+                data: data,
+                items: items,
+                amount: amounts
+            });
+
+            if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
+                console.log(bill.html());
+                printElem($('#print-header').html(), $(bill).html(), null);
             }
         });
     }
