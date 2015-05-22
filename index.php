@@ -35,7 +35,6 @@
 <body>
 
 <div class="container">
-    <div style="display:inline;width:80px;height:80px;"><canvas width="80" height="80"></canvas><input type="text" class="input-small knob" value="100" data-min="0" data-max="100" data-step="10" data-width="80" data-height="80" data-thickness=".2" data-fgcolor="#2091CF" style="width: 44px; height: 26px; position: absolute; vertical-align: middle; margin-top: 26px; margin-left: -62px; border: 0px; font-weight: bold; font-style: normal; font-variant: normal; font-stretch: normal; font-size: 16px; line-height: normal; font-family: Arial; text-align: center; color: rgb(32, 145, 207); padding: 0px; -webkit-appearance: none; background: none;"></div>
     <form class="" id="login">
         <div class="panel panel-primary form-signin">
             <div class="panel-heading">
