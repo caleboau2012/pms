@@ -20,9 +20,9 @@ SET time_zone = "+00:00";
 -- Database: `pms`
 --
 
-CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pms2` /*!40100 DEFAULT CHARACTER SET latin1 */;
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `pms` /*!40100 DEFAULT CHARACTER SET latin1 */;
 
-USE `pms2`;
+USE `pms`;
 
 -- --------------------------------------------------------
 
