@@ -175,7 +175,7 @@ Billing = {
             });
 
             if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
-                console.log(bill.html());
+                //console.log(bill.html());
                 printElem($('#print-header').html(), $(bill).html(), null);
             }
         });
