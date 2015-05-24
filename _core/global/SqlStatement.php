@@ -1018,4 +1018,5 @@ class HospitalInfoSqlStatement {
 
 class BillingSqlStatement{
     const ADD_BILLABLES = "INSERT INTO billables (bill, amount) VALUES ";
+    const GET_BILLABLES = "SELECT bill, amount FROM billables WHERE status = 1";
 }
