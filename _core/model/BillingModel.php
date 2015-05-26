@@ -63,6 +63,10 @@ class BillingModel extends BaseModel {
         return $this->conn->fetchAll(TreatmentSqlStatement::UNBILLED_TREATMENT, array());
     }
 
+    public function billTreatment($treatment_id) {
+        return $this->conn->execute(TreatmentSqlStatement::UPDATE_BILL_TREATMENT, $treatment_id);
+    }
+
     public function getDetails($treatment_id) {
         $details['days_spent'] = $this->getDaysSpent($treatment_id);
         $details['prescription'] = $this->getPrescription($treatment_id);
