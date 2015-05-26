@@ -193,12 +193,6 @@ Billing = {
             item: items,
             amount: amounts
         }, function(data){
-            console.log({
-                data: data,
-                items: items,
-                amount: amounts
-            });
-
             if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
                 //console.log(bill.html());
                 printElem($('#print-header').html(), $(bill).html(), null);
