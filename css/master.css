@@ -580,8 +580,9 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     color: #428BCA;
 }
 .patients-list_item > h4{
-    margin: 0;
-    font-weight: 400;
+    margin: 2px 0;
+    font-weight: 500;
+    font-size: 15px;
 }
 .active_selected_patient{
     color: #428BCA;

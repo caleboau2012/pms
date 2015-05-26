@@ -108,10 +108,10 @@ Pharmacy = {
                 //console.log(drugId);
                 drugUnit = $('#drugUnit').val();
                 if(drugName !== ''){
-                    content = "<div class='clearDrug'>" +
+                    content = "<div class='clearDrug' data-drug-quantity = "+ drugQuantity +" data-quantity-unit = "+  $('#drugUnit :selected').html() +">" +
                     "<span class='cancelClear small pull-right fa fa-close pointer'>&nbsp;</span>" +
                     "<h5 data-drug-id="+ drugId +">" + drugName.toUpperCase() + "</h5>" +
-                    "<span class='small'>(" + drugQuantity + " " + drugUnit+ ")</span>" +
+                    "<span class='small'>(" + drugQuantity + " " + $('#drugUnit :selected').html() + ")</span>" +
                     "<ul>";
 
                     $('.selected_prescription li').each(function(){
@@ -211,14 +211,15 @@ Pharmacy = {
                 Pharmacy.removeFromQueue(Pharmacy.selectedPatient);
                 Pharmacy.checkQueue();
                 $('#response_msg').empty().removeClass('alert-danger').addClass('alert-success').html(data.data);
+                Pharmacy.printOut();
             }else if(data.status == Pharmacy.CONSTANTS.REQUEST_ERROR){
                 $('#response_msg').empty().removeClass('alert-success').addClass('alert-danger').html(data.data);
             }
         });
-    },
-    removePrescription: function(prescription){
+    }
+    ,removePrescription: function(prescription){
         $('.patientPrescriptions li').each(function(){
-            if($(this).html() == $(prescription).html()){
+            if($(this).attr("data-prescription-id") == $(prescription).attr("data-prescription-id")){
                 $(this).remove();
             }
         });
@@ -231,6 +232,36 @@ Pharmacy = {
         }).done(function(){
 
         });
+    }
+    ,printOut: function () {
+        var content = "<h4>List of cleared drug(s)</h4>";
+        var clear_drugs ="<ol>";
+        $('.clearDrug').each(function(){
+            clear_drugs += "<li><h5>" + $(this).children('h5').html() + " (" + $(this).attr("data-drug-quantity") + " " + $(this).attr("data-quantity-unit") + ") </h5></li>";
+            clear_drugs += "<ul>";
+            $(this).find('li').each(function() {
+                clear_drugs += "<li class='text-capitalize'>" + $(this).html() + "</li>";
+            });
+
+            clear_drugs += "</ul>";
+        });
+        clear_drugs += "</ol>";
+
+        var unclear_drugs = "";
+        if($('.patientPrescriptions').children('li').length !== 0){
+            unclear_drugs = "<h4>List of uncleared prescription(s)</h4>";
+            unclear_drugs += "<ol>";
+            $('.prescription-item').each(function(){
+                unclear_drugs += "<li class='text-capitalize'>" + $(this).html() + "</li>";
+            });
+            unclear_drugs += "</ol>";
+        }else{
+            unclear_drugs += "<p>There are no uncleared prescription(s)</p>";
+        }
+        content += clear_drugs;
+        content += unclear_drugs;
+
+        printElem("Pharmacy Printout", content, null);
     }
 };
 

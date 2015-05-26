@@ -274,7 +274,7 @@ class PrescriptionSqlStatement{
     const GET_QUEUE = "SELECT t.treatment_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id
-                      order by modified_date DESC ";
+                      order by p.modified_date DESC ";
     const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status WHERE prescription_id = :prescription_id";
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
     const ADD_PRESCRIPTION = "INSERT INTO prescription (prescription_id, prescription, treatment_id, status, modified_by, created_date, modified_date, active_fg)

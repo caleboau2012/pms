@@ -356,7 +356,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../../js/constants.js"></script>
 <script src="../../js/treatment/out-patient.js"></script>
 
-<?php include('footer.php'); ?>
+<?php include('../footer.php'); ?>
 
 </body>
 </html>

@@ -101,7 +101,7 @@ $units = $pharmacist->getUnits();
                 </div>
             </div>
         </div>
-        <div class="col-sm-9 p-content">
+        <div class="col-sm-6 p-content">
             <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
             <div class="col-md-12">
                 <div class="active_patient hidden">
@@ -109,38 +109,38 @@ $units = $pharmacist->getUnits();
                         <h2 id="patient_name"></h2>
                         <p class="small text-primary" id="patient_reg"></p>
                     </div>
-                    <div class="col-md-6 patient_prescription">
+                    <div class="col-md-5 patient_prescription">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
                                 PRESCRIPTIONS
                             </div>
                             <div class="panel-body">
-                                <p class="small text-info text-center">
+                                <h5 class="small text-info text-center">
                                     Click on a prescription to select/de-select it
-                                </p>
+                                </h5>
                                 <ol class="list-group patientPrescriptions">
                                     <li class="list-group-item"></li>
                                 </ol>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-6  clearing_panel">
-                        <div class="col-md-12">
-                            <h4>CLEARING PANEL</h4>
-                        </div>
+                    <div class="col-md-7  clearing_panel">
                         <form id="addToClear">
                             <div class="col-md-12">
                                 <div class="form-group">
-                                    <input list="drugNames" type="text" class="form-control" id="drugName" placeholder="Drug name" required>
+                                    <label for="drugName">Drug Name</label>
+                                    <input list="drugNames" type="text" class="form-control" id="drugName" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
-                                    <input type="text" class="form-control" id="drugQuantity" placeholder="Drug quantity" required>
+                                    <label for="drugQuantity">Drug Quantity</label>
+                                    <input type="number" class="form-control" id="drugQuantity" required>
                                 </div>
                             </div>
                             <div class="col-md-6">
                                 <div class="form-group">
+                                    <label for="drugUnit">Drug Unit</label>
                                     <select id="drugUnit" class="form-control">
                                         <?php
                                         foreach($units as $unit){
@@ -178,6 +178,22 @@ $units = $pharmacist->getUnits();
                         <div class="alert col-md-12" id="response_msg"></div>
                     </div>
                 </div>
+            </div>
+        </div>
+        <div class="col-sm-3">
+            <div class="room-overview">
+                <div class="room-overview__heading">
+                    <h2 class="text-center"><span class="fa fa-history"></span></h2>
+                    <h3 class="text-center">Overview</h3>
+                </div>
+                <p>
+                    <span class="fa fa-users text-danger">&nbsp;</span>
+                    20 pending patients
+                </p>
+                <p>
+                    <span class="fa fa-dropbox text-danger">&nbsp;</span>
+                    200 Drugs Dispensed
+                </p>
             </div>
         </div>
     </div>
