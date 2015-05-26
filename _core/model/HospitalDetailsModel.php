@@ -7,6 +7,7 @@ class HospitalDetailsModel extends BaseModel{
     }
 
     public function updateHospitalDetails($name, $address){
-        return true;
+        $data = array(HospitalInfoTable::name => $name, HospitalInfoTable::address => $address);
+        return $this->conn->execute(HospitalInfoSqlStatement::ADD, $data);
     }
 }

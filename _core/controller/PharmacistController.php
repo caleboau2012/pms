@@ -11,6 +11,10 @@ class PharmacistController{
         return $this->pharmacy->addDrugUnits($unitSymbolArray);
     }
 
+    public function removeDrugUnit($unitRefId){
+        return $this->pharmacy->removeDrugUnit($unitRefId);
+    }
+
     public function getPatientQueue(){
         return $this->pharmacy->getPatientQueue(DRUG_UNCLEARED);
     }

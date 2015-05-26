@@ -3,13 +3,18 @@
 class PharmacistModel extends BaseModel{
 
     public function addDrugUnits($unitSymbolArray){
-        $stmt = PrescriptionSqlStatement::ADD_UNITS;
+        $stmt = UnitsSqlStatement::ADD_UNITS;
         foreach($unitSymbolArray as $obj){
             $unit = $obj['unit']; $symbol = $obj['symbol'];
             $stmt .= "('$unit', '$symbol'), ";
         }
         $stmt = rtrim($stmt, " ,");
         return $this->conn->execute($stmt, $unitSymbolArray);
+    }
+
+    public function removeDrugUnit($unitRefId){
+        $data = array(UnitsRefTable::unit_ref_id => $unitRefId);
+        return $this->conn->execute(UnitsSqlStatement::REMOVE_UNIT, $data);
     }
 
     public function getPatientQueue($status){

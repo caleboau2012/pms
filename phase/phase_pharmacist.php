@@ -99,6 +99,30 @@ if(RoleController::hasRole($pharm_id, PHARMACIST)){
         exit();
     }
 
+} elseif($intent == 'addDrugUnits'){
+    $values = $_REQUEST['values'];
+    $units = new PharmacistController();
+    $result = $units->addDrugUnits($values);
+
+    if($result){
+        echo JsonResponse::success('Successfully added drug units!');
+        exit;
+    } else {
+        echo JsonResponse::error('Adding of drug units unsuccessful!');
+        exit;
+    }
+} elseif($intent == 'removeDrugUnit'){
+    $unitRefId = $_REQUEST['id'];
+    $units = new PharmacistController();
+    $result = $units->removeDrugUnit($unitRefId);
+
+    if($result){
+        echo JsonResponse::success('Successfully removed drug unit!');
+        exit;
+    } else {
+        echo JsonResponse::error('Removal of drug unit unsuccessful!');
+        exit;
+    }
 } else {
     JsonResponse::accessDenied();
     exit();
