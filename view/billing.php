@@ -120,14 +120,6 @@ Crave::requireAll(UTIL);
                             </tr>
                             </thead>
                             <tbody>
-                            <tr>
-                                <td><input class="form-control item" name="item[{{0}}]" value="{{Constant Item 0}}" disabled></td>
-                                <td><input class="form-control amount" type="number" name="amount[{{0}}]"></td>
-                            </tr>
-                            <tr>
-                                <td><input class="form-control item" name="item[{{1}}]" value="{{Constant Item 1}}" disabled></td>
-                                <td><input class="form-control amount" type="number" name="amount[{{1}}]"></td>
-                            </tr>
                             </tbody>
                             <tfoot>
                             <tr>

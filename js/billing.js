@@ -9,6 +9,7 @@ Billing = {
     },
     init: function(){
         Billing.getQueue();
+        Billing.getConstants();
         $('#patient_query').bind('change paste keyup', function(e){
             e.preventDefault();
             Billing.searchPatient($(this).val());
@@ -58,6 +59,30 @@ Billing = {
             }
         });
     },
+    getConstants: function(){
+        var url = host + "phase/phase_billing.php?intent=getBillItems";
+        $.getJSON(url, function(data){
+            if(data.status == 1){
+                data = data.data;
+                $('tbody').empty();
+                var html;
+
+                for(i = 0; i < data.length; i++){
+                     html = '<tr>' +
+                        '<td><input class="form-control item" name="item[' +
+                        i +
+                        ']" disabled value="' + data[i].bill + '"></td> ' +
+                        '<td><input class="form-control amount" type="number" name="amount[' +
+                        i +
+                        ']" value="' + data[i].amount + '"></td>' +
+                        '</tr>';
+                    $('tbody').append(html);
+                }
+
+                Billing.computeTotal();
+            }
+        });
+    },
     searchPatient: function(query){
         $('.patient').each(function(index){
             var name = ($(this).find('.name').text()).toLowerCase();
@@ -95,12 +120,12 @@ Billing = {
     addMore: function(){
         var count = $('tbody').children().length;
         var html = '<tr>' +
-            '<td><input class="form-control item" name="item[{{' +
+            '<td><input class="form-control item" name="item[' +
                 count +
-                '}}]"></td>' +
-            '<td><input class="form-control amount" type="number" name="amount[{{' +
+                ']"></td>' +
+            '<td><input class="form-control amount" type="number" name="amount[' +
                 count +
-                '}}]"></td>' +
+                ']"></td>' +
             '</tr>';
         $('tbody').append(html);
     },
@@ -178,6 +203,12 @@ Billing = {
                 //console.log(bill.html());
                 printElem($('#print-header').html(), $(bill).html(), null);
             }
+        }).fail(function(e){
+            console.log({
+                data: e.responseText,
+                items: items,
+                amount: amounts
+            });
         });
     }
 };

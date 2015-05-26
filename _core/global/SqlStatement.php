@@ -992,7 +992,6 @@ class TreatmentSqlStatement {
     const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
                                     WHERE treatment_id = :treatment_id";
 
-
 }
 
 class EmergencySqlStatement {
