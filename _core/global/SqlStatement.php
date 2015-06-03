@@ -271,10 +271,10 @@ class CommunicationSqlStatement {
 
 class PrescriptionSqlStatement{
     const GET_PRESCRIPTION = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id AND status = 1";
-    const GET_QUEUE = "SELECT t.treatment_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
+    const GET_QUEUE = "SELECT t.treatment_id, p.encounter_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id
-                      order by p.modified_date DESC ";
+                      order by t.modified_date DESC ";
     const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status WHERE prescription_id = :prescription_id";
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
     const ADD_PRESCRIPTION = "INSERT INTO prescription (prescription_id, prescription, treatment_id, status, modified_by, created_date, modified_date, active_fg)
@@ -300,7 +300,9 @@ class VitalsSqlStatement {
 }
 
 class UnitsSqlStatement{
-    const GET = "SELECT unit_ref_id, unit FROM unit_ref";
+    const GET = "SELECT unit_ref_id, unit FROM unit_ref WHERE active_fg = 1";
+    const ADD_UNITS = "INSERT INTO unit_ref (unit, symbol) VALUES ";
+    const REMOVE_UNIT = "UPDATE unit_ref SET active_fg = 0 WHERE unit_ref_id = :unit_ref_id";
 }
 
 class HaematologySqlStatement {
@@ -617,7 +619,13 @@ class ParasitologyDetailsSqlStatement {
 
 class EncounterSqlStatement{
     const GET_HISTORY = 'SELECT * FROM encounter AS e WHERE admission_id = :admission_id ORDER BY e.created_date DESC';
-    const ADD = "INSERT INTO encounter(personnel_id, patient_id, admission_id, comments, created_date, active_fg) VALUES(:personnel_id, :patient_id, :admission_id, :comments, NOW(), 1)";
+    const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, created_date, active_fg) VALUES(:personnel_id, :patient_id, :admission_id, :treatment_id, NOW(), 1)";
+    const GET_UNCLOSED_SESSION = "SELECT encounter_id FROM encounter WHERE treatment_id = :treatment_id AND admission_id = :admission_id AND status = 1";
+    const UPDATE = "UPDATE encounter SET personnel_id = :personnel_id, consultation = :consultation, symptoms = :symptoms,
+                    diagnosis = :diagnosis, comments = :comments, modified_date = NOW() WHERE treatment_id = :treatment_id AND patient_id = :patient_id
+                    AND admission_id = :admission_id AND encounter_id = :encounter_id";
+    const CLOSE_SESSION = "UPDATE encounter SET status = :status WHERE encounter_id = :encounter_id AND treatment_id = :treatment_id";
+    const GET_ENCOUNTERS = "SELECT * FROM encounter WHERE treatment_id = :treatment_id";
 }
 
 class RadiologyRequestSqlStatement{
@@ -991,6 +999,7 @@ class TreatmentSqlStatement {
 
     const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
                                     WHERE treatment_id = :treatment_id";
+
 
 }
 

@@ -268,7 +268,7 @@ class TreatmentModel extends BaseModel{
         try{
             $this->conn->beginTransaction();
             $data = array(ChemicalPathologyRequestTable::doctor_id => $doctorId, ChemicalPathologyRequestTable::treatment_id => $treatmentId,
-                ChemicalPathologyRequestTable::clinical_diagnosis => $description);
+                          ChemicalPathologyRequestTable::clinical_diagnosis => $description);
             $this->conn->execute(ChemicalPathologyRequestSqlStatement::ADD_REQ_INFO, $data);
             $this->conn->commit();
         } catch(Exception $e){
@@ -382,7 +382,51 @@ class TreatmentModel extends BaseModel{
      * $encounterData is an assoc array of $doctorId, $patientId, $admissionId, $comments
      * */
     public function logEncounter($encounterData){
-        return $this->conn->execute(EncounterSqlStatement::ADD, $encounterData);
+        return $this->conn->execute(EncounterSqlStatement::UPDATE, $encounterData);
     }
+
+    public function createNewEncounter($treatmentId, $patientId, $admissionId, $doctorId){
+        $data = array(EncounterTable::treatment_id => $treatmentId, EncounterTable::patient_id => $patientId,
+                      EncounterTable::admission_id => $admissionId, EncounterTable::personnel_id => $doctorId);
+
+        try{
+            $this->conn->beginTransaction();
+            /* Other things come here! */
+            $id = $this->getUnclosedEncounterSession($treatmentId, $admissionId);
+            if(!$id){
+                if($this->conn->execute(EncounterSqlStatement::ADD, $data))
+                    throw new Exception('Could not add a new encounter session');
+                $id = $this->conn->getLastInsertedId();
+            }
+            $this->conn->commit();
+            return $id;
+        } catch(Exception $ex) {
+            $this->conn->rollBack();
+            return 0;
+        }
+    }
+
+    public function closeEncounter($treatmentId, $encounterId){
+        $data = array(EncounterTable::treatment_id => $treatmentId, EncounterTable::encounter_id => $encounterId, EncounterTable::status => 2);
+        return $this->conn->execute(EncounterSqlStatement::CLOSE_SESSION, $data);
+    }
+
+    public function getEncounters($treatmentId){
+        $data = array(EncounterTable::treatment_id => $treatmentId);
+        return $this->conn->fetchAll(EncounterSqlStatement::GET_ENCOUNTERS, $data);
+    }
+
+    private function getUnclosedEncounterSession($treatmentId, $admissionId){
+        $data = array(EncounterTable::treatment_id => $treatmentId, EncounterTable::admission_id => $admissionId);
+        $result = $this->conn->fetch(EncounterSqlStatement::GET_UNCLOSED_SESSION,
+                                     $data);
+
+        if($result[EncounterTable::encounter_id]){
+            return $result[EncounterTable::encounter_id];
+        }
+
+        return 0;
+    }
+
 
 }

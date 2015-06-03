@@ -75,9 +75,31 @@ class TreatmentController{
         return $this->treatmentModel->getEncounterHistory($admissionId);
     }
 
-    public function logEncounter($doctorId, $patientId, $admissionId, $comments){
+    /*public function logEncounter($doctorId, $patientId, $admissionId, $comments){
         $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
             EncounterTable::admission_id => $admissionId, EncounterTable::comments => $comments);
         return $this->treatmentModel->logEncounter($data);
+    }*/
+
+    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments){
+        $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
+                      EncounterTable::admission_id => $admissionId, EncounterTable::treatment_id => $treatmentId,
+                      EncounterTable::encounter_id => $encounterId, EncounterTable::consultation => $consultation,
+                      EncounterTable::symptoms => $symptoms, EncounterTable::diagnosis => $diagnosis,
+                      EncounterTable::comments => $comments);
+
+        return $this->treatmentModel->logEncounter($data);
+    }
+
+    public function getEncounterId($treatmentId, $patientId, $admissionId, $doctorId){
+        return $this->treatmentModel->createNewEncounter($treatmentId, $patientId, $admissionId, $doctorId);
+    }
+
+    public function closeEncounter($treatmentId, $encounterId){
+        return $this->treatmentModel->closeEncounter($treatmentId, $encounterId);
+    }
+
+    public function getEncounters($treatmentId){
+        return $this->treatmentModel->getEncounters($treatmentId);
     }
 }

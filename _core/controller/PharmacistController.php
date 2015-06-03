@@ -23,8 +23,8 @@ class PharmacistController{
         return $this->pharmacy->getPrescription($treatmentId);
     }
 
-    public function AddPrescription ($somepre, $treatment_id, $status, $mod){
-            return $this->pharmacy->AddPrescription($somepre, $treatment_id, $status, $mod);
+    public function AddPrescription ($somepre, $treatment_id, $status, $mod, $encounter_id = 0){
+            return $this->pharmacy->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
     }
 
     public function clearPrescription($pharmacist_id, $data){

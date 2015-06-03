@@ -439,7 +439,96 @@ elseif  ($intent == 'requestLabTest') {
 
 }
 
-elseif  ($intent == 'logEncounter') {
+elseif($intent == 'getEncounterId'){
+    $doctor_id    = CxSessionHandler::getItem('userid');
+    $patient_id   = isset($_REQUEST[EncounterTable::patient_id]) ? $_REQUEST[EncounterTable::patient_id] : null;
+    $admission_id = isset($_REQUEST[EncounterTable::admission_id]) ? $_REQUEST[EncounterTable::admission_id] : null;
+    $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
+
+    $encounter = new TreatmentController();
+    $result = $encounter->getEncounterId($treatment_id, $patient_id, $admission_id, $doctor_id);
+
+    if($result){
+        echo JsonResponse::success($result);
+        exit;
+    } else {
+        echo JsonResponse::error("Could not create an encounter session. Try again later");
+        exit;
+    }
+}
+
+elseif($intent == 'logEncounter'){
+    $doctor_id    = CxSessionHandler::getItem('userid');
+    $patient_id   = isset($_REQUEST[EncounterTable::patient_id]) ? $_REQUEST[EncounterTable::patient_id] : null;
+    $admission_id = isset($_REQUEST[EncounterTable::admission_id]) ? $_REQUEST[EncounterTable::admission_id] : null;
+    $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
+    $encounter_id = isset($_REQUEST[EncounterTable::encounter_id]) ? $_REQUEST[EncounterTable::encounter_id] : null;
+    $consultation = isset($_REQUEST[EncounterTable::consultation]) ? $_REQUEST[EncounterTable::consultation] : "";
+    $symptoms     = isset($_REQUEST[EncounterTable::symptoms]) ? $_REQUEST[EncounterTable::symptoms] : "";
+    $comments     = isset($_REQUEST[EncounterTable::comments]) ? $_REQUEST[EncounterTable::comments] : "";
+    $diagnosis    = isset($_REQUEST[EncounterTable::diagnosis]) ? $_REQUEST[EncounterTable::diagnosis] : "";
+
+    if($doctor_id && $patient_id && $admission_id && $treatment_id && $encounter_id){
+        $encounter = new TreatmentController();
+        $result = $encounter->logEncounter($doctor_id, $patient_id, $admission_id, $treatment_id, $encounter_id, $consultation, $symptoms, $diagnosis, $comments);
+
+        if($result){
+            echo JsonResponse::success("Successfully logged encounter");
+            exit;
+        } else {
+            echo JsonResponse::error("Failure logging encounter");
+            exit;
+        }
+    } else {
+        echo JsonResponse::error('Some needed parameters not set');
+        exit;
+    }
+}
+
+elseif($intent == 'closeEncounter'){
+    $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
+    $encounter_id = isset($_REQUEST[EncounterTable::encounter_id]) ? $_REQUEST[EncounterTable::encounter_id] : null;
+
+
+    if($treatment_id && $encounter_id){
+        $encounter = new TreatmentController();
+        $result = $encounter->closeEncounter($treatment_id, $encounter_id);
+
+        if($result){
+            echo JsonResponse::success("Successfully ended encounter");
+            exit;
+        } else {
+            echo JsonResponse::error("Could not end encounter");
+            exit;
+        }
+    } else {
+        echo JsonResponse::error('Some needed parameters not set');
+        exit;
+    }
+}
+
+elseif($intent == 'getEncounters'){
+    $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
+    var_dump($treatmentId);
+
+    if($treatment_id){
+        $encounter = new TreatmentController();
+        $result = $encounter->getEncounters($treatment_id);
+
+        if($result && is_array($result)){
+            echo JsonResponse::success($result);
+            exit;
+        } else {
+            echo JsonResponse::error('Patient was not admitted during this treatment session');
+            exit;
+        }
+    } else {
+        echo JsonResponse::error('treatment id not set');
+        exit;
+    }
+}
+
+elseif  ($intent == 'logEncounterOld') {
     $treat = new TreatmentController();
 
     $doctorId ="";
@@ -475,7 +564,7 @@ elseif  ($intent == 'logEncounter') {
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->logEncounter($doctorId, $patientId , $admissionId, $comments);
+        //$admission_add = $newaddm->logEncounter($doctorId, $patientId , $admissionId, $comments);
     }
 
     if($admission_add){

@@ -202,6 +202,7 @@ class PrescriptionTable{
     const prescription_id = 'prescription_id';
     const prescription    = 'prescription';
     const treatment_id    = 'treatment_id';
+    const encounter_id    = 'encounter_id';
     const status          = 'status';
     const modified_by     = 'modified_by';
     const created_date    = 'created_date';
@@ -574,13 +575,19 @@ class ChemicalPathologyRequestTable {
 class EncounterTable{
     const table_name = 'encounter';
 
-    const encounter_id = 'encounter_id';
-    const personnel_id = 'personnel_id';
-    const patient_id   = 'patient_id';
-    const admission_id = 'admission_id';
-    const comments     = 'comments';
-    const created_date = 'created_date';
-    const active_fg    = 'active_fg';
+    const encounter_id  = 'encounter_id';
+    const personnel_id  = 'personnel_id';
+    const patient_id    = 'patient_id';
+    const admission_id  = 'admission_id';
+    const treatment_id  = 'treatment_id';
+    const consultation  = 'consultation';
+    const comments      = 'comments';
+    const symptoms      = 'symptoms';
+    const diagnosis     = 'diagnosis';
+    const created_date  = 'created_date';
+    const modified_date = 'modified_date';
+    const status        = 'status';
+    const active_fg     = 'active_fg';
 }
 
 class AdmissionReqTable {

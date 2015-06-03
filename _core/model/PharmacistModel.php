@@ -21,12 +21,15 @@ class PharmacistModel extends BaseModel{
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_QUEUE, array(PrescriptionTable::status => $status));
     }
 
-    public function getPrescription($treatmentId){
-        return $this->conn->fetchAll(PrescriptionSqlStatement::GET_PRESCRIPTION, array(PrescriptionTable::treatment_id => $treatmentId));
+    public function getPrescription($treatmentId, $encounterId = 0){
+        $data = array(PrescriptionTable::treatment_id => $treatmentId, PrescriptionTable::encounter_id => $encounterId);
+        return $this->conn->fetchAll(PrescriptionSqlStatement::GET_PRESCRIPTION, $data);
     }
 
-    public function AddPrescription($somepre, $treatment_id, $status, $mod){
-        $data = array(PrescriptionTable::prescription => $somepre, PrescriptionTable::treatment_id => $treatment_id, PrescriptionTable::status => $status, PrescriptionTable::modified_by => $mod);
+    public function AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id = 0){
+        $data = array(PrescriptionTable::prescription => $somepre, PrescriptionTable::treatment_id => $treatment_id,
+                      PrescriptionTable::status => $status, PrescriptionTable::modified_by => $mod,
+                      PrescriptionTable::encounter_id => $encounter_id);
         $sql = PrescriptionSqlStatement::ADD_PRESCRIPTION;
         return $this->conn->execute($sql, $data);
     }
@@ -161,11 +164,11 @@ class PharmacistModel extends BaseModel{
 
 
     public function isOutPatient($patientId){
-        return true;
+        return $patientId;
     }
 
     public function isInPatient($patientId){
-        return true;
+        return $patientId;
     }
 
     public function getUnits(){
