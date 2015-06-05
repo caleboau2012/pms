@@ -4,11 +4,12 @@ class RadiologyModel extends BaseModel{
     private $rad = array('xray_case_id', 'xray_size_id');
     private $rad_req = array('previous_xray', 'xray_number');
 
-    public function radiologyRequest($doctorId, $treatmentId, $description){
+    public function radiologyRequest($doctorId, $treatmentId, $encounterId, $description){
         try{
             $this->conn->beginTransaction();
 
-            $data = array(RadiologyTable::doctor_id => $doctorId, RadiologyTable::treatment_id => $treatmentId);
+            $data = array(RadiologyTable::doctor_id => $doctorId, RadiologyTable::treatment_id => $treatmentId,
+                          RadiologyTable::encounter_id => $encounterId);
             if(!$this->conn->execute(RadiologyRequestSqlStatement::ADD_RAD_INFO, $data))
                 throw new Exception("Error requesting xray test1");
 
@@ -42,9 +43,9 @@ class RadiologyModel extends BaseModel{
         return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId){
+    public function getTestDetails($treatmentId, $encounterId){
         $result = array();
-        $data = array(RadiologyTable::treatment_id => $treatmentId);
+        $data = array(RadiologyTable::treatment_id => $treatmentId, RadiologyTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
         $result['radiology'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_RADIOLOGY_VALS, $data);
         return $result;

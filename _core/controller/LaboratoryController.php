@@ -54,20 +54,20 @@ class LaboratoryController{
         }
     }
 
-    public function getLabDetails($labType, $treatmentId){
+    public function getLabDetails($labType, $treatmentId, $encounterId){
         switch($labType){
             case CHEMICAL_PATHOLOGY:
-                return $this->chemicalPathology->getTestDetails($treatmentId);
+                return $this->chemicalPathology->getTestDetails($treatmentId, $encounterId);
             case HAEMATOLOGY:
-                return $this->haematology->getTestDetails($treatmentId);
+                return $this->haematology->getTestDetails($treatmentId, $encounterId);
             case PARASITOLOGY:
-                return $this->parasitology->getTestDetails($treatmentId);
+                return $this->parasitology->getTestDetails($treatmentId, $encounterId);
             case MICROSCOPY:
-                return $this->microscopy->getTestDetails($treatmentId);
+                return $this->microscopy->getTestDetails($treatmentId, $encounterId);
             case VISUAL:
-                return $this->visual->getTestDetails($treatmentId);
+                return $this->visual->getTestDetails($treatmentId, $encounterId);
             case RADIOLOGY:
-                return $this->radiology->getTestDetails($treatmentId);
+                return $this->radiology->getTestDetails($treatmentId, $encounterId);
             default:
                 return array();
         }
@@ -76,17 +76,17 @@ class LaboratoryController{
     public function setLabDetails($labType, $data){
         switch($labType){
             case CHEMICAL_PATHOLOGY:
-                return $this->chemicalPathology->getTestDetails($data);
+                return $this->chemicalPathology->updateTestDetails($data);
             case HAEMATOLOGY:
-                return $this->haematology->getTestDetails($data);
+                return $this->haematology->updateTestDetails($data);
             case PARASITOLOGY:
-                return $this->parasitology->getTestDetails($data);
+                return $this->parasitology->updateTestDetails($data);
             case MICROSCOPY:
-                return $this->microscopy->getTestDetails($data);
+                return $this->microscopy->updateTestDetails($data);
             case VISUAL:
-                return $this->visual->getTestDetails($data);
+                return $this->visual->updateTestDetails($data);
             case RADIOLOGY:
-                return $this->radiology->getTestDetails($data);
+                return $this->radiology->updateTestDetails($data);
             default:
                 return false;
         }
@@ -115,25 +115,25 @@ class LaboratoryController{
         }
     }
 
-    public function requestLabTest($labTestType, $doctorId, $treatmentId, $description){
+    public function requestLabTest($labTestType, $doctorId, $treatmentId, $encounterId, $description){
         switch($labTestType){
             case RADIOLOGY:
-                return $this->radiology->radiologyRequest($doctorId, $treatmentId, $description);
+                return $this->radiology->radiologyRequest($doctorId, $treatmentId, $encounterId, $description);
 
             case HAEMATOLOGY:
-                return $this->haematology->haematologyRequest($doctorId, $treatmentId, $description);
+                return $this->haematology->haematologyRequest($doctorId, $treatmentId, $encounterId, $description);
 
             case MICROSCOPY:
-                return $this->microscopy->microscopyRequest($doctorId, $treatmentId, $description);
+                return $this->microscopy->microscopyRequest($doctorId, $treatmentId, $encounterId, $description);
 
             case VISUAL:
-                return $this->visual->visualRequest($doctorId, $treatmentId);
+                return $this->visual->visualRequest($doctorId, $treatmentId, $encounterId);
 
             case CHEMICAL_PATHOLOGY:
-                return $this->chemicalPathology->chemicalPathologyRequest($doctorId, $treatmentId, $description);
+                return $this->chemicalPathology->chemicalPathologyRequest($doctorId, $treatmentId, $encounterId, $description);
 
             case PARASITOLOGY:
-                return $this->parasitology->parasitologyRequest($doctorId, $treatmentId, $description);
+                return $this->parasitology->parasitologyRequest($doctorId, $treatmentId, $encounterId, $description);
 
             default:
                 return false;

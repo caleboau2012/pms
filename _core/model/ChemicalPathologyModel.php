@@ -1,9 +1,9 @@
 <?php
 class ChemicalPathologyModel extends BaseModel{
 
-    public function chemicalPathologyRequest($doctorId, $treatmentId, $description){
+    public function chemicalPathologyRequest($doctorId, $treatmentId, $encounterId, $description){
             $data = array(ChemicalPathologyRequestTable::doctor_id => $doctorId, ChemicalPathologyRequestTable::treatment_id => $treatmentId,
-                ChemicalPathologyRequestTable::clinical_diagnosis => $description);
+                          ChemicalPathologyRequestTable::encounter_id => $encounterId, ChemicalPathologyRequestTable::clinical_diagnosis => $description);
             return $this->conn->execute(ChemicalPathologyRequestSqlStatement::ADD_REQ_INFO, $data);
     }
 
@@ -31,9 +31,10 @@ class ChemicalPathologyModel extends BaseModel{
         return $result;
     }
 
-    public function getTestDetails($treatmentId){
+    public function getTestDetails($treatmentId, $encounterId){
         $result = array();
-        $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId);
+        $data = array(ChemicalPathologyRequestTable::treatment_id => $treatmentId,
+                      ChemicalPathologyRequestTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
         $values = $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
         $result['values'] = $this->formatValues($values);

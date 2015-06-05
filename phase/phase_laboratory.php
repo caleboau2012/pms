@@ -89,11 +89,12 @@ if ($intent == 'getPatientQueue') {
     if (isset($_REQUEST['labType']) && isset($_REQUEST['treatmentId'])) {
         $labType = $_REQUEST['labType'];
         $treatmentId = $_REQUEST['treatment_id'];
+        $encounterId = (isset($_REQUEST['encounter_id'])) ? $_REQUEST['encounter_id'] : 0;
         $role = isset($labType_Role[$labType]) ? $labType_Role[$labType] : null;
 
         if($role && RoleController::hasRole($lab_attendant_id, $role)){
             $lab = new LaboratoryController();
-            $details = $lab->getLabDetails($labType, $treatmentId);
+            $details = $lab->getLabDetails($labType, $treatmentId, $encounterId);
             if (is_array($details) && !empty($details)) {
                 echo JsonResponse::success($details);
                 exit();

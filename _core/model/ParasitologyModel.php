@@ -1,9 +1,9 @@
 <?php
 class ParasitologyModel extends BaseModel{
 
-    public function parasitologyRequest($doctorId, $treatmentId, $description){
+    public function parasitologyRequest($doctorId, $treatmentId, $encounterId, $description){
             $data = array(ParasitologyRequestTable::doctor_id => $doctorId, ParasitologyRequestTable::treatment_id => $treatmentId,
-                          ParasitologyRequestTable::diagnosis => $description);
+                          ParasitologyRequestTable::encounter_id => $encounterId, ParasitologyRequestTable::diagnosis => $description);
             return $this->conn->execute(ParasitologyRequestSqlStatement::ADD_REQ_INFO, $data);
     }
 
@@ -22,9 +22,10 @@ class ParasitologyModel extends BaseModel{
         return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId, $activeFg = 1){
+    public function getTestDetails($treatmentId, $encounterId, $activeFg = 1){
         $result = array();
-        $data = array(ParasitologyRequestTable::treatment_id => $treatmentId, ParasitologyRequestTable::active_fg => $activeFg);
+        $data = array(ParasitologyRequestTable::treatment_id => $treatmentId, ParasitologyRequestTable::encounter_id => $encounterId,
+                      ParasitologyRequestTable::active_fg => $activeFg);
         $result['details'] = $this->conn->fetch(ParasitologyRequestSqlStatement::GET_DETAILS, $data);
         $result['parasites'] = $this->formatValues($this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PARASITES, $data));
 //        $result['parasites'] = $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PARASITES, $data);

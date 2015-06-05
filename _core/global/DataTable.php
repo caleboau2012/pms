@@ -250,6 +250,7 @@ class HaematologyTable {
     const create_date                = 'created_date';
     const modified_date              = 'modified_date';
     const treatment_id               = 'treatment_id';
+    const encounter_id               = 'encounter_id';
     const active_fg                  = 'active_fg';
     const status_id                  = 'status_id';
     const doctor_id                  = 'doctor_id';
@@ -260,6 +261,7 @@ class UrineTable {
     const table_name                 = 'urine';
     const urine_d                    = 'urine_id';
     const treatment_id               = 'treatment_id';
+    const encounter_id               = 'encounter_id';
     const lab_attendant_id           = 'lab_attendant_id';
     const clinical_diagnosis_details = 'clinical_diagnosis_details';
     const investigation_required     = 'investigation_required';
@@ -279,6 +281,7 @@ class ParasitologyRequestTable {
     const table_name = 'parasitology_req';
     const preq_id                = 'preq_id';
     const treatment_id           = 'treatment_id';
+    const encounter_id           = 'encounter_id';
     const nature_of_specimen     = 'nature_of_specimen';
     const investigation_required = 'investigation_req';
     const diagnosis              = 'diagnosis';
@@ -343,6 +346,7 @@ class VisualSkillsProfileTable {
     const table_name                = 'visual_skills_profile';
     const id                        = 'visual_profile_id';
     const treatment_id              = 'treatment_id';
+    const encounter_id              = 'encounter_id';
     const distance_re               = 'distance_re';
     const distance_le               = 'distance_le';
     const distance_be               = 'distance_be';
@@ -542,6 +546,7 @@ class RadiologyTable {
     const xray_case_id         = 'xray_case_id';
     const xray_size_id         = 'xray_size_id';
     const treatment_id         = 'treatment_id';
+    const encounter_id         = 'encounter_id';
     const consultant_in_charge = 'consultant_in_charge';
     const checked_by           = 'checked_by';
     const radiographers_note   = 'radiographers_note';
@@ -559,6 +564,7 @@ class ChemicalPathologyRequestTable {
     const cpreq_id           = 'cpreq_id';
     const patient_id         = 'patient_id';
     const treatment_id       = 'treatment_id';
+    const encounter_id       = 'encounter_id';
     const laboratory_ref     = 'laboratory_ref';
     const laboratory_comment = 'laboratory_comment';
     const clinical_diagnosis = 'clinical_diagnosis';

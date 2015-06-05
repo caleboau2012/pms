@@ -259,6 +259,7 @@ elseif  ($intent == 'submitTreatment') { //working
         $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
         $treatment_id =$_REQUEST['treatment_id'];
         $prescription = $_REQUEST['prescription'];
+        $encounter_id = (isset($_REQUEST['encounter_id'])) ? $_REQUEST['encounter_id'] : 0;
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -285,7 +286,7 @@ elseif  ($intent == 'submitTreatment') { //working
                 $status = ACTIVE;
                 $mod = DOCTOR;
                 $pre  = new PharmacistController();
-                $pre->AddPrescription($somepre, $treatment_id, $status, $mod);
+                $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
                 if(!$pre){
                     exit();
                 }
@@ -408,6 +409,7 @@ elseif  ($intent == 'requestLabTest') {
         $treatmentId =$_REQUEST[TreatmentTable::treatment_id];
         $labTestType = $_REQUEST['test_id'];
         $comment= $_REQUEST[TreatmentTable::comments];
+        $encounterId = (isset($_REQUEST[EncounterTable::encounter_id])) ? $_REQUEST[EncounterTable::encounter_id] : 0;
     }
     else {
         echo JsonResponse::error("things are not set");
@@ -424,7 +426,7 @@ elseif  ($intent == 'requestLabTest') {
     else{
 
         $newaddm = new TreatmentController();
-        $admission_add = $newaddm->requestLabTest($doctorId, $treatmentId, $labTestType, $comment);
+        $admission_add = $newaddm->requestLabTest($labTestType, $doctorId, $treatmentId, $encounterId, $comment);
     }
 
     if($admission_add){
@@ -710,12 +712,12 @@ elseif($intent == 'labRequest'){
     if(isset($_REQUEST['labType'])){
         $type = $_REQUEST['labType'];
         $doctorId = intval(CxSessionHandler::getItem('userid'));
-//        $doctorId = 1;
         $treatmentId = intval($_REQUEST['treatmentId']);
+        $encounterId = isset($_REQUEST['encounterId']) ? $_REQUEST['encounterId'] : 0;
         $description = isset($_REQUEST['description']) ? $_REQUEST['description'] : "";
         $lab = new LaboratoryController();
 
-        $result = $lab->requestLabTest($type, $doctorId, $treatmentId, $description);
+        $result = $lab->requestLabTest($type, $doctorId, $treatmentId, $encounterId, $description);
         if($result){
             echo JsonResponse::success("Request successful");
             exit();

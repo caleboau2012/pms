@@ -19,8 +19,8 @@ class PharmacistController{
         return $this->pharmacy->getPatientQueue(DRUG_UNCLEARED);
     }
 
-    public function getPrescription($treatmentId){
-        return $this->pharmacy->getPrescription($treatmentId);
+    public function getPrescription($treatmentId, $encounterId){
+        return $this->pharmacy->getPrescription($treatmentId, $encounterId);
     }
 
     public function AddPrescription ($somepre, $treatment_id, $status, $mod, $encounter_id = 0){

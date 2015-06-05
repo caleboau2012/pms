@@ -30,10 +30,12 @@ if(RoleController::hasRole($pharm_id, PHARMACIST)){
             exit();
         }
     } elseif ($intent == 'getPrescription') {
-        if($treatmentId = isset($_REQUEST['treatmentId']) ? $_REQUEST['treatmentId'] : null){         // Please check if this works correctly
+        $treatmentId = isset($_REQUEST['treatmentId']) ? $_REQUEST['treatmentId'] : null;
+        $encounterId = isset($_REQUEST['encounterId']) ? $_REQUEST['encounter_id'] : 0;
 
+        if($treatmentId){
             // Retrieve Patient Prescription
-            $prescription = (new PharmacistController())->getPrescription($treatmentId);
+            $prescription = (new PharmacistController())->getPrescription($treatmentId, $encounterId);
 
             if (is_array($prescription) && !empty($prescription)) {
                 echo JsonResponse::success($prescription);

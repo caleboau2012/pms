@@ -9,8 +9,9 @@ class HaematologyModel extends BaseModel{
                                 BloodTestTable::eosinophils, BloodTestTable::platelets, BloodTestTable::rectis,
                                 BloodTestTable::rectis_index, BloodTestTable::e_s_r);
 
-    public function haematologyRequest($doctorId, $treatmentId, $description){
-        $data = array(HaematologyTable::doctor_id => $doctorId, HaematologyTable::treatment_id => $treatmentId, HaematologyTable::clinical_diagnosis_details => $description);
+    public function haematologyRequest($doctorId, $treatmentId, $encounterId, $description){
+        $data = array(HaematologyTable::doctor_id => $doctorId, HaematologyTable::treatment_id => $treatmentId,
+                      HaematologyTable::encounter_id => $encounterId, HaematologyTable::clinical_diagnosis_details => $description);
         return $this->conn->execute(HaematologyRequestSqlStatement::ADD_REQ_INFO, $data);
     }
 
@@ -29,13 +30,13 @@ class HaematologyModel extends BaseModel{
         return $this->conn->fetchAll(HaematologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId){
+    public function getTestDetails($treatmentId, $encounterId){
         $result = array();
-        $data = array(HaematologyTable::treatment_id => $treatmentId);
+        $data = array(HaematologyTable::treatment_id => $treatmentId, HaematologyTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(HaematologyRequestSqlStatement::GET_DETAILS, $data);
-        $result['blood_test'] = $this->getBloodTestDetails($treatmentId);
-        $result['differential_count'] = $this->getDifferentialCountTestDetails($treatmentId);
-        $result['film_appearance'] = $this->getFilmAppearanceTestDetails($treatmentId);
+        $result['blood_test'] = $this->getBloodTestDetails($treatmentId, $encounterId);
+        $result['differential_count'] = $this->getDifferentialCountTestDetails($treatmentId, $encounterId);
+        $result['film_appearance'] = $this->getFilmAppearanceTestDetails($treatmentId, $encounterId);
 
         return $result;
     }
@@ -71,8 +72,8 @@ class HaematologyModel extends BaseModel{
 
 /*------------------------------------------ Blood Test Section -----------------------------------------*/
 
-    private function getBloodTestDetails($treatmentId){
-        $data = array(HaematologyTable::treatment_id => $treatmentId);
+    private function getBloodTestDetails($treatmentId, $encounterId){
+        $data = array(HaematologyTable::treatment_id => $treatmentId, HaematologyTable::encounter_id => $encounterId);
         return $this->conn->fetch(BloodTestSqlStatement::GET, $data);
     }
 
@@ -97,8 +98,8 @@ class HaematologyModel extends BaseModel{
 
 /*------------------------------------- Film Appearance Section ----------------------------------------*/
 
-    private function getFilmAppearanceTestDetails($treatmentId){
-        $data = array(HaematologyTable::treatment_id => $treatmentId);
+    private function getFilmAppearanceTestDetails($treatmentId, $encounterId){
+        $data = array(HaematologyTable::treatment_id => $treatmentId, HaematologyTable::encounter_id => $encounterId);
         return $this->conn->fetch(FilmAppearanceSqlStatement::GET, $data);
     }
 
@@ -118,8 +119,8 @@ class HaematologyModel extends BaseModel{
 
 
 /*------------------------------- Differential Count Section --------------------------------------------*/
-    private function getDifferentialCountTestDetails($treatmentId){
-        $data = array(HaematologyTable::treatment_id => $treatmentId);
+    private function getDifferentialCountTestDetails($treatmentId, $encounterId){
+        $data = array(HaematologyTable::treatment_id => $treatmentId, HaematologyTable::encounter_id => $encounterId);
         return $this->conn->fetch(DifferentialCountSqlStatement::GET, $data);
     }
 

@@ -1,8 +1,9 @@
 <?php
 class VisualModel extends BaseModel{
 
-    public function visualRequest($doctorId, $treatmentId){
-        $data = array(VisualSkillsProfileTable::doctor_id => $doctorId, VisualSkillsProfileTable::treatment_id => $treatmentId);
+    public function visualRequest($doctorId, $treatmentId, $encounterId){
+        $data = array(VisualSkillsProfileTable::doctor_id => $doctorId, VisualSkillsProfileTable::treatment_id => $treatmentId,
+                      VisualSkillsProfileTable::encounter_id => $encounterId);
         return $this->conn->execute(VisualRequestSqlStatement::ADD_REQ_INFO, $data);
     }
 
@@ -25,8 +26,8 @@ class VisualModel extends BaseModel{
         return $this->conn->fetchAll(VisualRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId){
-        $data = array(VisualSkillsProfileTable::treatment_id => $treatmentId);
+    public function getTestDetails($treatmentId, $encounterId){
+        $data = array(VisualSkillsProfileTable::treatment_id => $treatmentId, VisualSkillsProfileTable::encounter_id => $encounterId);
         return $this->conn->fetch(VisualRequestSqlStatement::GET_DETAILS, $data);
     }
 

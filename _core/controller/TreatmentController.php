@@ -59,8 +59,8 @@ class TreatmentController{
         return $this->treatmentModel->getTreatmentHistory($patientId);
     }
 
-    public function requestLabTest($doctorId, $treatmentId, $labTestType, $comment){
-        return $this->treatmentModel->requestLabTest($doctorId, $treatmentId, $labTestType, $comment);
+    public function requestLabTest($doctorId, $treatmentId, $encounterId, $labTestType, $comment){
+        return $this->treatmentModel->requestLabTest($doctorId, $treatmentId, $encounterId, $labTestType, $comment);
     }
 
     public function getLabHistory($patientId, $labTestType){

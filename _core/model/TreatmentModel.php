@@ -202,10 +202,11 @@ class TreatmentModel extends BaseModel{
 
     }
 
-    private function radiologyRequest($doctorId, $treatmentId, $description){
+    private function radiologyRequest($doctorId, $treatmentId, $encounterId, $description){
         try{
             $this->conn->beginTransaction();
-            $data = array(RadiologyTable::doctor_id => $doctorId, RadiologyTable::treatment_id => $treatmentId);
+            $data = array(RadiologyTable::doctor_id => $doctorId, RadiologyTable::treatment_id => $treatmentId,
+                          RadiologyTable::encounter_id => $encounterId);
             $this->conn->execute(RadiologyRequestSqlStatement::ADD_RAD_INFO, $data);
 
             unset($data);
@@ -294,24 +295,24 @@ class TreatmentModel extends BaseModel{
         return true;
     }
 
-    public function requestLabTest($doctorId, $treatmentId, $description, $labTestType){
+    public function requestLabTest($doctorId, $treatmentId, $encounterId, $description, $labTestType){
         switch($labTestType){
-            case 'radiology':
-                return $this->radiologyRequest($doctorId, $treatmentId, $description);
+            case RADIOLOGY:
+                return $this->radiologyRequest($doctorId, $treatmentId, $encounterId, $description);
 
-            case 'haematology':
-                return $this->haematologyRequest($doctorId, $treatmentId, $description);
+            case HAEMATOLOGY:
+                return $this->haematologyRequest($doctorId, $treatmentId, $encounterId, $description);
 
-            case 'microscopy':
+            case MICROSCOPY:
                 return $this->microscopyRequest($doctorId, $treatmentId, $description);
 
-            case 'visual':
+            case VISUAL:
                 return $this->visualRequest($doctorId, $treatmentId);
 
-            case 'chemical':
+            case CHEMICAL_PATHOLOGY:
                 return $this->chemicalPathologyRequest($doctorId, $treatmentId, $description);
 
-            case 'parasitology':
+            case PARASITOLOGY:
                 return $this->parasitologyRequest($doctorId, $treatmentId, $description);
 
             default:

@@ -1,8 +1,9 @@
 <?php
 class MicroscopyModel extends BaseModel{
 
-    public function microscopyRequest($doctorId, $treatmentId, $description){
-        $data = array(UrineTable::doctor_id => $doctorId, UrineTable::treatment_id => $treatmentId, UrineTable::clinical_diagnosis_details => $description);
+    public function microscopyRequest($doctorId, $treatmentId, $encounterId, $description){
+        $data = array(UrineTable::doctor_id => $doctorId, UrineTable::treatment_id => $treatmentId,
+                      UrineTable::encounter_id => $encounterId, UrineTable::clinical_diagnosis_details => $description);
         return $this->conn->execute(MicroscopyRequestSqlStatment::ADD_REQ_INFO, $data);
     }
 
@@ -21,13 +22,13 @@ class MicroscopyModel extends BaseModel{
         return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId){
+    public function getTestDetails($treatmentId, $encounterId){
         $result = array();
-        $data = array(UrineTable::treatment_id => $treatmentId);
+        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(MicroscopyRequestSqlStatment::GET_DETAILS, $data);
-        $result['urinalysis'] = $this->getUrinalysisDetails($treatmentId);
-        $result['microscopy'] = $this->getMicroscopyDetails($treatmentId);
-        $result['urine_sensitivity'] = $this->getUrineSensitivityDetails($treatmentId);
+        $result['urinalysis'] = $this->getUrinalysisDetails($treatmentId, $encounterId);
+        $result['microscopy'] = $this->getMicroscopyDetails($treatmentId, $encounterId);
+        $result['urine_sensitivity'] = $this->getUrineSensitivityDetails($treatmentId, $encounterId);
 
         return $result;
     }
@@ -67,8 +68,8 @@ class MicroscopyModel extends BaseModel{
 
 /*--------------------------------------- Urinalysis Section -------------------------------------------*/
 
-    private function getUrinalysisDetails($treatmentId){
-        $data = array(UrineTable::treatment_id => $treatmentId);
+    private function getUrinalysisDetails($treatmentId, $encounterId){
+        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
         return $this->conn->fetch(UrinalysisSqlStatement::GET, $data);
     }
 
@@ -88,8 +89,8 @@ class MicroscopyModel extends BaseModel{
 
 /*----------------------------------------Microscopy Section -------------------------------------------*/
 
-    private function getMicroscopyDetails($treatmentId){
-        $data = array(UrineTable::treatment_id => $treatmentId);
+    private function getMicroscopyDetails($treatmentId, $encounterId){
+        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
         return $this->conn->fetch(MicroscopySqlStatement::GET, $data);
     }
 
@@ -119,8 +120,8 @@ class MicroscopyModel extends BaseModel{
         return $result;     // An array of isolates as key and isolates_degree as value
     }
 
-    private function getUrineSensitivityDetails($treatmentId){
-        $data = array(UrineTable::treatment_id => $treatmentId);
+    private function getUrineSensitivityDetails($treatmentId, $encounterId){
+        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
         return $this->formatUrineSensitivityValues($this->conn->fetchAll(UrineSensitivitySqlStatement::GET, $data));
     }
 

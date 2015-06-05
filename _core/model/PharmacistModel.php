@@ -21,12 +21,12 @@ class PharmacistModel extends BaseModel{
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_QUEUE, array(PrescriptionTable::status => $status));
     }
 
-    public function getPrescription($treatmentId, $encounterId = 0){
+    public function getPrescription($treatmentId, $encounterId){
         $data = array(PrescriptionTable::treatment_id => $treatmentId, PrescriptionTable::encounter_id => $encounterId);
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_PRESCRIPTION, $data);
     }
 
-    public function AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id = 0){
+    public function AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id){
         $data = array(PrescriptionTable::prescription => $somepre, PrescriptionTable::treatment_id => $treatment_id,
                       PrescriptionTable::status => $status, PrescriptionTable::modified_by => $mod,
                       PrescriptionTable::encounter_id => $encounter_id);
