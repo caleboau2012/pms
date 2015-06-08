@@ -389,21 +389,28 @@ class TreatmentModel extends BaseModel{
     public function createNewEncounter($treatmentId, $patientId, $admissionId, $doctorId){
         $data = array(EncounterTable::treatment_id => $treatmentId, EncounterTable::patient_id => $patientId,
                       EncounterTable::admission_id => $admissionId, EncounterTable::personnel_id => $doctorId);
+        $check = array(EncounterTable::patient_id => $patientId, EncounterTable::admission_id => $admissionId);
+
+        /* Check if the patient_id rhymes with admission_id on admission table */
+        $checkVal = $this->conn->fetch(EncounterSqlStatement::CHECK_PATIENT_ID_AND_ADMISSION_ID, $check);
+        if(intval($checkVal[COUNT]) == 0)
+            return array('result' => false, 'message' => 'admission_id does not belong to the patient with this patient_id');
 
         try{
             $this->conn->beginTransaction();
+
             /* Other things come here! */
             $id = $this->getUnclosedEncounterSession($treatmentId, $admissionId);
             if(!$id){
-                if($this->conn->execute(EncounterSqlStatement::ADD, $data))
+                if(!$this->conn->execute(EncounterSqlStatement::ADD, $data))
                     throw new Exception('Could not add a new encounter session');
                 $id = $this->conn->getLastInsertedId();
             }
             $this->conn->commit();
-            return $id;
+            return array('result' => true, 'value' => $id);
         } catch(Exception $ex) {
             $this->conn->rollBack();
-            return 0;
+            return array('result' => false, 'message' => $ex->getMessage());
         }
     }
 

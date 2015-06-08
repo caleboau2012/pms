@@ -448,13 +448,13 @@ elseif($intent == 'getEncounterId'){
     $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
 
     $encounter = new TreatmentController();
-    $result = $encounter->getEncounterId($treatment_id, $patient_id, $admission_id, $doctor_id);
+    $response = $encounter->getEncounterId($treatment_id, $patient_id, $admission_id, $doctor_id);
 
-    if($result){
-        echo JsonResponse::success($result);
+    if($response['result']){
+        echo JsonResponse::success($response['value']);
         exit;
     } else {
-        echo JsonResponse::error("Could not create an encounter session. Try again later");
+        echo JsonResponse::error($response['message']);
         exit;
     }
 }
@@ -511,7 +511,6 @@ elseif($intent == 'closeEncounter'){
 
 elseif($intent == 'getEncounters'){
     $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
-    var_dump($treatmentId);
 
     if($treatment_id){
         $encounter = new TreatmentController();
