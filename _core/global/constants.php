@@ -45,6 +45,7 @@ define('HAEMATOLOGY_CONDUCTOR', 17);
 define ('LABORATORY_CONDUCTOR', 18);
 define ('BACKUP_OFFICER', 19);
 define ('BILLING_OFFICER', 20);
+define ('REPORT_OFFICER', 21);
 
 //Staff Permission
 define('READ_ONLY', 1);

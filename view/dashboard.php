@@ -203,7 +203,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     </a>
                                 </div>
                                 <div class="col-xs-3 text-center">
-                                    <a href="#" class="dashboard-link">
+                                    <a href="report/report.php" class="dashboard-link">
                                         <img src="../images/reports.png" width="60" height="60">
                                         <div class="dashboard-desc">Report Creation</div>
                                     </a>

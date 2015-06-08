@@ -239,6 +239,8 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
         $('body,html').animate({scrollTop : 0},800);
     });
 
+
+
 </script>
 <?php include('footer.php'); ?>
 </body>

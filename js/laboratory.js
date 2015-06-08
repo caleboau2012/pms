@@ -107,6 +107,7 @@ var Laboratory = {
                 $('#pending .patient-queue__list').empty().html(pending);
                 $('table.dataTable').dataTable();
             },
+
             error: function(){
                 console.log('failed');
             }
