@@ -12,7 +12,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 $lab = new LaboratoryController();
 $view_bag = array();
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 if ($view_bag['details'][UrineTable::status_id] == 7){

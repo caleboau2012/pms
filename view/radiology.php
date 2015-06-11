@@ -14,7 +14,7 @@ $lab = new LaboratoryController();
 
 $view_bag = array();
 
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 //var_dump($view_bag);
@@ -145,6 +145,7 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                     <form id="addTestForm" class="form" method="post">
                         <input type="hidden" name="<?php echo 'data[details]['.RadiologyTable::radiology_id.']'; ?>"value="<?php echo $view_bag['details']['radiology_id'] ?>">
                         <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::lab_attendant_id.']'; ?>" value="<?php echo $view_bag['radiology']['lab_attendant_id'] ?>">
+                        <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::encounter_id.']'; ?>" value="<?php echo $view_bag['radiology']['encounter_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="radiology">
                         <input type="hidden" id="status" name="status" value="">

@@ -86,7 +86,7 @@ if ($intent == 'getPatientQueue') {
         exit();
     }
 } elseif ($intent == 'getLabDetails') {
-    if (isset($_REQUEST['labType']) && isset($_REQUEST['treatmentId'])) {
+    if (isset($_REQUEST['labType']) && isset($_REQUEST['treatment_id'])) {
         $labType = $_REQUEST['labType'];
         $treatmentId = $_REQUEST['treatment_id'];
         $encounterId = (isset($_REQUEST['encounter_id'])) ? $_REQUEST['encounter_id'] : 0;
