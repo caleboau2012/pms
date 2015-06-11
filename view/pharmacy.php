@@ -80,7 +80,7 @@ $units = $pharmacist->getUnits();
                                 foreach($pharmacist_queue as $patient){
                                     $patient_name = ucwords($patient['surname'].' '.$patient['middlename'].' '. $patient['firstname']);
                                     ?>
-                                    <li class="patients-list_item" data-patient-id="<?php echo $patient['patient_id'] ?>" data-treatment-id="<?php echo $patient['treatment_id'] ?>" data-name = "<?php echo $patient_name ?>" data-reg = "<?php echo $patient['regNo']; ?>">
+                                    <li class="patients-list_item" data-patient-id="<?php echo $patient['patient_id'] ?>" data-treatment-id="<?php echo $patient['treatment_id'] ?>" data-encounter-id="<?php echo $patient['encounter_id'] ?>" data-name = "<?php echo $patient_name ?>" data-reg = "<?php echo $patient['regNo']; ?>">
                                         <h4><?php echo $patient_name ?></h4>
                                         <p class="small"><?php echo $patient['regNo'] ?></p>
                                     </li>
@@ -135,7 +135,7 @@ $units = $pharmacist->getUnits();
                             <div class="col-md-6">
                                 <div class="form-group">
                                     <label for="drugQuantity">Drug Quantity</label>
-                                    <input type="number" class="form-control" id="drugQuantity" required>
+                                    <input type="number" class="form-control" id="drugQuantity" min="0" required>
                                 </div>
                             </div>
                             <div class="col-md-6">

@@ -47,7 +47,8 @@ Pharmacy = {
         //get patient prescriptions
         var payload = {
             intent : 'getPrescription',
-            treatmentId : $(patient).attr("data-treatment-id")
+            treatmentId : $(patient).attr("data-treatment-id"),
+            encounterId : $(patient).attr("data-encounter-id")
         };
         //reset list of prescriptions
         $('.patientPrescriptions').empty();
