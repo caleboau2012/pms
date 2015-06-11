@@ -87,7 +87,7 @@ class ReportModel extends BaseModel {
         return $result;
     }
 
-    public static function patientDiagnosis() {
+    public static function patientDiagnosis($gender) {
         $data = array(
             START_DATE  =>  $_REQUEST[START_DATE],
             END_DATE    =>  $_REQUEST[END_DATE]
