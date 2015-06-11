@@ -115,5 +115,12 @@ define('OCCUPIED', 1);
 define('VACANT', 0);
 
 //EMERGECY REG THINGS
-
 define ('EMER', 'EMER');
+
+// Report Constants
+define('GENDER', 'gender');
+define('GENDER_MALE', 'Male');
+define('GENDER_FEMALE', 'Female');
+define('START_DATE', 'start_date');
+define('END_DATE', 'end_date');
+define('DAY', 'day');

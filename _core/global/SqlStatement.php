@@ -1036,26 +1036,26 @@ class BillingSqlStatement{
 
 class ReportSqlStatement {
     //  Number  list and graph of new patients from start date to end date
-    const NEW_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo
+    const NEW_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
                                 FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     //  Number  list and graph of new (male and female)patients from start date to end date
-    const NEW_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo
-                                FROM patient WHERE sex = :sex AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
+    const NEW_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
+                                FROM patient WHERE sex = :gender AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
     //  Number  and list and graph of current patients from start date to end date
-    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo
+    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
                                 FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
     //  Number  list and graph of current(male and female) patients from start date to end date
-    const CURRENT_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo
-                                            FROM patient WHERE (DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND sex = :sex)
+    const CURRENT_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
+                                            FROM patient WHERE (DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND sex = :gender)
                                             AND (DATE(created_date) BETWEEN DATE(:start_DATE) AND DATE(:end_date))";
 
     //  A graphical representation of patient and their age
     const PATIENTS_AND_AGE_GRAPH = "SELECT patient_id, CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name,
-                                            DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age
-                                            FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_DATE) AND DATE(:end_date)";
+                                            DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age, sex
+                                            FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     //  Number and list of patients visits/encounter hospital per day
     const PATIENTS_VISIT_PER_DAY = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo FROM encounter AS e
@@ -1070,27 +1070,27 @@ class ReportSqlStatement {
                             WHERE DATE(a.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // Number and list of consultations from start date to an end date
-    const CONSULTATIONS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo FROM treatment AS t
+    const CONSULTATIONS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, t.created_date AS consultation_date FROM treatment AS t
                                 LEFT JOIN patient AS p
                                 ON t.patient_id = p.patient_id
                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient  against diagnosis from a start date to an end date
-    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, t.diagnosis FROM treatment AS t
+    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient age against diagnosis
     const PATIENT_AGE_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name,
-                                                DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age, t.diagnosis FROM treatment AS t
+                                                DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age, t.diagnosis, t.created_date AS consultation_date FROM treatment AS t
                                                 LEFT JOIN patient AS p
                                                 ON t.patient_id = p.patient_id
                                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient sex against diagnosis
-    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis FROM treatment AS t
-                                                LEFT JOIN patient AS p
-                                                ON t.patient_id = p.patient_id
-                                                WHERE p.sex = :sex AND (DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
+    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+                                            LEFT JOIN patient AS p
+                                            ON t.patient_id = p.patient_id
+                                            WHERE p.sex = :gender AND (DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 }
