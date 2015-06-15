@@ -892,7 +892,7 @@ class AdmissionSqlStatement {
             AND bed.active_fg = 1
             AND (
                 pt.surname LIKE :wildcard
-                OR pt.surname LIKE :wildcard
+                OR pt.firstname LIKE :wildcard
                 OR pt.middlename LIKE :wildcard
                 OR pt.regNo = :parameter
             )
