@@ -868,7 +868,14 @@ class AdmissionSqlStatement {
             AND ad.patient_id = :patient_id
             AND ad.active_fg = 1";
 
-    const DISCHARGE = "UPDATE admission SET active_fg = 0, discharged_by = :discharged_by, modified_date = NOW() WHERE admission_id = :admission_id AND active_fg = 1";
+    const DISCHARGE = "UPDATE admission
+        INNER JOIN treatment
+            ON admission.treatment_id = treatment.treatment_id
+        SET admission.active_fg = 0, admission.discharged_by = :discharged_by, admission.modified_date = NOW(), treatment.treatment_status = 2, treatment.modified_date = NOW()
+        WHERE
+            admission.admission_id = :admission_id
+            AND admission.active_fg = 1
+            AND treatment.active_fg = 1";
 
     const IS_ADMITTED = "SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND active_fg = 1";
 
