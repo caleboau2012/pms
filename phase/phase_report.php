@@ -26,7 +26,7 @@ if ($intent == 'newPatients') {
 } elseif ($intent == 'currentPatients') {
     ReportController::datesIncluded();
 
-    $result = ReportController::currentPatients($gender);
+    $result = ReportController::currentPatients();
     if (is_array($result)) {
         echo JsonResponse::success($result);
         exit();

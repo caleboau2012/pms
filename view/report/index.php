@@ -86,20 +86,20 @@ Crave::requireAll(UTIL);
                 <label class="label label-primary">
                     Select a report to view
                 </label>
-                <select class="form-control">
-                    <option value="">New Patients</option>
-                    <option value="">Current Patients</option>
-                    <option value="">Patients Visits / Encounter</option>
-                    <option value="">Inpatients</option>
-                    <option value="">Consultation</option>
-                    <option value="">Patients and Diagnosis</option>
+                <select id="view" class="form-control">
+                    <option value="index">New Patients</option>
+                    <option value="currentPatients">Current Patients</option>
+                    <option value="patientVisits">Patients Visits / Encounter</option>
+                    <option value="inPatients">Inpatients</option>
+                    <option value="consultationReport">Consultation</option>
+                    <option value="patientDiagnosis">Patients and Diagnosis</option>
                 </select>
             </div>
             <div class="col-sm-2 center-block">
                 <label class="label label-primary">
                     Select Gender
                 </label>
-                <select class="form-control">
+                <select id="gender" class="form-control" disabled="disabled">
                     <option value="1">All</option>
                     <option value="2">Male</option>
                     <option value="3">Female</option>
@@ -109,16 +109,16 @@ Crave::requireAll(UTIL);
                 <label class="label label-primary">
                     Start Date
                 </label>
-                <input type="date" class="form-control"/>
+                <input type="date" name="start_date" id="start_date" class="form-control"/>
             </div>
             <div class="col-sm-3 center-block">
                 <label class="label label-primary">
                     End Date
                 </label>
-                <input type="date" class="form-control"/>
+                <input type="date" name="end_date" id="end_date" class="form-control"/>
             </div>
         </div>
-        <div class="col-sm-7 col-sm-offset-3">
+        <div class="col-sm-8 col-sm-offset-2">
             <table class="table table-responsive table-stripped dataTable">
                 <thead>
                     <tr>
@@ -152,13 +152,9 @@ Crave::requireAll(UTIL);
 <script src='../../js/bootstrap/jquery.min.js'></script>
 <script src='../../js/bootstrap/bootstrap.min.js'></script>
 <script src="../../js/constants.js"></script>
-<script src="../../js/billing.js"></script>
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
+<script src="../../js/bootstrap/dataTables.tableTools.js"></script>
+<script src="../../js/report.js" type="application/javascript"></script>
 <?php include('../footer.php'); ?>
-<script type="application/javascript">
-    $('.dataTable').dataTable({
-
-    })
-</script>
 </body>
 </html>
