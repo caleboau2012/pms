@@ -381,8 +381,31 @@ class TreatmentModel extends BaseModel{
     /*
      * $encounterData is an assoc array of $doctorId, $patientId, $admissionId, $comments
      * */
-    public function logEncounter($encounterData){
-        return $this->conn->execute(EncounterSqlStatement::UPDATE, $encounterData);
+    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions){
+        $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
+            EncounterTable::admission_id => $admissionId, EncounterTable::treatment_id => $treatmentId,
+            EncounterTable::encounter_id => $encounterId, EncounterTable::consultation => $consultation,
+            EncounterTable::symptoms => $symptoms, EncounterTable::diagnosis => $diagnosis,
+            EncounterTable::comments => $comments);
+
+        try{
+            $this->conn->beginTransaction();
+
+            if(!$this->conn->execute(EncounterSqlStatement::UPDATE, $data))
+                throw new Exception("Error logging encounter");
+
+            $pharmacistModel = new PharmacistModel();
+            foreach ($prescriptions as $prescription){
+                if(!$pharmacistModel->AddPrescription($prescription, $treatmentId, 1, $doctorId, $encounterId))
+                    throw new Exception("Could not add prescription $prescription for this patient");
+            }
+
+            $this->conn->commit();
+            return array('result' => true, 'message' => 'Successfully logged encounter');
+        } catch (Exception $ex){
+            $this->conn->rollBack();
+            return array('result' => false, 'message' => $ex->getMessage());
+        }
     }
 
     public function createNewEncounter($treatmentId, $patientId, $admissionId, $doctorId){

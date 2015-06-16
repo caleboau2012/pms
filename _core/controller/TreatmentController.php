@@ -79,14 +79,8 @@ class TreatmentController{
         return $this->treatmentModel->logEncounter($data);
     }*/
 
-    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments){
-        $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
-                      EncounterTable::admission_id => $admissionId, EncounterTable::treatment_id => $treatmentId,
-                      EncounterTable::encounter_id => $encounterId, EncounterTable::consultation => $consultation,
-                      EncounterTable::symptoms => $symptoms, EncounterTable::diagnosis => $diagnosis,
-                      EncounterTable::comments => $comments);
-
-        return $this->treatmentModel->logEncounter($data);
+    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions){
+        return $this->treatmentModel->logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions);
     }
 
     public function getEncounterId($treatmentId, $patientId, $admissionId, $doctorId){

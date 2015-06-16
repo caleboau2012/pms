@@ -460,25 +460,26 @@ elseif($intent == 'getEncounterId'){
 }
 
 elseif($intent == 'logEncounter'){
-    $doctor_id    = CxSessionHandler::getItem('userid');
-    $patient_id   = isset($_REQUEST[EncounterTable::patient_id]) ? $_REQUEST[EncounterTable::patient_id] : null;
-    $admission_id = isset($_REQUEST[EncounterTable::admission_id]) ? $_REQUEST[EncounterTable::admission_id] : null;
-    $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
-    $encounter_id = isset($_REQUEST[EncounterTable::encounter_id]) ? $_REQUEST[EncounterTable::encounter_id] : null;
-    $consultation = isset($_REQUEST[EncounterTable::consultation]) ? $_REQUEST[EncounterTable::consultation] : "";
-    $symptoms     = isset($_REQUEST[EncounterTable::symptoms]) ? $_REQUEST[EncounterTable::symptoms] : "";
-    $comments     = isset($_REQUEST[EncounterTable::comments]) ? $_REQUEST[EncounterTable::comments] : "";
-    $diagnosis    = isset($_REQUEST[EncounterTable::diagnosis]) ? $_REQUEST[EncounterTable::diagnosis] : "";
+    $doctor_id     = CxSessionHandler::getItem('userid');
+    $patient_id    = isset($_REQUEST[EncounterTable::patient_id]) ? $_REQUEST[EncounterTable::patient_id] : null;
+    $admission_id  = isset($_REQUEST[EncounterTable::admission_id]) ? $_REQUEST[EncounterTable::admission_id] : null;
+    $treatment_id  = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
+    $encounter_id  = isset($_REQUEST[EncounterTable::encounter_id]) ? $_REQUEST[EncounterTable::encounter_id] : null;
+    $consultation  = isset($_REQUEST[EncounterTable::consultation]) ? $_REQUEST[EncounterTable::consultation] : "";
+    $symptoms      = isset($_REQUEST[EncounterTable::symptoms]) ? $_REQUEST[EncounterTable::symptoms] : "";
+    $comments      = isset($_REQUEST[EncounterTable::comments]) ? $_REQUEST[EncounterTable::comments] : "";
+    $diagnosis     = isset($_REQUEST[EncounterTable::diagnosis]) ? $_REQUEST[EncounterTable::diagnosis] : "";
+    $prescription = isset($_REQUEST[PrescriptionTable::prescription]) ? $_REQUEST[PrescriptionTable::prescription] : array();
 
     if($doctor_id && $patient_id && $admission_id && $treatment_id && $encounter_id){
         $encounter = new TreatmentController();
-        $result = $encounter->logEncounter($doctor_id, $patient_id, $admission_id, $treatment_id, $encounter_id, $consultation, $symptoms, $diagnosis, $comments);
+        $response = $encounter->logEncounter($doctor_id, $patient_id, $admission_id, $treatment_id, $encounter_id, $consultation, $symptoms, $diagnosis, $comments, $prescription);
 
-        if($result){
-            echo JsonResponse::success("Successfully logged encounter");
+        if($response['result']){
+            echo JsonResponse::success($response['message']);
             exit;
         } else {
-            echo JsonResponse::error("Failure logging encounter");
+            echo JsonResponse::error($response['message']);
             exit;
         }
     } else {
