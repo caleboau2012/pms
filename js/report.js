@@ -45,6 +45,81 @@ var Report = {
             gender:         gender,
             day:            day
         }
+    },
+
+    doTableOdd: function(sort, header, footer){
+        $('.table').DataTable( {
+            dom: 'T<"clear">lfrtip',
+            iDisplayLength: 25,
+            "bSort": sort,
+            tableTools: {
+                "sSwfPath": "swf/copy_csv_xls_pdf.swf",
+                "aButtons": [
+                    {
+                        "sExtends":    "copy",
+                        "bHeader": header,
+                        "bFooter": footer
+                    },
+                    {
+                        "sExtends":    "csv",
+                        "bHeader": header,
+                        "bFooter": footer
+                    },
+                    {
+                        "sExtends":    "xls",
+                        "bHeader": header,
+                        "bFooter": footer
+                    },
+                    {
+                        "sExtends": "pdf",
+                        "sPdfOrientation": "landscape",
+                        "sPdfMessage": "PMS REPORT.",
+                        "bHeader": header,
+                        "bFooter": footer
+                    },
+                    {
+                        "sExtends": "print",
+                        "sMessage": "PMS REPORT."
+                    }
+                ]
+            }
+        } );
+        Report.printTable();
+    },
+
+
+    table: function(){
+        $('.table').DataTable( {
+            dom: 'T<"clear">lfrtip',
+            iDisplayLength: 25,
+            tableTools: {
+                "sSwfPath": "swf/copy_csv_xls_pdf.swf",
+                "aButtons": [
+                    "copy",
+                    "csv",
+                    "xls",
+                    {
+                        "sExtends": "pdf",
+                        "sPdfOrientation": "landscape",
+                        "sPdfMessage": "PMS Report."
+                    },
+                    {
+                        "sExtends": "print",
+                        "sMessage": "PMS Report."
+                    }
+                ]
+            }
+        } );
+//        Report.printTable();
+    },
+
+    printTable: function(){
+        $('.DTTT_button_print').click(function(){
+            setTimeout(function(){
+                window.print();
+                location.reload();
+            }, 500);
+        });
     }
 }
 
@@ -56,7 +131,7 @@ $(document).ready(function(){
 
     $("#start_date, #end_date").on('change', function(e){
         e.preventDefault();
-        var intent = $('#view').val(), template = "", count = 0;
+        var intent = $('#view').val(), template = "", total = "";
         var start_date = $('#start_date').val(), end_date = $('#end_date').val(), gender = $('#gender').val(), param;
         param = Report.payload(Report.INTENT.CURRENT_PATIENTS, start_date, end_date, gender, null);
         Report.ajaxRequest(host + Report.URL.phase, param, function(data){
@@ -68,8 +143,14 @@ $(document).ready(function(){
                     template += "<td>"+ item.regNo +"</td>"
                     template += "<td>"+ item.sex +"</td></tr>"
                 });
+                total += "<th><td>&nbsp;</td><td>&nbsp;</td>";
+                total += "<td>Total</td><td>"+ data.data.length +"</td>"
             }
-            $('tbody').empty().append(template);
+            $('#new_patient').html("");
+            $('#new_patient').append(template);
+            $('#total').html("");
+            $('#total').append(total);
         }, 'GET');
+        Report.table();
     });
 });

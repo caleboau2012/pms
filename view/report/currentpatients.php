@@ -119,7 +119,7 @@ Crave::requireAll(UTIL);
             </div>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <table class="table table-responsive table-stripped dataTable">
+            <table class="table table-responsive table-stripped">
                 <thead>
                 <tr>
                     <th>S/N</th>
@@ -129,16 +129,7 @@ Crave::requireAll(UTIL);
                 </tr>
                 </thead>
                 <tbody>
-                <tr>
-                    <td colspan="4" class="text-center">No data</td>
-                </tr>
                 </tbody>
-                <tfoot>
-                    <th>
-                        <td colspan="2" class="text-right"><h5>Total</h5></td>
-                        <td><h5>10</h5></td>
-                    </th>
-                </tfoot>
             </table>
         </div>
     </div>

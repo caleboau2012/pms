@@ -119,31 +119,20 @@ Crave::requireAll(UTIL);
             </div>
         </div>
         <div class="col-sm-8 col-sm-offset-2">
-            <table class="table table-responsive table-stripped dataTable">
+            <table class="table table-responsive">
                 <thead>
                     <tr>
                         <th>S/N</th>
                         <th>Name</th>
                         <th>Registration Number</th>
+                        <th>Gender</th>
                     </tr>
                 </thead>
-                <tbody>
-                    <tr>
-                        <td>1</td>
-                        <td>Mbakwe Caleb</td>
-                        <td>CSC/2008/005</td>
-                    </tr>
-                    <tr>
-                        <td>2</td>
-                        <td>Olajuwon Moses Olamoses</td>
-                        <td>CSC/2008/205</td>
-                    </tr>
-                    <tr>
-                        <td>3</td>
-                        <td>Ogunsua Gabriel Oyebode</td>
-                        <td>CSC/2009/045</td>
-                    </tr>
+                <tbody id="new_patient">
                 </tbody>
+                <tfoot id="total">
+
+                </tfoot>
             </table>
         </div>
     </div>
