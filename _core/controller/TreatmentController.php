@@ -24,21 +24,17 @@ class TreatmentController{
     }
 
     public function addTreatment1($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments){
-//    public function addTreatment1($doctorId, $patientId){
-
         $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
-            TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
-            TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments);
-
-//var_dump($treatmentInfo);
+                               TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
+                               TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments);
 
         return $this->treatmentModel->addTreatment1($treatmentInfo);
     }
 
     public function addTreatment2($doctorId, $patientId, $consultation, $symptoms, $diagnosis, $comments, $treatment_id){
         $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
-            TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
-            TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments, TreatmentTable::treatment_id => $treatment_id);
+                               TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
+                               TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments, TreatmentTable::treatment_id => $treatment_id);
 
         return $this->treatmentModel->addTreatment2($treatmentInfo);
     }

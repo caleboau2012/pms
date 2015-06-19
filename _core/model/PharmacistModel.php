@@ -48,7 +48,7 @@ class PharmacistModel extends BaseModel{
      * This method adds a drug to the drug_name_ref if does not already exist.
      */
     public function addDrug($drug){
-        if(!$this->conn->execute(DrugSqlStatement::ADD_DRUG, array(DrugRefTable::name => strtolower($drug) ) ) )
+        if(!$this->conn->execute(DrugSqlStatement::ADD_DRUG, array(DrugRefTable::name => strtolower($drug) ), true) )
             throw new Exception("Could not add drug to table");
         return true;
     }
@@ -100,7 +100,7 @@ class PharmacistModel extends BaseModel{
 
     public function setOutgoingDrug($drugId, $qty, $unitId){
         $data = array(OutgoingDrugsTable::drug_id => $drugId, OutgoingDrugsTable::quantity => $qty, OutgoingDrugsTable::unit_id => $unitId);
-        if(!$this->conn->execute(DrugSqlStatement::ADD_OUTGOING_DRUG, $data))
+        if(!$this->conn->execute(DrugSqlStatement::ADD_OUTGOING_DRUG, $data, true))
             throw new Exception("Could not add outgoing drug to outgoing_drug table");
         return true;
     }
@@ -127,13 +127,13 @@ class PharmacistModel extends BaseModel{
                 if($drugName){
 
                     if(!$drugId){
-                            $this->addDrug($drugName);
-                            $drugId = $this->conn->getLastInsertedId();
+                            $addDrug = $this->addDrug($drugName);
+                            $drugId = ($addDrug) ? $this->conn->getLastInsertedId() : null;
                     }
 
                     if($quantity && $unitId && $drugId){
-                            $this->setOutgoingDrug($drugId, $quantity, $unitId);
-                            $outgoingDrugId = $this->conn->getLastInsertedId();
+                            $outgoingDrug = $this->setOutgoingDrug($drugId, $quantity, $unitId);
+                            $outgoingDrugId = ($outgoingDrug) ? $this->conn->getLastInsertedId() : null;
                     }
 
                     $this->mapPharmacistToOutgoingDrug($pharmacistId, $outgoingDrugId);

@@ -41,8 +41,6 @@ class PatientModel extends BaseModel {
         $data2 = $this->conn->getLastInsertedId();
 
         if ($data2){
-
-
             $sql = PatientSqlStatement::UPDATE_EMER_REGNO;
             $data3 = array(PatientTable::regNo=> EMER.$data2, PatientTable::patient_id =>$data2);
             $this->conn->execute($sql, $data3);
