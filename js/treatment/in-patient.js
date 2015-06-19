@@ -192,22 +192,23 @@ Treatment = {
         $('.at').click();
     },
     endTreatment: function(){
-        var url = host + "phase/phase_treatment.php?intent=endTreatment&treatment_id=" + Treatment.CONSTANTS.treatmentid
-            + "&patient_id=" + $('.patient-ID').html();
+        var url = host + "phase/phase_treatment.php?intent=closeEncounter&treatment_id=" + Treatment.CONSTANTS.treatmentid
+            + "&encounter_id=" + Treatment.CONSTANTS.encounterid;
         $.getJSON(url, function (data) {
             console.log(data);
-            $('.treatment-ID').html(data.data);
-            Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
-            $('.patient-name').html($(patient).find('.patientName').html());
-            $('.patient-RegNo').html($(patient).find('.patientRegNo').html());
-            $('.patient-Sex').html($(patient).find('.patientSex').html());
-            $('.patient-Age').html($(patient).find('.patientAge').html());
-            $('.patient-ID').html($(patient).find('.patientid').html());
+            showSuccess(data.data);
+            //$('.treatment-ID').html(data.data);
+            //Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
+            //$('.patient-name').html($(patient).find('.patientName').html());
+            //$('.patient-RegNo').html($(patient).find('.patientRegNo').html());
+            //$('.patient-Sex').html($(patient).find('.patientSex').html());
+            //$('.patient-Age').html($(patient).find('.patientAge').html());
+            //$('.patient-ID').html($(patient).find('.patientid').html());
         });
         Treatment.removeFromQueue($('.patient-ID').html());
-        //$('.patient-name').html("Please Select a Patient from the Queue <span class='fa fa-long-arrow-right'></span> ");
-        //$('#end').addClass('hidden');
-        //$('.well').addClass('hidden');
+        $('.patient-name').html("Please Select a Patient from the Queue <span class='fa fa-long-arrow-right'></span> ");
+        $('#end').addClass('hidden');
+        $('.well').addClass('hidden');
     },
     submitTreatment: function(data){
         $('#loader').removeClass('hidden');
@@ -242,12 +243,14 @@ Treatment = {
             }
         }, 'json')
     },
-    removeFromQueue: function (patient){
-        $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
-        + patient), function(data){
-            console.log(data);
-            location.reload();
-        });
+    removeFromQueue: function (id){
+        console.log(id);
+        $('.patients').find('#heading' + id).parent().remove();
+        //$.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
+        //+ patient), function(data){
+        //    console.log(data);
+        //    //location.reload();
+        //});
     },
     getTreatmentHistory: function() {
         var url = host + "phase/phase_treatment.php?intent=getTreatmentHistory&patient_id=" + $('.patient-ID').html();
@@ -311,7 +314,7 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            showAlert(data.data);
+            showSuccess(data.data);
         }, 'json')
     },
     getLabHistory: function(type){

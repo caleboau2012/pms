@@ -406,7 +406,6 @@ elseif($intent == 'closeEncounter'){
     $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
     $encounter_id = isset($_REQUEST[EncounterTable::encounter_id]) ? $_REQUEST[EncounterTable::encounter_id] : null;
 
-
     if($treatment_id && $encounter_id){
         $encounter = new TreatmentController();
         $result = $encounter->closeEncounter($treatment_id, $encounter_id);
