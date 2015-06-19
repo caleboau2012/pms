@@ -675,7 +675,7 @@ CREATE TABLE IF NOT EXISTS `encounter` (
   `symptoms` varchar(200) DEFAULT NULL,
   `comments` text,
   `created_date` datetime NOT NULL,
-  `modified_date` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `modified_date` datetime NOT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
   `active_fg` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB AUTO_INCREMENT=78 DEFAULT CHARSET=latin1;

@@ -4,7 +4,10 @@
 Treatment = {
     CONSTANTS: {
         doctorid: $('#doctorid').html(),
-        treatmentid: null
+        treatmentid: 0,
+        encounterid: 0,
+        admissionid: 0,
+        patientid: 0
     },
     init: function(){
         $('.navbar-form').on('submit', function(e){
@@ -95,7 +98,7 @@ Treatment = {
     //    //Treatment.addToQueue();
     //},
     addToQueue: function (patient){
-        console.log(patient);
+        //console.log(patient);
         //var currentYear = new Date().getFullYear();
         //var age = currentYear - parseInt(data[i].birth_date.split('-')[0]);
         //
@@ -111,6 +114,7 @@ Treatment = {
         var patientHTML = "";
         patientHTML += $('#tmplPatients').html();
         patientHTML = patientHTML.replace('{{status}}', panel);
+        patientHTML = replaceAll('{{admission_id}}', patient.admission_id, patientHTML);
         patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
         patientHTML = replaceAll('{{doctor}}', toTitleCase(patient.doctor), patientHTML);
         patientHTML = replaceAll('{{patient_id}}', patient.patient_id, patientHTML);
@@ -118,6 +122,9 @@ Treatment = {
         patientHTML = replaceAll('{{name}}', patientName, patientHTML);
         patientHTML = replaceAll('{{treatment_id}}', patient.treatment_id, patientHTML);
         patientHTML = replaceAll('{{bed}}', patient.bed_id, patientHTML);
+        patientHTML = replaceAll('{{ward_id}}', patient.ward_id, patientHTML);
+
+        //console.log(patientHTML);
 
         $('.patients').append(patientHTML);
     },
@@ -156,18 +163,29 @@ Treatment = {
         });
     },
     startTreatment: function(patient){
-        var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
-            + "&patient_id=" + $(patient).find('.patientid').html();
-        //$.getJSON(url, function (data) {
-        //    //console.log(data);
-        //    $('.treatment-ID').html(data.data.treatment_id.treatment_id);
-        //    Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
-        //    $('.patient-name').html($(patient).find('.patientName').html());
-        //    $('.patient-RegNo').html($(patient).find('.patientRegNo').html());
-        //    $('.patient-Sex').html($(patient).find('.patientSex').html());
-        //    $('.patient-Age').html($(patient).find('.patientAge').html());
-        //    $('.patient-ID').html($(patient).find('.patientid').html());
-        //});
+        //console.log(patient);
+
+        Treatment.CONSTANTS.treatmentid = $(patient).find('.treatment_id').html();
+        Treatment.CONSTANTS.admissionid = $(patient).find('.admission_id').html();
+        Treatment.CONSTANTS.patientid = $(patient).find('.patient_id').html();
+
+        var url = host + "phase/phase_treatment.php?intent=getEncounterId";
+
+        $.getJSON(url, {
+            treatment_id:Treatment.CONSTANTS.treatmentid,
+            patient_id: Treatment.CONSTANTS.patientid,
+            admission_id: Treatment.CONSTANTS.admissionid
+        }, function (data) {
+            //console.log(data);
+            Treatment.CONSTANTS.encounterid = data.data;
+            $('.treatment-ID').html(Treatment.CONSTANTS.treatmentid);
+            $('.patient-name').html($(patient).find('.patientName').html());
+            $('.patient-RegNo').html($(patient).find('.patientRegNo').html());
+            $('.patient-Sex').html($(patient).find('.patientSex').html());
+            $('.patient-Age').html($(patient).find('.patientAge').html());
+            $('.patient-ID').html($(patient).find('.patient_id').html());
+        });
+
         $('#end').removeClass('hidden');
         $('.well').removeClass('hidden');
         $('.at').click();
@@ -198,35 +216,38 @@ Treatment = {
             prescription.push($(this).text().substring(0, $(this).text().length - 1));
         });
 
-        console.log(prescription);
-
-        var url = host + "phase/phase_admission_request.php?treatment_id=" + Treatment.CONSTANTS.treatmentid +
-            "&intent=requestAdmission";
-
-        if(data.admit.checked){
-            $.get(url, function(data){
-                console.log(data);
-            }).fail(function(e){
-                console.log(e.responseText);
-            });
-        }
-
-        url = host + "phase/phase_treatment.php";
-        $.post(url, {
-            intent: "submitTreatment",
+        console.log({
+            intent: "logEncounter",
             treatment_id: Treatment.CONSTANTS.treatmentid,
+            admission_id: Treatment.CONSTANTS.admissionid,
+            encounter_id: Treatment.CONSTANTS.encounterid,
             doctor_id: Treatment.CONSTANTS.doctorid,
-            patient_id: $('.patient-ID').html(),
+            patient_id: Treatment.CONSTANTS.patientid,
+            symptoms: data.symptoms.value,
+            consultation: data.consultation.value,
+            comments: data.comment.value,
+            diagnosis: data.diagnosis.value,
+            prescription: prescription
+        });
+
+        var url = host + "phase/phase_treatment.php";
+        $.post(url, {
+            intent: "logEncounter",
+            treatment_id: Treatment.CONSTANTS.treatmentid,
+            admission_id: Treatment.CONSTANTS.admissionid,
+            encounter_id: Treatment.CONSTANTS.encounterid,
+            doctor_id: Treatment.CONSTANTS.doctorid,
+            patient_id: Treatment.CONSTANTS.patientid,
             symptoms: data.symptoms.value,
             consultation: data.consultation.value,
             comments: data.comment.value,
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
-            console.log(data);
+            console.log(response);
             $('#loader').addClass('hidden');
             if(response.status == 1){
-                showAlert("Done, please end the session if you are done");
+                showSuccess("Done, please end the session if you are done");
                 $(data)[0].reset();
             }
             else{
