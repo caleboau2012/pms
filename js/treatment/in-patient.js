@@ -274,6 +274,7 @@ Treatment = {
         });
     },
     getEncounterHistory: function(id) {
+        console.log(id);
         var url = host + "phase/phase_treatment.php?intent=getEncounters&treatment_id=" + id;
         $.getJSON(url, function (data) {
             console.log(data);
