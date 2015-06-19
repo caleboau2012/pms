@@ -108,7 +108,29 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 <script id="tmplTreatmentHistory" type="text/html">
     <li class="list-group-item">
-        <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{userid}}"
+        <a class="collapsed treatment-history-template" data-toggle="collapse" data-parent="#accordion{{userid}}"
+           href="#collapse{{treatmentid}}" aria-expanded="false" aria-controls="collapse{{treatmentid}}">
+            <b>Diagnosis:</b> {{diagnosis}}
+        </a>
+        <div id="collapse{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
+             aria-labelledby="heading{{treatmentid}}">
+            <div class="panel-body">
+                <p><b>Comments:</b> {{comments}}</p>
+                <p><b>Consultation Details:</b> {{consultation}}</p>
+                <span class="treatmentid" hidden>{{treatmentid}}</span>
+                <span class="doctorid" hidden>{{doctorid}}</span>
+                <p><b>Syptoms:</b> {{symptoms}}</p>
+                <div class="accordion-inner">
+                    <div class="accordion" id="encounteraccordion{{treatmentid}}"></div>
+                </div>
+            </div>
+        </div>
+    </li>
+</script>
+
+<script id="tmplEncounterHistory" type="text/html">
+    <li class="list-group-item">
+        <a class="collapsed" data-toggle="collapse" data-parent="#encounteraccordion{{userid}}"
            href="#collapse{{treatmentid}}" aria-expanded="false" aria-controls="collapse{{treatmentid}}">
             <b>Diagnosis:</b> {{diagnosis}}
         </a>

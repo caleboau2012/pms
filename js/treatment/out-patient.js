@@ -83,6 +83,12 @@ Treatment = {
         $('body').delegate('#prescriptions .close', 'click', function(e){
             $(this).parent().remove();
         });
+
+        $('body').delegate('.treatment-history-template', 'click', function(e){
+            e.preventDefault();
+            //console.log([e, this]);
+            Treatment.getEncounterHistory($(this).parent().find('.treatmentid').html());
+        });
     },
     addPrescription: function(drug){
         var drugHTML = "";
@@ -229,19 +235,47 @@ Treatment = {
 
             $('.history').empty();
 
-            for(i = 0; i < data.length; i++){
+            for(var i = 0; i < data.length; i++){
                 var patientHTML = "";
                 patientHTML += $('#tmplTreatmentHistory').html();
                 patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
                 patientHTML = replaceAll('{{treatmentid}}', data[i].treatment_id, patientHTML);
                 patientHTML = replaceAll('{{comments}}', data[i].comments, patientHTML);
-                patientHTML = replaceAll('{{consultation}}', patientName, patientHTML);
+                patientHTML = replaceAll('{{consultation}}', data[i].consultation, patientHTML);
                 patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
                 patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                 patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
 
                 //console.log(patientHTML);
                 $('.history').append(patientHTML);
+            }
+        });
+    },
+    getEncounterHistory: function(id) {
+        console.log(id);
+        var url = host + "phase/phase_treatment.php?intent=getEncounters&treatment_id=" + id;
+        $.getJSON(url, function (data) {
+            console.log(data);
+
+            if(data.status == 1){
+                data = data.data;
+
+                $('#encounteraccordion' + id).empty();
+
+                for(var i = 0; i < data.length; i++){
+                    var patientHTML = "";
+                    patientHTML += $('#tmplEncounterHistory').html();
+                    patientHTML = replaceAll('{{userid}}', id, patientHTML);
+                    patientHTML = replaceAll('{{treatmentid}}', data[i].encounter_id, patientHTML);
+                    patientHTML = replaceAll('{{comments}}', data[i].comments, patientHTML);
+                    patientHTML = replaceAll('{{consultation}}', data[i].consultation, patientHTML);
+                    patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
+                    patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
+                    patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
+
+                    //console.log(patientHTML);
+                    $('#encounteraccordion' + id).append(patientHTML);
+                }
             }
         });
     },
