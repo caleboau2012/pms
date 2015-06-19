@@ -216,20 +216,6 @@ Treatment = {
             prescription.push($(this).text().substring(0, $(this).text().length - 1));
         });
 
-        console.log({
-            intent: "logEncounter",
-            treatment_id: Treatment.CONSTANTS.treatmentid,
-            admission_id: Treatment.CONSTANTS.admissionid,
-            encounter_id: Treatment.CONSTANTS.encounterid,
-            doctor_id: Treatment.CONSTANTS.doctorid,
-            patient_id: Treatment.CONSTANTS.patientid,
-            symptoms: data.symptoms.value,
-            consultation: data.consultation.value,
-            comments: data.comment.value,
-            diagnosis: data.diagnosis.value,
-            prescription: prescription
-        });
-
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "logEncounter",
@@ -244,7 +230,7 @@ Treatment = {
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
-            console.log(response);
+            //console.log(response);
             $('#loader').addClass('hidden');
             if(response.status == 1){
                 showSuccess("Done, please end the session if you are done");
@@ -348,7 +334,7 @@ Treatment = {
             intent: "getVitals",
             patient_id: $('.patient-ID').html()
         }, function(data){
-            console.log(data);
+            //console.log(data);
             $('.vitals ul').empty();
             if(data.status == 1){
                 data = data.data;

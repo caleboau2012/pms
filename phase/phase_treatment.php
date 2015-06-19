@@ -292,11 +292,10 @@ elseif  ($intent == 'getTreatmentHistory') {
     }
 
     $treat = new TreatmentController();
-    $request_adm = $treat->getTreatmentHistory($patientid);
+    $history = $treat->getTreatmentHistory($patientid);
 
-    if(is_array($request_adm)){
-        //echo JsonResponse::success($request_adm);
-        echo JsonResponse::success(array($request_adm));
+    if(is_array($history)){
+        echo JsonResponse::success($history);
         //echo array($request_adm);
         exit();
     } else {
