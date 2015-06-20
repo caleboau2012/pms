@@ -17,6 +17,19 @@ var Report = {
         phase: "phase/phase_report.php"
     },
 
+    currentDate: function() {
+        var now = new Date();
+        var year = now.getFullYear().toString();
+        var month = now.getMonth().toString();
+        var day = now.getDate().toString();
+
+        month = (month.length < 2) ? ('0' + month) : month;
+        day = (day.length < 2) ? ('0' + day) : day;
+
+        var today = year + "-" + month + "-" + day;
+        return today;
+    },
+
     ajaxRequest: function(url, param, callback, request_type) {
         if (request_type == "POST"){
             $.post(url, param, function(data){
@@ -128,6 +141,8 @@ $(document).ready(function(){
         var view = $(this).val().toLowerCase();
         window.open(view +'.php', '_self');
     });
+
+    $("#start_date, #end_date").val(Report.currentDate());
 
     $("#start_date, #end_date").on('change', function(e){
         e.preventDefault();
