@@ -248,24 +248,18 @@ elseif  ($intent == 'submitTreatment') { //working
 
     $admission_add = null;
 
-    if (isset($treatment_id) || isset($doctorid) || isset ($patientid) || isset ($consultation) || isset ($symptoms) || isset ($diagnosis) || isset ($comments)){
-        echo JsonResponse::error("MANY filled, Ensure All fields are filled");
-        exit();
-    }
-    else{
-        $newaddm = new TreatmentController();
-        $admission_add = $newaddm->addTreatment2($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments, $treatment_id);
+    $newaddm = new TreatmentController();
+    $admission_add = $newaddm->addTreatment2($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments, $treatment_id);
 
-        if ($admission_add){
+    if ($admission_add){
 
-            foreach ($prescription as $somepre) {
-                $status = ACTIVE;
-                $mod = DOCTOR;
-                $pre  = new PharmacistController();
-                $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
-                if(!$pre){
-                    exit();
-                }
+        foreach ($prescription as $somepre) {
+            $status = ACTIVE;
+            $mod = DOCTOR;
+            $pre  = new PharmacistController();
+            $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
+            if(!$pre){
+                exit();
             }
         }
     }

@@ -184,7 +184,7 @@ Treatment = {
             prescription.push($(this).text().substring(0, $(this).text().length - 1));
         });
 
-        console.log(prescription);
+        console.log(Treatment.CONSTANTS.treatmentid);
 
         var url = host + "phase/phase_admission_request.php?treatment_id=" + Treatment.CONSTANTS.treatmentid +
             "&intent=requestAdmission";
@@ -192,10 +192,24 @@ Treatment = {
         if(data.admit.checked){
             $.get(url, function(data){
                 console.log(data);
+                if(data.status == 2)
+                    showSuccess('Patient Already Admitted');
             }).fail(function(e){
                 console.log(e.responseText);
             });
         }
+
+        console.log({
+            intent: "submitTreatment",
+            treatment_id: Treatment.CONSTANTS.treatmentid,
+            doctor_id: Treatment.CONSTANTS.doctorid,
+            patient_id: $('.patient-ID').html(),
+            symptoms: data.symptoms.value,
+            consultation: data.consultation.value,
+            comments: data.comment.value,
+            diagnosis: data.diagnosis.value,
+            prescription: prescription
+        });
 
         url = host + "phase/phase_treatment.php";
         $.post(url, {
@@ -209,10 +223,10 @@ Treatment = {
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
-            console.log(data);
+            console.log(response);
             $('#loader').addClass('hidden');
             if(response.status == 1){
-                showAlert("Done, please end the session if you are done");
+                showSuccess("Done, please end the session if you are done");
                 $(data)[0].reset();
             }
             else{
@@ -289,7 +303,7 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            showAlert(data.data);
+            showSuccess(data.data);
         }, 'json')
     },
     getLabHistory: function(type){

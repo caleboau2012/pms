@@ -207,7 +207,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <div class="alert hidden alert-danger alert-dismissable" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
-                        <span id="alertMSG"></span>
+                        <span class="alertMSG"></span>
+                    </div>
+                    <div class="alert hidden alert-success alert-dismissable" role="alert">
+                        <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                aria-hidden="true">&times;</span></button>
+                        <span class="successMSG"></span>
                     </div>
                 </div>
             </div>
