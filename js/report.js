@@ -158,14 +158,15 @@ $(document).ready(function(){
                     template += "<td>"+ item.regNo +"</td>"
                     template += "<td>"+ item.sex +"</td></tr>"
                 });
-                total += "<th><td>&nbsp;</td><td>&nbsp;</td>";
-                total += "<td>Total</td><td>"+ data.data.length +"</td>"
+                //total += "<th><td>&nbsp;</td><td>&nbsp;</td>";
+                total += "<tr><th>Total</th><th></th><th></th><th>"+ data.data.length +"</th></tr>"
             }
-            $('#new_patient').html("");
-            $('#new_patient').append(template);
-            $('#total').html("");
-            $('#total').append(total);
+            //$('#new_patient').html("");
+            $('#new_patient').html(template);
+            //$('#total').html("");
+            $('#total').html(total);
+
+            Report.table();
         }, 'GET');
-        Report.table();
     });
 });

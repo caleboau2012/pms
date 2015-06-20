@@ -142,7 +142,7 @@ Crave::requireAll(UTIL);
 <script src='../../js/bootstrap/bootstrap.min.js'></script>
 <script src="../../js/constants.js"></script>
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
-<script src="../../js/bootstrap/dataTables.tableTools.js"></script>
+<!--<script src="../../js/bootstrap/dataTables.tableTools.j"></script>-->
 <script src="../../js/report.js" type="application/javascript"></script>
 <?php include('../footer.php'); ?>
 </body>
