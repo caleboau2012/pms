@@ -166,7 +166,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <!-- New Patient Modal -->
 <div class="modal fade" id="newPatientModal" tabindex="-1" role="dialog" aria-labelledby="newPatientModal"
      aria-hidden="true">
-    <div class="modal-dialog">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <form id="newPatientForm" name="newPatientForm" class="form-group">
                 <div class="modal-header">
