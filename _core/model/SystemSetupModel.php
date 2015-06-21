@@ -17,7 +17,7 @@ class SystemSetupModel{
     }
 
     public function createDB(){
-        $query = file_get_contents($this->path.'pms.sql');
+        $query = file_get_contents($this->path.'pms_setup.sql');
         $pds = $this->pdo->prepare($query);
         $check = $pds->execute(array());
 
