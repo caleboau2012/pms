@@ -3,7 +3,7 @@
 require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
+Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'Licence'));
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
 Crave::requireFiles(CONTROLLER, array('UserController'));
 
@@ -48,8 +48,14 @@ if ($intent == 'getStaffDetails') {
 
     $userController = new UserController();
 
-    if($userController->addUser($regNo, $passcode)){
-        echo JsonResponse::success("Successfully created!");
+    $feedback = $userController->addUser($regNo, $passcode);
+
+    if(is_array($feedback) && $feedback[JsonResponse::P_STATUS] == STATUS_ERROR){
+        echo JsonResponse::error($feedback[JsonResponse::P_MESSAGE]);
+        exit();
+    }
+    if($feedback) {
+        echo JsonResponse::message(STATUS_OK, "Successfully created user!");
         exit();
     } else {
         echo JsonResponse::error("Failed! User already exist");

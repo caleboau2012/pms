@@ -13,7 +13,6 @@
             $result = $licence->conn->fetch($stmt, $data);
 
             $existing_user_count = $result['count'];
-            var_dump($existing_user_count);
 
             // Get user count allowed in licence file
             $project_name = 'pms';

@@ -44,7 +44,11 @@ class UserController {
 
     public function addUser($regNo, $passcode, $status = INACTIVE){
         if (!Licence::withinUserLimit()) {
-            return false;
+            $response_array = array(
+                JsonResponse::P_STATUS  =>  JsonResponse::STATUS_ERROR,
+                JsonResponse::P_MESSAGE =>  'You have exceeded maximum number of users within your licence'
+            );
+            return $response_array;
         }
 
         if (!($regNo && $passcode)){
