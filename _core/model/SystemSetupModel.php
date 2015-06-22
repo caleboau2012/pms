@@ -39,7 +39,7 @@ class SystemSetupModel{
         $host = DB_HOST;
         $username = DB_USERNAME;
         $password = DB_PASSWORD;
-        $params = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => 1);
+        $params = array(UserAuthTable::regNo => $regNo, UserAuthTable::passcode => $passcode, UserAuthTable::status => INACTIVE);
         $sql = UserAuthSqlStatement::ADD;
 
         try{
