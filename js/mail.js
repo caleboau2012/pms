@@ -2,7 +2,7 @@
 jQuery.fn.setSelection = function(selectionStart, selectionEnd) {
     if(this.length == 0) return this;
     input = this[0];
- 
+
     if (input.createTextRange) {
         var range = input.createTextRange();
         range.collapse(true);
@@ -13,7 +13,7 @@ jQuery.fn.setSelection = function(selectionStart, selectionEnd) {
         input.focus();
         input.setSelectionRange(selectionStart, selectionEnd);
     }
- 
+
     return this;
 }
 
@@ -29,7 +29,7 @@ var Mail = {};
 Mail.CONSTANTS = {
     MSG_STATUS : {
         UNREAD : "1",
-        READ : "0"        
+        READ : "0"
     },
 
     MSG_TYPE : {
@@ -113,7 +113,7 @@ Mail.Template = {
 
         var participant_id = (typeof msg.sender_id == 'undefined') ? msg.recipient_id : msg.sender_id;
         var participant_name = toTitleCase((typeof msg.sender_name == 'undefined') ? msg.recipient_name : msg.sender_name);
-        
+
         var pronoun = (typeof msg.sender_id == 'undefined') ? "recipient" : "sender";
         var preposition;
         if(pronoun == "sender"){
@@ -122,7 +122,7 @@ Mail.Template = {
         else{
             preposition = "<span class='label label-default'>To </span>";
         }
-        
+
         var subject = (typeof msg.msg_subject == 'undefined' || msg.msg_subject == "") ? "(no subject)" : msg.msg_subject;
 
         var display_date = Mail.Template.formatDate(msg.created_date);
@@ -160,7 +160,7 @@ Mail.Template = {
 
             So, PLEASE JUST LEAVE THIS ELSE BLOCK AS IT IS
             THANK YOU!!!
-            */            
+            */
             msg_status = "";
             msg_status_indicator = "";
         }
@@ -232,12 +232,12 @@ Mail.Template = {
 
     formatDate : function(date_string) {
         var date_obj = new Date(date_string);
-        
+
         var now_date_obj = new Date();
         var now_date = now_date_obj.getDate();
         var now_month = now_date_obj.getMonth();
         var now_year = now_date_obj.getFullYear();
-        
+
         if (date_obj.getFullYear() == now_year) {
             if (date_obj.getMonth() == now_month && date_obj.getDate() == now_date) {
                 var split_arr = date_obj.toLocaleTimeString().split(" ")
@@ -250,7 +250,7 @@ Mail.Template = {
         }
         if (date_obj.getDate() == now_date && date_obj.getMonth() == now_month && date_obj.getFullYear() == now_year) {
             return date_obj.toDateString().split(" " + b.toTimeString())[0];
-        } 
+        }
     }
 }
 
@@ -271,7 +271,7 @@ Mail.serverReq = function(url, param, callback, request_type) {
             };
         }).done(function(){
             window.dispatchEvent(new Event('ServerRequestComplete'));
-        });        
+        });
     }
 }
 
@@ -280,7 +280,7 @@ Mail.sendMail = function() {
     var message_modal = $(".message-modal-body");
 
     var recipient_field = $("input[name='recipient']");
-    
+
     if (typeof recipient_field.attr("id") == 'undefined') {
         var parent_field = recipient_field.parent();
         parent_field.addClass("has-error");
@@ -310,7 +310,7 @@ Mail.sendMail = function() {
                     /*console.log("Load message complete!");*/
                     Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.SUCCESS);
                     /*console.log("alert displayed..." + data.message);*/
-                });                
+                });
             } else {
                 Mail.alertMessage(data.message, Mail.CONSTANTS.ALERT_TYPE.SUCCESS);
             }
@@ -327,7 +327,7 @@ Mail.replyMail = function(msg_data) {
     var recipient_field = $("input[name='recipient']");
 
     recipient_field.val(recipient_name);
-    recipient_field.attr("id", recipient_id);
+    recipient_field.attr("id", "user-" + recipient_id);
     recipient_field.attr("disabled", "disabled");
 
     var subject = "Re: " + msg_data.msg_subject;
@@ -448,7 +448,7 @@ Mail.loadMessages = function(active_tab, callback){
     var active_tab_id = $(active_tab).attr("id");
 
     /*console.log(active_tab_id);*/
-    
+
     var payload = {};
 
     if (active_tab_id == "inbox") {
@@ -483,7 +483,7 @@ Mail.renderEmptyMessagePane = function() {
 
 Mail.displayMessages = function(data, active_tab) {
     var active_tab = (active_tab == null) ? $(".tab-pane.active") : active_tab;
-    
+
     active_tab.find(".message-pane").removeClass("hidden");
     active_tab.find(".empty-box-message").addClass("hidden");
 
@@ -496,13 +496,13 @@ Mail.displayMessages = function(data, active_tab) {
 
     var message_list = active_tab.find("table.message-list > tbody");
     message_list.html("");
-    
+
     var msg_type = data.msg_type;
-    
+
     if (msg_type == Mail.CONSTANTS.MSG_TYPE.INBOX) {
         Mail.resource.unread_count = parseInt(data.unread);
     };
-    
+
     $(data[msg_type]).each(function(index, value){
         value.name = value.surname + " " + value.firstname + " " + value.middlename;
         message_list.append(Mail.Template.messageElement(value));
@@ -528,7 +528,7 @@ Mail.setMailNavigation = function(active_tab, start_index, end_index, total, pag
 
     var nav_newer = active_tab.find(".newer");
     var nav_older = active_tab.find(".older");
-    
+
     nav_newer.addClass("disabled_msg_nav_icon")
     nav_older.addClass("disabled_msg_nav_icon")
 
@@ -571,7 +571,7 @@ Mail.regDOM = function(){
     $(".back-button").unbind('click').bind('click', function(event){
         Mail.removeMessagePane();
     })
-    
+
     $('.msg-action').unbind('click').bind('click', function(event){
         var clicked = $(this);
         if (clicked.hasClass("msg-action-reply")) {
