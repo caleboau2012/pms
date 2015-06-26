@@ -5,14 +5,15 @@
 
     Roster = {
         init: function(){
-            $('#calendar').fullCalendar({
+            $('#dashboard-calendar').fullCalendar({
                 header: {
                     left: 'prev,next today',
                     center: 'title',
-                    right: 'month,basicWeek'
+                    right: 'basicWeek, basicDay'
                 },
+                defaultView: 'basicWeek',
+                height: 150,
                 eventLimit: true, // allow "more" link when too many events
-                //defaultDate: '2015-02-12',
                 editable: false,
                 droppable: false, // this allows things to be dropped onto the calendar
                 events:{
@@ -29,6 +30,7 @@
                             '<span class="n-duty small">Night&nbsp;&nbsp;&nbsp;</span><br/>' +
                           '</div>';
             $('.fc-toolbar').append(content)
+            console.log((new Date()).toUTCString());
         }
     };
     $(function(){

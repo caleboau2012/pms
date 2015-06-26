@@ -24,6 +24,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
+    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
+    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
     <link href="../css/master.css" rel="stylesheet">
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -47,8 +49,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             </button>
             <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
-        <div class="navbar-collapse collapse navbar-right">
-            <ul class="nav navbar-nav">
+        <div id="navbar" class="navbar-collapse collapse">
+            <ul class="nav navbar-nav navbar-right">
                 <li>
                     <a href="mails.php">
                         <span class="fa fa-envelope"></span>
@@ -77,6 +79,19 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div id="dashboard">
             <br>
             <div class="dashboard-panels">
+
+                <div class="panel panel-default">
+                    <div class="panel-heading">
+                        <h3 class="panel-title">Roster</h3>
+                    </div>
+                    <div class="panel-body">
+                        <div id='roster_loading'>
+                            <span class="fa fa-pulse fa-spinner"></span>
+                        </div>
+                        <div id='dashboard-calendar'></div>
+                    </div>
+                </div>
+
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h3 class="panel-title">Core Functions</h3>
@@ -246,7 +261,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../js/constants.js"></script>
 <script src="../js/index.js"></script>
 <script src="../js/backup_restore.js" type="application/javascript"></script>
+<script src='../js/libs/fullcalendar/moment.min.js'></script>
+<script src='../js/bootstrap/jquery-ui.custom.min.js'></script>
+<script src='../js/libs/fullcalendar/fullcalendar.min.js'></script>
+<script src="../js/dashboard-roster.js"></script>
 <?php include('footer.php'); ?>
-
 </body>
 </html>

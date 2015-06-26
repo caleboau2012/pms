@@ -369,6 +369,9 @@ a.dashboard-link:hover, a.dashboard-link:focus {
 .fc-event.ui-draggable.ui-draggable-handle{
 
 }
+.fc-center h2{
+    font-size: x-large;
+}
 .accordion-group{
     margin: 0.4em;
     border-bottom: solid thin #E0E0E0;

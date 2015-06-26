@@ -41,7 +41,7 @@
                     right: 'month,basicWeek'
                 },
                 eventLimit: true, // allow "more" link when too many events
-                defaultDate: '2015-02-12',
+                //defaultDate: '2015-02-12',
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar
                 events:{
