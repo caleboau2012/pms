@@ -278,8 +278,8 @@ class PrescriptionSqlStatement{
                       order by t.modified_date DESC ";
     const UPDATE_STATUS = "UPDATE prescription AS p SET p.status = :status WHERE prescription_id = :prescription_id";
     const PRESCRIPTION_DRUG = "INSERT INTO outgoing_drugs AS od ";
-    const ADD_PRESCRIPTION = "INSERT INTO prescription (prescription_id, prescription, treatment_id, encounter_id, status, modified_by, created_date, modified_date, active_fg)
-     VALUES (NULL, :prescription, :treatment_id, :encounter_id, :status, :modified_by, NOW(), NOW(), '1')";
+    const ADD_PRESCRIPTION = "INSERT INTO prescription (prescription, treatment_id, encounter_id, status, modified_by, created_date, modified_date, active_fg)
+     VALUES (:prescription, :treatment_id, :encounter_id, :status, :modified_by, NOW(), NOW(), '1')";
     const ADD_UNITS = "INSERT INTO unit_ref (unit, symbol) VALUES ";
 }
 
