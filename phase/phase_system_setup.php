@@ -75,31 +75,6 @@ if ($intent == 'initialSetup') {
         echo JsonResponse::error('Adding hospital information unsuccessful');
         exit;
     }
-} elseif($intent == 'updateHospitalInfo'){
-    $hospital_name = $_REQUEST['name'];
-    $hospital_address = $_REQUEST['address'];
-    $hospital = new HospitalDetailsController();
-    $result = $hospital->updateHospitalDetails($hospital_name, $hospital_address);
-
-    if($result){
-        echo JsonResponse::success('Successfully updated hospital information');
-        exit;
-    } else {
-        echo JsonResponse::error('Updating hospital information unsuccessful');
-        exit;
-    }
-} elseif($intent == 'addDrugUnits'){
-    $values = $_REQUEST['values'];
-    $units = new PharmacistController();
-    $result = $units->addDrugUnits($values);
-
-    if($result){
-        echo JsonResponse::success('Successfully added drug units.');
-        exit;
-    } else {
-        echo JsonResponse::error('Adding of drug units unsuccessful.');
-        exit;
-    }
 } elseif($intent == 'addBillingItems'){
     $values = $_REQUEST['billItems'];
     $bills = new BillingController();

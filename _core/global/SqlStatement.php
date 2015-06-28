@@ -1032,8 +1032,9 @@ class SystemSetupSqlStatement {
 }
 
 class HospitalInfoSqlStatement {
+    const GET = "SELECT hospital_info_id, name, address FROM hospital_info";
     const ADD = "INSERT INTO hospital_info (name, address, created_date, modified_date) VALUES (:name, :address, NOW(), NOW())";
-    const UPDATE = "UPDATE hospital_info SET name = :name, address = :address, modified_date = NOW()";
+    const UPDATE = "UPDATE hospital_info SET name = :name, address = :address, modified_date = NOW() WHERE hospital_info_id = :hospital_info_id";
 }
 
 class BillingSqlStatement{

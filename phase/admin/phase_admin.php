@@ -3,9 +3,9 @@
 require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'Licence'));
-Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
-Crave::requireFiles(CONTROLLER, array('UserController'));
+Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
+Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'HospitalDetailsModel'));
+Crave::requireFiles(CONTROLLER, array('UserController', 'HospitalDetailsController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -74,6 +74,51 @@ if ($intent == 'getStaffDetails') {
             echo JsonResponse::error("Could not update Profile. Please try again!");
             exit();
         }
+    } else {
+        echo JsonResponse::error('No profile info to add.');
+        exit();
+    }
+} elseif($intent == 'getHospitalDetails'){
+    $hospitalDetailsController = new HospitalDetailsController();
+    $hospitalInfo = $hospitalDetailsController->getHospitalDetails();
+
+    if($hospitalInfo){
+        echo JsonResponse::success($hospitalInfo);
+        exit();
+    } else {
+        echo JsonResponse::error("Could not fetch hospital details.");
+        exit();
+    }
+}  elseif($intent == 'updateHospitalDetails'){
+    $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
+    $name = isset($_REQUEST['name']) ? $_REQUEST['name'] : "";
+    $address = isset($_REQUEST['address']) ? $_REQUEST['address'] : "";
+
+    $hospitalDetailsController = new HospitalDetailsController();
+    if($id){
+        $hospitalInfo = $hospitalDetailsController->updateHospitalDetails($id, $name, $address);
+    } else {
+        $hospitalInfo = $hospitalDetailsController->createHospitalDetails($name, $address);
+    }
+
+    if($hospitalInfo){
+        echo JsonResponse::success("Successfully updated  hospital details");
+        exit();
+    } else {
+        echo JsonResponse::error("Could not update hospital details.");
+        exit();
+    }
+} elseif($intent == 'addDrugUnits'){
+    $values = $_REQUEST['values'];
+    $units = new PharmacistController();
+    $result = $units->addDrugUnits($values);
+
+    if($result){
+        echo JsonResponse::success('Successfully added drug units.');
+        exit;
+    } else {
+        echo JsonResponse::error('Adding of drug units unsuccessful.');
+        exit;
     }
 } else {
     echo JsonResponse::error("Invalid intent!");

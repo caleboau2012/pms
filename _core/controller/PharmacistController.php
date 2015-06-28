@@ -15,6 +15,10 @@ class PharmacistController{
         return $this->pharmacy->removeDrugUnit($unitRefId);
     }
 
+    public function getUnits(){
+        return $this->pharmacy->getUnits();
+    }
+
     public function getPatientQueue(){
         return $this->pharmacy->getPatientQueue(DRUG_UNCLEARED);
     }
@@ -47,7 +51,4 @@ class PharmacistController{
         return $this->pharmacy->isOutPatient($patientId);
     }
 
-    public function getUnits(){
-        return $this->pharmacy->getUnits();
-    }
 }
