@@ -191,6 +191,7 @@ CREATE TABLE IF NOT EXISTS `chemical_pathology_ref` (
 CREATE TABLE IF NOT EXISTS `chemical_pathology_request` (
   `cpreq_id` int(11) NOT NULL AUTO_INCREMENT,
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) NOT NULL DEFAULT '0',
   `laboratory_ref` varchar(15) DEFAULT NULL,
   `laboratory_comment` text,
   `clinical_diagnosis` text,
@@ -397,6 +398,7 @@ CREATE TABLE IF NOT EXISTS `haematology` (
   `created_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) NOT NULL DEFAULT '0',
   `active_fg` tinyint(1) NOT NULL DEFAULT '1',
   `status_id` int(11) NOT NULL DEFAULT '5',
   PRIMARY KEY (`haematology_id`),
@@ -515,6 +517,7 @@ CREATE TABLE IF NOT EXISTS `parasitology_ref` (
 CREATE TABLE IF NOT EXISTS `parasitology_req` (
   `preq_id` int(11) NOT NULL AUTO_INCREMENT,
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) NOT NULL DEFAULT '0',
   `nature_of_specimen` varchar(50) DEFAULT NULL,
   `investigation_req` varchar(100) DEFAULT NULL,
   `diagnosis` varchar(255) DEFAULT NULL,
@@ -637,6 +640,7 @@ CREATE TABLE IF NOT EXISTS `prescription` (
   `prescription_id` int(11) unsigned NOT NULL AUTO_INCREMENT,
   `prescription` varchar(255) DEFAULT NULL,
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) NOT NULL DEFAULT '0',
   `status` int(11) NOT NULL,
   `modified_by` int(11) unsigned NOT NULL,
   `created_date` datetime NOT NULL,
@@ -915,6 +919,7 @@ CREATE TABLE IF NOT EXISTS `urinary` (
 CREATE TABLE IF NOT EXISTS `urine` (
   `urine_id` int(11) NOT NULL AUTO_INCREMENT,
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) NOT NULL DEFAULT '0',
   `lab_attendant_id` int(11) DEFAULT NULL,
   `clinical_diagnosis_details` text,
   `investigation_required` varchar(100) DEFAULT NULL,
@@ -993,6 +998,7 @@ CREATE TABLE IF NOT EXISTS `visual_skills_profile` (
   `visual_profile_id` int(11) NOT NULL AUTO_INCREMENT,
   `doctor_id` int(11) DEFAULT '1',
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) NOT NULL DEFAULT '0',
   `distance_re` varchar(10) DEFAULT NULL,
   `distance_le` varchar(10) DEFAULT NULL,
   `distance_be` varchar(10) DEFAULT NULL,
