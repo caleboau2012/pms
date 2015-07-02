@@ -40,9 +40,8 @@ EditSetup = {
             EditSetup.updateHospitalInfo();
         });
 
-        //Previous drugs units
+        //Hospital drugs units process
         EditSetup.getHospitalDrugUnits();
-
         $("body").delegate(".delete-unit", "click", function () {
             EditSetup.removeUnit(this);
         });
@@ -53,6 +52,20 @@ EditSetup = {
         $("#step_drug_units_form").on("submit", function (e) {
             e.preventDefault();
             EditSetup.updateHospitalDrugUnits();
+        });
+
+        //Hospital Billing process
+        EditSetup.getHospitalBills();
+        $("body").delegate(".delete-bill", "click", function () {
+            EditSetup.removeBill(this);
+        });
+        $("#add-bill").click(function (e) {
+            e.preventDefault();
+            EditSetup.addBill();
+        });
+        $("#step_bill_form").on("submit", function (e) {
+            e.preventDefault();
+            EditSetup.updateHospitalBills(this);
         });
     },
     getHospitalInfo: function () {
@@ -103,7 +116,7 @@ EditSetup = {
                     var unit_field = this.unit;
                     var unit_symbol = this.symbol;
                     var unit_ref_id = this.unit_ref_id;
-                    $("#units-list").append("<li data-unit-ref-id='"+ unit_ref_id +"' data-unit-field='" + unit_field + "' data-unit-symbol ='" + unit_symbol + "'>" + unit_field + "&nbsp;(" + unit_symbol + ")" +
+                    $("#units-list").append("<li data-unit-ref-id='"+ unit_ref_id +"' data-unit-field='" + unit_field + "' data-unit-symbol ='" + unit_symbol + "'><span class='text-capitalize'>" + unit_field + "</span>&nbsp;(" + unit_symbol + ")" +
                     "<p class='pull-right'>" +
                     "<span class='fa fa-remove text-danger pointer delete-unit'></span>" +
                     "</p><div class='clearfix'></div>" +
@@ -125,6 +138,8 @@ EditSetup = {
                     "unit": $(this).attr("data-unit-field"),
                     "symbol": $(this).attr("data-unit-symbol")
                 });
+                //remove new label
+                $(this).removeAttr("data-unit-new");
             }
         });
         $.post(host + "phase/phase_pharmacist.php", payload, function(data){
@@ -202,8 +217,93 @@ EditSetup = {
     },
     resetView: function(){
         $("#response").empty();
-    }
+    },
+    getHospitalBills: function(){
+        payload = {};
+        payload.intent = "getBillItems";
 
+        $.getJSON(host + "phase/phase_billing.php", payload, function (data) {
+            if(data.status == EditSetup.Constants.REQUEST_SUCCESS){
+                $(".units-indicator").addClass("hidden");
+                $(data.data).each(function(){
+                    var bill_name = this.bill;
+                    var bill_price = this.amount;
+                    $("#bill-list").append("<li class='' data-bill-name='" + bill_name + "' data-bill-price ='" + bill_price + "'><span class='text-capitalize'>" + bill_name + "</span> - <span class='text-danger'>" + bill_price + "</span>" +
+                    "<p class='pull-right'>" +
+                    "<span class='fa fa-remove text-danger pointer delete-bill'></span>" +
+                    "</p><div class='clearfix'></div>" +
+                    "</li>");
+                });
+            }
+        });
+    },
+    addBill: function () {
+        $(".form-response").empty();
+        $(".bill-form-group").removeClass("has-error");
+        var bill_name = $("#bill-name").val();
+        var bill_price = $("#bill-cost").val();
+        if (bill_name == "") {
+            $("#bill-name-input").addClass("has-error");
+            $("#bill-name-response").html("Bill name is required");
+        }
+        else if (isNaN(bill_price) || bill_price == "") {
+            $("#bill-cost-input").addClass("has-error");
+            $("#bill-cost-response").html("Bill cost should be a number. The comma in the price should be omitted");
+        }
+        else {
+            $(".units-indicator").addClass("hidden");
+            $("#bill-list").append("<li data-bill-new="+ true + " data-bill-name='" + bill_name + "' data-bill-price ='" + bill_price + "'><span class='text-capitalize'>" + bill_name + "</span> - <span class='text-danger'>" + bill_price + "</span>" +
+            "<p class='pull-right'>" +
+            "<span class='fa fa-remove text-danger pointer delete-bill'></span>" +
+            "</p><div class='clearfix'></div>" +
+            "</li>");
+            $("#bill-name").val("");
+            $("#bill-cost").val("");
+            $("#add-bill-btn").removeClass("disabled");
+        }
+    },
+    removeBill: function (unit) {
+        $(unit).parent().parent().remove();
+        if ($("#units-list li").length == 0) {
+            $(".units-indicator").removeClass("hidden");
+        }
+    },
+    updateHospitalBills: function(form_data){
+        $(form_data).find(":submit").addClass("disabled").html("Updating...");
+        var payload = {};
+        payload.intent = "addBillingItems";
+        payload.billItems = [];
+
+        $("#bill-list").find("li").each(function () {
+            if($(this).attr("data-bill-new")){
+                payload.billItems.push({
+                    "bill": $(this).attr("data-bill-name"),
+                    "amount": $(this).attr("data-bill-price")
+                });
+            }
+            //remove new label
+            $(this).removeAttr("data-unit-new");
+        });
+
+        $.post(host + "phase/phase_system_setup.php", payload, function (data) {
+            var response;
+            if(data.status == EditSetup.Constants.REQUEST_SUCCESS){
+                response = '<div class="alert alert-dismissible alert-success text-center">' +
+                '<button type="button" class="close" data-dismiss="alert" aria-label="Close">' +
+                '<span aria-hidden="true">&times;</span></button>' +
+                '<strong><span class="fa fa-2x fa-check-circle">&nbsp;</span></strong>' + data.data + '' +
+                '</div>';
+                $("#response").html(response);
+            }else if(data.status == EditSetup.Constants.REQUEST_ERROR){
+                response = '<div class="alert alert-danger text-center">' +
+                '' + "Unable to perform operation at the moment, try again later" + '' +
+                '</div>';
+                $("#response").html(response);
+            }
+            $(form_data).find(":submit").addClass("disabled").html("Update");
+
+        }, "json");
+    }
 };
 $(function(){
     EditSetup.init();

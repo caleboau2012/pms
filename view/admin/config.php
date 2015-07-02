@@ -92,7 +92,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     Info
                 </div>
                 <div class="col-xs-3  pointer steps text-center" id="step--drugs">
-                    Drugs
+                     Drug Units
                 </div>
                 <div class="col-xs-3 pointer  steps text-center" id="step--bills">
                     Bills
@@ -157,7 +157,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <h4 class="text-center text-info" style="margin: 0; margin-bottom: 0.5em;">
                     Add the basic hospital bills
                 </h4>
-                <form class="form-horizontal form-setup" id="step_three_form">
+                <form class="form-horizontal form-setup" id="step_bill_form">
                     <div class="form-group bill-form-group" id="bill-name-input">
                         <label for="bill-name" class="col-sm-4 control-label">Bill Name</label>
                         <div class="col-sm-8">
@@ -179,7 +179,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-10">
-                            <button type="submit" class="btn btn-primary disabled" id="add-bill-btn">Proceed</button>
+                            <button type="submit" class="btn btn-primary disabled" id="add-bill-btn">Update</button>
                         </div>
                     </div>
                 </form>
