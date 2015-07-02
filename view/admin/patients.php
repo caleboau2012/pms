@@ -56,7 +56,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             <ul class="nav navbar-nav navbar-right">
                 <li><a href="#" class="label-default">Patients</a></li>
                 <li><a href="staff.php">Staff</a></li>
-                <li><a href="#">Config</a></li>
+                <li><a href="config.php">Config</a></li>
                 <li class="dropdown navbar-right-text pointer">
                     <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
                     <img src="../../images/profile.png">

@@ -301,7 +301,7 @@ class VitalsSqlStatement {
 }
 
 class UnitsSqlStatement{
-    const GET = "SELECT unit_ref_id, unit FROM unit_ref WHERE active_fg = 1";
+    const GET = "SELECT unit_ref_id, symbol, unit FROM unit_ref WHERE active_fg = 1";
     const ADD_UNITS = "INSERT INTO unit_ref (unit, symbol) VALUES ";
     const REMOVE_UNIT = "UPDATE unit_ref SET active_fg = 0 WHERE unit_ref_id = :unit_ref_id";
 }
