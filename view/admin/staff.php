@@ -56,8 +56,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
                 <li><a href="patients.php">Patients</a></li>
-                <li><a href="#" class="label-default">Staff</a></li>
-                <li><a href="#">Config</a></li>
+                <li><a href="staff.php" class="label-default">Staff</a></li>
+                <li><a href="config.php">Config</a></li>
                 <li>
                     <a href="../mails.php">
                         <span class="fa fa-envelope"></span>
@@ -232,7 +232,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script type="text/javascript" src="../../js/pinger.js"></script>
 <script src="../../js/admin/staff.js"></script>
 
-<?php include('footer.php'); ?>
+<?php include('../footer.php'); ?>
 
 </body>
 </html>

@@ -64,7 +64,7 @@ if($intent == 'getPatientQueue') {
     $units = (new PharmacistController())->getUnits();
 
     if(is_array($units) && !empty($units)){
-        echo JsonResponse::success($drugs);
+        echo JsonResponse::success($units);
         exit();
     } else {
         echo JsonResponse::error("No unit available");
