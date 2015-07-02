@@ -92,7 +92,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     Info
                 </div>
                 <div class="col-xs-3  pointer steps text-center" id="step--drugs">
-                     Drug Units
+                    Drug Units
                 </div>
                 <div class="col-xs-3 pointer  steps text-center" id="step--bills">
                     Bills
@@ -104,7 +104,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <form class="form-horizontal form-setup" id="step_info_form">
                     <input type="hidden" name="intent" value="addHospitalInfo">
 
-<!--                    <h4 class="text-info text-center">Hospital Info</h4>-->
+                    <!--                    <h4 class="text-info text-center">Hospital Info</h4>-->
                     <div class="form-group">
                         <label for="hos_name" class="col-sm-4 control-label">Hospital Name</label>
                         <div class="col-sm-8">
@@ -141,9 +141,23 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <div class="col-sm-8">
                             <input type="text" class="form-control" id="drug_symbol">
                             <a href="#" class="text-primary small" id="add-unit" title="Enter each units used, then click on the add more">Add unit</a>
-                            <ol class="text-muted small" id="units-list">
+                            <!--                            <ol class="text-muted small" id="units-list">-->
+                            <!--                                <p class="small text-muted text-center units-indicator">No unit added yet</p>-->
+                            <!--                            </ol>-->
+                            <table class="table table-hover " id="units_table">
+                                <thead>
+                                <tr>
+                                    <th class="text-primary">S/N</th>
+                                    <th class="text-primary">Unit Name</th>
+                                    <th class="text-primary">Symbol</th>
+                                    <th class="text-primary">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="unit-list-table">
                                 <p class="small text-muted text-center units-indicator">No unit added yet</p>
-                            </ol>
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="form-group">
@@ -172,9 +186,19 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             <input type="text" class="form-control" id="bill-cost">
                             <p class="small text-danger form-response" id="bill-cost-response"></p>
                             <a href="#" class="text-primary small" id="add-bill">Add Bill</a>
-                            <ol class="text-muted small" id="bill-list">
-                                <p class="small text-muted text-center units-indicator">No bill added yet</p>
-                            </ol>
+                            <table class="table table-hover ">
+                                <thead>
+                                <tr>
+                                    <th class="text-primary">S/N</th>
+                                    <th class="text-primary">Bill Name</th>
+                                    <th class="text-primary">Cost</th>
+                                    <th class="text-primary">Action</th>
+                                </tr>
+                                </thead>
+                                <tbody id="bill-list-table">
+
+                                </tbody>
+                            </table>
                         </div>
                     </div>
                     <div class="form-group">
