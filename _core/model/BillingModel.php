@@ -83,7 +83,7 @@ class BillingModel extends BaseModel {
     }
 
     public function addBillingItems($billAmountArray){
-        $stmt = BillingSqlStatement::ADD_BILLABLES;
+        $stmt = BillingSqlStatement::ADD_BILL_ITEMS;
         foreach($billAmountArray as $obj){
             $billable = $obj['bill']; $amount = $obj['amount'];
             $stmt .= "('$billable', '$amount'), ";
@@ -93,6 +93,17 @@ class BillingModel extends BaseModel {
     }
 
     public function getBillItems(){
-        return $this->conn->fetchAll(BillingSqlStatement::GET_BILLABLES, array());
+        return $this->conn->fetchAll(BillingSqlStatement::GET_BILL_ITEMS, array());
+    }
+
+    public function deleteBillItem($id){
+        $data = array(BillablesTable::billables_id => $id);
+        return $this->conn->execute(BillingSqlStatement::DELETE_BILL_ITEM, $data);
+    }
+
+    public function editBillItem($id, $bill, $amount){
+        $data = array(BillablesTable::billables_id => $id, BillablesTable::bill => bill,
+                      BillablesTable::amount => $amount);
+        return $this->conn->execute(BillingSqlStatement::EDIT_BILL_ITEM, $data);
     }
 }

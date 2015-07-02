@@ -79,6 +79,44 @@ if ($intent == 'unbilled_treatments') {
         echo JsonResponse::error("Could not fetch bill items");
         exit;
     }
+}  elseif ($intent == 'deleteBillItem'){
+    $id = isset($_REQUEST[BillablesTable::billables_id]) ? $_REQUEST[BillablesTable::billables_id] : null;
+
+    if($id){
+        $billItems = new BillingController();
+        $result = $billItems->deleteBillItem($id);
+
+        if($result){
+            echo JsonResponse::success('Successfully deleted bill item.');
+            exit;
+        } else {
+            echo JsonResponse::error("Could not delete bill item");
+            exit;
+        }
+    } else {
+        echo JsonResponse::error('Error! Bill item id not set');
+        exit;
+    }
+}  elseif ($intent == 'editBillItem'){
+    $id = isset($_REQUEST[BillablesTable::billables_id]) ? $_REQUEST[BillablesTable::billables_id] : null;
+    $bill = isset($_REQUEST[BillablesTable::bill]) ? $_REQUEST[BillablesTable::bill] : "";
+    $amount = isset($_REQUEST[BillablesTable::amount]) ? $_REQUEST[BillablesTable::amount] : 0;
+
+    if($id){
+        $billItems = new BillingController();
+        $result = $billItems->editBillItem($id, $bill, $amount);
+
+        if($result){
+            echo JsonResponse::success('Successfully edited bill item.');
+            exit;
+        } else {
+            echo JsonResponse::error("Could not edit bill item");
+            exit;
+        }
+    } else {
+        echo JsonResponse::error('Error! Bill item id not set');
+        exit;
+    }
 } else {
     echo JsonResponse::error("Invalid intent!");
     exit();

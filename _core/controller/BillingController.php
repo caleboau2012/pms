@@ -36,4 +36,12 @@ class BillingController {
     public function getBillItems(){
         return $this->systemBilling->getBillItems();
     }
+
+    public function deleteBillItem($id){
+        return $this->systemBilling->deleteBillItem($id);
+    }
+
+    public function editBillItem($id, $bill, $amount){
+        return $this->systemBilling->editBillItem($id, $bill, $amount);
+    }
 }

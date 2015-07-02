@@ -700,3 +700,14 @@ class HospitalInfoTable{
     const created_date     = 'created_date';
     const modified_date    = 'modified_date';
 }
+
+class BillablesTable{
+    const table_name = 'billables';
+
+    const billables_id  = 'billables_id';
+    const bill          = 'bill';
+    const amount        = 'amount';
+    const status        = 'status';
+    const created_date  = 'created_date';
+    const modified_date = 'modified_date';
+}
