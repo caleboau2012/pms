@@ -79,18 +79,14 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <div id="dashboard">
             <br>
             <div class="dashboard-panels">
-
-                <div class="panel panel-default">
-                    <div class="panel-heading">
-                        <h3 class="panel-title">Roster</h3>
+                <div>
+                    <div id='roster_loading'>
+                        <span class="fa fa-pulse fa-spinner"></span>
                     </div>
-                    <div class="panel-body">
-                        <div id='roster_loading'>
-                            <span class="fa fa-pulse fa-spinner"></span>
-                        </div>
-                        <div id='dashboard-calendar'></div>
-                    </div>
+                    <div id='dashboard-calendar'></div>
                 </div>
+
+                <br>
 
                 <div class="panel panel-primary">
                     <div class="panel-heading">

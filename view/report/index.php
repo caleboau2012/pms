@@ -34,6 +34,12 @@ Crave::requireAll(UTIL);
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
+                <li class="active">
+                    <a>Tables</a>
+                </li>
+                <li>
+                    <a href="graphs.php">Graphs</a>
+                </li>
                 <li>
                     <a href="../mails.php">
                         <span class="fa fa-envelope"></span>
@@ -81,69 +87,77 @@ Crave::requireAll(UTIL);
 
 <div class="container-fluid">
     <div class="row">
-        <div id="reportContent" class="col-sm-12 well">
-            <div class="col-sm-4 center-block">
-                <label class="label label-primary">
-                    Select a report to view
-                </label>
-                <select id="view" class="form-control">
-                    <option value="index">New Patients</option>
-                    <option value="currentPatients">Current Patients</option>
-                    <option value="patientVisits">Patients Visits / Encounter</option>
-                    <option value="inPatients">Inpatients</option>
-                    <option value="consultationReport">Consultation</option>
-                    <option value="patientDiagnosis">Patients and Diagnosis</option>
-                </select>
-            </div>
-            <div class="col-sm-2 center-block">
-                <label class="label label-primary">
-                    Select Gender
-                </label>
-                <select id="gender" class="form-control" disabled="disabled">
-                    <option value="1">All</option>
-                    <option value="2">Male</option>
-                    <option value="3">Female</option>
-                </select>
-            </div>
-            <div class="col-sm-3 center-block">
-                <label class="label label-primary">
-                    Start Date
-                </label>
-                <input type="date" name="start_date" id="start_date" class="form-control"/>
-            </div>
-            <div class="col-sm-3 center-block">
-                <label class="label label-primary">
-                    End Date
-                </label>
-                <input type="date" name="end_date" id="end_date" class="form-control"/>
-            </div>
-        </div>
-        <div class="col-sm-8 col-sm-offset-2">
-            <table class="table table-responsive">
-                <thead>
-                    <tr>
-                        <th>S/N</th>
-                        <th>Name</th>
-                        <th>Registration Number</th>
-                        <th>Gender</th>
-                    </tr>
-                </thead>
-                <tbody id="new_patient">
-                </tbody>
-                <tfoot id="total">
 
-                </tfoot>
-            </table>
-        </div>
+            <div class="col-sm-3">
+                <div class="r-sidebar">
+                    <div class="r-panel">
+                        <div class="r-heading">REPORTS</div>
+                        <div class="r_body">
+                            <div class="r-margin">
+                                <label>
+                                    Select a report to view
+                                </label>
+                                <select id="view" onchange="Report.switcher()" class="form-control">
+                                    <option opt="yes" value="newPatient">New Patients</option>
+                                    <option opt="yes" value="currentPatients">Current Patients</option>
+                                    <option opt="no" value="patientsAge">Patients with their Age</option>
+                                    <option opt="day" value="patientVisits">Patients Visits / Encounter</option>
+                                    <option opt="no" value="inPatients">Inpatients</option>
+                                    <option opt="no" value="consultationReport">Consultation</option>
+                                    <option opt="no" value="patientDiagnosis">Patient with Diagnosis</option>
+                                </select>
+                            </div>
+                            <div id="range">
+                                <div class="r-margin">
+                                    <div class="gender"><label>
+                                        Select Gender
+                                    </label>
+                                    <select id="gender" class="form-control">
+                                        <option>All</option>
+                                        <option value="Male">Male</option>
+                                        <option value="Female">Female</option>
+                                    </select></div>
+                                </div>
+                                <div class="r-margin">
+                                    <label>
+                                        Start Date
+                                    </label>
+                                    <input type="date" name="start_date" id="start_date" class="form-control"/>
+                                </div>
+                                <div class="r-margin">
+                                    <label>
+                                        End Date
+                                    </label>
+                                    <input type="date" name="end_date" id="end_date" class="form-control"/>
+                                </div>
+                            </div>
+                            <div id="day" class="r-margin">
+                                <label>
+                                    Select Day
+                                </label>
+                                <input type="date" name="day" id="day" class="form-control"/>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-9">
+
+                <iframe id="report_iframe" style="width: 100%;" seamless="seamless" frameborder="0">
+                    <h1>iFrames are not supported in this browser.</h1>
+                </iframe>
+
+            </div>
     </div>
 </div>
 
 <script src='../../js/bootstrap/jquery.min.js'></script>
 <script src='../../js/bootstrap/bootstrap.min.js'></script>
 <script src="../../js/constants.js"></script>
-<script src="../../js/bootstrap/jquery.dataTables.js"></script>
-<!--<script src="../../js/bootstrap/dataTables.tableTools.j"></script>-->
-<script src="../../js/report.js" type="application/javascript"></script>
+<script src="../../js/set-iframe-height.js"></script>
+<script src="../../js/bootstrap/jquery.dataTables.min.js"></script>
+<script src="../../js/bootstrap/dataTables.tableTools.min.js"></script>
+<script src="../../js/reports/report.js" type="application/javascript"></script>
 <?php include('../footer.php'); ?>
 </body>
 </html>

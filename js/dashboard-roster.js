@@ -12,7 +12,7 @@
                     right: 'basicWeek, basicDay'
                 },
                 defaultView: 'basicWeek',
-                height: 150,
+                height: 125,
                 eventLimit: true, // allow "more" link when too many events
                 editable: false,
                 droppable: false, // this allows things to be dropped onto the calendar

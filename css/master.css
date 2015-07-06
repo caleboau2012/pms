@@ -470,7 +470,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
         background-color: #f5f5f5;
         border-right: 1px solid #eee;
     }
-    .p_body{
+    .p_body, .r_body{
         min-height: 60em;
         max-height: 80em;
         margin-top: 0;
@@ -479,6 +479,14 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 
 /* Sidebar navigation */
+.r-margin {
+    margin: 8px;
+}
+.r-top-margin {
+    margin-top: 30px;
+    background-color: #fff !important;
+}
+
 .r-nav-sidebar {
     margin-right: -21px; /* 20px padding + 1px border */
     margin-bottom: 20px;
@@ -536,12 +544,10 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 /*
     PHARMACY PAGE
 */
-.p-sidebar{
+.p-sidebar, .r-sidebar{
     background: #dddddd;
-
-
 }
-.p_body{
+.p_body, .r_body{
     max-height: 15em;
     overflow-y: auto;
 }
@@ -549,10 +555,10 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 .margin-buttom {
     margin-bottom: 50px;
 }
-.p-panel{
+.p-panel, .r-panel{
     background: #FFFFFF;
 }
-.p-heading{
+.p-heading, .r-heading{
     background: #428BCA;
     padding: 0.6em;
     color: #FFFFFF;
@@ -1425,4 +1431,9 @@ span#loader{
     background: #f2f2f2;
     border-radius: 3px;
     cursor: pointer;
+}
+
+/* Graphs */
+.graph{
+    height: 300px;
 }

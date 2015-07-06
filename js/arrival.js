@@ -57,14 +57,55 @@ function init(){
         });
     });
 
+    loadQueue();
+
+    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=loadGenQueue'), function(data){
+        data = JSON.parse(data);
+
+        data = data.data;
+        var patientHTML = "";
+
+        if(data == null)
+            return;
+
+        for (var j = 0; j < data.length; j++) {
+            if (data[j].regNo.substr(0, 4) == 'EMER'){
+                panel = "panel-danger";
+                patientName = data[j].regNo;
+                sex = "";
+            }
+            else{
+                panel = "panel-success";
+                patientName = toTitleCase(data[j].surname) + " " + toTitleCase(data[j].firstname) + " " + toTitleCase(data[j].middlename);
+                sex = data[j].sex;
+            }
+            patientHTML += $('#tmplPatients').html();
+            patientHTML = patientHTML.replace('{{status}}', panel);
+            patientHTML = replaceAll('{{userid}}', '0', patientHTML);
+            patientHTML = replaceAll('{{patientid}}', data[j].patient_id, patientHTML);
+            patientHTML = replaceAll('{{regNo}}', data[j].regNo, patientHTML);
+            patientHTML = replaceAll('{{name}}', patientName, patientHTML);
+            patientHTML = replaceAll('{{sex}}', sex, patientHTML);
+        }
+
+        $(".general").find('.drop').html(patientHTML);
+        draggableDropabble();
+    });
+}
+
+var limit;
+function loadQueue(){
     $.get(host + "phase/arrival/phase_patient_arrival.php?intent=loadQueue", function(data){
         data = JSON.parse(data);
+
+        limit = data.data.LMT;
 
         if(data.status == 1){
             data = data.data.queue;
 
             var name, obj, panel, patientName, regNo;
 
+            $('#masonry').empty();
             for(var i = 0; i < data.length; i++) {
                 var html;
                 var doctorHTML = "";
@@ -113,45 +154,27 @@ function init(){
             }
             //$('#masonry').html(html);
             draggableDropabble();
+            pollQueue();
         }
-    });
-
-    $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=loadGenQueue'), function(data){
-        data = JSON.parse(data);
-
-        data = data.data;
-        var patientHTML = "";
-
-        if(data == null)
-            return;
-
-        for (var j = 0; j < data.length; j++) {
-            if (data[j].regNo.substr(0, 4) == 'EMER'){
-                panel = "panel-danger";
-                patientName = data[j].regNo;
-                sex = "";
-            }
-            else{
-                panel = "panel-success";
-                patientName = toTitleCase(data[j].surname) + " " + toTitleCase(data[j].firstname) + " " + toTitleCase(data[j].middlename);
-                sex = data[j].sex;
-            }
-            patientHTML += $('#tmplPatients').html();
-            patientHTML = patientHTML.replace('{{status}}', panel);
-            patientHTML = replaceAll('{{userid}}', '0', patientHTML);
-            patientHTML = replaceAll('{{patientid}}', data[j].patient_id, patientHTML);
-            patientHTML = replaceAll('{{regNo}}', data[j].regNo, patientHTML);
-            patientHTML = replaceAll('{{name}}', patientName, patientHTML);
-            patientHTML = replaceAll('{{sex}}', sex, patientHTML);
-        }
-
-        $(".general").find('.drop').html(patientHTML);
-        draggableDropabble();
     });
 }
 
+function pollQueue(){
+    setInterval(function(){
+        $.getJSON(host + 'phase/arrival/phase_patient_arrival.php?intent=pollQueue', {
+            LMT: limit
+        }, function(data){
+            console.log({limit: limit, data: data});
+            if(data.status == 1){
+               loadQueue();
+            }
+        })
+    }, 10000);
+}
+
 function draggableDropabble(){
-    $('#masonry').masonry();
+
+    $('#masonry').masonry().masonry('reloadItems').masonry('layout');
 
     $('.patient').draggable({
         containment: 'body',
