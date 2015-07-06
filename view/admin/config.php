@@ -88,13 +88,13 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             </div>
             <div id="setup-nav">
 
-                <div class="col-xs-3 pointer setup-nav-active steps text-center" id="step--info">
+                <div class="col-xs-4 pointer edit-setup-nav-active steps text-center" id="step--info">
                     Info
                 </div>
-                <div class="col-xs-3  pointer steps text-center" id="step--drugs">
+                <div class="col-xs-4  pointer steps text-center" id="step--drugs">
                     Drug Units
                 </div>
-                <div class="col-xs-3 pointer  steps text-center" id="step--bills">
+                <div class="col-xs-4 pointer  steps text-center" id="step--bills">
                     Bills
                 </div>
                 <div class="clearfix"></div>
@@ -133,13 +133,13 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     <div class="form-group step-2-form-group">
                         <label for="drug_unit" class="col-sm-4 control-label">Drug Unit</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="drug_unit">
+                            <input type="text" class="form-control" id="drug_unit" placeholder="E.g: kilogramme">
                         </div>
                     </div>
                     <div class="form-group step-2-form-group">
                         <label for="drug_symbol" class="col-sm-4 control-label">Drug Symbol</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="drug_symbol">
+                            <input type="text" class="form-control" id="drug_symbol" placeholder="kg">
                             <a href="#" class="text-primary small" id="add-unit" title="Enter each units used, then click on the add more">Add unit</a>
                             <!--                            <ol class="text-muted small" id="units-list">-->
                             <!--                                <p class="small text-muted text-center units-indicator">No unit added yet</p>-->
@@ -147,7 +147,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             <table class="table table-hover " id="units_table">
                                 <thead>
                                 <tr>
-                                    <th class="text-primary">S/N</th>
                                     <th class="text-primary">Unit Name</th>
                                     <th class="text-primary">Symbol</th>
                                     <th class="text-primary">Action</th>
@@ -162,34 +161,30 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     </div>
                     <div class="form-group">
                         <div class="col-sm-offset-4 col-sm-10">
-                            <button type="submit" class="btn btn-primary">Update</button>
+                            <button type="submit" class="disabled btn btn-primary" id="add-units-btn">Update</button>
                         </div>
                     </div>
                 </form>
             </div>
             <div class="steps_content hidden" id="step--bills_content">
-                <h4 class="text-center text-info" style="margin: 0; margin-bottom: 0.5em;">
-                    Add the basic hospital bills
-                </h4>
                 <form class="form-horizontal form-setup" id="step_bill_form">
                     <div class="form-group bill-form-group" id="bill-name-input">
                         <label for="bill-name" class="col-sm-4 control-label">Bill Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="bill-name">
-                            <p class="small text-danger form-response" id="bill-name-response"></p>
+                            <input type="text" class="form-control" id="bill-name" placeholder="E.g: Consultancy">
+                             <p class="small text-danger form-response" id="bill-name-response"></p>
 
                         </div>
                     </div>
                     <div class="form-group bill-form-group" id="bill-cost-input">
                         <label for="bill-cost" class="col-sm-4 control-label">Bill Cost</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="bill-cost">
+                            <input type="text" class="form-control" id="bill-cost" placeholder="2000">
                             <p class="small text-danger form-response" id="bill-cost-response"></p>
                             <a href="#" class="text-primary small" id="add-bill">Add Bill</a>
                             <table class="table table-hover ">
                                 <thead>
                                 <tr>
-                                    <th class="text-primary">S/N</th>
                                     <th class="text-primary">Bill Name</th>
                                     <th class="text-primary">Cost</th>
                                     <th class="text-primary">Action</th>

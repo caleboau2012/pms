@@ -121,6 +121,10 @@ System setup
     background: #126BB8;
     color: #fff;
 }
+.edit-setup-nav-active{
+    background: #126BB8;
+    color: #fff;
+}
 .steps_content{
     padding: 0 1em;
 }

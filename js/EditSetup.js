@@ -14,20 +14,20 @@ EditSetup = {
         $("#step--info").click(function () {
             EditSetup.resetView();
             EditSetup.openInfoSetup();
-            $(".steps").removeClass("setup-nav-active");
-            $(this).addClass("setup-nav-active");
+            $(".steps").removeClass("edit-setup-nav-active");
+            $(this).addClass("edit-setup-nav-active");
         });
         $("#step--drugs").click(function () {
             EditSetup.resetView();
             EditSetup.openDrugSetup();
-            $(".steps").removeClass("setup-nav-active");
-            $(this).addClass("setup-nav-active");
+            $(".steps").removeClass("edit-setup-nav-active");
+            $(this).addClass("edit-setup-nav-active");
         });
         $("#step--bills").click(function () {
             EditSetup.resetView();
             EditSetup.openBillsSetup();
-            $(".steps").removeClass("setup-nav-active");
-            $(this).addClass("setup-nav-active");
+            $(".steps").removeClass("edit-setup-nav-active");
+            $(this).addClass("edit-setup-nav-active");
 
         });
 
@@ -51,7 +51,7 @@ EditSetup = {
         });
         $("#step_drug_units_form").on("submit", function (e) {
             e.preventDefault();
-            EditSetup.updateHospitalDrugUnits();
+            EditSetup.updateHospitalDrugUnits(this);
         });
 
         //Hospital Billing process
@@ -113,13 +113,12 @@ EditSetup = {
             if(data.status == EditSetup.Constants.REQUEST_SUCCESS){
                 $("#units-list").empty();
                 $("#units-indicator").addClass("hidden");
-                $(data.data).each(function (index) {
+                $(data.data).each(function () {
                     var unit_field = this.unit;
                     var unit_symbol = this.symbol;
                     var unit_ref_id = this.unit_ref_id;
 
                     var html = "<tr data-unit-ref-id='"+ unit_ref_id +"' data-unit-field='" + unit_field + "' data-unit-symbol ='" + unit_symbol + "'>";
-                    html += "<td>" + (index + 1) + "</td>";
                     html += "<td class='text-capitalize'>" + unit_field + "</td>";
                     html += "<td>" + unit_symbol + "</td>";
                     html += "<td> <span class='small text-warning pointer delete-unit'>Remove</span></td>";
@@ -135,12 +134,14 @@ EditSetup = {
             }
         });
     },
-    updateHospitalDrugUnits: function () {
+    updateHospitalDrugUnits: function (form_data){
+        $(form_data).find(":submit").addClass("disabled").html("Updating...");
+
         var payload = {};
         payload.intent = "addDrugUnits";
         payload.values = [];
 
-        $("#units-list").find("li").each(function (index) {
+        $("#unit-list-table").find("tr").each(function (index) {
             if($(this).attr("data-unit-new")){
                 payload.values.push({
                     "unit": $(this).attr("data-unit-field"),
@@ -166,6 +167,8 @@ EditSetup = {
                 $("#response").html(response);
             }
 
+            $(form_data).find(":submit").addClass("disabled").html("Update");
+
         }, 'json');
     },
     addUnits: function () {
@@ -173,18 +176,18 @@ EditSetup = {
         var unit_symbol = $("#drug_symbol").val();
         if (unit_field !== '' && unit_symbol !== "") {
             $(".units-indicator").addClass("hidden");
-            $("#units-list").append("<li class='' data-unit-new="+ true +" data-unit-field='" + unit_field + "' data-unit-symbol ='" + unit_symbol + "'>" + unit_field + "&nbsp;(" + unit_symbol + ")" +
-            "<p class='pull-right'>" +
-            "<span class='fa fa-remove text-danger pointer delete-unit'></span>" +
-            "</p><div class='clearfix'></div>" +
-            "</li>");
+            //$("#units-list").append("<li class='' data-unit-new="+ true +" data-unit-field='" + unit_field + "' data-unit-symbol ='" + unit_symbol + "'>" + unit_field + "&nbsp;(" + unit_symbol + ")" +
+            //"<p class='pull-right'>" +
+            //"<span class='fa fa-remove text-danger pointer delete-unit'></span>" +
+            //"</p><div class='clearfix'></div>" +
+            //"</li>");
             $("#drug_unit").val("");
             $("#drug_symbol").val("");
+            $("#add-units-btn").removeClass('disabled');
 
             var num_of_units = $("#unit-list-table tr").length;
 
-            var html = "<tr>";
-            html += "<td>" + (num_of_units + 1) + "</td>";
+            var html = "<tr data-unit-new="+ true +" data-unit-field='" + unit_field + "' data-unit-symbol ='" + unit_symbol + "'>";
             html += "<td class='text-capitalize'>" + unit_field + "</td>";
             html += "<td>" + unit_symbol + "</td>";
             html += "<td> <span class='small text-warning pointer delete-unit'>Remove</span></td>";
@@ -216,8 +219,8 @@ EditSetup = {
 
             }).removeClass("hidden");
         });
-        $(".steps").removeClass("setup-nav-active");
-        $(this).addClass("setup-nav-active");
+        $(".steps").removeClass("edit-setup-nav-active");
+        $(this).addClass("edit-setup-nav-active");
     },
     openDrugSetup: function () {
         $('.steps_content').fadeOut('fast', function () {
@@ -235,8 +238,8 @@ EditSetup = {
             }).removeClass("hidden");
         });
 
-        $(".steps").removeClass("setup-nav-active");
-        $(this).addClass("setup-nav-active");
+        $(".steps").removeClass("edit-setup-nav-active");
+        $(this).addClass("edit-setup-nav-active");
     },
     resetView: function(){
         $("#response").empty();
@@ -251,20 +254,16 @@ EditSetup = {
                 $(data.data).each(function(index){
                     var bill_name = this.bill;
                     var bill_price = this.amount;
-                    //$("#bill-list").append("<li class='' data-bill-name='" + bill_name + "' data-bill-price ='" + bill_price + "'><span class='text-capitalize'>" + bill_name + "</span> - <span class='text-danger'>" + bill_price + "</span>" +
-                    //"<p class='pull-right'>" +
-                    //"<span class='fa fa-remove text-danger pointer delete-bill'></span>" +
-                    //"</p><div class='clearfix'></div>" +
-                    //"</li>");
 
-                    var html = "<tr data-bill-name='" + bill_name + "' data-bill-price ='" + bill_price + "'>";
-                    html += "<td>" + (index + 1) + "</td>";
+                    var html = "<tr data-bill-id="+ this.billables_id +" data-bill-name='" + bill_name + "' data-bill-price ='" + bill_price + "'>";
                     html += "<td class='text-capitalize'>" + bill_name + "</td>";
                     html += "<td>" + bill_price + "</td>";
                     html += "<td> <span class='small text-warning pointer delete-bill'>Remove</span></td>";
                     html += "</tr>";
                     $("#bill-list-table").append(html);
                 });
+            }else if(data.status == EditSetup.Constants.REQUEST_ERROR){
+                $("#bill-list-table").html("<p class='small'>No bill added yet</p>");
             }
         });
     },
@@ -289,19 +288,41 @@ EditSetup = {
             $("#add-bill-btn").removeClass("disabled");
 
             var html = "<tr data-bill-new="+ true + " data-bill-name='" + bill_name + "' data-bill-price ='" + bill_price + "'>";
-            html += "<td>" + (num_of_bills + 1) + "</td>";
             html += "<td class='text-capitalize'>" + bill_name + "</td>";
             html += "<td>" + bill_price + "</td>";
             html += "<td> <span class='small text-warning pointer delete-bill'>Remove</span></td>";
             html += "</tr>";
-            $("#bill-list-table").empty().append(html);
+
+            if(num_of_bills == 0){
+                $("#bill-list-table").html(html);
+            }else{
+                $("#bill-list-table").append(html);
+
+            }
         }
     },
     removeBill: function (unit) {
-        $(unit).parent().parent().remove();
-        if ($("#bill-list-table tr").length == 0) {
-            $("#bill-list-table").html("<p class='small text-center text-info'>No bill added</p>");
+        var bill_id = $(unit).parent().parent().attr("data-bill-id");
+
+        if(bill_id === undefined){
+            $(unit).parent().parent().remove();
+            if ($("#bill-list-table tr").length == 0) {
+                $("#bill-list-table").html("<p class='small text-center text-info'>No bill added</p>");
+            }
+        }else{
+            var payload = {};
+            payload.intent = "deleteBillItem";
+            payload.billables_id = bill_id;
+            $.post(host + "phase/phase_billing.php", payload, function(data){
+                if(data.status == EditSetup.Constants.REQUEST_SUCCESS){
+                    $(unit).parent().parent().remove();
+                    if ($("#bill-list-table tr").length == 0) {
+                        $("#bill-list-table").html("<p class='small text-center text-info'>No bill added</p>");
+                    }
+                }
+            }, 'json');
         }
+
     },
     updateHospitalBills: function(form_data){
         $(form_data).find(":submit").addClass("disabled").html("Updating...");
