@@ -135,7 +135,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3 text-center">
                                     <a href="arrival.php" class="dashboard-link">
-                                        <img src="../images/arrival.png">
+                                        <img src="../images/arrival.jpg" width="60" height="60">
 
                                         <div class="dashboard-desc">Patient Arrival</div>
                                     </a>
@@ -155,7 +155,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3 text-center">
                                     <a href="admission.php" class="dashboard-link">
-                                        <img src="../images/arrival.png">
+                                        <img src="../images/admission.png">
 
                                         <div class="dashboard-desc">Admission</div>
                                     </a>
