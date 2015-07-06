@@ -69,7 +69,7 @@ if (file_exists("../_resource/setup")){
                     <div class="form-group">
                         <label for="root_password" class="col-sm-4 control-label">MySQL Password</label>
                         <div class="col-sm-8">
-                            <input type="password" class="form-control" id="root_password" name="rootPassword" placeholder="Password for root user">
+                            <input type="password" class="form-control" id="root_password" name="rootPass" placeholder="Password for root user">
                         </div>
                     </div>
                     <div class="form-group">
@@ -122,13 +122,13 @@ if (file_exists("../_resource/setup")){
                     <div class="form-group step-2-form-group">
                         <label for="drug_unit" class="col-sm-4 control-label">Drug Unit</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="drug_unit">
+                            <input type="text" class="form-control" placeholder="e.g. Kilogramme" id="drug_unit">
                         </div>
                     </div>
                     <div class="form-group step-2-form-group">
                         <label for="drug_symbol" class="col-sm-4 control-label">Drug Symbol</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="drug_symbol">
+                            <input type="text" class="form-control" id="drug_symbol" placeholder="e.g. kg">
                             <a href="#" class="text-primary small" id="add-unit" title="Enter each units used, then click on the add more">Add unit</a>
                             <ol class="text-muted small" id="units-list">
                                 <p class="small text-muted text-center units-indicator">No unit added yet</p>
@@ -150,7 +150,7 @@ if (file_exists("../_resource/setup")){
                     <div class="form-group bill-form-group" id="bill-name-input">
                         <label for="bill-name" class="col-sm-4 control-label">Bill Name</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="bill-name">
+                            <input type="text" class="form-control" id="bill-name" placeholder="Enter the constant things you always charge for">
                             <p class="small text-danger form-response" id="bill-name-response"></p>
 
                         </div>
@@ -158,7 +158,7 @@ if (file_exists("../_resource/setup")){
                     <div class="form-group bill-form-group" id="bill-cost-input">
                         <label for="bill-cost" class="col-sm-4 control-label">Bill Cost</label>
                         <div class="col-sm-8">
-                            <input type="text" class="form-control" id="bill-cost">
+                            <input type="text" class="form-control" id="bill-cost" placeholder="Enter price in naira. No comma needed">
                             <p class="small text-danger form-response" id="bill-cost-response"></p>
                             <a href="#" class="text-primary small" id="add-bill">Add Bill</a>
                             <ol class="text-muted small" id="bill-list">

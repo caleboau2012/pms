@@ -46,7 +46,10 @@ Setup = {
         $(form_data).find(":submit").addClass("disabled").html("Processing...");
 
         payload = $(form_data).serialize();
+        //console.log(payload);
+
         $.post(host + "phase/phase_system_setup.php", payload, function (data) {
+            //console.log(data);
             if (data.status == Setup.Constants.REQUEST_SUCCESS) {
                 //    Proceed to step 2
                 $("#response").empty();
@@ -58,7 +61,9 @@ Setup = {
                 $("#response").html(response);
                 $(form_data).find(":submit").removeClass("disabled").html("Proceed");
             }
-        }, "json");
+        }, "json").fail(function(e){
+            console.log(e.responseText);
+        });
     },
     processStepTwo: function (form_data) {
         $("#step-2-response").empty();
@@ -82,7 +87,10 @@ Setup = {
                 });
             });
             $(form_data).find(":submit").addClass("disabled").html("Processing...");
+            console.log(payload);
+
             $.post(host + "phase/phase_system_setup.php", payload, function (data) {
+                console.log(data);
                 if (data.status == Setup.Constants.REQUEST_SUCCESS) {
                     //    Proceed to step 2
                     $("#response").empty();
@@ -94,7 +102,9 @@ Setup = {
                     $("#step-2-response").html(response);
                     $(form_data).find(":submit").removeClass("disabled").html("Proceed");
                 }
-            }, "json");
+            }, "json").fail(function (e) {
+                console.log(e.responseText);
+            });
         }
 
     },
