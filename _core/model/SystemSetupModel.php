@@ -74,7 +74,9 @@ class SystemSetupModel{
     }
 
     public function setupComplete(){
-        return touch($this->path.'setup');
+        $result = touch($this->path.'setup');
+//        die(var_dump($result));
+        return $result;
     }
 
 }

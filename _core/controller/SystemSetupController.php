@@ -9,10 +9,10 @@ class SystemSetupController{
 
     public function setup($regNo, $passcode){
         try{
-            if(!$this->systemSetupModel->createDB())
-                throw new Exception('Mysql credentials is not valid');
-            if(!$this->systemSetupModel->createDBUser())
-                throw new Exception('Mysql credentials is not valid');
+//            if(!$this->systemSetupModel->createDB())
+//                throw new Exception("Mysql credentials not valid: Couldn't create db");
+//            if(!$this->systemSetupModel->createDBUser())
+//                throw new Exception("Mysql credentials not valid: Couldn't create db user");
             $this->systemSetupModel->createAdminUser($regNo, $passcode);
         } catch (Exception $e){
 //            var_dump($e->getMessage());
