@@ -97,7 +97,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         </div>
         <input class='form-control' id='regNo' placeholder='Registration No'><br>
         <div class="input-group">
-            <input disabled class="form-control" id='password' placeholder='Password' aria-describedby="generate">
+            <input class="form-control" id='password' placeholder='Password' aria-describedby="generate">
             <span class="btn btn-info input-group-addon" id="generate" onclick="generatePassword()">Generate</span>
         </div>
         <br>
@@ -229,7 +229,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../../js/bootstrap/bootstrap.min.js"></script>
 <script src="../../js/constants.js"></script>
-<script type="text/javascript" src="../../js/pinger.js"></script>
+<script src="../../js/pinger.js"></script>
 <script src="../../js/admin/staff.js"></script>
 
 <?php include('../footer.php'); ?>

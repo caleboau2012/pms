@@ -10,6 +10,7 @@ $(function(){
         $('#form-loading').removeClass('hidden');
         var form_data = $(this).serialize();
         e.preventDefault();
+        console.log(form_data);
 
         var request = $.post(host + 'phase/phase_profile.php', form_data);
         console.log(form_data);
@@ -39,7 +40,8 @@ $(function(){
 });
 function calendar_pop(){
     $('.date-picker').datepicker({
-        format: 'yyyy-mm-dd'
+        format: 'yyyy-mm-dd',
+        startView: 'decade'
         //startDate: '3d'
-    })
+    });
 }
