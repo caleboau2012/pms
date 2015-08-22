@@ -438,6 +438,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             <table class="table table-responsive">
                                 <tr>
                                     <td class="form-inline">Name <br/>
+                                        <input class="hidden" name="<?php echo PatientTable::patient_id ?>"/>
                                         <input class="form-control" name="<?php echo PatientTable::surname ?>" placeholder="Surname" required/>
                                         <input class="form-control" name="<?php echo PatientTable::firstname ?>" placeholder="Firstname" required/>
                                         <input class="form-control" name="<?php echo PatientTable::middlename ?>" placeholder="Middlename" required/>
