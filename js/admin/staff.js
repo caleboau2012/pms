@@ -119,7 +119,7 @@ function addNewStaff(e){
         $.get(host + "phase/admin/phase_admin.php?intent=addNewStaff&regNo=" + regNo + "&passcode=" + password,
             function(data){
                 data = JSON.parse(data);
-                    console.log(data);
+                //console.log(data);
                 if(data.status == 2){
                     $(e).parent().find('.alert').removeClass('hidden');
                 }
