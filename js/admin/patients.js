@@ -221,6 +221,8 @@ function manage(id){
             function(data){
                 console.log(data);
                 showSuccess(data.message);
+                $('#managePatientModal').modal('hide');
+                init();
             }, 'json').fail(function(){
                 console.log('shing');
             });

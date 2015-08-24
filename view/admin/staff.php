@@ -140,8 +140,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                     <tbody id="staffTable">
                     <tr>
                         <td>1</td>
-                        <td>Lorem</td>
-                        <td>ipsum</td>
+                        <td></td>
+                        <td></td>
                         <td><button class="btn btn-sm btn-default" userid="1" onclick="rapModal(this)">Manage</button></td>
                     </tr>
                     </tbody>
