@@ -1,6 +1,6 @@
 var Pinger = {};
 Pinger.RESOURCE = {
-    pingerURL       :   "http://localhost/pms/phase/phase_lookout.php?intent=markPresence",
+    pingerURL       :   "http://code.caleb.com.ng/pms/phase/phase_lookout.php?intent=markPresence",
     pingInterval    :   60000
 }
 
