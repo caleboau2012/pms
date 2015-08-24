@@ -124,3 +124,6 @@ define('GENDER_FEMALE', 'Female');
 define('START_DATE', 'start_date');
 define('END_DATE', 'end_date');
 define('DAY', 'day');
+
+// Host
+define('HOST', "http://localhost/pms/");

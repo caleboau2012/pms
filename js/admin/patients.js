@@ -155,8 +155,9 @@ function manage(id){
         console.log(data);
         if(data.status == 1){
             data = data.data;
+            form.patient_id.value = data.patient_id;
             form.surname.value = data.surname;
-            form.firstname.value = data.surname;
+            form.firstname.value = data.firstname;
             form.middlename.value = data.middlename;
             form.regNo.value = data.regNo;
             form.occupation.value = data.occupation;
@@ -177,6 +178,7 @@ function manage(id){
             form.family_position.value = data.family_position;
             form.mother_status.value = data.mother_status;
             form.father_status.value = data.father_status;
+            form.marital_status.value = data.marital_status;
 
             $('#managePatientModal').modal({
                 backdrop: 'static'
@@ -190,6 +192,7 @@ function manage(id){
         e.preventDefault();
         $.post(host + "phase/arrival/phase_patient.php?intent=ManagePatient",
             {
+                patient_id: form.patient_id.value,
                 surname : form.surname.value,
                 firstname : form.firstname.value,
                 middlename : form.middlename.value,
@@ -217,6 +220,7 @@ function manage(id){
             },
             function(data){
                 console.log(data);
+                showSuccess(data.message);
             }, 'json').fail(function(){
                 console.log('shing');
             });

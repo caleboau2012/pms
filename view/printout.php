@@ -19,11 +19,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
     <title>PMS</title>
     <!-- Bootstrap core CSS -->
-    <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="<?php echo HOST?>css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
-    <link href="../css/master.css" rel="stylesheet">
-    <link rel="stylesheet" href="../css/print.css" media="print">
+    <link href="<?php echo HOST?>css/master.css" rel="stylesheet">
+    <link rel="stylesheet" href="<?php echo HOST?>css/print.css" media="print">
 
 </head>
 
@@ -54,7 +54,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
 </div>
 
-<script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="<?php echo HOST?>js/bootstrap/jquery-1.10.2.min.js"></script>
 <script>
     $(document).ready(function(){
         window.print();

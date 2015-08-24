@@ -3,7 +3,7 @@
 require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
-Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse'));
+Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'Licence'));
 Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'HospitalDetailsModel'));
 Crave::requireFiles(CONTROLLER, array('UserController', 'HospitalDetailsController'));
 

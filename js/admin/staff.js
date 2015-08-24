@@ -13,6 +13,7 @@ $(document).ready(function(){
 function init(){
     $.get(host + "phase/admin/phase_admin.php?intent=getAllUsers", function(data){
         data = JSON.parse(data);
+        console.log(data);
         var  html = "";
         for(var i = 0; i < data.data.length; i++){
             var obj = data.data[i];
@@ -29,7 +30,12 @@ function init(){
                 .replace("{{userid}}", obj.userid);
         }
 
-        $("#staffTable").html(html);
+        $("#staffTable").html(html).find('.btn').each(function(e){
+            if($(this).attr('userid') == 'null'){
+                $(this).attr('disabled', 'disabled');
+            }
+        });
+
         makeTable();
     });
 }
@@ -119,7 +125,7 @@ function addNewStaff(e){
         $.get(host + "phase/admin/phase_admin.php?intent=addNewStaff&regNo=" + regNo + "&passcode=" + password,
             function(data){
                 data = JSON.parse(data);
-                    console.log(data);
+                //console.log(data);
                 if(data.status == 2){
                     $(e).parent().find('.alert').removeClass('hidden');
                 }
