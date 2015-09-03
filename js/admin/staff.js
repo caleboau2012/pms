@@ -27,6 +27,7 @@ function init(){
             html += $('#tmplTable').html().replace('{{sn}}', (i + 1) )
                 .replace("{{staffId}}", obj.regNo)
                 .replace("{{name}}", name)
+                .replace("{{userid}}", obj.userid)
                 .replace("{{userid}}", obj.userid);
         }
 
@@ -44,6 +45,16 @@ function rapModal(e){
     userid = $(e).attr('userid');
 
     initModal();
+}
+
+function profileModal(e){
+    userid = $(e).attr('userid');
+
+    initProfileModal();
+}
+
+function initProfileModal(){
+    $("#profileModal").modal('show');
 }
 
 function initModal(){

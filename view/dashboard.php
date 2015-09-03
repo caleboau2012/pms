@@ -113,10 +113,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             <?php
                             if ($staff[StaffRoleTable::staff_role_id] == DOCTOR) {
                                 ?>
-                                <div class="col-xs-3  text-center">
+                                <div class="col-xs-3 text-center">
                                     <a href="treatment/out-patient.php" class="dashboard-link">
-                                        <img src="../images/medical_consultants.png" width="60">
-
+                                        <img src="../images/medical_consultants.png" width="60" height="60">
                                         <div class="dashboard-desc">Doctor</div>
                                     </a>
                                 </div>
@@ -125,8 +124,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3 text-center">
                                     <a href="pharmacy.php" class="dashboard-link">
-                                        <img src="../images/pharmacy-icons.png" width="60">
-
+                                        <img src="../images/pharmacy-icons.png" width="60" height="60">
                                         <div class="dashboard-desc">Pharmacist</div>
                                     </a>
                                 </div>
@@ -155,8 +153,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3 text-center">
                                     <a href="admission.php" class="dashboard-link">
-                                        <img src="../images/admission.png">
-
+                                        <img src="../images/admission.png" width="60" height="60">
                                         <div class="dashboard-desc">Admission</div>
                                     </a>
                                 </div>
