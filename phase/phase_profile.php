@@ -33,6 +33,44 @@ if ($intent == 'addProfile') {
         echo JsonResponse::error("Profile data not set");
         exit();
     }
+} elseif ($intent == 'updateProfile') {
+    if(isset($_REQUEST['profile'])){
+        $profileInfo = $_REQUEST['profile'];
+
+        $userController = new UserController();
+        $response = $userController->updateProfile($profileInfo);
+
+        if($response){
+            echo JsonResponse::success("Profile Successfully Updated!");
+            exit();
+        } else {
+            echo JsonResponse::error("Could not update Profile. Please try again!");
+            exit();
+        }
+    }
+    else{
+        echo JsonResponse::error("Profile data not set");
+        exit();
+    }
+} elseif ($intent == 'getProfile') {
+    if(isset($_REQUEST['userid'])){
+        $userid = $_REQUEST['userid'];
+
+        $userController = new UserController();
+        $profile = $userController->getUserProfile($userid);
+
+        if($profile && is_array($profile)){
+            echo JsonResponse::success($profile);
+            exit();
+        } else {
+            echo JsonResponse::error("Could not fetch user profile. Please try again later.");
+            exit();
+        }
+    }
+    else{
+        echo JsonResponse::error("Expected parameter not set");
+        exit();
+    }
 } else {
     echo JsonResponse::error('Invalid intent!');
     exit();

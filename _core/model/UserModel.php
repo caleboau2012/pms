@@ -16,8 +16,16 @@ class UserModel extends BaseModel {
         return $this->conn->execute(ProfileSqlStatement::ADD, $profileData);
     }
 
+    public function updateProfile($profileData){
+        return $this->conn->execute(ProfileSqlStatement::UPDATE, $profileData);
+    }
+
     public function getProfile($regNo){
         return $this->conn->fetch(ProfileSqlStatement::GET_PROFILE, array(UserAuthTable::regNo => $regNo));
+    }
+
+    public function getUserProfile($userid){
+        return $this->conn->fetch(ProfileSqlStatement::GET_USER_PROFILE, array(UserAuthTable::userid => $userid));
     }
 
     /*$regNo, $passcode, $status*/
