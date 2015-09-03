@@ -127,3 +127,6 @@ define('DAY', 'day');
 
 // Host
 define('HOST', "http://localhost/pms/");
+
+// Hospital Info
+define('HOSPITAL_NAME', 'hospital_name');

@@ -102,6 +102,7 @@ if ($intent == 'getStaffDetails') {
     }
 
     if($hospitalInfo){
+        CxSessionHandler::setItem(HOSPITAL_NAME, $name);    // RESETS THE HOSPITAL NAME IN SESSION
         echo JsonResponse::success("Successfully updated  hospital details");
         exit();
     } else {

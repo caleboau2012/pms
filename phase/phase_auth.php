@@ -3,8 +3,11 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'UserModel'));
-Crave::requireFiles(CONTROLLER, array('AuthenticationController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'HospitalDetailsModel'));
+Crave::requireFiles(CONTROLLER, array('AuthenticationController', 'HospitalDetailsController'));
+
+$hospital_info = (new HospitalDetailsController())->getHospitalDetails();
+$hospital_name = $hospital_name['name'];
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -30,6 +33,8 @@ if ($intent == 'login') {
                 foreach ($user_credentials as $key => $value) {
                     CxSessionHandler::setItem($key, $value);
                 }
+
+                CxSessionHandler::setItem(HOSPITAL_NAME, $hospital_name);    // ADD HOSPITAL NAME TO SESSION
 
                 //CONSTRUCT RESPONSE
                 $response = array();
