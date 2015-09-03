@@ -23,7 +23,7 @@ Treatment = {
                 return false;
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            //console.log(item);
+            console.log(item);
             return $( "<li>" )
                 .append( "<div class='panel-success'>" +
                 "<div class='panel panel-heading' style='margin: 1px'>" +
@@ -270,6 +270,7 @@ Treatment = {
                 patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
                 patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                 patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
+                patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
 
                 //console.log(patientHTML);
                 $('.history').append(patientHTML);
@@ -297,10 +298,14 @@ Treatment = {
                     patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
                     patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                     patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
+                    patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
 
                     //console.log(patientHTML);
                     $('#encounteraccordion' + id).append(patientHTML);
                 }
+            }
+            else{
+                $('#encounteraccordion' + id).text(data.message);
             }
         });
     },

@@ -38,7 +38,7 @@ $(function(){
     });
 
     //change password
-    $('#change-password').on('submit', function (e) {
+    $('#change-password, #passwordForm').on('submit', function (e) {
         $('#form-loading').removeClass('hidden');
         $('#form-info').addClass('hidden');
 

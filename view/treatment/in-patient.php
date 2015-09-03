@@ -66,6 +66,9 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                         <span class="caret"></span>
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
+                        <li role="presentation"><a href="../dashboard.php">Dashboard</a></li>
+                        <li class="divider"></li>
+                        <li role="presentation"><a href="../view-profile.php">View Profile</a></li>
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
                 </li>
@@ -117,10 +120,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
              aria-labelledby="heading{{treatmentid}}">
             <div class="panel-body">
                 <p><b>Comments:</b> {{comments}}</p>
-                <p><b>Consultation Details:</b> {{consultation}}</p>
+                <p><b>Title:</b> {{consultation}}</p>
                 <span class="treatmentid" hidden>{{treatmentid}}</span>
                 <span class="doctorid" hidden>{{doctorid}}</span>
-                <p><b>Syptoms:</b> {{symptoms}}</p>
+                <p><b>Complaint:</b> {{symptoms}}</p>
+                <p><b>Date:</b> {{date}}</p>
                 <div class="accordion-inner">
                     <div class="accordion" id="encounteraccordion{{treatmentid}}"></div>
                 </div>
@@ -132,17 +136,18 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script id="tmplEncounterHistory" type="text/html">
     <li class="list-group-item">
         <a class="collapsed" data-toggle="collapse" data-parent="#encounteraccordion{{userid}}"
-           href="#collapse{{treatmentid}}" aria-expanded="false" aria-controls="collapse{{treatmentid}}">
+           href="#encountercollapse{{treatmentid}}" aria-expanded="false" aria-controls="encountercollapse{{treatmentid}}">
             <b>Diagnosis:</b> {{diagnosis}}
         </a>
-        <div id="collapse{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
+        <div id="encountercollapse{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
              aria-labelledby="heading{{treatmentid}}">
             <div class="panel-body">
                 <p><b>Comments:</b> {{comments}}</p>
-                <p><b>Consultation Details:</b> {{consultation}}</p>
+                <p><b>Title:</b> {{consultation}}</p>
                 <span class="treatmentid" hidden>{{treatmentid}}</span>
                 <span class="doctorid" hidden>{{doctorid}}</span>
-                <p><b>Syptoms:</b> {{symptoms}}</p>
+                <p><b>Complaint:</b> {{symptoms}}
+                <p><b>Date:</b> {{date}}</p>
             </div>
         </div>
     </li>
@@ -177,7 +182,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="pull-left patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> </h4>
+                    <h4 class="pull-left patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></h4>
                     <span class="pull-right">
                         <button id="end" class="hidden btn btn-warning pull-right">End Session <span class="fa fa-close"></span></button>
                     </span>
@@ -216,7 +221,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <br/>
                             <div class="col-sm-12">
                                 <div class="center-block">
-                                    <label>Consultation Details:</label>
+                                    <label>Title:</label>
                                     <textarea type="text" class="form-control" name="consultation"></textarea>
                                 </div>
                             </div>
@@ -246,7 +251,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-6">
                                 <br>
                                 <div class="center-block">
-                                    <label>Symptoms:</label>
+                                    <label>Complaint:</label>
                                     <textarea type="text" class="form-control" name="symptoms"></textarea>
                                 </div>
                                 <br/>

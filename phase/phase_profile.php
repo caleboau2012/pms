@@ -58,7 +58,6 @@ if ($intent == 'addProfile') {
 
         $userController = new UserController();
         $profile = $userController->getUserProfile($userid);
-
         if($profile && is_array($profile)){
             echo JsonResponse::success($profile);
             exit();

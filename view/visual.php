@@ -78,6 +78,8 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                     </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         <li role="presentation"><a href="dashboard.php">Dashboard</a></li>
+                        <li class="divider"></li>
+                        <li role="presentation"><a href="view-profile.php">View Profile</a></li>
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
                 </li>

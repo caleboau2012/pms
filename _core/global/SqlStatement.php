@@ -969,7 +969,7 @@ class TreatmentSqlStatement {
                             diagnosis=:diagnosis, comments=:comments, created_date=NOW(), modified_date = NOW(), active_fg=1 WHERE treatment_id=:treatment_id';
 
 
-    const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id=:patient_id";
+    const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments, created_date FROM treatment WHERE patient_id=:patient_id";
 
     const CHECK_TREATMENT = "SELECT treatment_id FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
 
