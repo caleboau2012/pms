@@ -1,11 +1,12 @@
 var Pinger = {};
 Pinger.RESOURCE = {
-    pingerURL       :   "http://localhost/pms/phase/phase_lookout.php?intent=markPresence",
+    pingerURL       :   host + "phase/phase_lookout.php?intent=markPresence",
     pingInterval    :   60000
 }
 
 Pinger.markPresence = function() {
     $.get(Pinger.RESOURCE.pingerURL);
+    console.log("pinged");
 }
 
 Pinger.start = function() {
