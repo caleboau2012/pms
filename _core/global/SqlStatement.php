@@ -63,9 +63,9 @@ class ProfileSqlStatement {
                 INNER JOIN user_auth AS ua
                     ON p.userid = ua.userid
             WHERE regNo = :regNo';
-        const UPDATE = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight,department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
+        const UPDATE = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
         const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
-        const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department, p.work_address, p.home_address, p.telephone, p.sex,
+        const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department_id, p.work_address, p.home_address, p.telephone, p.sex,
                                         p.height, p.weight, p.birth_date, p.created_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
         const GET_USER_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, dept.department_name, p.work_address, p.home_address, p.telephone, p.sex, p.height, p.weight, p.birth_date, p.created_date, p.modified_date
                                     FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) INNER JOIN department as dept ON (p.department_id = dept.department_id) WHERE ua.userid = :userid';
@@ -1034,7 +1034,7 @@ class SystemSetupSqlStatement {
 }
 
 class HospitalInfoSqlStatement {
-    const GET = "SELECT hospital_info_id, name, address FROM hospital_info";
+    const GET = "SELECT hospital_info_id, name, address FROM hospital_info ORDER BY modified_date DESC";
     const ADD = "INSERT INTO hospital_info (name, address, created_date, modified_date) VALUES (:name, :address, NOW(), NOW())";
     const UPDATE = "UPDATE hospital_info SET name = :name, address = :address, modified_date = NOW() WHERE hospital_info_id = :hospital_info_id";
 }
