@@ -63,6 +63,10 @@ class UserController {
         return $this->user->addAuthInfo($authData);
     }
 
+    public function deleteUser($userid){
+        return $this->user->deleteUser($userid);
+    }
+
     public function getUserProfile($userid){
         return $this->user->getUserProfile($userid);
     }

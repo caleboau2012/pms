@@ -28,6 +28,10 @@ class UserModel extends BaseModel {
         return $this->conn->fetch(ProfileSqlStatement::GET_USER_PROFILE, array(UserAuthTable::userid => $userid));
     }
 
+    public function deleteUser($userid){
+        return $this->conn->execute(UserAuthSqlStatement::DELETE, array(UserAuthTable::userid => $userid));
+    }
+
     /*$regNo, $passcode, $status*/
     public function addAuthInfo($authData){
         return $this->conn->execute(UserAuthSqlStatement::ADD, $authData);

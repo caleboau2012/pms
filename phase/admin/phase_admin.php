@@ -62,6 +62,21 @@ if ($intent == 'getStaffDetails') {
         exit();
     }
 
+} elseif($intent == 'deleteStaff'){
+    $userid = isset($_REQUEST['userid']) ? $_REQUEST['userid'] : null;
+
+    $userController = new UserController();
+
+    $feedback = $userController->deleteUser($userid);
+
+    if($feedback) {
+        echo JsonResponse::message(STATUS_OK, "Successfully deleted user!");
+        exit();
+    } else {
+        echo JsonResponse::error("Could not delete this user. Try again!");
+        exit();
+    }
+
 } elseif($intent == 'addProfile'){
     if(isset($_REQUEST['profileInfo'])){
         $profileInfo = $_REQUEST['profileInfo'];
