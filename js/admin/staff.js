@@ -49,8 +49,56 @@ function rapModal(e){
 
 function profileModal(e){
     userid = $(e).attr('userid');
+    $.getJSON(host + "phase/phase_profile.php?intent=getProfile&userid=" + userid, function(data){
+        console.log(data);
+        if(data.status == 1){
+            data = data.data;
+            $('#profile-user-id').val(userid);
+            $('#first-name').val(data.firstname);
+            $('#middle-name').val(data.middlename);
+            $('#surname').val(data.surname);
+            $('#dob').val(data.birth_date);
+            $('#height').val(data.height);
+            $('#weight').val(data.weight);
+            if(data.sex == "MALE"){
+                $("#sex-male").attr('selected', 'selected')
+            }
+            else if (data.sex == "FEMALE"){
+                $("#sex-female").attr('selected', 'selected');
+            }
+            $('#telephone').val(data.telephone);
+            if(data.dept_id == 1){
+                $("#dept-doctor").attr('selected', 'selected')
+            }
+            else if(data.dept_id == 2){
+                $("#dept-pharmacy").attr('selected', 'selected');
+            }
+            else if(data.dept_id == 3){
+                $("#dept-mro").attr('selected', 'selected');
+            }
+            else if(data.dept_id == 7){
+                $("#dept-urine").attr('selected', 'selected');
+            }
+            else if(data.dept_id == 5){
+                $("#dept-visual").attr('selected', 'selected');
+            }
+            else if(data.dept_id == 6){
+                $("#dept-xray").attr('selected', 'selected');
+            }
+            else if(data.dept_id == 4){
+                $("#dept-parasitology").attr('selected', 'selected');
+            }
+            else if(data.dept_id == 8){
+                $("#dept-pathology").attr('selected', 'selected');
+            }
+            $('#h-address').text(data.home_address);
+            $('#l-address').text(data.work_address);
+        }
 
-    initProfileModal();
+        $('#password-userid').val(userid);
+
+        initProfileModal();
+    });
 }
 
 function initProfileModal(){

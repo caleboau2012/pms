@@ -36,15 +36,19 @@ class LookoutController {
         $orig_dir = getcwd();
         chdir($watch_path);
 
+        $worked = false;
+
         $watch_files = glob('*.sess');
+
         foreach ($watch_files as $file) {
             $file_access_time = fileatime($file);
             $current_time = time();
             $inactive = ($current_time - $file_access_time) > MAX_INACTIVE_TIME;
             if ($inactive) {
-                $userid = explode('.', $file)[0];
-                array_push($inactive_users, $userid);
+                $userid = explode('.', $file);
+                array_push($inactive_users, $userid[0]);
             }
+            $worked = true;
         }
 
         chdir($orig_dir);
@@ -52,6 +56,10 @@ class LookoutController {
         if (sizeof($inactive_users) > 0) {
             LookoutController::deleteInactiveWatch($inactive_users);
             AuthenticationController::autoLogout($inactive_users);
+
+            $worked = true;
         }
+
+        return $worked;
     }
 }

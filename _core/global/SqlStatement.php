@@ -67,8 +67,8 @@ class ProfileSqlStatement {
         const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
         const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department_id, p.work_address, p.home_address, p.telephone, p.sex,
                                         p.height, p.weight, p.birth_date, p.created_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
-        const GET_USER_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department_id, p.work_address, p.home_address, p.telephone, p.sex,
-                                        p.height, p.weight, p.birth_date, p.created_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.userid = :userid';
+        const GET_USER_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, dept.department_name, p.work_address, p.home_address, p.telephone, p.sex, p.height, p.weight, p.birth_date, p.created_date, p.modified_date
+                                    FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) INNER JOIN department as dept ON (p.department_id = dept.department_id) WHERE ua.userid = :userid';
         const GET_USER_AND_DEPT = 'SELECT dept.department_name, p.firstname, p.middlename, p.surname, FROM profile AS p
                                    LEFT JOIN department AS dept
                                     ON p.department_id = dept.department_id

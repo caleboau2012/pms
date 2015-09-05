@@ -29,6 +29,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../css/master.css" rel="stylesheet">
@@ -167,88 +168,127 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <h4 class="modal-title" id="rapModalTitle">Staff Profile</h4>
             </div>
             <div class="modal-body">
-                <div class="alert hidden alert-danger alert-dismissable" role="alert">
-                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-                    <span id="alertMSG"></span>
-                </div>
-                <div class="form-profile">
-                    <div class="hidden text-center" id="form-loading">
-                        <img src="../images/loading.gif">
-                    </div>
-                    <div class="text-danger  text-center hidden " id="form-error"></div>
-                    <div class="text-success text-center hidden" id="form-success"></div>
-                    <form action="#" method="post" role="form"  id="profile-form">
-                        <input type="hidden" name="<?php echo ProfileTable::table_name.'['.ProfileTable::userid.']'?>" value="<?php echo CxSessionHandler::getItem(UserAuthTable::userid)?>">
-                        <input type="hidden" name="intent" value="addProfile">
-                        <div class="form-group-lg col-md-4">
-                            <label for="first-name">First Name</label>
-                            <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" required >
-                        </div>
-                        <div class="form-group-lg col-md-4">
-                            <label for="middle-name">Middle Name</label>
-                            <input type="text" class="form-control" id="middle-name"  name="<?php echo ProfileTable::table_name.'['.ProfileTable::middlename.']'?>" required >
-                        </div>
-                        <div class="form-group-lg col-md-4">
-                            <label for="surname">Surname</label>
-                            <input type="text" class="form-control" id="surname" name="<?php echo ProfileTable::table_name.'['.ProfileTable::surname.']'?>" required >
-                        </div>
+                <div class="row">
+                    <div class="col-xs-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="panel-title"><h4>Manage profile</h4></div>
+                            </div>
+                            <div class="panel-body">
+                                <div class="row">
+                                    <div class="hidden text-center" id="form-loading">
+                                        <img src="../images/loading.gif">
+                                    </div>
+                                    <div class="text-danger  text-center hidden " id="form-error"></div>
+                                    <div class="text-success text-center hidden" id="form-success"></div>
+                                    <form action="#" method="post" role="form"  id="profile-form">
+                                        <input type="hidden" id="profile-user-id" name="<?php echo ProfileTable::table_name.'['.ProfileTable::userid.']'?>">
+                                        <input type="hidden" name="intent" value="updateProfile">
+                                        <div class="form-group col-md-4">
+                                            <label for="first-name">First Name</label>
+                                            <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="middle-name">Middle Name</label>
+                                            <input type="text" class="form-control" id="middle-name"  name="<?php echo ProfileTable::table_name.'['.ProfileTable::middlename.']'?>" required>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="surname">Surname</label>
+                                            <input type="text" class="form-control" id="surname" name="<?php echo ProfileTable::table_name.'['.ProfileTable::surname.']'?>" required >
+                                        </div>
 
-                        <div class="form-group-lg col-md-4">
-                            <label for="dob">Date of Birth</label>
-                            <input name="<?php echo ProfileTable::table_name.'['.ProfileTable::birth_date.']'?>" class="date-picker form-control edit-read-only" readonly id="dob" type="text" data-date-format="yyyy-mm-dd"/>
+                                        <div class="form-group col-md-4">
+                                            <label for="dob">Date of Birth</label>
+                                            <input name="<?php echo ProfileTable::table_name.'['.ProfileTable::birth_date.']'?>" class="date-picker form-control edit-read-only" readonly id="dob" type="text" data-date-format="yyyy-mm-dd"/>
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="height">Height</label><span class="text-danger">&nbsp;(metre)</span>
+                                            <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::height.']'?>" id="height">
+                                        </div>
+                                        <div class="form-group col-md-4">
+                                            <label for="weight">Weight</label><span class="text-danger">&nbsp;(kg)</span>
+                                            <input type="text" class="form-control" id="weight" name="<?php echo ProfileTable::table_name.'['.ProfileTable::weight.']'?>" >
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="sex">Sex</label>
+                                            <select class="form-control" id="sex" name="<?php echo ProfileTable::table_name.'['.ProfileTable::sex.']'?>">
+                                                <option id="sex-male" value="MALE">Male</option>
+                                                <option id="sex-female" value="FEMALE">Female</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-3">
+                                            <label for="telephone">Mobile Number</label>
+                                            <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::telephone.']'?>" id="telephone" value="<?php echo $profile[ProfileTable::telephone]?>">
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="dept">Department</label>
+                                            <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::department_id.']'?>">
+                                                <option id="dept-doctor" value="<?php echo DOCTOR; ?>">Doctor</option>
+                                                <option id="dept-pharmacy" value="<?php echo PHARMACIST; ?>">Pharmacy</option>
+                                                <option id="dept-mro" value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
+                                                <option id="dept-urine" value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
+                                                <option id="dept-visual" value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
+                                                <option id="dept-xray" value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
+                                                <option id="dept-parasitology" value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>
+                                                <option id="dept-pathology" value="<?php echo CHEMICAL_PATHOLOGY_CONDUCTOR; ?>">Chemical Pathology</option>
+                                            </select>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="h-address">Home Address</label>
+                                            <textarea class="form-control" rows="3" id="h-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::home_address.']'?>"><?php echo $profile[ProfileTable::home_address]?></textarea>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <label for="l-address">Work Address</label>
+                                            <textarea class="form-control" rows="3" id="l-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::work_address.']'?>"><?php echo $profile[ProfileTable::work_address]?></textarea>
+                                        </div>
+                                        <div class="form-group col-md-6">
+                                            <button type="submit" class="btn btn-lg btn-success">Submit</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-group-lg col-md-4">
-                            <label for="height">Height</label><span class="text-danger">&nbsp;(metre)</span>
-                            <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::height.']'?>" id="height">
+                        <div class="panel panel-warning">
+                            <div class="panel-heading">
+                                <div class="panel-title">
+                                    <h4>Change Password</h4>
+                                </div>
+                            </div>
+                            <div class="panel-body">
+                                <form autocomplete="off" class="form-group" id="passwordForm">
+                                    <div class="hidden text-center" id="form-loading"><img src="../images/loading.gif"></div>
+                                    <div class=" alert alert-danger hidden text-center" id="form-error"></div>
+                                    <div class=" alert alert-success hidden text-center" id="form-success"></div>
+
+                                    <input type="hidden" name="intent" value="changePassword">
+                                    <input type="hidden" id="password-userid" name="userid">
+                                    <input type="hidden" name="status" value="1">
+                                    <span class="form-inline">
+                                        <label class="sr-only" for="exampleInputAmount">Username</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">New Password &nbsp; &nbsp; &nbsp;</div>
+                                            <input type="password" class="form-control " id="passcode" name="passcode" required>
+                                        </div>
+                                    </span>
+                                    <span class="form-inline">
+                                        <label class="sr-only" for="passcode">Re-type Password</label>
+                                        <div class="input-group">
+                                            <div class="input-group-addon">Re-type Password </div>
+                                            <input type="password" class="form-control" id="confirm_passcode" name="confirm_passcode" required>
+                                        </div>
+                                    </span>
+                                    <button type="submit" class="btn btn-warning btn-lg">Submit</button>
+                                </form>
+                            </div>
                         </div>
-                        <div class="form-group-lg col-md-4">
-                            <label for="weight">Weight</label><span class="text-danger">&nbsp;(kg)</span>
-                            <input type="text" class="form-control" id="weight" name="<?php echo ProfileTable::table_name.'['.ProfileTable::weight.']'?>" >
-                        </div>
-                        <div class="form-group-lg col-md-3">
-                            <label for="sex">Sex</label>
-                            <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::sex.']'?>">
-                                <option value="MALE">Male</option>
-                                <option value="FEMALE">Female</option>
-                            </select>
-                        </div>
-                        <div class="form-group-lg col-md-3">
-                            <label for="telephone">Mobile Number</label>
-                            <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::telephone.']'?>" id="telephone" >
-                        </div>
-                        <div class="form-group-lg col-md-6">
-                            <label for="dept">Department</label>
-                            <select class="form-control" id="dept" name="<?php echo ProfileTable::table_name.'['.ProfileTable::department_id.']'?>">
-                                <option value="<?php echo DOCTOR; ?>">Doctor</option>
-                                <option value="<?php echo PHARMACIST; ?>">Pharmacy</option>
-                                <option value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
-                                <option value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
-                                <option value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
-                                <option value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
-                                <option value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>
-                                <option value="<?php echo CHEMICAL_PATHOLOGY_CONDUCTOR; ?>">Chemical Pathology</option>
-                            </select>
-                        </div>
-                        <div class="form-group-lg col-md-6">
-                            <label for="h-address">Home Address</label>
-                            <textarea class="form-control" rows="3" id="h-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::home_address.']'?>"></textarea>
-                        </div>
-                        <div class="form-group-lg col-md-6">
-                            <label for="l-address">Work Address</label>
-                            <textarea class="form-control" rows="3" id="l-address" name="<?php echo ProfileTable::table_name.'['.ProfileTable::work_address.']'?>"></textarea>
-                        </div>
-                        <div class="form-group-lg col-md-6">
-                            <button type="submit" class="btn btn-lg btn-primary">Submit</button>
-                        </div>
-                    </form>
-                    <div class="clearfix"></div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
 
-<!-- Roles nd Permissions Modal -->
+<!-- Roles and Permissions Modal -->
 <div class="modal fade" id="rapModal" tabindex="-1" role="dialog" aria-labelledby="rapModal" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -325,8 +365,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../../js/bootstrap/bootstrap.min.js"></script>
+<script src="../../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../../js/constants.js"></script>
 <script src="../../js/pinger.js"></script>
+<script src="../../js/profile.js"></script>
+<script src="../../js/index.js"></script>
 <script src="../../js/admin/staff.js"></script>
 
 <?php include('../footer.php'); ?>

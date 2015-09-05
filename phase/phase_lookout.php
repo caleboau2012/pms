@@ -32,6 +32,6 @@ if ($intent == 'markPresence') {
         exit();
     }
 } elseif ($intent == 'sweep') {
-    LookoutController::sweep();
-    file_put_contents("time.txt", date('Y-m-d H:i:s'));
+    $sweepResult = LookoutController::sweep();
+    var_dump($sweepResult);
 }
