@@ -4,8 +4,8 @@ require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'Licence'));
-Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'HospitalDetailsModel'));
-Crave::requireFiles(CONTROLLER, array('UserController', 'HospitalDetailsController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'HospitalDetailsModel', 'RoleModel'));
+Crave::requireFiles(CONTROLLER, array('UserController', 'HospitalDetailsController', 'AuthenticationController', 'RoleController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -63,13 +63,31 @@ if ($intent == 'getStaffDetails') {
     }
 
 } elseif($intent == 'deleteStaff'){
-    $userid = isset($_REQUEST['userid']) ? $_REQUEST['userid'] : null;
+    // check that userid of staff to be deleted is specified
+    if (!isset($_POST['userid'])) {
+        echo JsonResponse::error("Incomplete parameters for delete user intent");
+        exit();
+    }
+
+    $userid = $_POST['userid'];
 
     $userController = new UserController();
 
     $feedback = $userController->deleteUser($userid);
 
+    if(is_array($feedback) && $feedback[JsonResponse::P_STATUS] == STATUS_ERROR){
+        echo JsonResponse::error($feedback[JsonResponse::P_MESSAGE]);
+        exit();
+    }
+
     if($feedback) {
+        // log user out, if they delete themself
+        $loggedInUser = CxSessionHandler::getItem(UserAuthTable::userid);
+        if ($loggedInUser == $userid) {
+            CxSessionHandler::destroy();
+            header("Location: ../../index.php");
+        }
+
         echo JsonResponse::message(STATUS_OK, "Successfully deleted user!");
         exit();
     } else {

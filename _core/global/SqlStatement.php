@@ -35,7 +35,9 @@ class UserAuthSqlStatement {
             FROM user_auth AS u
                 LEFT JOIN profile AS p
                     ON(u.userid=p.userid)
-            WHERE regNo=:regNo AND passcode=SHA1(:passcode)";
+            WHERE regNo=:regNo
+                AND passcode=SHA1(:passcode)
+                AND u.active_fg=1";
 
         const GET_USER_BY_ID = 'SELECT u.userid, u.regNo, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
         FROM user_auth AS u

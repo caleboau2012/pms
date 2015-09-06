@@ -64,7 +64,26 @@ class UserController {
     }
 
     public function deleteUser($userid){
-        return $this->user->deleteUser($userid);
+        $loggedInUser = CxSessionHandler::getItem('userid');
+
+        // check if user has permission to delete users
+        if (!RoleController::hasRole($loggedInUser, ADMINISTRATOR)) {
+            $response_array = array(
+                JsonResponse::P_STATUS  =>  JsonResponse::STATUS_ERROR,
+                JsonResponse::P_MESSAGE =>  'You are not authorized to delete users!'
+            );
+            return $response_array;
+        }
+
+        $user_deleted = $this->user->deleteUser($userid);
+
+        if ($user_deleted) {
+            // log user out from database level, once delete is succesful
+            $authenticator = new AuthenticationController();
+            $authenticator->flagUserOffline($userid);
+        }
+
+        return $user_deleted;
     }
 
     public function getUserProfile($userid){
