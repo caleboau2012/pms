@@ -12,7 +12,7 @@
 class UserAuthSqlStatement {
         const VERIFY_USER = "SELECT COUNT(*) AS count FROM user_auth WHERE regNo = :regNo AND passcode = :passcode";
         const ADD = 'INSERT INTO user_auth (regNo, passcode, created_date, modified_date, status) VALUES (:regNo, SHA1(:passcode), NOW(), NOW(), :status)';
-        const DELETE = 'UPDATE user_auth SET active_fg = 0 WHERE userid = :userid';
+        const DELETE = 'UPDATE user_auth SET active_fg = 0, modified_date = NOW() WHERE userid = :userid';
         const RESTORE_USER = 'UPDATE user_auth SET active_fg = 1 WHERE userid = :userid';
         const GET = 'SELECT userid, regNo, created_date, modified_date, status, online_status
                                 FROM user_auth
