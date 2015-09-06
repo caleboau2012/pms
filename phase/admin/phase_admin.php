@@ -61,7 +61,6 @@ if ($intent == 'getStaffDetails') {
         echo JsonResponse::error("Failed! User already exist");
         exit();
     }
-
 } elseif($intent == 'deleteStaff'){
     // check that userid of staff to be deleted is specified
     if (!isset($_POST['userid'])) {
@@ -80,7 +79,7 @@ if ($intent == 'getStaffDetails') {
         exit();
     }
 
-    if($feedback) {
+    if ($feedback) {
         // log user out, if they delete themself
         $loggedInUser = CxSessionHandler::getItem(UserAuthTable::userid);
         if ($loggedInUser == $userid) {
@@ -94,7 +93,28 @@ if ($intent == 'getStaffDetails') {
         echo JsonResponse::error("Could not delete this user. Try again!");
         exit();
     }
+} elseif ($intent == 'restoreStaff') {
+    // check that userid of staff to be deleted is specified
+    if (!isset($_POST['userid'])) {
+        echo JsonResponse::error("Incomplete parameters for restoring user!");
+        exit();
+    }
 
+    $userid = $_POST['userid'];
+    $userController = new UserController();
+    $feedback = $userController->restoreUser($userid);
+
+    if(is_array($feedback) && $feedback[JsonResponse::P_STATUS] == STATUS_ERROR){
+        echo JsonResponse::error($feedback[JsonResponse::P_MESSAGE]);
+        exit();
+    }
+    if ($feedback) {
+        echo JsonResponse::message(STATUS_OK, "Successfully restored user!");
+        exit();
+    } else {
+        echo JsonResponse::error("Could not restore this user. Try again!");
+        exit();
+    }
 } elseif($intent == 'addProfile'){
     if(isset($_REQUEST['profileInfo'])){
         $profileInfo = $_REQUEST['profileInfo'];

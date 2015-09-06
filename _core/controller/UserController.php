@@ -86,6 +86,20 @@ class UserController {
         return $user_deleted;
     }
 
+    public function restoreUser($userid)
+    {
+        // check licencing details
+        if (!Licence::withinUserLimit()) {
+            $response_array = array(
+                JsonResponse::P_STATUS  =>  JsonResponse::STATUS_ERROR,
+                JsonResponse::P_MESSAGE =>  'You have exceeded maximum number of users within your licence'
+            );
+            return $response_array;
+        }
+
+        return $this->user->restoreUser($userid);
+    }
+
     public function getUserProfile($userid){
         return $this->user->getUserProfile($userid);
     }
