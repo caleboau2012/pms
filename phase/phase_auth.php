@@ -7,7 +7,7 @@ Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'HospitalDetailsModel
 Crave::requireFiles(CONTROLLER, array('AuthenticationController', 'HospitalDetailsController'));
 
 $hospital_info = (new HospitalDetailsController())->getHospitalDetails();
-$hospital_name = $hospital_name['name'];
+$hospital_name = $hospital_info['name'];
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
