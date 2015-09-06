@@ -51,5 +51,4 @@ $inpatients = ReportController::inPatients();
         </tfoot>
     </table>
 
-
 <?php require_once 'includes/iframe-footer.php';
