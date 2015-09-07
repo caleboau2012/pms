@@ -23,12 +23,12 @@
                 }
             });
             //*Legend */
-            var content = '<div class="text-center" id="roster-legend">' +
-                            '<span class="m-duty small">Morning</span>' +
-                            '<span class="a-duty small">Afternoon</span>' +
-                            '<span class="n-duty small">Night&nbsp;&nbsp;&nbsp;</span><br/>' +
-                          '</div>';
-            $('.fc-toolbar').append(content)
+            //var content = '<div class="text-center" id="roster-legend">' +
+            //                '<span class="m-duty small">Morning</span>' +
+            //                '<span class="a-duty small">Afternoon</span>' +
+            //                '<span class="n-duty small">Night&nbsp;&nbsp;&nbsp;</span><br/>' +
+            //              '</div>';
+            //$('.fc-toolbar').append(content)
         }
     };
     $(function(){
