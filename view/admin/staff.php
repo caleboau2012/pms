@@ -98,6 +98,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <td>{{name}}</td>
         <td><button class="btn btn-sm btn-default" userid="{{userid}}" onclick="profileModal(this)">Manage</button></td>
         <td><button class="btn btn-sm btn-default" userid="{{userid}}" onclick="rapModal(this)">Manage</button></td>
+        <td>
+            <div class="switch">
+                <input id="cmn-toggle-{{userid}}" class="cmn-toggle cmn-toggle-round" type="checkbox">
+                <label active_fg="{{active_fg}}" userid="{{userid}}" for="cmn-toggle-{{userid}}"  onclick="return toggleDelete(this)"></label>
+            </div>
+        </td>
     </tr>
 </script>
 
@@ -148,6 +154,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <th>Name </th>
                         <th>Profile</th>
                         <th>Roles and Permissions</th>
+                        <th>Disable?</th>
                     </tr>
                     </thead>
                     <tbody id="staffTable">
@@ -157,6 +164,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <td></td>
                         <td><button class="btn btn-sm btn-default" userid="1" onclick="profileModal(this)">Manage</button></td>
                         <td><button class="btn btn-sm btn-default" userid="1" onclick="rapModal(this)">Manage</button></td>
+                        <td></td>
                     </tr>
                     </tbody>
                 </table>

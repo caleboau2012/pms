@@ -28,12 +28,26 @@ function init(){
                 .replace("{{staffId}}", obj.regNo)
                 .replace("{{name}}", name)
                 .replace("{{userid}}", obj.userid)
-                .replace("{{userid}}", obj.userid);
+                .replace("{{userid}}", obj.userid)
+                .replace("{{userid}}", obj.userid)
+                .replace("{{userid}}", obj.userid)
+                .replace("{{userid}}", obj.userid)
+                .replace("{{active_fg}}", obj.active_fg);
         }
 
         $("#staffTable").html(html).find('.btn').each(function(e){
             if($(this).attr('userid') == 'null'){
                 $(this).attr('disabled', 'disabled');
+            }
+        });
+        $('#staffTable').find('label').each(function(e){
+            if($(this).attr('userid') == 'null'){
+                $(this).addClass('hidden');
+            }
+        });
+        $('#staffTable').find('label').each(function(e){
+            if($(this).attr('active_fg') == 0){
+                $(this).attr('data-origin', 'auto').click().removeAttr('data-origin');
             }
         });
 
@@ -45,6 +59,58 @@ function rapModal(e){
     userid = $(e).attr('userid');
 
     initModal();
+}
+
+function toggleDelete(e){
+    userid = $(e).attr('userid');
+    console.log({origin: $(e).attr('data-origin'), userid: userid});
+
+    if($(e).attr('data-origin') == 'auto'){
+        return true;
+    }
+    else{
+        var confirmed;
+        if($(e).attr('active_fg') == 1) {
+            confirmed = confirm("You are about to deactivate this account. The person will no longer be able to log in and if the person is logged in, he will no longer be able to do anything." +
+                "\n Are you sure you want to continue?");
+            if(confirmed){
+                $.post(host + "phase/admin/phase_admin.php", {
+                    intent: 'deleteStaff',
+                    userid: userid
+                }, function(data){
+                    console.log(data);
+                    $(e).attr('active_fg', '0');
+                }, 'json');
+            }
+            else{
+                return false;
+            }
+        }
+        else{
+            confirmed = confirm("You are about to reactivate this account. The person will now be able to log in." +
+                "\n Are you sure you want to continue?");
+            if(confirmed){
+                $.post(host + "phase/admin/phase_admin.php", {
+                    intent: 'restoreStaff',
+                    userid: userid
+                }, function(data){
+                    console.log(data);
+                    $(e).attr('active_fg', '1');
+                }, 'json');
+            }
+            else{
+                return false;
+            }
+        }
+    }
+
+    //if($(e).find('input').attr('checked')){
+    //    $(e).find('input').removeAttr('checked');
+    //}
+    //else{
+    //    $(e).find('input').attr('checked', 'checked');
+    //    $(e).find('span').css('right', '10px');
+    //}
 }
 
 function profileModal(e){
