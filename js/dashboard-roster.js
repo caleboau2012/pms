@@ -7,7 +7,7 @@
         init: function(){
             $('#dashboard-calendar').fullCalendar({
                 header: {
-                    left: 'prev,next today',
+                    left: 'today',
                     center: 'title',
                     right: 'basicWeek, basicDay'
                 },
@@ -24,13 +24,13 @@
                 }
             });
             //*Legend */
-            var content = '<div class="text-center" id="roster-legend">' +
-                            '<span class="m-duty small">Morning</span>' +
-                            '<span class="a-duty small">Afternoon</span>' +
-                            '<span class="n-duty small">Night&nbsp;&nbsp;&nbsp;</span><br/>' +
-                          '</div>';
-            $('.fc-toolbar').append(content)
-            console.log((new Date()).toUTCString());
+            //var content = '<div class="text-center" id="roster-legend">' +
+            //                '<span class="m-duty small">Morning</span>' +
+            //                '<span class="a-duty small">Afternoon</span>' +
+            //                '<span class="n-duty small">Night&nbsp;&nbsp;&nbsp;</span><br/>' +
+            //              '</div>';
+            //$('.fc-toolbar').append(content)
+            //console.log((new Date()).toUTCString());
         }
     };
     $(function(){

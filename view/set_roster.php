@@ -70,10 +70,12 @@ $list_of_staff = $userController->getAllUsers();
 
     </div>
     <div class="col-sm-8">
-        <div id='roster_loading'>
-            <span class="fa fa-pulse fa-spinner"></span>
+        <div class="calendar-wrap">
+            <div id='roster_loading'>
+               <span class="fa fa-pulse fa-spinner"></span>
+            </div>
+            <div id='calendar'></div>
         </div>
-        <div id='calendar'></div>
     </div>
     <div  class="clearfix"></div>
 </div>

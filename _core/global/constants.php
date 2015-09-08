@@ -130,3 +130,6 @@ define('HOST', "http://localhost/pms/");
 
 // Hospital Info
 define('HOSPITAL_NAME', 'hospital_name');
+
+//Folder Aliases
+define('HEADERS', 'view/header/');
