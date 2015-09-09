@@ -7,7 +7,7 @@
 <div class="container-fluid">
     <div id="footer">
         <p class="text-center">
-            &copy; 2015. Patient Management System
+            &copy; 2015. Elyon 1.0 <small>by Bathill Capital Limited</small>
         </p>
     </div>
 </div>
