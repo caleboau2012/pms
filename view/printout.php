@@ -31,7 +31,13 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div class="navbar navbar-inverse navbar-fixed-top">
     <div class="container-fluid">
         <div class="navbar-header">
-            <a class="navbar-brand"><b>Patient Management System</b></a>
+            <a class="navbar-brand"><b><?php
+                    if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                        echo "Patient Management System";
+                    }else{
+                        echo ucwords(CxSessionHandler::getItem('hospital_name'));
+                    }
+                    ?></b></a>
         </div>
     </div>
 </div>
