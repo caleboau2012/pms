@@ -31,7 +31,7 @@ if($intent == 'getPatientQueue') {
     }
 } elseif($intent == 'getPrescription') {
     $treatmentId = isset($_REQUEST['treatmentId']) ? $_REQUEST['treatmentId'] : null;
-    $encounterId = isset($_REQUEST['encounterId']) ? $_REQUEST['encounter_id'] : 0;
+    $encounterId = isset($_REQUEST['encounterId']) ? $_REQUEST['encounterId'] : 0;
 
     if($treatmentId){
         // Retrieve Patient Prescription
