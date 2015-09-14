@@ -92,19 +92,26 @@ $wards = $ward->loadWards();
                         <div id="new-ward-response"></div>
                         <ul class="list-group ward-list-items">
                             <?php
-                            foreach($wards as $ward){
-                                ?>
-                                <li class="list-group-item ward-item ward text-primary" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>" data-ward-name = "<?php echo $ward['description']?>">
-                                    <div class="pull-left ward-list-name">
-                                        <?php echo $ward['description'] ?>
-                                    </div>
+                            if($wards){
+                                foreach($wards as $ward){
+                                    ?>
+                                    <li class="list-group-item ward-item ward text-primary" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>" data-ward-name = "<?php echo $ward['description']?>">
+                                        <div class="pull-left ward-list-name">
+                                            <?php echo $ward['description'] ?>
+                                        </div>
                                         <p class='text-muted pull-right pointer ward-list-delete invisible' data-ward-name = "<?php echo $ward['description'] ?>" data-ward-id="<?php echo $ward['ward_ref_id']?>">
                                             <span class='fa fa-remove fa-2x text-danger'>&nbsp;</span>
                                         </p>
-                                    <div class="clearfix"></div>
-                                </li>
+                                        <div class="clearfix"></div>
+                                    </li>
+                                <?php
+                                }
+                            }else{
+                                ?>
+                                <h3 class="text-info text-center">No ward yet</h3>
                             <?php
                             }
+
                             ?>
                         </ul>
                     </div>

@@ -107,13 +107,20 @@ $wards = $admission->loadWards();
                                 <!--                                <p class="small text-muted text-center">Select ward below</p>-->
                                 <ul class="list-group admitted-out-patients_ward">
                                     <?php
-                                    foreach($wards as $ward){
+                                    if($wards){
+                                        foreach($wards as $ward){
+                                            ?>
+                                            <li class="pointer list-group-item ward text-capitalize" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
+                                                <?php echo $ward['description'] ?>
+                                            </li>
+                                        <?php
+                                        }
+                                    }else{
                                         ?>
-                                        <li class="pointer list-group-item ward text-capitalize" data-ward-id = "<?php echo $ward['ward_ref_id'] ?>">
-                                            <?php echo $ward['description'] ?>
-                                        </li>
+                                        <h3 class="text-info text-center">No ward yet</h3>
                                     <?php
                                     }
+
                                     ?>
                                 </ul>
                             </div>
