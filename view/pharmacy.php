@@ -23,8 +23,8 @@ $units = $pharmacist->getUnits();
     <title>Admin Dashboard</title>
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
 
-    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
-    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
+<!--    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />-->
+<!--    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />-->
     <link href="../css/master.css" rel="stylesheet">
 </head>
 <body>
@@ -69,7 +69,7 @@ $units = $pharmacist->getUnits();
                 </div>
             </div>
         </div>
-        <div class="col-sm-6 p-content">
+        <div class="col-sm-7 p-content">
             <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
             <div class="col-md-12">
                 <div class="active_patient hidden">
@@ -148,22 +148,22 @@ $units = $pharmacist->getUnits();
                 </div>
             </div>
         </div>
-        <div class="col-sm-3">
-            <div class="room-overview">
-                <div class="room-overview__heading">
-                    <h2 class="text-center"><span class="fa fa-history"></span></h2>
-                    <h3 class="text-center">Overview</h3>
-                </div>
-                <p>
-                    <span class="fa fa-users text-danger">&nbsp;</span>
-                    20 pending patients
-                </p>
-                <p>
-                    <span class="fa fa-dropbox text-danger">&nbsp;</span>
-                    200 Drugs Dispensed
-                </p>
-            </div>
-        </div>
+<!--        <div class="col-sm-2">-->
+<!--            <div class="room-overview">-->
+<!--                <div class="room-overview__heading">-->
+<!--                    <h2 class="text-center"><span class="fa fa-history"></span></h2>-->
+<!--                    <h3 class="text-center">Overview</h3>-->
+<!--                </div>-->
+<!--                <p>-->
+<!--                    <span class="fa fa-users text-danger">&nbsp;</span>-->
+<!--                    20 pending patients-->
+<!--                </p>-->
+<!--                <p>-->
+<!--                    <span class="fa fa-dropbox text-danger">&nbsp;</span>-->
+<!--                    200 Drugs Dispensed-->
+<!--                </p>-->
+<!--            </div>-->
+<!--        </div>-->
     </div>
 </div>
 

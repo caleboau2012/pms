@@ -138,6 +138,8 @@ elseif  ($intent == 'startTreatment') { //working
     else{
 
         $newaddm = new TreatmentController();
+        $newpat = new PatientController();
+        $all_info=array();
 
         // check if patient has treatment before, if so return existing treatment_id, otherwise, create ne treament id.
         $hasTreatmentbefore = $newaddm->doesTreatmentExist ($patientid);
@@ -147,12 +149,17 @@ elseif  ($intent == 'startTreatment') { //working
             $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
         } else {
             $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
+            $patient_info = $newpat->retrievePatientInfo($patientid);
+            $treatid = $newaddm->doesTreatmentExist($patientid);
+            $all_info = array_merge($treatid,$patient_info);
+
         }
     }
 
 
     if($admission_add){
         echo JsonResponse::success($admission_add);
+        echo JsonResponse::success($all_info);  //  all patient info coming from here treatment id and patient info as you have requested.
         exit();
     } else {
         echo $admission_add;

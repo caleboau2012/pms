@@ -10,7 +10,7 @@ require_once '../../_core/global/_require.php';
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
 if(!isset($_SESSION[UserAuthTable::userid])){
-    header("Location: ../index.php");
+    header("Location: ../../index.php");
 }
 ?>
 <!DOCTYPE html>
@@ -50,7 +50,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">
+            <a class="navbar-brand" href="../dashboard.php">
                 <?php
                 if(is_null(CxSessionHandler::getItem('hospital_name'))){
                     echo "Patient Management System";

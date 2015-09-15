@@ -50,6 +50,7 @@ Pharmacy = {
             treatmentId : $(patient).attr("data-treatment-id"),
             encounterId : $(patient).attr("data-encounter-id")
         };
+        console.log(payload);
         //reset list of prescriptions
         $('.patientPrescriptions').empty();
         //reset selected list of prescription
@@ -58,14 +59,15 @@ Pharmacy = {
         Pharmacy.showClearButton();
 
         Pharmacy.serverReq(host + 'phase/phase_pharmacist.php', payload,function(data){
+            console.log(data);
             if(data.status == Pharmacy.CONSTANTS.REQUEST_SUCCESS){
-                //console.log(data.data);
                 prescriptions = Object.keys(data.data);
                 prescriptions.forEach(function(record){
                     $('.patientPrescriptions').append('<li class="prescription-item  list-group-item" data-prescription-id = "' + data.data[record].prescription_id + '"">' + data.data[record].prescription + '</li>');
                 });
                 Pharmacy.addClickEventToPrescription();
             }else if(data.status == Pharmacy.CONSTANTS.REQUEST_ERROR){
+                $('.patientPrescriptions').append("<p class='text-danger small text-center'>" + data.message + "</p>");
 
             }
         });
