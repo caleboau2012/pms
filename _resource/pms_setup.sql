@@ -13,7 +13,7 @@ SET time_zone = "+00:00";
 --
 -- Database: `pms`
 --
---CREATE DATABASE IF NOT EXISTS `pms` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
+CREATE DATABASE IF NOT EXISTS `pms` DEFAULT CHARACTER SET latin1 COLLATE latin1_swedish_ci;
 USE `calebcom_pms`;
 
 -- --------------------------------------------------------

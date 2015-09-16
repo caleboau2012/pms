@@ -134,7 +134,7 @@ Billing = {
             intent: 'details',
             treatment_id: Billing.CONSTANTS.treatment_id
         }, function(data){
-            //console.log(data);
+            console.log(data);
             $('#test').empty();
             $('#days_spent').text(data.data.days_spent.days_spent);
             var prescriptionHTML = "";
