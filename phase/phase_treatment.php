@@ -133,6 +133,7 @@ elseif  ($intent == 'startTreatment') { //working
     if (empty($doctorid) || empty ($patientid) ){
 
 //        print_r($_REQUEST);
+        print_r('55555');
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
@@ -148,13 +149,14 @@ elseif  ($intent == 'startTreatment') { //working
         if ($hasTreatmentbefore == 0)
         {
             $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
-            echo'here1';
+            print_r('jjhfhfhfhfh');
         } else {
             $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
             $patient_info = $newpat->retrievePatientInfo($patientid);
             $treatid = $newaddm->doesTreatmentExist($patientid);
             $all_info = array_merge($treatid,$patient_info);
             echo'here2';
+            print_r('GGGGGGGGGGGGGGGGGGGGGGGfhfh');
         }
     }
 
@@ -164,9 +166,10 @@ elseif  ($intent == 'startTreatment') { //working
         //echo JsonResponse::success($all_info);  //  all patient info coming from here treatment id and patient info as you have requested.
         //echo $patient_info;//
         echo'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh';
+        print_r('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
         exit();
     } else {
-        echo $admission_add;
+       // echo $admission_add;
         echo JsonResponse::error("Error starting treatment process");
         exit();
     }
