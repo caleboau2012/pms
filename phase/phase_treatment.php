@@ -120,11 +120,13 @@ elseif  ($intent == 'startTreatment') { //working
         $diagnosis =" ";
 
         echo'here3';
+        echo JsonResponse::error("here7");
 
 
     }
     else {
         echo JsonResponse::error("things are not set");
+        echo JsonResponse::error("here8");
         exit();
     }
 
@@ -134,6 +136,7 @@ elseif  ($intent == 'startTreatment') { //working
 
 //        print_r($_REQUEST);
         print_r('55555');
+        echo JsonResponse::error("here4");
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
@@ -142,6 +145,7 @@ elseif  ($intent == 'startTreatment') { //working
         $newaddm = new TreatmentController();
         $newpat = new PatientController();
         $all_info=array();
+        echo JsonResponse::error("here5");
 
         // check if patient has treatment before, if so return existing treatment_id, otherwise, create ne treament id.
         $hasTreatmentbefore = $newaddm->doesTreatmentExist ($patientid);
@@ -150,12 +154,14 @@ elseif  ($intent == 'startTreatment') { //working
         {
             $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
             print_r('jjhfhfhfhfh');
+            echo JsonResponse::error("here3");
         } else {
             $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
             $patient_info = $newpat->retrievePatientInfo($patientid);
             $treatid = $newaddm->doesTreatmentExist($patientid);
             $all_info = array_merge($treatid,$patient_info);
             echo'here2';
+            echo JsonResponse::error("here2");
             print_r('GGGGGGGGGGGGGGGGGGGGGGGfhfh');
         }
     }
@@ -167,6 +173,7 @@ elseif  ($intent == 'startTreatment') { //working
         //echo $patient_info;//
         echo'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh';
         print_r('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
+        echo JsonResponse::error("cool");
         exit();
     } else {
        /// echo $admission_add;
