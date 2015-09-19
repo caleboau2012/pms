@@ -169,7 +169,7 @@ elseif  ($intent == 'startTreatment') { //working
         print_r('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
         exit();
     } else {
-       // echo $admission_add;
+       /// echo $admission_add;
         echo JsonResponse::error("Error starting treatment process");
         exit();
     }
