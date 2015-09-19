@@ -119,6 +119,7 @@ elseif  ($intent == 'startTreatment') { //working
         $comments= " ";
         $diagnosis =" ";
 
+        echo'here3';
 
 
     }
@@ -147,12 +148,13 @@ elseif  ($intent == 'startTreatment') { //working
         if ($hasTreatmentbefore == 0)
         {
             $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
+            echo'here1';
         } else {
             $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
             $patient_info = $newpat->retrievePatientInfo($patientid);
             $treatid = $newaddm->doesTreatmentExist($patientid);
             $all_info = array_merge($treatid,$patient_info);
-
+            echo'here2';
         }
     }
 
