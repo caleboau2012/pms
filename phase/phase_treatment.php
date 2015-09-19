@@ -98,7 +98,7 @@ elseif  ($intent == 'requestAdmission') {
 
 }
 
-elseif  ($intent == 'startTreatment') { //working
+elseif  ($intent == 'startTreatment2') { //working
 
 
     $treat = new TreatmentController();
