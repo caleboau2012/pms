@@ -158,7 +158,7 @@ elseif  ($intent == 'startTreatment') { //working
 
 
     if($admission_add){
-        echo JsonResponse::success($admission_add);
+       // echo JsonResponse::success($admission_add);
         echo JsonResponse::success($all_info);  //  all patient info coming from here treatment id and patient info as you have requested.
         exit();
     } else {
