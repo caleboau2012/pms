@@ -51,7 +51,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">
+            <a class="navbar-brand" href="../dashboard.php">
                 <?php
                 if(is_null(CxSessionHandler::getItem('hospital_name'))){
                     echo "Patient Management System";

@@ -273,13 +273,22 @@ Treatment = {
     getTreatmentHistory: function() {
         var url = host + "phase/phase_treatment.php?intent=getTreatmentHistory&patient_id=" + $('.patient-ID').html();
         $.getJSON(url, function (data) {
-            console.log(data.data);
+
             data = data.data;
 
             $('.history').empty();
+            var prescriptions, prescriptionHTML, patientHTML;
 
             for(var i = data.length - 1; i >= 0; i--){
-                var patientHTML = "";
+                prescriptions = data[i].prescriptions;
+                prescriptionHTML = "";
+                for(var j = 0; j < prescriptions.length; j++){
+                    prescriptionHTML += $('#tmplPrescription').html();
+                    prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
+                    console.log(prescriptionHTML);
+                }
+
+                patientHTML = "";
                 patientHTML += $('#tmplTreatmentHistory').html();
                 patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
                 patientHTML = replaceAll('{{treatmentid}}', data[i].treatment_id, patientHTML);
@@ -289,6 +298,7 @@ Treatment = {
                 patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                 patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
                 patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
+                patientHTML = replaceAll('{{prescriptions}}', prescriptionHTML, patientHTML);
 
                 //console.log(patientHTML);
                 $('.history').append(patientHTML);

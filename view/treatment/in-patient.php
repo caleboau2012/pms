@@ -133,11 +133,18 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <span class="doctorid" hidden>{{doctorid}}</span>
                 <p><b>Complaint:</b> {{symptoms}}</p>
                 <p><b>Date:</b> {{date}}</p>
+                <ul class="list-group" style="width: 30%;">{{prescriptions}}</ul>
                 <div class="accordion-inner">
                     <div class="accordion" id="encounteraccordion{{treatmentid}}"></div>
                 </div>
             </div>
         </div>
+    </li>
+</script>
+
+<script id="tmplPrescription" type="text/html">
+    <li class="list-group-item">
+        {{prescription}}
     </li>
 </script>
 

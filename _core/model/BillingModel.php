@@ -13,7 +13,7 @@ class BillingModel extends BaseModel {
         }
     }
 
-    private function getPrescription($treatment_id){
+    public function getPrescription($treatment_id){
         $data = array(TreatmentTable::treatment_id => $treatment_id);
         $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION, $data);
         if($prescription) {

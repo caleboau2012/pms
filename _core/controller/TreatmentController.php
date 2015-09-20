@@ -50,7 +50,17 @@ class TreatmentController{
     }
 
     public function getTreatmentHistory($patientId){
-        return $this->treatmentModel->getTreatmentHistory($patientId);
+        $history = $this->treatmentModel->getTreatmentHistory($patientId);
+        $billingModel = new BillingModel();
+//        die(var_dump($history));
+
+        for($i = 0; $i < sizeof($history); $i++){
+            $prescriptions = $billingModel->getPrescription($history[$i][TreatmentTable::treatment_id]);
+//            array_push($history[$i], $prescriptions);
+            $history[$i]['prescriptions'] = $prescriptions;
+        }
+
+        return $history;
     }
 
     public function requestLabTest($doctorId, $treatmentId, $encounterId, $labTestType, $comment){
