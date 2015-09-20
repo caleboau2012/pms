@@ -168,7 +168,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3  text-center">
                                     <a href="admin/staff.php" class="dashboard-link">
-                                        <img src="../images/file-edit.png">
+                                        <img src="../images/file-edit.gif" width="60" height="60">
 
                                         <div class="dashboard-desc">Admin Access</div>
                                     </a>
