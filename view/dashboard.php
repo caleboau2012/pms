@@ -88,7 +88,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 <div class="col-xs-3 text-center">
                                     <a href="pharmacy.php" class="dashboard-link">
                                         <img src="../images/pharmacy-icons.png" width="60" height="60">
-                                        <div class="dashboard-desc">Pharmacist</div>
+                                        <div class="dashboard-desc">Pharmacy</div>
                                     </a>
                                 </div>
                             <?php
