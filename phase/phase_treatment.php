@@ -11,8 +11,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
-Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'PharmacistModel'));
-Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController', 'PharmacistController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'PharmacistModel', 'PatientModel'));
+Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController', 'PharmacistController', 'PatientController'));
 
 
 if (isset($_REQUEST['intent'])) {
@@ -98,9 +98,7 @@ elseif  ($intent == 'requestAdmission') {
 
 }
 
-elseif  ($intent == 'startTreatment2') { //working
-
-
+elseif  ($intent == 'startTreatment') {
     $treat = new TreatmentController();
 
     $doctorid ="";
@@ -111,32 +109,22 @@ elseif  ($intent == 'startTreatment2') { //working
 //    $diagnosis ="";
 
     if (isset($_REQUEST['doctor_id']) && isset($_REQUEST['patient_id'])){  // change surname to what you thin should be set.
-
         $doctorid =$_REQUEST[TreatmentTable::doctor_id];
         $patientid =$_REQUEST[TreatmentTable::patient_id];
         $consultation =" ";
         $symptoms =" ";
         $comments= " ";
         $diagnosis =" ";
-
-        echo'here3';
-        echo JsonResponse::error("here7");
-
-
     }
     else {
         echo JsonResponse::error("things are not set");
-        echo JsonResponse::error("here8");
         exit();
     }
 
-    $admission_add = null;
+//    $admission_add = null;
 
     if (empty($doctorid) || empty ($patientid) ){
-
 //        print_r($_REQUEST);
-        print_r('55555');
-        echo JsonResponse::error("here4");
         echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
         exit();
     }
@@ -145,38 +133,28 @@ elseif  ($intent == 'startTreatment2') { //working
         $newaddm = new TreatmentController();
         $newpat = new PatientController();
         $all_info=array();
-        echo JsonResponse::error("here5");
 
         // check if patient has treatment before, if so return existing treatment_id, otherwise, create ne treament id.
         $hasTreatmentbefore = $newaddm->doesTreatmentExist ($patientid);
 
         if ($hasTreatmentbefore == 0)
         {
-            $admission_add = $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments);
-            print_r('jjhfhfhfhfh');
-            echo JsonResponse::error("here3");
+            $treatid = array("treatment_id" => $newaddm->addTreatment1($doctorid, $patientid, $consultation, $symptoms, $diagnosis, $comments));
         } else {
-            $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
-            $patient_info = $newpat->retrievePatientInfo($patientid);
+//            $admission_add= array(TreatmentTable::treatment_id => $hasTreatmentbefore);
             $treatid = $newaddm->doesTreatmentExist($patientid);
-            $all_info = array_merge($treatid,$patient_info);
-            echo'here2';
-            echo JsonResponse::error("here2");
-            print_r('GGGGGGGGGGGGGGGGGGGGGGGfhfh');
         }
     }
 
+    $patient_info = $newpat->retrievePatientInfo($patientid);
+    $all_info = array_merge($treatid,$patient_info);
 
-    if($admission_add){
-       // echo JsonResponse::success($admission_add);
-        //echo JsonResponse::success($all_info);  //  all patient info coming from here treatment id and patient info as you have requested.
-        //echo $patient_info;//
-        echo'hhhhhhhhhhhhhhhhhhhhhhhhhhhhhh';
-        print_r('WWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWWW');
-        echo JsonResponse::error("cool");
+    if($all_info){
+//        echo JsonResponse::success($admission_add);
+        echo JsonResponse::success($all_info);  //  all patient info coming from here treatment id and patient info as you have requested.
         exit();
     } else {
-       /// echo $admission_add;
+//        echo $admission_add;
         echo JsonResponse::error("Error starting treatment process");
         exit();
     }
@@ -377,10 +355,14 @@ elseif($intent == 'getEncounterId'){
     $treatment_id = isset($_REQUEST[EncounterTable::treatment_id]) ? $_REQUEST[EncounterTable::treatment_id] : null;
 
     $encounter = new TreatmentController();
+    $newpat = new PatientController();
+
     $response = $encounter->getEncounterId($treatment_id, $patient_id, $admission_id, $doctor_id);
+    $patientData = $newpat->retrievePatientInfo($patient_id);
 
     if($response['result']){
-        echo JsonResponse::success($response['value']);
+        $all_info = array_merge(array('encounter_id' => $response['value']), $patientData);
+        echo JsonResponse::success($all_info);
         exit;
     } else {
         echo JsonResponse::error($response['message']);

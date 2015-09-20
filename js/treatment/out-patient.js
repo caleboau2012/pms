@@ -145,16 +145,26 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
-            console.log(data);
-            $('.treatment-ID').html(data.data.treatment_id.treatment_id);
+            data = data.data;
+            $('.treatment-ID').html(data.treatment_id);
             Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
             $('.patient-name').html($(patient).find('.patientName').html());
-            $('.patient-RegNo').html($(patient).find('.patientRegNo').html());
-            $('.patient-Sex').html($(patient).find('.patientSex').html());
+            $('.patient-RegNo').html(data.regNo);
+            $('.patient-Sex').html(data.sex);
             $('.patient-Age').html($(patient).find('.patientAge').html());
             $('.patient-ID').html($(patient).find('.patientid').html());
+            $('.father_status').text(data.father_status);
+            $('.mother_status').text(data.mother_status);
+            $('.marital_status').text(data.marital_status);
+            $('.home_address').text(data.home_address);
+            $('.occupation').text(data.occupation);
+            $('.citizenship').text(data.citizenship);
+            $('.religion').text(data.religion);
+            $('.height').text(data.height);
+            $('.weight').text(data.weight);
+            $('.telephone').text(data.telephone);
         });
-        $('#end').removeClass('hidden');
+        $('.end').removeClass('hidden');
         $('.well').removeClass('hidden');
         $('.at').click();
     },
@@ -249,7 +259,7 @@ Treatment = {
 
             $('.history').empty();
 
-            for(var i = 0; i < data.length; i++){
+            for(var i = data.length - 1; i >= 0; i--){
                 var patientHTML = "";
                 patientHTML += $('#tmplTreatmentHistory').html();
                 patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
@@ -277,7 +287,7 @@ Treatment = {
 
                 $('#encounteraccordion' + id).empty();
 
-                for(var i = 0; i < data.length; i++){
+                for(var i = data.length - 1; i >= 0; i--){
                     var patientHTML = "";
                     patientHTML += $('#tmplEncounterHistory').html();
                     patientHTML = replaceAll('{{userid}}', id, patientHTML);

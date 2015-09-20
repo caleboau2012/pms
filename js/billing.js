@@ -171,7 +171,7 @@ Billing = {
             }
         });
     },
-    endBilling: function(form){
+    endBilling: function(){
         var items = [];
         var amounts = [];
 
@@ -186,6 +186,8 @@ Billing = {
             amounts.push($(this).val());
             $(this).attr('value', $(this).val());
         });
+
+        $("tfoot tr")[0].remove();
 
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'post_bills',

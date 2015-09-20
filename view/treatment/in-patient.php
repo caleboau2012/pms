@@ -197,11 +197,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <span class="clearfix"></span>
                 </div>
                 <div class="panel-body">
-                    <p class="patient-RegNo"></p>
-                    <span class="patient-Sex"></span>
-                    <span class="patient-ID hidden"></span>
-                    <span class="treatment-ID hidden"></span>
-                    <span class="patient-Age"></span>
                     <div class="alert hidden alert-danger alert-dismissable" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
@@ -212,6 +207,81 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 aria-hidden="true">&times;</span></button>
                         <span class="successMSG"></span>
                     </div>
+                    <div class="row end hidden">
+                        <div class="col-xs-6">
+                            <div class="panel panel-success">
+                                <div class="panel-body bg-success">
+                                    <h4>
+                                        <b>Registration No: </b>
+                                        <span class="patient-RegNo"></span>
+                                    </h4>
+                                    <span>
+                                        <b>Height:</b>
+                                        <span class="height"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Weight:</b>
+                                        <span class="weight"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Sex:</b>
+                                        <span class="patient-Sex"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Date of Birth:</b>
+                                        <span class="patient-Age"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel panel-info">
+                                <div class="panel-body bg-info">
+                                    <span>
+                                        <b>Address:</b>
+                                        <span class="home_address"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Telephone:</b>
+                                        <span class="telephone"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Occupation:</b>
+                                        <span class="occupation"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Marital Status:</b>
+                                        <span class="marital_status"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Country:</b>
+                                        <span class="citizenship"></span>
+                                    </span>
+                                    <span>
+                                        <b>Religion:</b>
+                                        <span class="religion"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        Father is <span class="father_status"></span>
+                                    </span>
+                                    <span>
+                                        Mother is <span class="mother_status"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="patient-ID hidden"></span>
+                    <span class="treatment-ID hidden"></span>
                 </div>
             </div>
 

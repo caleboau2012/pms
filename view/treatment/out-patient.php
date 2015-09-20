@@ -111,7 +111,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <span class="patientName" hidden>{{name}}</span>
                 <span class="patientSex" hidden>{{sex}}</span>
                 <span class="patientRegNo" hidden>{{regNo}}</span>
-                <span class="patientAge">{{Age}} year(s)</span>
+                <span class="patientAge" hidden>{{Age}} year(s)</span>
             </div>
         </div>
     </div>
@@ -207,16 +207,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <div class="panel-heading">
                     <h4 class="pull-left patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></h4>
                     <span class="pull-right">
-                        <button id="end" class="hidden btn btn-warning pull-right">End Session <span class="fa fa-close"></span></button>
+                        <button id="end" class="end hidden btn btn-warning pull-right">End Session <span class="fa fa-close"></span></button>
                     </span>
                     <span class="clearfix"></span>
                 </div>
                 <div class="panel-body">
-                    <p class="patient-RegNo"></p>
-                    <span class="patient-Sex"></span>
-                    <span class="patient-ID hidden"></span>
-                    <span class="treatment-ID hidden"></span>
-                    <span class="patient-Age"></span>
                     <div class="alert hidden alert-danger alert-dismissable" role="alert">
                         <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                 aria-hidden="true">&times;</span></button>
@@ -227,6 +222,81 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 aria-hidden="true">&times;</span></button>
                         <span class="successMSG"></span>
                     </div>
+                    <div class="row end hidden">
+                        <div class="col-xs-6">
+                            <div class="panel panel-success">
+                                <div class="panel-body bg-success">
+                                    <h4>
+                                        <b>Registration No: </b>
+                                        <span class="patient-RegNo"></span>
+                                    </h4>
+                                    <span>
+                                        <b>Height:</b>
+                                        <span class="height"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Weight:</b>
+                                        <span class="weight"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Sex:</b>
+                                        <span class="patient-Sex"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Age:</b>
+                                        <span class="patient-Age"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-6">
+                            <div class="panel panel-info">
+                                <div class="panel-body bg-info">
+                                    <span>
+                                        <b>Address:</b>
+                                        <span class="home_address"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Telephone:</b>
+                                        <span class="telephone"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Occupation:</b>
+                                        <span class="occupation"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Marital Status:</b>
+                                        <span class="marital_status"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        <b>Country:</b>
+                                        <span class="citizenship"></span>
+                                    </span>
+                                    <span>
+                                        <b>Religion:</b>
+                                        <span class="religion"></span>
+                                    </span>
+                                    <br>
+                                    <span>
+                                        Father is <span class="father_status"></span>
+                                    </span>
+                                    <span>
+                                        Mother is <span class="mother_status"></span>
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <span class="patient-ID hidden"></span>
+                    <span class="treatment-ID hidden"></span>
                 </div>
             </div>
 
