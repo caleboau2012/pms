@@ -162,6 +162,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <span class="doctorid" hidden>{{doctorid}}</span>
                 <p><b>Complaint:</b> {{symptoms}}</p>
                 <p><b>Date:</b> {{date}}</p>
+                <ul class="list-group" style="width: 30%;">{{prescriptions}}</ul>
             </div>
         </div>
     </li>

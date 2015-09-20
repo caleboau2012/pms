@@ -182,6 +182,7 @@ class TreatmentTable{
     const table_name = 'treatment';
 
     const treatment_id      = 'treatment_id';
+    const encounter_id      = 'encounter_id';
     const doctor_id         = 'doctor_id';
     const patient_id        = 'patient_id';
     const consultation      = 'consultation';

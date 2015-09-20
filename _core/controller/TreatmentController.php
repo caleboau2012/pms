@@ -98,6 +98,17 @@ class TreatmentController{
     }
 
     public function getEncounters($treatmentId){
-        return $this->treatmentModel->getEncounters($treatmentId);
+        $history = $this->treatmentModel->getEncounters($treatmentId);
+
+        $billingModel = new BillingModel();
+//        die(var_dump($history));
+
+        for($i = 0; $i < sizeof($history); $i++){
+            $prescriptions = $billingModel->getPrescriptionByEncounter($history[$i][TreatmentTable::treatment_id]);
+//            array_push($history[$i], $prescriptions);
+            $history[$i]['prescriptions'] = $prescriptions;
+        }
+
+        return $history;
     }
 }

@@ -23,6 +23,16 @@ class BillingModel extends BaseModel {
         }
     }
 
+    public function getPrescriptionByEncounter($encounter_id){
+        $data = array(TreatmentTable::encounter_id => $encounter_id);
+        $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER, $data);
+        if($prescription) {
+            return $prescription;
+        } else {
+            return array('prescription'  => 'No Drug Prescribed');
+        }
+    }
+
     private function getTest($treatment_id) {
         $data = array(TreatmentTable::treatment_id => $treatment_id);
         $blood = $this->conn->fetch(TreatmentSqlStatement::BLOODTEST, $data);

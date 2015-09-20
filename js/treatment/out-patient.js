@@ -266,7 +266,7 @@ Treatment = {
                 for(var j = 0; j < prescriptions.length; j++){
                     prescriptionHTML += $('#tmplPrescription').html();
                     prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
-                    console.log(prescriptionHTML);
+                    //console.log(prescriptionHTML);
                 }
 
                 patientHTML = "";
@@ -287,18 +287,28 @@ Treatment = {
         });
     },
     getEncounterHistory: function(id) {
-        console.log(id);
+        //console.log(id);
         var url = host + "phase/phase_treatment.php?intent=getEncounters&treatment_id=" + id;
         $.getJSON(url, function (data) {
-            console.log(data);
+            //console.log(data);
 
             if(data.status == 1){
                 data = data.data;
 
                 $('#encounteraccordion' + id).empty();
 
+                var prescriptions, prescriptionHTML, patientHTML;
+
                 for(var i = data.length - 1; i >= 0; i--){
-                    var patientHTML = "";
+                    prescriptions = data[i].prescriptions;
+                    prescriptionHTML = "";
+                    for(var j = 0; j < prescriptions.length; j++){
+                        prescriptionHTML += $('#tmplPrescription').html();
+                        prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
+                        //console.log(prescriptionHTML);
+                    }
+
+                    patientHTML = "";
                     patientHTML += $('#tmplEncounterHistory').html();
                     patientHTML = replaceAll('{{userid}}', id, patientHTML);
                     patientHTML = replaceAll('{{treatmentid}}', data[i].encounter_id, patientHTML);
@@ -308,6 +318,7 @@ Treatment = {
                     patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                     patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
                     patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
+                    patientHTML = replaceAll('{{prescriptions}}', prescriptionHTML, patientHTML);
 
                     //console.log(patientHTML);
                     $('#encounteraccordion' + id).append(patientHTML);
