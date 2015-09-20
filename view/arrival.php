@@ -273,7 +273,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <option value="7">Husband</option>
                                                 <option value="8">Wife</option>
                                                 <option value="9">Other</option>
-                                            </select></div>
+                                            </select>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

@@ -314,11 +314,26 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <br/>
                             <div class="col-sm-6">
                                 <br>
+                                <div class="center-block">
+                                    <label>Complaint:</label>
+                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
+                                </div>
+                                <br/>
+                                <div class="center-block"><label>Diagnosis:</label>
+                                    <input type="text" class="form-control" name="diagnosis">
+                                </div>
+                                <br/>
+                                <div>
+                                    <button id="treatmentSubmit" type="submit" class="btn btn-primary">Submit</button>
+                                </div>
+
+                            </div>
+                            <div class="col-sm-6">
+                                <br>
                                 <div class="center-block"><label>Comments:</label>
                                     <textarea class="form-control" name="comment"></textarea>
                                 </div>
                                 <br/>
-
                                 <div class="center-block"><label>Prescriptions:</label>
                                     <input list="drugNames" type="text" id="prescriptionInput" class="form-control" placeholder="">
 
@@ -332,24 +347,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
                                     <ul class="list-group" id="prescriptions">
                                     </ul>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <br>
-                                <div class="center-block">
-                                    <label>Complaint:</label>
-                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
-                                </div>
-                                <br/>
-
-                                <div class="center-block"><label>Diagnosis:</label>
-                                    <input type="text" class="form-control" name="diagnosis">
-                                </div>
-                                <br/>
-                                <div>
-<!--                                    <input  name="admit" type="checkbox">-->
-<!--                                    <small>Request Admission? <span class="fa fa-bed"></span><span class="fa fa-spinner fa-spin hidden" id="loader"></span></small>-->
-                                    <button id="treatmentSubmit" type="submit" class="btn btn-sm btn-primary pull-right">Submit</button>
                                 </div>
                             </div>
                         </div>

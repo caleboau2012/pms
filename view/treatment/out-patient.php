@@ -191,22 +191,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     </li>
 </script>
 
-<!--<script id="tmplDoctor" type="text/html">-->
-<!--    <div class="col-sm-4 col-md-3">-->
-<!--        <div class="panel {{online_status}} doctor">-->
-<!--            <div class="panel-heading" userid="{{userid}}">-->
-<!--                <h2 class="panel-title">Dr. {{DoctorName}}</h2>-->
-<!--            </div>-->
-<!--            <div class="panel-body patients">-->
-<!--                <span class="to_doctor" hidden>{{userid}}</span>-->
-<!---->
-<!--                <div class="panel-group drop" id="accordion{{userid}}" role="tablist" aria-multiselectable="true">-->
-<!--                </div>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</script>-->
-
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-9">
@@ -329,11 +313,27 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <br/>
                             <div class="col-sm-6">
                                 <br>
+                                <div class="center-block">
+                                    <label>Complaint:</label>
+                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
+                                </div>
+                                <br/>
+                                <div class="center-block"><label>Diagnosis:</label>
+                                    <input type="text" class="form-control" name="diagnosis">
+                                </div>
+                                <br/>
+                                <div>
+                                    <input  name="admit" type="checkbox">
+                                    <small>Request Admission? <span class="fa fa-bed"></span><span class="fa fa-spinner fa-spin hidden" id="loader"></span></small>
+                                    <button id="treatmentSubmit" type="submit" class="btn btn-primary pull-right">Submit</button>
+                                </div>
+                            </div>
+                            <div class="col-sm-6">
+                                <br>
                                 <div class="center-block"><label>Comments:</label>
                                     <textarea class="form-control" name="comment"></textarea>
                                 </div>
                                 <br/>
-
                                 <div class="center-block"><label>Prescriptions:</label>
                                     <input list="drugNames" type="text" id="prescriptionInput" class="form-control" placeholder="">
 
@@ -347,24 +347,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
                                     <ul class="list-group" id="prescriptions">
                                     </ul>
-                                </div>
-                            </div>
-                            <div class="col-sm-6">
-                                <br>
-                                <div class="center-block">
-                                    <label>Complaint:</label>
-                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
-                                </div>
-                                <br/>
-
-                                <div class="center-block"><label>Diagnosis:</label>
-                                    <input type="text" class="form-control" name="diagnosis">
-                                </div>
-                                <br/>
-                                <div>
-                                    <input  name="admit" type="checkbox">
-                                    <small>Request Admission? <span class="fa fa-bed"></span><span class="fa fa-spinner fa-spin hidden" id="loader"></span></small>
-                                    <button id="treatmentSubmit" type="submit" class="btn btn-sm btn-primary pull-right">Submit</button>
                                 </div>
                             </div>
                         </div>
