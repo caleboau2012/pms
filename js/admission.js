@@ -389,7 +389,7 @@ Admission = {
                     Admission.prepareInPatients(data.data);
                 }
             }).fail(function(data){
-                console.log(data.responseText);
+                $('#in-patient-result').html("<h4 class='text-muted text-center'>Unable to complete request at the moment</h4>")
             });
         }else{
             //    get all in patients
