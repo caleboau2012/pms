@@ -1060,6 +1060,12 @@ class BillingSqlStatement{
 }
 
 class ReportSqlStatement {
+    // all patients, no date range!
+    const ALL_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date FROM patient WHERE active_fg = 1";
+
+    // all patients, with gender
+    const ALL_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date FROM patient WHERE sex = :gender AND active_fg = 1";
+
     //  Number  list and graph of new patients from start date to end date
     const NEW_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
                                 FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
@@ -1068,14 +1074,21 @@ class ReportSqlStatement {
     const NEW_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
                                 FROM patient WHERE sex = :gender AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
+
+    // const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
+    //                             FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
+
     //  Number  and list and graph of current patients from start date to end date
     const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
-                                FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
+                                FROM patient WHERE DATE(created_date) < DATE(:start_date) AND active_fg = 1";
 
     //  Number  list and graph of current(male and female) patients from start date to end date
+    // const CURRENT_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
+    //                                         FROM patient WHERE (DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND sex = :gender)
+    //                                         AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
+
     const CURRENT_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
-                                            FROM patient WHERE (DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND sex = :gender)
-                                            AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
+                                FROM patient WHERE DATE(created_date) < DATE(:start_date) AND sex = :gender AND active_fg = 1";
 
     //  A graphical representation of patient and their age
     const PATIENTS_AND_AGE_GRAPH = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo,
