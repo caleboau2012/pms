@@ -201,7 +201,17 @@ $wards = $admission->loadWards();
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
                     <div id="in-patient-identity">
-                        <span class="fa fa-pulse fa-spin"></span>
+                        <h2 class='text-primary text-capitalize' id="patient_name">
+
+                        </h2>
+                        <h4 class="text-muted text-uppercase">
+                            <span class="fa fa-barcode text-success">&nbsp;</span>
+                            <span id="patient_reg_num"></span>
+                        </h4>
+                        <h4 class="text-capitalize text-muted">
+                            <span class="fa fa-stethoscope text-info">&nbsp;</span>
+                            Requested by&nbsp;<span id="req_doctor"></span>
+                        </h4>
                     </div>
 
                     <ul class="nav nav-tabs nav-pills nav-justified">
@@ -212,7 +222,13 @@ $wards = $admission->loadWards();
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade adm-tab-pane" id="home-tab">
                             <br/>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore enim est eum quae quo.
+                            <div class="div-rounded" style="background: #337AB7;">
+                                <span class="fa fa-calendar"></span>
+                            </div>
+                            <h4 class="text-muted text-center" style="margin-bottom: 0">Admitted on</h4>
+                            <h3 class="text-center text-info" style="margin-top: 5px">
+                                <span id="entry_date"></span>
+                            </h3>
                         </div>
                         <div class="tab-pane fade adm-tab-pane active in" id="switch-tab">
                             <br/>
