@@ -60,6 +60,9 @@ Admission = {
         });
         //
 
+        /*Get All In Patients*/
+        Admission.getAllInPatients();
+
         //IN-PATIENTS
         $('#in-patient-form').on('submit', function(e){
             e.preventDefault();
@@ -361,9 +364,21 @@ Admission = {
         $('#assignPatient').removeClass('hidden');
     }
     //IN-PATIENTS
+    ,getAllInPatients: function () {
+        var payload = {};
+        payload.intent = "getPatients";
+
+        $.getJSON(host + 'phase/phase_admission.php', payload, function (data) {
+            if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
+                Admission.prepareInPatients(data.data);
+            }else{
+                $('#in-patient-result').html("<h4 class='text-muted text-center'>"+ data.message +"</h4>")
+            }
+        });
+    }
     ,getInPatients: function(){
-        query = $('#patient_query').val();
-        payload = {};
+        var query = $('#patient_query').val();
+        var payload = {};
         payload.intent = "searchPatients";
         if(query !== ''){
             payload.term = query;
@@ -371,22 +386,29 @@ Admission = {
                 if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
                     $('#in-patient-result').html("<h4 class='text-muted text-center'>"+ data.message +"</h4>")
                 }else if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                    content = "<ul class='patients-queue list-group'>";
-                    data.data.forEach(function(record){
-                        content += "<li class='text-capitalize list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
-                        record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
-                    });
-                    content += "</ul>";
-                    $('#in-patient-result').html(content);
-                    $('.in-patient').bind('click', function(){
-                        Admission.attendToInPatient(this);
-                        Admission.getPatientRoomDetails(this);
-                    })
+                    Admission.prepareInPatients(data.data);
                 }
             }).fail(function(data){
                 console.log(data.responseText);
             });
+        }else{
+            //    get all in patients
+            Admission.getAllInPatients();
         }
+    },
+    prepareInPatients: function (patients) {
+        //console.log(patients);
+        var content = "<ul class='patients-queue list-group'>";
+        patients.forEach(function(record){
+            content += "<li class='text-capitalize list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
+            record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
+        });
+        content += "</ul>";
+        $('#in-patient-result').html(content);
+        $('.in-patient').bind('click', function(){
+            Admission.attendToInPatient(this);
+            Admission.getPatientRoomDetails(this);
+        });
     }
     ,attendToInPatient: function(patient){
         //remove patient from search queue
@@ -410,6 +432,7 @@ Admission = {
 
     },
     getPatientRoomDetails: function(patient){
+        console.log(patient);
         //set patient bed id
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-bed-id");
 
