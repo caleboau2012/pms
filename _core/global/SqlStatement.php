@@ -911,7 +911,7 @@ class AdmissionSqlStatement {
             )
         ORDER BY ad.created_date DESC";
 
-    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
+    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo, adb.bed_id, bed.ward_id
         FROM admission AS ad
             INNER JOIN treatment AS t
                 ON t.treatment_id = ad.treatment_id
@@ -919,10 +919,16 @@ class AdmissionSqlStatement {
                 ON p.userid = t.doctor_id
             INNER JOIN patient AS pt
                 ON pt.patient_id = t.patient_id
+            INNER JOIN admission_bed AS adb
+                ON ad.admission_id = adb.admission_id
+            INNER JOIN bed
+                ON adb.bed_id = bed.bed_id
         WHERE ad.active_fg = 1
             AND t.active_fg = 1
             AND p.active_fg = 1
             AND pt.active_fg = 1
+            AND adb.active_fg = 1
+            AND bed.active_fg = 1
         ORDER BY ad.created_date DESC";
 }
 
