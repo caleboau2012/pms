@@ -398,7 +398,6 @@ Admission = {
         }
     },
     prepareInPatients: function (patients) {
-        console.log(patients);
         var content = "<ul class='patients-queue list-group'>";
         patients.forEach(function(record){
             content += "<li class='text-capitalize list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +" data-entry-date ='"+ record.entry_date +"'>" +
