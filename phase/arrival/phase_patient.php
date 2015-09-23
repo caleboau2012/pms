@@ -233,17 +233,17 @@ else if ($intent == 'ManagePatient') { //working
 
         $result = $patientController->checkEmergencyStatus($patient_id); // return  the status, 1 active, 2 upgraded, 3 treatment...
 
-//        echo $result;
-        $result = is_array( $result);
+       // echo $result;
+      //  $result = is_array( $result);
 
-        if ($result){
-            $result=1;
-        }
-        else{
-            $result=0;
-        }
+//        if ($result){
+//            $result=1;
+//        }
+//        else{
+//            $result=0;
+//        }
 
-        if ($result == 1 || $result == 0) { //
+        if ($result == 1 ) { //
 
 
             $surname = $_REQUEST[PatientTable::surname];
@@ -282,7 +282,8 @@ else if ($intent == 'ManagePatient') { //working
 
         $patientUp = null;
 
-        if (empty($surname) || empty($firstname) || empty($middlename) || empty($regNo) || empty($home_address) || empty($telephone) || empty($birth_date) || empty($nok_firstname) || empty($nok_middlename) || empty($nok_surname) || empty($nok_address) || empty($nok_telephone)
+        if ( //0
+        empty($surname) || empty($firstname) || empty($middlename) || empty($regNo) || empty($home_address) || empty($telephone) || empty($birth_date) || empty($nok_firstname) || empty($nok_middlename) || empty($nok_surname) || empty($nok_address) || empty($nok_telephone)
             || empty($citizenship) || empty($religion) || empty($mother_status) || empty($father_status) || empty($marital_status) || empty ($occupation)
         ) {
 
@@ -297,7 +298,7 @@ else if ($intent == 'ManagePatient') { //working
                 $nok_surname, $nok_address, $nok_telephone, $nok_relationship, $citizenship, $religion, $family_position,
                 $mother_status, $father_status, $marital_status, $no_of_children, $occupation, $patient_id);
         }
-
+       // $patientUp=1;
         if ($patientUp) {
             // change status of emergency table of emergency patient from 1 to 2;
 
@@ -318,7 +319,7 @@ else if ($intent == 'ManagePatient') { //working
 
             // var_dump($result);
 
-            if ($change == 0 || $change == 1 || $result==0) {
+            if ($change == 0 || $change == 1 || $result==1) {
                 if ($change !=0){
                     echo JsonResponse::message(1, "Emergency Patient sucessfully upgraded");
                 }

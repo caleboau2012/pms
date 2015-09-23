@@ -1034,7 +1034,7 @@ class EmergencySqlStatement {
 
     const REG_EMERGENCY = "INSERT INTO emergency (emergency_id, patient_id, emergency_status_id, created_date, modified_date) VALUES (NULL, :patient_id, '1', NOW(), NOW())";
 
-    const VERIFY_EMERGENCY ="SELECT * FROM emergency WHERE patient_id=:patient_id ";
+    const VERIFY_EMERGENCY ="SELECT emergency_status_id FROM emergency WHERE patient_id=:patient_id ";
 
     const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE patient_id =:patient_id ";
 
