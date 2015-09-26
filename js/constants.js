@@ -4,6 +4,11 @@
 var host = "http://localhost/pms/";
 
 function printElem(title, body, footer){
+    console.log({
+        title: title,
+        body: body,
+        footer: footer
+    });
     var data = '';
     $.get(host + 'view/printout.php', function(html){
         if(title != null) {
@@ -25,7 +30,7 @@ function printElem(title, body, footer){
             footer = "<div class='panel-footer'>" + footer + "</div>";
         }
         else {
-            var footer = "";
+            footer = "";
         }
 
         html = replaceAll("{{title}}", title, html);

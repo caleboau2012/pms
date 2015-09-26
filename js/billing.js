@@ -32,6 +32,7 @@ Billing = {
         $.getJSON(url, function(data){
             if(data.status == 1){
                 data = data.data;
+                console.log(data);
                 $('#unbilled-patients').empty();
 
                 for(i = 0; i < data.length; i++){
@@ -53,6 +54,9 @@ Billing = {
                     patientHTML = replaceAll('{{name}}', patientName, patientHTML);
                     patientHTML = replaceAll('{{treatment_id}}', data[i].treatment_id, patientHTML);
                     patientHTML = replaceAll('{{treatment_status}}', data[i].treatment_status, patientHTML);
+                    patientHTML = replaceAll('{{home_address}}', data[i].home_address, patientHTML);
+                    patientHTML = replaceAll('{{telephone}}', data[i].telephone, patientHTML);
+                    patientHTML = replaceAll('{{modified_date}}', data[i].modified_date, patientHTML);
 
                     $('#unbilled-patients').append(patientHTML);
                 }
@@ -99,6 +103,9 @@ Billing = {
     startBilling: function(patient){
         var name = ($(patient).find('.name').text());
         var regNo = ($(patient).find('.regNo').text());
+        var telephone = ($(patient).find('.telephone').text());
+        var address = ($(patient).find('.home_address').text());
+        var date = ($(patient).find('.modified_date').text());
         Billing.CONSTANTS.treatment_id = ($(patient).find('.treatment_id').text());
         Billing.getDetails();
 
@@ -106,6 +113,13 @@ Billing = {
         $('.one').removeClass('hidden');
         $('#patientName').text(name);
         $('#patientRegNo').text(regNo);
+        $('#home_address').text(address);
+        $('#telephone').text(telephone);
+        $('#modified_date').text(date.substring(0, 10));
+        $('#receipt_no').text(Billing.CONSTANTS.treatment_id);
+        $('#print-header').removeClass('hidden');
+        $('#print-footer').removeClass('hidden');
+
         $('.bill').removeClass('hidden');
     },
     computeTotal: function(){
@@ -197,7 +211,7 @@ Billing = {
         }, function(data){
             if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
                 //console.log(bill.html());
-                printElem($('#print-header').html(), $(bill).html(), null);
+                printElem($('#print-header').html(), $(bill).html(), $('#print-footer').html());
             }
         }).fail(function(e){
             console.log({

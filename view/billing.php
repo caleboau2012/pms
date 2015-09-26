@@ -43,6 +43,9 @@ Crave::requireAll(UTIL);
                 <span class="treatment_id hidden">{{treatment_id}}</span>
                 <span class="treatment_status hidden">{{treatment_status}}</span>
                 <span class="bill_status hidden">{{bill_status}}</span>
+                <span class="home_address hidden">{{home_address}}</span>
+                <span class="telephone hidden">{{telephone}}</span>
+                <span class="modified_date hidden">{{modified_date}}</span>
             </div>
         </div>
     </div>
@@ -72,9 +75,26 @@ Crave::requireAll(UTIL);
                     <div class="div-rounded encounter-icon">
                         <span class="fa fa-money"></span>
                     </div>
-                    <div id="print-header">
-                        <p id="patientRegNo" class="text-center h3"></p>
-                        <p id="patientName" class="text-center h4"></p>
+                    <div id="print-header" class="hidden">
+                        <div class="row">
+                            <div style="width:50%; padding: 0 20px;" class="pull-left">
+
+                                    <p id="patientRegNo" class="h4"></p>
+                                    <p id="patientName"></p>
+                                    <p id="home_address"></p>
+                                    <p><span class="fa fa-phone"></span> <span id="telephone"></span></p>
+
+                            </div>
+                            <div style="width: 50%; padding: 0 20px;" class="pull-right">
+                                <div class="text-right">
+                                    <p id="receipt_no" class="h4"></p>
+                                    <p>Issuer: <?php
+                                        echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname));
+                                        ?></p>
+                                    <p id="modified_date"></p>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="h2 none text-center">
                         <span class="fa fa-arrow-circle-o-left"></span> Please select a patient to bill
@@ -107,6 +127,27 @@ Crave::requireAll(UTIL);
 
                     </form>
                     <div class="clearfix"></div>
+                    <div id="print-footer" class="row hidden">
+                        <div class="text-center">
+                            <p><?php
+                                if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                                    echo "Patient Management System";
+                                }else{
+                                    echo ucwords(CxSessionHandler::getItem('hospital_name'));
+                                }
+                                ?>
+                            </p>
+                            <p>
+                                <?php
+                                if(is_null(CxSessionHandler::getItem('hospital_address'))){
+                                }else{
+                                    echo ucwords(CxSessionHandler::getItem('hospital_address'));
+                                }
+                                ?>
+                            </p>
+                            <p>This is a generated receipt and does not require signatures</p>
+                        </div>
+                    </div>
                     <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
                     <div class="text-center" id="log_encounter_response"></div>
                 </div>
@@ -138,7 +179,6 @@ Crave::requireAll(UTIL);
                             <button class="btn btn-success bill hidden" id="print">Print</button>
                             <div id="print_error" class="text-danger"></div>
                         </div>
-
                     </div>
                 </div>
             </div>

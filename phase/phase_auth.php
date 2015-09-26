@@ -8,6 +8,7 @@ Crave::requireFiles(CONTROLLER, array('AuthenticationController', 'HospitalDetai
 
 $hospital_info = (new HospitalDetailsController())->getHospitalDetails();
 $hospital_name = $hospital_info['name'];
+$hospital_address = $hospital_info['address'];
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -35,6 +36,7 @@ if ($intent == 'login') {
                 }
 
                 CxSessionHandler::setItem(HOSPITAL_NAME, $hospital_name);    // ADD HOSPITAL NAME TO SESSION
+                CxSessionHandler::setItem(HOSPITAL_ADDRESS, $hospital_address);    // ADD HOSPITAL NAME TO SESSION
 
                 //CONSTRUCT RESPONSE
                 $response = array();

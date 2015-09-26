@@ -52,11 +52,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
 </div> <!-- /container -->
 
-<div class="navbar navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="text-center">
-            &copy; 2015. Patient Management System
-        </div>
+<br>
+
+<div>
+    <div class="text-center">
+        Copyright &copy; 2015 ELYON 1.0 | All Rights Reserved
     </div>
 </div>
 
