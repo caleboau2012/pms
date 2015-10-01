@@ -15,7 +15,7 @@ $lab = new LaboratoryController();
 $view_bag = array();
 
 
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 if ($view_bag[HaematologyTable::status_id] == 7){
@@ -127,7 +127,27 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     </div>
 </script>
 <body>
-<div class="container-fluid">
+<div id="print-head" class="hidden">
+    <div class="row">
+        <div style="width:50%; padding: 0 20px;" class="pull-left">
+
+            <p id="patientRegNo" class="h4"></p>
+            <p id="patientName"></p>
+            <p id="home_address"></p>
+            <p><span class="fa fa-phone"></span> <span id="telephone"></span></p>
+        </div>
+        <div style="width: 50%; padding: 0 20px;" class="pull-right">
+            <div class="text-right">
+                <p id="receipt_no" class="h4"></p>
+                <p>Test Carried By: <?php
+                    echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname));
+                    ?></p>
+                <p id="modified_date"></p>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="container-fluid" id="print-body">
     <div class="row">
         <div class="col-sm-12 well">
             <div class="panel panel-default">
@@ -221,6 +241,28 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div id="print-footer" class="row hidden">
+    <div class="text-center">
+        <p><?php
+            if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                echo "Patient Management System";
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_name'));
+            }
+            ?>
+        </p>
+        <p>
+            <?php
+            if(is_null(CxSessionHandler::getItem('hospital_address'))){
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_address'));
+            }
+            ?>
+        </p>
+        <p></p>
     </div>
 </div>
 

@@ -23,9 +23,9 @@ class SystemSetupController{
     }
 
     public function createAdminUser($username, $password, $confirmPassword){
-        if($password == $confirmPassword)
+        /*if($password == $confirmPassword)
             return $this->systemSetupModel->createAdminUser($username, $password);
-        return false;
+        return false;*/
     }
 
     public function setupComplete(){
