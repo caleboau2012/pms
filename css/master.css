@@ -729,6 +729,10 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     vertical-align: middle;
 }
 
+.add-treatment textarea{
+    height: 100px;
+}
+
 @media (max-width: 1024px) {
     .patient-arrival .form-control {
         display: block;
