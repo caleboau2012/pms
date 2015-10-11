@@ -877,7 +877,7 @@ class AdmissionSqlStatement {
     const DISCHARGE = "UPDATE admission
         INNER JOIN treatment
             ON admission.treatment_id = treatment.treatment_id
-        SET admission.active_fg = 0, admission.discharged_by = :discharged_by, admission.modified_date = NOW(), treatment.treatment_status = 2, treatment.modified_date = NOW()
+        SET admission.active_fg = 0, admission.discharged_by = :discharged_by, admission.modified_date = NOW(), admission.exit_date = NOW(), treatment.treatment_status = 2, treatment.modified_date = NOW()
         WHERE
             admission.admission_id = :admission_id
             AND admission.active_fg = 1
@@ -993,9 +993,13 @@ class TreatmentSqlStatement {
                                 ON t.patient_id = p.patient_id
                                 WHERE t.treatment_status = 2 AND t.bill_status = 1";
 
+//    const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
+//                            FROM admission
+//                            WHERE active_fg = 1 AND treatment_id = :treatment_id";
+
     const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
                             FROM admission
-                            WHERE active_fg = 1 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE status = 1 AND treatment_id = :treatment_id";
