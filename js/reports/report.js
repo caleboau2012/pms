@@ -96,13 +96,13 @@ var Report = {
                     {
                         "sExtends": "pdf",
                         "sPdfOrientation": "landscape",
-                        "sPdfMessage": "PMS REPORT.",
+                        //"sPdfMessage": "PMS REPORT.",
                         "bHeader": header,
                         "bFooter": footer
                     },
                     {
-                        "sExtends": "print",
-                        "sMessage": "PMS REPORT."
+                        //"sMessage": "PMS REPORT.",
+                        "sExtends": "print"
                     }
                 ]
             }
