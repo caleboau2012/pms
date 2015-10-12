@@ -131,7 +131,8 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
 <div class="container-fluid">
     <div class="row">
         <div class="col-sm-12 well">
-            <div class="panel panel-default">
+            <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
+            <div class="panel panel-default" id="print-head">
                 <div class="panel-heading">
                     <h2 class="panel-title"><span style="text-transform: uppercase"><?php echo $patient['surname']; ?></span> <?php echo $patient['middlename'].' '. $patient['firstname'];  ?></h2>
                 </div>
@@ -142,7 +143,7 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                 </div>
             </div>
 
-            <div class="haematology">
+            <div class="haematology" id="print-body">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="post">
                         <input type="hidden" name="<?php echo 'data[details]['.RadiologyTable::radiology_id.']'; ?>"value="<?php echo $view_bag['details']['radiology_id'] ?>">
@@ -297,6 +298,28 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                 </div>
             </div>
         </div>
+    </div>
+</div>
+<div class="clearfix"></div>
+<div id="print-footer" class="row hidden">
+    <div class="text-center">
+        <p><?php
+            if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                echo "Patient Management System";
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_name'));
+            }
+            ?>
+        </p>
+        <p>
+            <?php
+            if(is_null(CxSessionHandler::getItem('hospital_address'))){
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_address'));
+            }
+            ?>
+        </p>
+        <p></p>
     </div>
 </div>
 
