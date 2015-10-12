@@ -189,7 +189,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_be])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_be]; ?>"></td>
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_re])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_re]; ?>"></td>
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_le])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_le]; ?>"></td>
-
                                         </tr>
                                     </tbody>
                                 </table>
@@ -211,6 +210,18 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                     <tr>
                                         <td class="test-label"><span>Amplitude of Accommodation</td>
                                         <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::amplitude_of_accomodation.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::amplitude_of_accomodation])) echo $view_bag[VisualSkillsProfileTable::amplitude_of_accomodation]; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="test-label">Intra-ocular pressure</td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::intra_ocular_pressure.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::intra_ocular_pressure])) echo $view_bag[VisualSkillsProfileTable::intra_ocular_pressure]; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="test-label">Central Visual Field</td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::central_visual_field.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::central_visual_field])) echo $view_bag[VisualSkillsProfileTable::central_visual_field]; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="test-label">Others</td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::others.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::others])) echo $view_bag[VisualSkillsProfileTable::others]; ?>"></td>
                                     </tr>
                                     </tbody>
                                 </table>
