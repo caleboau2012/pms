@@ -357,6 +357,9 @@ class VisualSkillsProfileTable {
     const pinhole_acuity_re         = 'pinhole_acuity_re';
     const pinhole_acuity_le         = 'pinhole_acuity_le';
     const pinhole_acuity_be         = 'pinhole_acuity_be';
+    const intra_ocular_pressure     = 'intra-ocular-pressure';
+    const central_visual_field      = 'central_visual_field';
+    const others                    = 'others';
     const colour_vision             = 'colour_vision';
     const stereopsis                = 'stereopsis';
     const amplitude_of_accomodation = 'amplitude_of_accomodation';

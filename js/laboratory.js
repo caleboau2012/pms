@@ -33,6 +33,10 @@ var Laboratory = {
             history.go(0);
 
         });
+
+        $('#print').click(function(e){
+            printElem($('#print-head').html(), $('#print-body').html(), $('#print-footer').html());
+        })
         /*$('body').delegate('a.pending', 'click', function(e){
             e.preventDefault();
             Laboratory.getLabDetails(this);
