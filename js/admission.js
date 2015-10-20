@@ -79,6 +79,8 @@ Admission = {
             }
         });
 
+        Admission.getWardBedCounter();
+
     },
     switchMenu : function(obj){
         $('.adm-menu').removeClass('active');
@@ -127,7 +129,6 @@ Admission = {
                 }
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
                 $('.pending-list').html("<h2 class='text-center text-muted'>Unable to complete request at the moment</h2>");
-                //console.log('Error in page');
             }
         });
     },
@@ -140,7 +141,7 @@ Admission = {
         Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
         //$('#empty_active').hide();
         //$('#patient-panel').removeClass('hidden');
-        content = "<h2 class='panel-title text-capitalize'>" + $(patient).attr('data-patient-name') +"</h2>";
+        var content = "<h2 class='panel-title text-capitalize'>" + $(patient).attr('data-patient-name') +"</h2>";
         content += "<p>" + $(patient).attr('data-regNum') +"</p>";
         $('#request-heading').html(content);
 
@@ -496,7 +497,6 @@ Admission = {
                 $('#log_encounter_response').html(response);
             }
         }).fail(function(data){
-            console.log(data.responseText);
             response = '<div class="alert alert-dismissible alert-danger text-center">' +
             ' <button type="button" class="close" data-dismiss="alert">×</button>' +
             'Unfortunately, an unexpected occur, Please try again' +
@@ -547,6 +547,36 @@ Admission = {
             //console.log(date instanceof String)
             return date.toLocaleTimeString();
         }
+    },
+    getWardBedCounter: function(){
+        var payload = {};
+        payload.intent = "getWardBedCounter";
+        $.getJSON(host + "phase/phase_ward.php", payload, function (data) {
+
+            if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
+                var num_of_wards = data.data.wards;
+                if(num_of_wards > 1){
+                    $(".num_of_wards").html(num_of_wards + " wards");
+                }else{
+                    $(".num_of_wards").html(num_of_wards + " ward");
+
+                }
+                var num_of_available_beds = data.data.beds.available;
+                if(num_of_available_beds > 1){
+                    $(".num_of_available_beds").html(num_of_available_beds + " available beds");
+                }else{
+                    $(".num_of_available_beds").html(num_of_available_beds + " available bed");
+                }
+                var num_of_beds = parseInt(data.data.beds.occupied) + parseInt(data.data.beds.available);
+                if(num_of_beds > 1){
+                    $(".num_of_beds").html(num_of_beds + " beds");
+                }else{
+                    $(".num_of_beds").html(num_of_beds + " bed");
+                }
+            }else{
+
+            }
+        })
     }
 };
 

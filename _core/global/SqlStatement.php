@@ -944,6 +944,9 @@ class BedSqlStatement {
     const NEW_BED = "INSERT INTO bed(bed_description, bed_status, ward_id, created_date, modified_date, active_fg) VALUES(:bed_description, 0, :ward_id, NOW(), NOW(), 1)";
 
     const DELETE = "UPDATE bed SET active_fg = 0 WHERE bed_id = :bed_id AND bed_status != 1";
+
+    const BEDS_COUNT = "SELECT COUNT(bed_status) as total, bed_status FROM bed WHERE active_fg = 1 GROUP BY bed_status";
+
 }
 
 class WardRefSqlStatement {
@@ -964,6 +967,8 @@ class WardRefSqlStatement {
     const DELETE_WARD_BEDS = "UPDATE bed SET active_fg = 0 WHERE ward_id = :ward_id AND active_fg = 1";
 
     const DELETE_WARD = "UPDATE ward_ref SET active_fg = 0 WHERE ward_ref_id = :ward_id AND active_fg = 1";
+
+    const WARDS_COUNT = "SELECT COUNT(ward_ref_id) as total FROM ward_ref WHERE active_fg = 1";
 }
 
 class TreatmentSqlStatement {
