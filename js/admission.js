@@ -418,6 +418,7 @@ Admission = {
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-patient-id");
         Admission.GLOBAL.PATIENT_ADMISSION_ID = $(patient).attr("data-admission-id");
         Admission.GLOBAL.ACTIVE_PATIENT_ID = $(patient).attr('data-patient-id');
+        Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
 
         $("#patient_name").empty().html($(patient).attr('data-patient-name'));
         $("#patient_reg_num").empty().html($(patient).attr('data-regNo'));
@@ -462,10 +463,11 @@ Admission = {
     logEncounter: function(){
         $('#log_encounter_response').empty();
         $('#log_encounter_loading').removeClass('hidden');
-        payload = {};
+        var payload = {};
         payload.intent = 'logEncounter';
         payload.admission_id = Admission.GLOBAL.PATIENT_ADMISSION_ID;
         payload.patient_id =  Admission.GLOBAL.ACTIVE_PATIENT_ID;
+        payload.treatment_id =  Admission.GLOBAL.TREATMENT_ID;
         payload.comments = $('#comment').val();
         payload.vitals = {};
 
@@ -494,6 +496,7 @@ Admission = {
                 $('#log_encounter_response').html(response);
             }
         }).fail(function(data){
+            console.log(data.responseText);
             response = '<div class="alert alert-dismissible alert-danger text-center">' +
             ' <button type="button" class="close" data-dismiss="alert">×</button>' +
             'Unfortunately, an unexpected occur, Please try again' +
