@@ -807,7 +807,8 @@ class VisualRequestSqlStatement{
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
                             distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
-                            pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
+                            pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, intra_ocular_pressure = :intra_ocular_pressure,
+                            central_visual_field = :central_visual_field, others = :others, stereopsis = :stereopsis,
                             amplitude_of_accomodation = :amplitude_of_accomodation, modified_date = NOW(),
                             status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE visual_profile_id = :visual_profile_id";
 }
@@ -1123,7 +1124,7 @@ class ReportSqlStatement {
                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient  against diagnosis from a start date to an end date
-    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
@@ -1136,7 +1137,7 @@ class ReportSqlStatement {
                                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient sex against diagnosis
-    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE p.sex = :gender AND (DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";

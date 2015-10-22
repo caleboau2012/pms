@@ -14,7 +14,7 @@ Crave::requireFiles(MODEL, array('BaseModel', 'ReportModel'));
 Crave::requireFiles(CONTROLLER, array('ReportController'));
 
 $current_patient = ReportController::currentPatients();
-
+var_dump($current_patient);
 ?>
 
     <table class="table table-responsive dataTable">
