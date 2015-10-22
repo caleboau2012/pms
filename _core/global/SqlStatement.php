@@ -1089,7 +1089,7 @@ class ReportSqlStatement {
     //                             FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
     //  Number  and list and graph of current patients from start date to end date
-    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
+    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
                                 FROM patient WHERE DATE(created_date) < DATE(:start_date) AND active_fg = 1";
 
     //  Number  list and graph of current(male and female) patients from start date to end date
