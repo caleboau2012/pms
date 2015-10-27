@@ -628,7 +628,7 @@ class ParasitologyDetailsSqlStatement {
 class EncounterSqlStatement{
     const GET_HISTORY = 'SELECT * FROM encounter AS e WHERE admission_id = :admission_id ORDER BY e.created_date DESC';
     const CHECK_PATIENT_ID_AND_ADMISSION_ID = 'SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND admission_id = :admission_id AND exit_date IS NULL';
-    const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, created_date, modified_date, active_fg) VALUES (:personnel_id, :patient_id, :admission_id, :treatment_id, NOW(), NOW(), 1)";
+    const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, comments, created_date, modified_date, active_fg) VALUES (:personnel_id, :patient_id, :admission_id, :treatment_id, :comments, NOW(), NOW(), 1)";
     const GET_UNCLOSED_SESSION = "SELECT encounter_id FROM encounter WHERE treatment_id = :treatment_id AND admission_id = :admission_id AND status = 1";
     const UPDATE = "UPDATE encounter SET personnel_id = :personnel_id, consultation = :consultation, symptoms = :symptoms,
                     diagnosis = :diagnosis, comments = :comments, modified_date = NOW() WHERE treatment_id = :treatment_id AND patient_id = :patient_id
@@ -807,7 +807,8 @@ class VisualRequestSqlStatement{
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
                             distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
-                            pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
+                            pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, intra_ocular_pressure = :intra_ocular_pressure,
+                            central_visual_field = :central_visual_field, others = :others, stereopsis = :stereopsis,
                             amplitude_of_accomodation = :amplitude_of_accomodation, modified_date = NOW(),
                             status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE visual_profile_id = :visual_profile_id";
 }
@@ -944,6 +945,9 @@ class BedSqlStatement {
     const NEW_BED = "INSERT INTO bed(bed_description, bed_status, ward_id, created_date, modified_date, active_fg) VALUES(:bed_description, 0, :ward_id, NOW(), NOW(), 1)";
 
     const DELETE = "UPDATE bed SET active_fg = 0 WHERE bed_id = :bed_id AND bed_status != 1";
+
+    const BEDS_COUNT = "SELECT COUNT(bed_status) as total, bed_status FROM bed WHERE active_fg = 1 GROUP BY bed_status";
+
 }
 
 class WardRefSqlStatement {
@@ -964,6 +968,8 @@ class WardRefSqlStatement {
     const DELETE_WARD_BEDS = "UPDATE bed SET active_fg = 0 WHERE ward_id = :ward_id AND active_fg = 1";
 
     const DELETE_WARD = "UPDATE ward_ref SET active_fg = 0 WHERE ward_ref_id = :ward_id AND active_fg = 1";
+
+    const WARDS_COUNT = "SELECT COUNT(ward_ref_id) as total FROM ward_ref WHERE active_fg = 1";
 }
 
 class TreatmentSqlStatement {
@@ -1083,7 +1089,7 @@ class ReportSqlStatement {
     //                             FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
     //  Number  and list and graph of current patients from start date to end date
-    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
+    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
                                 FROM patient WHERE DATE(created_date) < DATE(:start_date) AND active_fg = 1";
 
     //  Number  list and graph of current(male and female) patients from start date to end date
@@ -1118,7 +1124,7 @@ class ReportSqlStatement {
                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient  against diagnosis from a start date to an end date
-    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
@@ -1131,7 +1137,7 @@ class ReportSqlStatement {
                                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient sex against diagnosis
-    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE p.sex = :gender AND (DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";

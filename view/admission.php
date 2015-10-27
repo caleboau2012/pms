@@ -159,18 +159,18 @@ $wards = $admission->loadWards();
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <p>
+                    <h3>
                         <span class="fa fa-university text-danger">&nbsp;</span>
-                        20 Wards
-                    </p>
-                    <p>
+                        <span class="num_of_wards"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-danger">&nbsp;</span>
-                        200 Beds
-                    </p>
-                    <p>
+                        <span class="num_of_beds"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-success">&nbsp;</span>
-                        30 Available Beds
-                    </p>
+                        <span class="num_of_available_beds"></span>
+                    </h3>
                 </div>
             </div>
         </div>
@@ -349,18 +349,18 @@ $wards = $admission->loadWards();
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <p>
+                    <h3>
                         <span class="fa fa-university text-danger">&nbsp;</span>
-                        20 Wards
-                    </p>
-                    <p>
+                        <span class="num_of_wards"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-danger">&nbsp;</span>
-                        200 Beds
-                    </p>
-                    <p>
+                        <span class="num_of_beds"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-success">&nbsp;</span>
-                        30 Available Beds
-                    </p>
+                        <span class="num_of_available_beds"></span>
+                    </h3>
                 </div>
                 <div class="discharge-container hidden">
                     <br/>

@@ -117,7 +117,7 @@ class AdmissionController {
         return $feedback;
     }
 
-    public function logEncounter($personnel_id, $patient_id, $admission_id, $comments, $vitals_data) {
+    public function logEncounter($personnel_id, $treatment_id, $patient_id, $admission_id, $comments, $vitals_data) {
         $admission_model = new AdmissionModel();
 
         $encounter_data = array();
@@ -125,6 +125,7 @@ class AdmissionController {
         $encounter_data[EncounterTable::patient_id] = $patient_id;
         $encounter_data[EncounterTable::admission_id] = $admission_id;
         $encounter_data[EncounterTable::comments] = $comments;
+        $encounter_data[EncounterTable::treatment_id] = $treatment_id;
 
         if ($vitals_data) {
             $encounter_data[VITALS] = $vitals_data;

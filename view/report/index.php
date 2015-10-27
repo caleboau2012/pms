@@ -108,6 +108,7 @@ Crave::requireAll(UTIL);
                                     Select a report to view
                                 </label>
                                 <select id="view" onchange="Report.switcher()" class="form-control">
+                                    <option opt="all" value="allPatients">All Patients</option>
                                     <option opt="yes" value="newPatient">New Patients</option>
                                     <option opt="yes" value="currentPatients">Current Patients</option>
                                     <option opt="no" value="patientsAge">Patients with their Age</option>
@@ -122,7 +123,7 @@ Crave::requireAll(UTIL);
                                     <div class="gender"><label>
                                         Select Gender
                                     </label>
-                                    <select id="gender" class="form-control">
+                                    <select id="gender" name="gender" class="form-control">
                                         <option>All</option>
                                         <option value="Male">Male</option>
                                         <option value="Female">Female</option>

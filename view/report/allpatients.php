@@ -2,8 +2,8 @@
 /**
  * Created by PhpStorm.
  * User: Olaniyi
- * Date: 6/4/15
- * Time: 3:37 PM
+ * Date: 10/22/15
+ * Time: 5:08 PM
  */
 require_once 'includes/iframe-header.php';
 require_once '../../_core/global/_require.php';
@@ -13,8 +13,8 @@ Crave::requireAll(UTIL);
 Crave::requireFiles(MODEL, array('BaseModel', 'ReportModel'));
 Crave::requireFiles(CONTROLLER, array('ReportController'));
 
-$current_patient = ReportController::currentPatients();
-var_dump($current_patient);
+$all_patients = ReportController::allPatients();
+
 ?>
 
     <table class="table table-responsive dataTable">
@@ -27,15 +27,15 @@ var_dump($current_patient);
         </tr>
         </thead>
         <tbody id="new_patient">
-        <?php if (count($current_patient) == 0) {?>
+        <?php if (count($all_patients) == 0) {?>
             <tr>
                 <td></td>
                 <td></td>
-                <td class="text-center">No current patients</td>
+                <td class="text-center">No new patients</td>
                 <td></td>
             </tr>
         <?php }else { $counter = 0;?>
-            <?php foreach ($current_patient as $patient) { ?>
+            <?php foreach ($all_patients as $patient) { ?>
                 <tr>
                     <td><?php echo ++$counter; ?></td>
                     <td><?php echo $patient['patient_name']; ?></td>
@@ -49,8 +49,8 @@ var_dump($current_patient);
         <tr>
             <th></th>
             <th></th>
-            <th class="text-right">Total Number of Current Patients</th>
-            <th><?php echo count($current_patient); ?></th>
+            <th class="text-right">Total Number of All Patients</th>
+            <th><?php echo count($all_patients); ?></th>
         </tr>
 
         </tfoot>

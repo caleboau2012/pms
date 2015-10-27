@@ -4,6 +4,7 @@
 
 var Report = {
     INTENT: {
+        ALL_PATIENTS:           'allPatients',
         NEW_PATIENTS:           'newPatient',
         CURRENT_PATIENTS:       'currentPatients',
         PATIENT_VISITS:         'patientVisits',
@@ -116,13 +117,13 @@ var Report = {
         if (opt == 'no') {
             $('#day').hide();
             $('#range').show();
-            $('.gender').hide();
+            $('#gender').hide();
             gender.attr('disabled', 'disabled');
         }
         else if (opt == 'yes') {
             $('#day').hide();
             $('#range').show();
-            $(".gender").show();
+            $("#gender").show();
             gender.removeAttr('disabled');
         }
         else if (opt == 'day') {
@@ -131,8 +132,19 @@ var Report = {
             $('#day').show();
 
         }
+        else if (opt == 'all') {
+            $('#day').hide();
+            $('#range').hide();
+        }
 
         switch ($("#view").val()){
+            case Report.INTENT.ALL_PATIENTS:
+//                if (gender.val() != ''){
+                    ifram.attr('src', Report.INTENT.ALL_PATIENTS.toLowerCase() + ".php");
+                /*} else {
+                    ifram.attr('src', Report.INTENT.ALL_PATIENTS.toLowerCase() + ".php?gender="+gender.val());
+                }*/
+                break;
             case Report.INTENT.NEW_PATIENTS:
                 if (gender.val() != ''){
                     ifram.attr('src', Report.INTENT.NEW_PATIENTS.toLowerCase() + ".php?start_date="+start_date.val()+"&end_date="+end_date.val()+"&gender="+gender.val());
@@ -209,9 +221,11 @@ var Report = {
 $(document).ready(function(){
     $("#start_date").val(Report.yestardayDate());
     $("#end_date").val(Report.currentDate());
+    $('#range').hide();
     $("#day").hide();
 
-    $('#report_iframe').attr('src', "newpatient.php?start_date="+Report.yestardayDate()+"&end_date="+Report.currentDate());
+
+    $('#report_iframe').attr('src', "allpatients.php");
     Report.table();
 
 
@@ -220,7 +234,8 @@ $(document).ready(function(){
         if (view == Report.INTENT.PATIENT_VISITS){
             $('#report_iframe').attr('src', view.val().toLowerCase()+".php?day="+$("input[name=day]").val());
             Report.table();
-        } else {
+        }
+        else {
             $('#report_iframe').attr('src', view.val().toLowerCase()+".php?start_date="+$('#start_date').val()+"&end_date="+$('#end_date').val()+"&gender="+$('#gender').val());
             Report.table();
         }

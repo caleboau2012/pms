@@ -123,4 +123,25 @@ class WardController {
 
         return $feedback;
     }
+
+    public function wardBedCounter(){
+        $ward = new WardModel();
+
+        $response = $ward->wardBedCounter();
+
+        if(is_array($response['beds'])){
+            $reformat = array();
+            foreach($response['beds'] as $data){
+                if($data['bed_status'] == VACANT){
+                    $reformat['available'] = $data['total'];
+                }elseif($data['bed_status'] == OCCUPIED){
+                    $reformat['occupied'] = $data['total'];
+                }
+            }
+            return array('wards' => $response['wards']['total'], 'beds' => $reformat);
+        }else{
+            return false;
+        }
+
+    }
 }
