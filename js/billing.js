@@ -150,7 +150,14 @@ Billing = {
         }, function(data){
             console.log(data);
             $('#test').empty();
-            $('#days_spent').text(data.data.days_spent.days_spent + " days");
+            var days = "";
+            if((data.data.days_spent.days_spent == null) || (data.data.days_spent.days_spent == "No admission")){
+                days = "No admission";
+            }
+            else{
+                days = data.data.days_spent.days_spent + " day(s)";
+            }
+            $('#days_spent').text(days);
             var prescriptionHTML = "";
             if(data.data.prescription.constructor === Array){
                 for(var i = 0; i < data.data.prescription.length; i++){

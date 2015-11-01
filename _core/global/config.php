@@ -2,9 +2,9 @@
 //DATABASE CONFIGURATION
 // define('DB_HOST', '10.81.1.120');
 define('DB_HOST', 'localhost');
-define('DBNAME', 'calebcom_pms');
-define('DB_USERNAME', 'calebcom_root');
-define('DB_PASSWORD', 'prince');
+define('DBNAME', 'pms');
+define('DB_USERNAME', 'root');
+define('DB_PASSWORD', 'admin');
 //define('DB_USERNAME', 'pms');
 //define('DB_PASSWORD', '__$pmsadmin)(--');
 

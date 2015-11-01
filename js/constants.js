@@ -1,7 +1,7 @@
 /**
  * Created by user on 1/28/2015.
  */
-var host = "http://code.caleb.com.ng/pms/";
+var host = "http://localhost/pms/";
 
 function printElem(title, body, footer){
     console.log({
