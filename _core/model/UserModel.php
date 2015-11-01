@@ -99,7 +99,8 @@ class UserModel extends BaseModel {
             'inactive_users'    =>  $_inactive
         );
 
-        $this->conn->execute($stmt, $data);
+        $status = $this->conn->execute($stmt, $data);
+//        die(var_dump("logged out user" , $status));
     }
 
     public function getUserDetails($userid) {

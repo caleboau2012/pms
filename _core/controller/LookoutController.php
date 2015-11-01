@@ -48,7 +48,7 @@ class LookoutController {
                 $userid = explode('.', $file);
                 array_push($inactive_users, $userid[0]);
             }
-            $worked = true;
+//            $worked = true;
         }
 
         chdir($orig_dir);
