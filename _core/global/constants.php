@@ -126,7 +126,7 @@ define('END_DATE', 'end_date');
 define('DAY', 'day');
 
 // Host
-define('HOST', "http://localhost/pms/");
+define('HOST', "http://code.caleb.com.ng/pms/");
 
 // Hospital Info
 define('HOSPITAL_NAME', 'hospital_name');
