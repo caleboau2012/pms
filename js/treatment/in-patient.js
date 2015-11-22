@@ -172,6 +172,13 @@ Treatment = {
 
         var url = host + "phase/phase_treatment.php?intent=getEncounterId";
 
+        console.log({
+            url: url,
+            treatment_id: Treatment.CONSTANTS.treatmentid,
+            admission_id: Treatment.CONSTANTS.admissionid,
+            patient_id: Treatment.CONSTANTS.patientid
+        });
+
         $.getJSON(url, {
             treatment_id:Treatment.CONSTANTS.treatmentid,
             patient_id: Treatment.CONSTANTS.patientid,

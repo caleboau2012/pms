@@ -29,6 +29,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/print.css" media="print">
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../css/master.css" rel="stylesheet">

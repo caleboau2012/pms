@@ -58,6 +58,7 @@ function printElem(title, body, footer){
 
 function makeTable(){
     $('.dataTable').dataTable();
+    $('.dataTables_wrapper select, .dataTables_filter input').addClass('btn');
 }
 
 //Sign out

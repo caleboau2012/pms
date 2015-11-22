@@ -730,7 +730,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 }
 
 .add-treatment textarea{
-    height: 100px;
+    height: 70px;
 }
 
 @media (max-width: 1024px) {
@@ -1144,7 +1144,7 @@ span#loader{
 }
 /*Footer*/
 #footer{
-    margin-top: 50px;
+    /*margin-top: 5px;*/
     /*background: rgba(34, 34, 34, 0.72);*/
     padding: 15px;
     color: #2c2c2c;

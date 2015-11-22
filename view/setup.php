@@ -35,7 +35,7 @@ if (file_exists("../_resource/setup")){
     <div class="row">
         <div id="setup-container">
             <div class="bg-info text-center" id="setup-heading">
-                <h4>PMS Setup</h4>
+                <h4>System Setup</h4>
             </div>
             <div id="setup-nav">
 

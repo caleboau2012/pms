@@ -21,6 +21,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <title>PMS</title>
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
@@ -40,7 +41,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div class="container">
     <div class="row">
         <div id="dashboard">
-            <br>
             <div class="dashboard-panels">
                 <div>
                     <div id='roster_loading'>
@@ -96,7 +96,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3 text-center">
                                     <a href="arrival.php" class="dashboard-link">
-                                        <img src="../images/arrival.jpg" width="60" height="60">
+                                        <img src="../images/arrival.png" width="60" height="60">
 
                                         <div class="dashboard-desc">Patient Arrival</div>
                                     </a>

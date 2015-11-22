@@ -6,8 +6,8 @@ var Laboratory = {
     CONSTANTS:{
         FIVE: 'Pending',
         SIX: 'Processing',
-        SEVEN: 'Completed'
-
+        SEVEN: 'Completed',
+        DATA_TABLE: false
     },
     URL: {
         lab_uri: "phase/phase_laboratory.php",
@@ -50,6 +50,7 @@ var Laboratory = {
             url : url,
             dataType: 'json',
             success: function(returnedData){
+                console.log(returnedData);
                 var test_data = "";
                 var pending = "";
                 var action;
@@ -98,7 +99,11 @@ var Laboratory = {
                         pending += ' data-firstname='+this.firstname;
                         pending += ' data.middlename='+this.middlename;
                         pending += ' class="pending">';
-                        pending += '<div class="patient-queue__item">';
+                        var hidden = '';
+                        if(this.status_id == 7){
+                            hidden = 'hidden';
+                        }
+                        pending += '<div class="patient-queue__item ' + hidden + '">';
                         pending += '<div class="patient-queue__item-label-block">' + name;
                         pending += '<small class="sub">' + $("#type").val() + '</small>';
                         pending += '</div>';
@@ -109,7 +114,7 @@ var Laboratory = {
                 }
                 $('#test_table tbody').empty().html(test_data);
                 $('#pending .patient-queue__list').empty().html(pending);
-                $('table.dataTable').dataTable();
+                Laboratory.CONSTANTS.DATA_TABLE = $('table.dataTable').dataTable();
             },
 
             error: function(){
@@ -122,8 +127,8 @@ var Laboratory = {
         var test = Laboratory.selectedOption();
         var data = Laboratory.payload('getAllTest', test);
 //        Laboratory.changeAction();
+        Laboratory.CONSTANTS.DATA_TABLE.fnDestroy();
         Laboratory.ajaxRequest(host + Laboratory.URL.lab_uri,data,'GET');
-
     },
 
     selectedOption: function(){

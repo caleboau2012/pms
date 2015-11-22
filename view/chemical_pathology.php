@@ -56,7 +56,15 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
+            <a class="navbar-brand" href="dashboard.php">
+                <?php
+                if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                    echo "Patient Management System";
+                }else{
+                    echo ucwords(CxSessionHandler::getItem('hospital_name'));
+                }
+                ?>
+            </a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
