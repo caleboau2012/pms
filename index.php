@@ -39,7 +39,7 @@
     <form class="" id="login">
         <div class="panel panel-primary form-signin">
             <div class="panel-heading">
-                <h2 class="panel-title">Login</h2>
+                <h2 class="panel-title"><span class="fa fa-lock"></span> Login</h2>
             </div>
             <div class="panel-body">
                 <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
