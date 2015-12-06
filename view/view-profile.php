@@ -31,6 +31,7 @@ $profile = $userController->getUserProfile($_SESSION[UserAuthTable::userid]);
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
     <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="../js/bootstrap/bootstrap.min.js"></script>
@@ -166,6 +167,8 @@ $profile = $userController->getUserProfile($_SESSION[UserAuthTable::userid]);
         </div>
     </div>
 </div> <!-- /container -->
+
+<?php include('footer.php'); ?>
 
 </body>
 </html>

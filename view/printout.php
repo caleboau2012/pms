@@ -20,6 +20,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <title>Elyon</title>
     <!-- Bootstrap core CSS -->
     <link href="<?php echo HOST?>css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?php echo HOST?>css/master.css" rel="stylesheet">
@@ -54,11 +55,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
 <br>
 
-<div>
-    <div class="text-center">
-        Copyright &copy; 2015 ELYON 1.0 | All Rights Reserved
-    </div>
-</div>
+<?php include('footer.php'); ?>
 
 <script src="<?php echo HOST?>js/bootstrap/jquery-1.10.2.min.js"></script>
 <script>

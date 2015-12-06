@@ -40,6 +40,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -138,7 +139,8 @@ if ($view_bag[HaematologyTable::status_id] == 7){
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 well">
+        <br>
+        <div class="col-sm-12">
             <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
             <div class="panel panel-default" id="print-head">
                 <div class="panel-heading">
@@ -271,6 +273,8 @@ if ($view_bag[HaematologyTable::status_id] == 7){
         <p></p>
     </div>
 </div>
+
+<?php include('footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

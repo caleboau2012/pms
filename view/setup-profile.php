@@ -27,6 +27,7 @@ Crave::requireAll(UTIL);
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
     <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
@@ -124,6 +125,8 @@ Crave::requireAll(UTIL);
         </div>
     </div>
 </div> <!-- /container -->
+
+<?php include('footer.php'); ?>
 
 </body>
 </html>

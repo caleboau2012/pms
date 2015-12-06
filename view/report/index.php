@@ -17,6 +17,7 @@ Crave::requireAll(UTIL);
     <meta charset='utf-8' />
     <title>Report Generator</title>
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
     <link href="../../css/master.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
 </head>
@@ -97,7 +98,6 @@ Crave::requireAll(UTIL);
 
 <div class="container-fluid">
     <div class="row">
-
             <div class="col-sm-3">
                 <div class="r-sidebar">
                     <div class="r-panel">

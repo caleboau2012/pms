@@ -16,6 +16,7 @@ Crave::requireAll(UTIL);
     <meta charset='utf-8' />
     <title>Admin Dashboard</title>
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
 <!--    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />-->
 <!--    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />-->

@@ -18,7 +18,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PMS</title>
+    <title>Elyon</title>
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/sticky-footer-navbar.css" rel="stylesheet">

@@ -24,6 +24,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery-ui.css" rel="stylesheet">
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../css/master.css" rel="stylesheet">

@@ -18,6 +18,7 @@ Crave::requireAll(UTIL);
     <title>Report Generator</title>
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/libs/morris.css" rel="stylesheet">
+    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
     <link href="../../css/master.css" rel="stylesheet">
 </head>
 <body>

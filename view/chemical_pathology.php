@@ -36,6 +36,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -131,7 +132,8 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 well">
+        <br>
+        <div class="col-sm-12">
             <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
             <div class="panel panel-default" id="print-head">
                 <div class="panel-heading">
@@ -201,7 +203,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                 <h4 class="title">ELECTROLYTES</h4>
                                 <?php foreach($electrolytes_label_list->getList() as $label) {  $attr = $label->getAttribute(); ?>
                                 <label class="test-label"><?php echo $label->getLabel(); ?></label>
-                                <?php if (isset($attr['unit'])){ ?>
+                            <?php if (isset($attr['unit'])){ ?>
                                 <div class="input-group">
                                     <?php } else { ?>
                                     <div class="center-block">
@@ -212,7 +214,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         <?php } ?>
                                     </div>
                                     <?php } ?>
-                            </div>
+                                </div>
 
                                 <?php
                                 $lft_label_list = new LabelList();
@@ -229,7 +231,7 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                     <h4 class="title">LFT</h4>
                                     <?php foreach($lft_label_list->getList() as $label) {  $attr = $label->getAttribute(); ?>
                                     <label class="test-label"><?php echo $label->getLabel(); ?></label>
-                                    <?php if (isset($attr['unit'])){ ?>
+                                <?php if (isset($attr['unit'])){ ?>
                                     <div class="input-group">
                                         <?php } else { ?>
                                         <div class="center-block">
@@ -240,49 +242,24 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                             <?php } ?>
                                         </div>
                                         <?php } ?>
-                                </div>
+                                    </div>
 
-                                <div class="col-sm-6 col-sm-offset-6"></div>
-
-                                <?php
-                                $fasting_label_list = new LabelList();
-                                $fasting_label_list->addNode(new LabelNode("Total Chol (2.5-5.17)", 9, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                $fasting_label_list->addNode(new LabelNode("TG < 2.3", 10, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                $fasting_label_list->addNode(new LabelNode("HDL > 1.04", 11, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                $fasting_label_list->addNode(new LabelNode("LDL > 3.9", 12, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                $fasting_label_list->addNode(new LabelNode("Glucose (Fatsing) 2.8-5.0", 13, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                $fasting_label_list->addNode(new LabelNode("Glucose (2HPP) 3.0-6.0", 14, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                ?>
-                                <div class="col-sm-6">
-                                    <h4 class="title">FASTING LIPIDS PROFILE</h4>
-                                    <?php foreach($fasting_label_list->getList() as $label) { $attr = $label->getAttribute(); ?>
-                                    <label class="test-label"><?php echo $label->getLabel(); ?></label>
-                                    <?php if (isset($attr['unit'])){ ?>
-                                    <div class="input-group">
-                                        <?php } else { ?>
-                                        <div class="center-block">
-                                            <?php } ?>
-                                            <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data[values]['.$label->getId().']' ?>" value="<?php if (isset($view_bag['values'][$label->getId()])) echo $view_bag['values'][$label->getId()]; else echo 0; ?>">
-                                            <?php if (isset($attr['unit'])){ ?>
-                                                <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
-                                            <?php } ?>
-                                        </div>
-                                        <?php } ?>
-                                </div>
+                                    <div class="col-sm-6 col-sm-offset-6"></div>
 
                                     <?php
-                                    $proteins_label_list = new LabelList();
-                                    $proteins_label_list->addNode(new LabelNode("Total Protein", 21, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                    $proteins_label_list->addNode(new LabelNode("Albumin", 22, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                    $proteins_label_list->addNode(new LabelNode("Globulin", 23, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
-                                    $proteins_label_list->addNode(new LabelNode("Others", 24, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                    $fasting_label_list = new LabelList();
+                                    $fasting_label_list->addNode(new LabelNode("Total Chol (2.5-5.17)", 9, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                    $fasting_label_list->addNode(new LabelNode("TG < 2.3", 10, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                    $fasting_label_list->addNode(new LabelNode("HDL > 1.04", 11, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                    $fasting_label_list->addNode(new LabelNode("LDL > 3.9", 12, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                    $fasting_label_list->addNode(new LabelNode("Glucose (Fatsing) 2.8-5.0", 13, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                    $fasting_label_list->addNode(new LabelNode("Glucose (2HPP) 3.0-6.0", 14, array('unit'=>'mmol/L', 'column'=>ChemicalPathologyDetailsTable::result)));
                                     ?>
-
                                     <div class="col-sm-6">
-                                        <h4 class="title">PROTEINS</h4>
-                                        <?php foreach($proteins_label_list->getList() as $label) { $attr = $label->getAttribute(); ?>
+                                        <h4 class="title">FASTING LIPIDS PROFILE</h4>
+                                        <?php foreach($fasting_label_list->getList() as $label) { $attr = $label->getAttribute(); ?>
                                         <label class="test-label"><?php echo $label->getLabel(); ?></label>
-                                        <?php if (isset($attr['unit'])){ ?>
+                                    <?php if (isset($attr['unit'])){ ?>
                                         <div class="input-group">
                                             <?php } else { ?>
                                             <div class="center-block">
@@ -296,13 +273,38 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                         </div>
 
                                         <?php
-                                        if ($view_bag['details'][HaematologyTable::status_id] == 5 || $view_bag['details'][HaematologyTable::status_id] == 6){?>
-                                            <div class="col-sm-6 submit-test">
-                                                <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
-                                                <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save'>
+                                        $proteins_label_list = new LabelList();
+                                        $proteins_label_list->addNode(new LabelNode("Total Protein", 21, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                        $proteins_label_list->addNode(new LabelNode("Albumin", 22, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                        $proteins_label_list->addNode(new LabelNode("Globulin", 23, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                        $proteins_label_list->addNode(new LabelNode("Others", 24, array('unit'=>'g/L', 'column'=>ChemicalPathologyDetailsTable::result)));
+                                        ?>
+
+                                        <div class="col-sm-6">
+                                            <h4 class="title">PROTEINS</h4>
+                                            <?php foreach($proteins_label_list->getList() as $label) { $attr = $label->getAttribute(); ?>
+                                            <label class="test-label"><?php echo $label->getLabel(); ?></label>
+                                        <?php if (isset($attr['unit'])){ ?>
+                                            <div class="input-group">
+                                                <?php } else { ?>
+                                                <div class="center-block">
+                                                    <?php } ?>
+                                                    <input type="text" <?php echo $disabled; ?> class="form-control col-sm-12" name="<?php echo 'data[values]['.$label->getId().']' ?>" value="<?php if (isset($view_bag['values'][$label->getId()])) echo $view_bag['values'][$label->getId()]; else echo 0; ?>">
+                                                    <?php if (isset($attr['unit'])){ ?>
+                                                        <span class="input-group-addon"><?php echo $attr['unit']; ?></span>
+                                                    <?php } ?>
+                                                </div>
+                                                <?php } ?>
                                             </div>
-                                        <?php } ?>
-                        </div>
+
+                                            <?php
+                                            if ($view_bag['details'][HaematologyTable::status_id] == 5 || $view_bag['details'][HaematologyTable::status_id] == 6){?>
+                                                <div class="col-sm-6 submit-test">
+                                                    <input type='submit' id="submit" class='btn btn-primary pull-right pad' value='Submit' name='submit'>
+                                                    <input type='submit' id="save" class='btn btn-default pull-right pad' value='Save & Continue' name='save'>
+                                                </div>
+                                            <?php } ?>
+                                        </div>
                     </form>
                 </div>
             </div>
@@ -331,6 +333,8 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
         <p></p>
     </div>
 </div>
+
+<?php include('footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

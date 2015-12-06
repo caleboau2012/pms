@@ -95,7 +95,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <div class="row">
         <div id="setup-container">
             <div class="bg-info text-center" id="setup-heading">
-                <h4>PMS Setup</h4>
+                <h4>System Setup</h4>
             </div>
             <div id="setup-nav">
 
@@ -228,6 +228,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/constants.js"></script>
 <script type="text/javascript" src="../../js/pinger.js"></script>
 <script type="text/javascript" src="../../js/EditSetup.js"></script>
+
+<?php include('../footer.php'); ?>
 
 </body>
 </html>

@@ -17,10 +17,10 @@
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/master.css" rel="stylesheet">
-    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
 
     <script src="js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="js/constants.js"></script>

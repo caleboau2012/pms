@@ -661,5 +661,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/constants.js"></script>
 <script type="text/javascript" src="../../js/pinger.js"></script>
 <script src="../../js/admin/patients.js"></script>
+
+<?php include('../footer.php'); ?>
+
 </body>
 </html>

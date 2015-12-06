@@ -35,6 +35,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -128,6 +129,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             </div>
         </div>
         <div class="col-sm-3">
+            <br>
             <label>Select Test</label>
             <select id="type" class="form-control" name="test_id" onchange="Laboratory.onTestChange()">
                 <?php

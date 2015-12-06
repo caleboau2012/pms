@@ -2,7 +2,7 @@
 
 body {
     padding-top: 54px;
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
     background-color: #eee;
     font-family: "Source Sans Pro", "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
 }
@@ -349,7 +349,7 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     color: #409BC8;
 }
 #roster-wrap{
-    margin-top: 40px;
+    padding: 10px 0;
 }
 #rosterResponse{
     text-align: center;
@@ -809,8 +809,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 .haematology, .parasitology{
     min-height:20px;
-    padding:19px;
-    margin-bottom:20px;
+    padding:20px;
     background-color:#ffffff;
     border:1px solid #e3e3e3;border-radius:4px;
     -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.05);
