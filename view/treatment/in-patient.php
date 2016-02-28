@@ -129,10 +129,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
              aria-labelledby="heading{{treatmentid}}">
             <div class="panel-body">
                 <p><b>Comments:</b> {{comments}}</p>
-                <p><b>Title:</b> {{consultation}}</p>
+                <p><b>Procedure:</b> {{consultation}}</p>
                 <span class="treatmentid" hidden>{{treatmentid}}</span>
                 <span class="doctorid" hidden>{{doctorid}}</span>
-                <p><b>Complaint:</b> {{symptoms}}</p>
+                <p><b>Complaint and Examination:</b> {{symptoms}}</p>
                 <p><b>Date:</b> {{date}}</p>
                 <ul class="list-group" style="width: 30%;">{{prescriptions}}</ul>
                 <div class="accordion-inner">
@@ -159,10 +159,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
              aria-labelledby="heading{{treatmentid}}">
             <div class="panel-body">
                 <p><b>Comments:</b> {{comments}}</p>
-                <p><b>Title:</b> {{consultation}}</p>
+                <p><b>Procedure:</b> {{consultation}}</p>
                 <span class="treatmentid" hidden>{{treatmentid}}</span>
                 <span class="doctorid" hidden>{{doctorid}}</span>
-                <p><b>Complaint:</b> {{symptoms}}
+                <p><b>Complaint and Examination:</b> {{symptoms}}
                 <p><b>Date:</b> {{date}}</p>
                 <ul class="list-group" style="width: 30%;">{{prescriptions}}</ul>
             </div>
@@ -308,7 +308,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <br/>
                             <div class="col-sm-12">
                                 <div class="center-block">
-                                    <label>Title:</label>
+                                    <label>Procedure:</label>
                                     <textarea type="text" class="form-control" name="consultation"></textarea>
                                 </div>
                             </div>
@@ -316,7 +316,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-6">
                                 <br>
                                 <div class="center-block">
-                                    <label>Complaint:</label>
+                                    <label>Complaint and Examination:</label>
                                     <textarea type="text" class="form-control" name="symptoms"></textarea>
                                 </div>
                                 <br/>
