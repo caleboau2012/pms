@@ -123,7 +123,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     <li class="list-group-item">
         <a class="collapsed treatment-history-template" data-toggle="collapse" data-parent="#accordion{{userid}}"
            href="#collapse{{treatmentid}}" aria-expanded="false" aria-controls="collapse{{treatmentid}}">
-            <b>Diagnosis:</b> {{diagnosis}}
+            <span>Session {{treatmentid}}</span> <b>Diagnosis:</b> {{diagnosis}}
         </a>
         <div id="collapse{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
              aria-labelledby="heading{{treatmentid}}">
@@ -199,9 +199,9 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             <br>
             <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h4 class="pull-left patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></h4>
+                    <h4 class="pull-left"><span class="label label-info hidden end">Session ID: <span class="treatment-ID"></span></span> <span class="patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></span></h4>
                     <span class="pull-right">
-                        <button id="end" class="hidden btn btn-warning pull-right">End Session <span class="fa fa-close"></span></button>
+                        <button id="end" class="hidden btn btn-warning pull-right">End Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
                     </span>
                     <span class="clearfix"></span>
                 </div>
@@ -404,7 +404,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                         <table class="table table-stripped table--bordered dataTable">
                             <thead>
                             <tr>
-                                <th>S/N</th>
+                                <th>Session ID</th>
                                 <th>Diagnosis</th>
                                 <th>Date</th>
                                 <th>Status</th>
@@ -415,7 +415,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             </tbody>
                             <tfoot>
                             <tr>
-                                <th>S/N</th>
+                                <th>Session ID</th>
                                 <th>Diagnosis</th>
                                 <th>Date</th>
                                 <th>Status</th>

@@ -393,7 +393,7 @@ Treatment = {
                             status = "No status put in";
                     }
                     html += "<tr>" +
-                    "<td>" + (i + 1) + "</td>" +
+                    "<td>" + data[i].treatment_id + "</td>" +
                     "<td>" + data[i].diagnosis + "</td>" +
                     "<td>" + data[i].modified_date + "</td>" +
                     "<td>" + status + "</td>" +
