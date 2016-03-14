@@ -102,7 +102,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <table id="test_table" class="table table-stripped table-responsive dataTable">
                         <thead>
                         <tr>
-                            <th>S/N</th>
+                            <th>Session ID</th>
                             <th>Name</th>
                             <th>Identification No.</th>
                             <th>Test Type</th>
@@ -115,7 +115,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>S/N</th>
+                            <th>Session ID</th>
                             <th>Name</th>
                             <th>Identification No.</th>
                             <th>Test Type</th>

@@ -37,10 +37,6 @@ var Laboratory = {
         $('#print').click(function(e){
             printElem($('#print-head').html(), $('#print-body').html(), $('#print-footer').html());
         })
-        /*$('body').delegate('a.pending', 'click', function(e){
-            e.preventDefault();
-            Laboratory.getLabDetails(this);
-        });*/
     },
 
     ajaxRequest:function(url, data, request_type){
@@ -68,7 +64,7 @@ var Laboratory = {
 //                        console.log(this);
                         var name = this.surname.toUpperCase() + ' ' + this.firstname + ' ' + this.middlename;
                         test_data += "<tr>";
-                        test_data += "<td>" + ++count + "</td>";
+                        test_data += "<td>" + this.treatment_id + "</td>";
                         test_data += "<td>" + name + "</td>";
                         test_data += "<td>" + this.regNo + "</td>";
                         test_data += "<td class='text-capitalize'>" + $('#type').val() + "</td>";
