@@ -58,8 +58,8 @@ class SystemSetupModel{
             $userid = $this->pdo->lastInsertId();
             $sql = PermissionRoleSqlStatement::ADD_STAFF_ROLE;
             $params = array(PermissionRoleTable::userid => $userid,
-                            PermissionRoleTable::staff_permission_id => READ_WRITE,
-                            PermissionRoleTable::staff_role_id => ADMINISTRATOR);
+                PermissionRoleTable::staff_permission_id => READ_WRITE,
+                PermissionRoleTable::staff_role_id => ADMINISTRATOR);
             $pds = $this->pdo->prepare($sql);
             $pds->execute($params);
             if (!$pds->rowCount()){
@@ -74,9 +74,15 @@ class SystemSetupModel{
     }
 
     public function setupComplete(){
-        $result = touch($this->path.'setup');
+        var_dump($this->path);
+        var_dump(system($this->path."permission.php"));
+//        if(system($this->path."permission.php")){
+            $result = touch($this->path.'setup');
 //        die(var_dump($result));
-        return $result;
+            return $result;
+
+
+        return false;
     }
 
 }
