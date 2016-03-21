@@ -65,6 +65,8 @@ class RadiologyModel extends BaseModel{
 
     private function updateRadiology($data){
         $this->checkDecimalColumns($this->rad, $data);
+        if(isset($data['encounter_id'])) unset($data['encounter_id']);
+
         if(!$this->conn->checkParams(RadiologySqlStatement::UPDATE, $data))
             throw new Exception("Incomplete radiology params");
         if(!$this->conn->execute(RadiologySqlStatement::UPDATE, $data))
