@@ -156,8 +156,9 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
             <div class="haematology" id="print-body">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="post">
+                        <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::radiology_id.']'; ?>"value="<?php echo $view_bag['details']['radiology_id'] ?>">
                         <input type="hidden" name="<?php echo 'data[details]['.RadiologyTable::radiology_id.']'; ?>"value="<?php echo $view_bag['details']['radiology_id'] ?>">
-                        <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::lab_attendant_id.']'; ?>" value="<?php echo $view_bag['radiology']['lab_attendant_id'] ?>">
+                        <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::lab_attendant_id.']'; ?>" value="<?php if(isset($view_bag['details']['lab_attendant_id'])) echo $view_bag['details']['lab_attendant_id'] ?>">
                         <input type="hidden" name="<?php echo 'data[radiology]['.RadiologyTable::encounter_id.']'; ?>" value="<?php echo $view_bag['radiology']['encounter_id'] ?>">
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="radiology">
@@ -214,7 +215,7 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                                             </label>
                                         <?php } ?>
                                         <div class="col-sm-3">
-                                            <input type="text" <?php echo $disabled; ?> placeholder="L.M.P." class="form-control" name="<?php echo 'data[radiology][' . RadiologyTable::lmp . ']'; ?>"/>
+                                            <input type="text" <?php echo $disabled; ?> placeholder="L.M.P." class="form-control" name="<?php echo 'data[radiology][' . RadiologyTable::lmp . ']'; ?>" value="lmp"/>
                                         </div>
                                     </fieldset>
                                 </div>
