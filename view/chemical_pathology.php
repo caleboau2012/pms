@@ -159,6 +159,16 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                         <div class="row">
                             <div class="page-header">
                                 <h2 class="page-header__title">Chemical Pathology</h2>
+                                <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="alertMSG"></span>
+                                </div>
+                                <div class="alert hidden alert-success alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="successMSG"></span>
+                                </div>
                             </div>
 
                             <div class="col-sm-6">

@@ -48,6 +48,7 @@ class RadiologyModel extends BaseModel{
         $data = array(RadiologyTable::treatment_id => $treatmentId, RadiologyTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
         $result['radiology'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_RADIOLOGY_VALS, $data);
+        $result['xray_no'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_XRAY_NO_VALS, $data);
         return $result;
     }
 
