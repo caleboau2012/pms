@@ -50,7 +50,6 @@ var Laboratory = {
                 var test_data = "";
                 var pending = "";
                 var action;
-                var count = 0;
                 if(returnedData.status == 2){
                     test_data = "<tr>" +
                         "<td colspan='7' class='text-center'>"+ returnedData.message + "</td>"
