@@ -42,7 +42,7 @@
                 <h2 class="panel-title"><span class="fa fa-lock"></span> Login</h2>
             </div>
             <div class="panel-body">
-                <div class="text-center"><img src="images/loading.gif"></div>
+                <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
                 <div class="text-center alert alert-danger hidden" id="form-error"></div>
 
                 <input type="hidden" name="intent" value="login">
