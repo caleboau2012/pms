@@ -15,7 +15,7 @@ class TreatmentModel extends BaseModel{
         $sql = TreatmentSqlStatement::CHECK_TREATMENT;
         $data = $patientInfo;
         $result = $this->conn->fetch($sql, $data);
-        return $result;   // returns the number of time patient id has been registered for treatment.
+        return $result;   // returns the treatment data for patient id has been registered for treatment.
     }
 
     public function terminateTreatment ($treatmentinfo){

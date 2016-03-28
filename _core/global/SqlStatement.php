@@ -984,12 +984,12 @@ class TreatmentSqlStatement {
     VALUES(:doctor_id, :patient_id, :consultation, :symptoms, :diagnosis, :comments, NOW(), NOW(), 1)";
 
     const UPDATE_TREATMENT = 'UPDATE treatment SET  doctor_id = :doctor_id, patient_id =:patient_id, consultation=:consultation, symptoms=:symptoms,
-                            diagnosis=:diagnosis, comments=:comments, created_date=NOW(), modified_date = NOW(), active_fg=1 WHERE treatment_id=:treatment_id';
+                            diagnosis=:diagnosis, comments=:comments, created_date=NOW(), modified_date = NOW(), bill_status=1, active_fg=1 WHERE treatment_id=:treatment_id';
 
 
     const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments, created_date FROM treatment WHERE patient_id=:patient_id";
 
-    const CHECK_TREATMENT = "SELECT treatment_id FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
+    const CHECK_TREATMENT = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
@@ -997,7 +997,7 @@ class TreatmentSqlStatement {
                                 FROM treatment t
                                 LEFT JOIN patient p
                                 ON t.patient_id = p.patient_id
-                                WHERE t.treatment_status = 2 AND t.bill_status = 1";
+                                WHERE t.bill_status = 1";
 
 //    const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
 //                            FROM admission
@@ -1036,8 +1036,6 @@ class TreatmentSqlStatement {
 
     const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
                                     WHERE treatment_id = :treatment_id";
-
-
 }
 
 class EmergencySqlStatement {

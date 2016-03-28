@@ -48,6 +48,10 @@ Treatment = {
             Treatment.endTreatment();
         });
 
+        $('#end-incomplete').click(function(e){
+            Treatment.removeFromQueue($('.patient-ID').html());
+        });
+
         $(document.requestTestForm).on('submit', function(e){
             e.preventDefault();
             Treatment.requestTest(this);
@@ -145,6 +149,8 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
+            console.log(data);
+            document.addTreatmentForm.reset();
             data = data.data;
             $('.treatment-ID').html(data.treatment_id);
             Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
@@ -163,6 +169,12 @@ Treatment = {
             $('.height').text(data.height);
             $('.weight').text(data.weight);
             $('.telephone').text(data.telephone);
+
+            //    Pre-populate form
+            document.addTreatmentForm.consultation.value = data.consultation;
+            document.addTreatmentForm.symptoms.value = data.symptoms;
+            document.addTreatmentForm.diagnosis.value = data.diagnosis;
+            document.addTreatmentForm.comment.value = data.comments;
         });
         $('.end').removeClass('hidden');
         $('.well').removeClass('hidden');
