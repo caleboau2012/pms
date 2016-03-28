@@ -55,7 +55,8 @@ class UserModel extends BaseModel {
         $data = array(UserAuthTable::userid => $doctorId);
         $result = $this->conn->fetchAll(ProfileSqlStatement::GET_DOCTOR_NAME_BY_ID, $data);
         if(is_array($result)){
-            return $result[ProfileTable::surname] + " " + $result[ProfileTable::firstname] + " " + $result[ProfileTable::middlename];
+//            return $result[ProfileTable::surname] + " " + $result[ProfileTable::firstname] + " " + $result[ProfileTable::middlename];
+            return $result;
         } else {
             return "No name";
         }

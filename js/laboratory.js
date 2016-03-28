@@ -50,7 +50,6 @@ var Laboratory = {
                 var test_data = "";
                 var pending = "";
                 var action;
-                var count = 0;
                 if(returnedData.status == 2){
                     test_data = "<tr>" +
                         "<td colspan='7' class='text-center'>"+ returnedData.message + "</td>"
@@ -192,9 +191,9 @@ var Laboratory = {
                 console.log(returnedData);
                 $('body,html').animate({scrollTop : 0}, 800);
                 if (returnedData.status == 3){
-                    $('div.page-header').append("<p class='alert alert-danger'>"+ returnedData.message +"</p>");
+                    showAlert(returnedData.message);
                 } else{
-                    $('div.page-header').append("<p class='alert alert-success'>"+ returnedData.data +"</p>");
+                    showSuccess(returnedData.data);
                 }
                 if($('#status').attr('value') ==  7){
                     location.reload();
@@ -203,7 +202,7 @@ var Laboratory = {
             error: function(data){
                 console.log(data.responseText);
                 $('body,html').animate({scrollTop : 0}, 800);
-                $('div.page-header').append("<p class='alert alert-danger'>Update not Successful</p>");
+                showAlert("Update not Successful. Check your input")
             }
         });
     }

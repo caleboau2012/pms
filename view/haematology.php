@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
@@ -22,7 +22,7 @@ $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'],
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
-
+$doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['doctor_id']);
 ?>
 
 <!DOCTYPE html>
@@ -163,6 +163,16 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                         <div class="row">
                             <div class="page-header">
                                 <h2 class="page-header__title">Haematology</h2>
+                                <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="alertMSG"></span>
+                                </div>
+                                <div class="alert hidden alert-success alert-dismissable" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                            aria-hidden="true">&times;</span></button>
+                                    <span class="successMSG"></span>
+                                </div>
                             </div>
 
                             <div class="col-sm-6">
@@ -175,7 +185,13 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
                                             }
                                             ?>
                                         </textarea>
-                                        <div class="test-label">Doctor: {{Doctor's Name}}<span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span></div>
+                                        <div class="test-label">Doctor: <?php
+                                            if (!empty($doctor_name)){
+                                                echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
+                                            } else { echo 'no name';}
+                                            ?>
+                                            <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span>
+                                        </div>
                                     </fieldset>
                                 </div>
                             </div>

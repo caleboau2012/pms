@@ -48,6 +48,7 @@ class RadiologyModel extends BaseModel{
         $data = array(RadiologyTable::treatment_id => $treatmentId, RadiologyTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
         $result['radiology'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_RADIOLOGY_VALS, $data);
+        $result['xray_no'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_XRAY_NO_VALS, $data);
         return $result;
     }
 
@@ -65,6 +66,9 @@ class RadiologyModel extends BaseModel{
 
     private function updateRadiology($data){
         $this->checkDecimalColumns($this->rad, $data);
+        if(isset($data['encounter_id'])) unset($data['encounter_id']);
+        if(!isset($data['lmp'])) $data['lmp'] = null;
+
         if(!$this->conn->checkParams(RadiologySqlStatement::UPDATE, $data))
             throw new Exception("Incomplete radiology params");
         if(!$this->conn->execute(RadiologySqlStatement::UPDATE, $data))

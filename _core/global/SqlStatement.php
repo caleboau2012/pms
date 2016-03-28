@@ -661,6 +661,9 @@ class RadiologyRequestSqlStatement{
     const UPDATE_DETAILS = "UPDATE radiology_request SET previous_operation = :previous_operation,
                             any_known_allergies = :any_known_allergies, previous_xray = :previous_xray,
                             xray_number = :xray_number, modified_date = NOW() WHERE radiology_id = :radiology_id";
+    const GET_XRAY_NO_VALS = "SELECT xray_number,casual_no,gp_no,ante_natal_no
+                                FROM xray_no WHERE radiology_id IN (SELECT radiology_id FROM radiology WHERE
+                                treatment_id = :treatment_id AND encounter_id = :encounter_id)";
 }
 
 class RadiologySqlStatement{
