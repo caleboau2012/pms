@@ -51,9 +51,9 @@ var Laboratory = {
                 var pending = "";
                 var action;
                 if(returnedData.status == 2){
-                    test_data = "<tr>" +
-                        "<td colspan='7' class='text-center'>"+ returnedData.message + "</td>"
-                    "</tr>"
+                    //test_data = "<tr>" +
+                    //    "<td colspan='7' class='text-center'>"+ returnedData.message + "</td>"
+                    //"</tr>"
 
                     pending += '<p class="text-warning">No pending test</p>';
 
