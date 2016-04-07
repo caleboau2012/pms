@@ -18,7 +18,7 @@ class UserAuthSqlStatement {
                                 FROM user_auth
                                 WHERE regNo = :regNo AND userid = :userid';
         const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo, ua.active_fg FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid)';
-
+        const GET_ALL_REGISTERED = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo, ua.active_fg FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid) WHERE ua.status = 1';
         const CHANGE_PASSCODE = 'UPDATE user_auth SET passcode = SHA1(:passcode), status = :status, modified_date = NOW(), online_status = :online_status WHERE userid = :userid';
         const CHANGE_ONLINE_STATUS = 'UPDATE user_auth SET online_status = :online_status WHERE userid = :userid';
         const CHANGE_STATUS = 'UPDATE user_auth SET status = :status WHERE regNo = :regNo';
@@ -628,7 +628,7 @@ class ParasitologyDetailsSqlStatement {
 class EncounterSqlStatement{
     const GET_HISTORY = 'SELECT * FROM encounter AS e WHERE admission_id = :admission_id ORDER BY e.created_date DESC';
     const CHECK_PATIENT_ID_AND_ADMISSION_ID = 'SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND admission_id = :admission_id AND exit_date IS NULL';
-    const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, comments, created_date, modified_date, active_fg) VALUES (:personnel_id, :patient_id, :admission_id, :treatment_id, :comments, NOW(), NOW(), 1)";
+    const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, created_date, modified_date, active_fg) VALUES (:personnel_id, :patient_id, :admission_id, :treatment_id, NOW(), NOW(), 1)";
     const GET_UNCLOSED_SESSION = "SELECT encounter_id FROM encounter WHERE treatment_id = :treatment_id AND admission_id = :admission_id AND status = 1";
     const UPDATE = "UPDATE encounter SET personnel_id = :personnel_id, consultation = :consultation, symptoms = :symptoms,
                     diagnosis = :diagnosis, comments = :comments, modified_date = NOW() WHERE treatment_id = :treatment_id AND patient_id = :patient_id
@@ -810,8 +810,7 @@ class VisualRequestSqlStatement{
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
                             distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
-                            pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, intra_ocular_pressure = :intra_ocular_pressure,
-                            central_visual_field = :central_visual_field, others = :others, stereopsis = :stereopsis,
+                            pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
                             amplitude_of_accomodation = :amplitude_of_accomodation, modified_date = NOW(),
                             status_id = :status_id, lab_attendant_id = :lab_attendant_id WHERE visual_profile_id = :visual_profile_id";
 }
@@ -881,7 +880,7 @@ class AdmissionSqlStatement {
     const DISCHARGE = "UPDATE admission
         INNER JOIN treatment
             ON admission.treatment_id = treatment.treatment_id
-        SET admission.active_fg = 0, admission.discharged_by = :discharged_by, admission.modified_date = NOW(), admission.exit_date = NOW(), treatment.treatment_status = 2, treatment.modified_date = NOW()
+        SET admission.active_fg = 0, admission.discharged_by = :discharged_by, admission.modified_date = NOW(), treatment.treatment_status = 2, treatment.modified_date = NOW()
         WHERE
             admission.admission_id = :admission_id
             AND admission.active_fg = 1
@@ -915,7 +914,7 @@ class AdmissionSqlStatement {
             )
         ORDER BY ad.created_date DESC";
 
-    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo, adb.bed_id, bed.ward_id
+    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
         FROM admission AS ad
             INNER JOIN treatment AS t
                 ON t.treatment_id = ad.treatment_id
@@ -923,16 +922,10 @@ class AdmissionSqlStatement {
                 ON p.userid = t.doctor_id
             INNER JOIN patient AS pt
                 ON pt.patient_id = t.patient_id
-            INNER JOIN admission_bed AS adb
-                ON ad.admission_id = adb.admission_id
-            INNER JOIN bed
-                ON adb.bed_id = bed.bed_id
         WHERE ad.active_fg = 1
             AND t.active_fg = 1
             AND p.active_fg = 1
             AND pt.active_fg = 1
-            AND adb.active_fg = 1
-            AND bed.active_fg = 1
         ORDER BY ad.created_date DESC";
 }
 
@@ -948,9 +941,6 @@ class BedSqlStatement {
     const NEW_BED = "INSERT INTO bed(bed_description, bed_status, ward_id, created_date, modified_date, active_fg) VALUES(:bed_description, 0, :ward_id, NOW(), NOW(), 1)";
 
     const DELETE = "UPDATE bed SET active_fg = 0 WHERE bed_id = :bed_id AND bed_status != 1";
-
-    const BEDS_COUNT = "SELECT COUNT(bed_status) as total, bed_status FROM bed WHERE active_fg = 1 GROUP BY bed_status";
-
 }
 
 class WardRefSqlStatement {
@@ -971,8 +961,6 @@ class WardRefSqlStatement {
     const DELETE_WARD_BEDS = "UPDATE bed SET active_fg = 0 WHERE ward_id = :ward_id AND active_fg = 1";
 
     const DELETE_WARD = "UPDATE ward_ref SET active_fg = 0 WHERE ward_ref_id = :ward_id AND active_fg = 1";
-
-    const WARDS_COUNT = "SELECT COUNT(ward_ref_id) as total FROM ward_ref WHERE active_fg = 1";
 }
 
 class TreatmentSqlStatement {
@@ -996,25 +984,18 @@ class TreatmentSqlStatement {
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
-    const UNBILLED_TREATMENT = "SELECT p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, t.treatment_status, t.bill_status, t.treatment_id, t.modified_date
+    const UNBILLED_TREATMENT = "SELECT p.surname, p.firstname, p.middlename, p.regNo, t.treatment_status, t.bill_status, t.treatment_id
                                 FROM treatment t
                                 LEFT JOIN patient p
                                 ON t.patient_id = p.patient_id
                                 WHERE t.bill_status = 1";
 
-//    const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
-//                            FROM admission
-//                            WHERE active_fg = 1 AND treatment_id = :treatment_id";
-
     const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
                             FROM admission
-                            WHERE treatment_id = :treatment_id";
+                            WHERE active_fg = 1 AND treatment_id = :treatment_id";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE status = 1 AND treatment_id = :treatment_id";
-
-    const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
-                            WHERE status = 1 AND encounter_id = :encounter_id";
 
     const BLOODTEST = "SELECT haematology_id FROM haematology
                             WHERE status_id = 7 AND treatment_id = :treatment_id";
@@ -1045,7 +1026,7 @@ class EmergencySqlStatement {
 
     const REG_EMERGENCY = "INSERT INTO emergency (emergency_id, patient_id, emergency_status_id, created_date, modified_date) VALUES (NULL, :patient_id, '1', NOW(), NOW())";
 
-    const VERIFY_EMERGENCY ="SELECT emergency_status_id FROM emergency WHERE patient_id=:patient_id ";
+    const VERIFY_EMERGENCY ="SELECT * FROM emergency WHERE patient_id=:patient_id ";
 
     const CHANGE_STATUS = "UPDATE emergency SET emergency_status_id = :emergency_status_id WHERE patient_id =:patient_id ";
 
@@ -1071,12 +1052,6 @@ class BillingSqlStatement{
 }
 
 class ReportSqlStatement {
-    // all patients, no date range!
-    const ALL_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date FROM patient WHERE active_fg = 1";
-
-    // all patients, with gender
-    const ALL_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date FROM patient WHERE sex = :gender AND active_fg = 1";
-
     //  Number  list and graph of new patients from start date to end date
     const NEW_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
                                 FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
@@ -1085,21 +1060,14 @@ class ReportSqlStatement {
     const NEW_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
                                 FROM patient WHERE sex = :gender AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
-
-    // const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
-    //                             FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
-
     //  Number  and list and graph of current patients from start date to end date
-    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex
-                                FROM patient WHERE DATE(created_date) < DATE(:start_date) AND active_fg = 1";
+    const CURRENT_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
+                                FROM patient WHERE DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
     //  Number  list and graph of current(male and female) patients from start date to end date
-    // const CURRENT_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
-    //                                         FROM patient WHERE (DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND sex = :gender)
-    //                                         AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
-
     const CURRENT_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
-                                FROM patient WHERE DATE(created_date) < DATE(:start_date) AND sex = :gender AND active_fg = 1";
+                                            FROM patient WHERE (DATEDIFF(DATE(modified_date), DATE(created_date))>0 AND sex = :gender)
+                                            AND (DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";
 
     //  A graphical representation of patient and their age
     const PATIENTS_AND_AGE_GRAPH = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo,
@@ -1125,7 +1093,7 @@ class ReportSqlStatement {
                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient  against diagnosis from a start date to an end date
-    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+    const PATIENT_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
@@ -1138,7 +1106,7 @@ class ReportSqlStatement {
                                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient sex against diagnosis
-    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
+    const PATIENT_SEX_AGAINST_DIAGNOSIS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.sex, t.diagnosis, t.created_date AS consultation_date, DATE_FORMAT(FROM_DAYS(DATEDIFF(DATE(NOW()), birth_date)), '%Y')+0 AS age FROM treatment AS t
                                             LEFT JOIN patient AS p
                                             ON t.patient_id = p.patient_id
                                             WHERE p.sex = :gender AND (DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date))";

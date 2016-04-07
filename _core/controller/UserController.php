@@ -121,6 +121,10 @@ class UserController {
         return $this->user->getAllUsers();
     }
 
+    public function getAllRegisteredUsers(){
+        return $this->user->getAllRegisteredUsers();
+    }
+
     public function updateStatus($userid, $status){
         return $this->user->updateStatus($userid, $status);
     }

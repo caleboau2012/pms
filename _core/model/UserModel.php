@@ -9,6 +9,10 @@ class UserModel extends BaseModel {
         return $this->conn->fetchAll(UserAuthSqlStatement::GET_ALL, array());
     }
 
+    public function getAllRegisteredUsers(){
+        return $this->conn->fetchAll(UserAuthSqlStatement::GET_ALL_REGISTERED, array());
+    }
+
     /*$userId, $surname, $firstName, $middleName,
     $workAddress, $homeAddress, $telephone,
     $birthDate, $sex, $height, $weight*/
@@ -55,8 +59,7 @@ class UserModel extends BaseModel {
         $data = array(UserAuthTable::userid => $doctorId);
         $result = $this->conn->fetchAll(ProfileSqlStatement::GET_DOCTOR_NAME_BY_ID, $data);
         if(is_array($result)){
-//            return $result[ProfileTable::surname] + " " + $result[ProfileTable::firstname] + " " + $result[ProfileTable::middlename];
-            return $result;
+            return $result[ProfileTable::surname] + " " + $result[ProfileTable::firstname] + " " + $result[ProfileTable::middlename];
         } else {
             return "No name";
         }
@@ -100,8 +103,7 @@ class UserModel extends BaseModel {
             'inactive_users'    =>  $_inactive
         );
 
-        $status = $this->conn->execute($stmt, $data);
-//        die(var_dump("logged out user" , $status));
+        $this->conn->execute($stmt, $data);
     }
 
     public function getUserDetails($userid) {
