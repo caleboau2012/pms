@@ -997,6 +997,9 @@ class TreatmentSqlStatement {
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE status = 1 AND treatment_id = :treatment_id";
 
+   const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
+                            WHERE status = 1 AND encounter_id = :encounter_id";
+
     const BLOODTEST = "SELECT haematology_id FROM haematology
                             WHERE status_id = 7 AND treatment_id = :treatment_id";
 

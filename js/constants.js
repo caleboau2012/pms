@@ -96,3 +96,7 @@ function showSuccess(message){
     }, 10000);
     location.href="#successMSG";
 }
+
+function checkNull(field){
+    return (field)?field:"None";
+}

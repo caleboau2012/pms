@@ -23,7 +23,7 @@ Treatment = {
                 return false;
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            console.log(item);
+            //console.log(item);
             return $( "<li>" )
                 .append( "<div class='panel-success'>" +
                 "<div class='panel panel-heading' style='margin: 1px'>" +
@@ -172,12 +172,12 @@ Treatment = {
 
         var url = host + "phase/phase_treatment.php?intent=getEncounterId";
 
-        console.log({
-            url: url,
-            treatment_id: Treatment.CONSTANTS.treatmentid,
-            admission_id: Treatment.CONSTANTS.admissionid,
-            patient_id: Treatment.CONSTANTS.patientid
-        });
+        //console.log({
+        //    url: url,
+        //    treatment_id: Treatment.CONSTANTS.treatmentid,
+        //    admission_id: Treatment.CONSTANTS.admissionid,
+        //    patient_id: Treatment.CONSTANTS.patientid
+        //});
 
         $.getJSON(url, {
             treatment_id:Treatment.CONSTANTS.treatmentid,
@@ -282,6 +282,7 @@ Treatment = {
         $.getJSON(url, function (data) {
 
             data = data.data;
+            console.log(data);
 
             $('.history').empty();
             var prescriptions, prescriptionHTML, patientHTML;
@@ -318,6 +319,7 @@ Treatment = {
         $.getJSON(url, function (data) {
             if(data.status == 1){
                 data = data.data;
+                console.log(data);
 
                 $('#encounteraccordion' + id).empty();
 
@@ -336,11 +338,11 @@ Treatment = {
                     patientHTML += $('#tmplEncounterHistory').html();
                     patientHTML = replaceAll('{{userid}}', id, patientHTML);
                     patientHTML = replaceAll('{{treatmentid}}', data[i].encounter_id, patientHTML);
-                    patientHTML = replaceAll('{{comments}}', data[i].comments, patientHTML);
-                    patientHTML = replaceAll('{{consultation}}', data[i].consultation, patientHTML);
-                    patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
+                    patientHTML = replaceAll('{{comments}}', checkNull(data[i].comments), patientHTML);
+                    patientHTML = replaceAll('{{consultation}}', checkNull(data[i].consultation), patientHTML);
+                    patientHTML = replaceAll('{{diagnosis}}', checkNull(data[i].diagnosis), patientHTML);
                     patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
-                    patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
+                    patientHTML = replaceAll('{{symptoms}}', checkNull(data[i].symptoms), patientHTML);
                     patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
                     patientHTML = replaceAll('{{prescriptions}}', prescriptionHTML, patientHTML);
 

@@ -324,11 +324,11 @@ Treatment = {
                     patientHTML += $('#tmplEncounterHistory').html();
                     patientHTML = replaceAll('{{userid}}', id, patientHTML);
                     patientHTML = replaceAll('{{treatmentid}}', data[i].encounter_id, patientHTML);
-                    patientHTML = replaceAll('{{comments}}', data[i].comments, patientHTML);
-                    patientHTML = replaceAll('{{consultation}}', data[i].consultation, patientHTML);
-                    patientHTML = replaceAll('{{diagnosis}}', data[i].diagnosis, patientHTML);
+                    patientHTML = replaceAll('{{comments}}', checkNull(data[i].comments), patientHTML);
+                    patientHTML = replaceAll('{{consultation}}', checkNull(data[i].consultation), patientHTML);
+                    patientHTML = replaceAll('{{diagnosis}}', checkNull(data[i].diagnosis), patientHTML);
                     patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
-                    patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
+                    patientHTML = replaceAll('{{symptoms}}', checkNull(data[i].symptoms), patientHTML);
                     patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
                     patientHTML = replaceAll('{{prescriptions}}', prescriptionHTML, patientHTML);
 
