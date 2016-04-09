@@ -44,8 +44,10 @@ function init(){
 
     $('#verify').click(function(e){
         e.preventDefault();
+        $('#verify-progress').removeClass('hidden');
         $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $('#regNo').val()), function(data){
-            console.log(data);
+            //console.log(data);
+            $('#verify-progress').addClass('hidden');
             if(data.status == 2){
                 showAlert(data.message);
             }

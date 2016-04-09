@@ -198,6 +198,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <span class="btn btn-info input-group-addon" id="verify">Verify</span>
                                                 <datalist id="regNos"></datalist>
                                             </div>
+                                            <span class="hidden" id="verify-progress">
+                                                <span class="fa fa-spinner fa-spin"></span>
+                                            </span>
                                         </div>
                                         <div class="pull-left">
                                             Occupation <br/>
