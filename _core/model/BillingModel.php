@@ -23,6 +23,16 @@ class BillingModel extends BaseModel {
         }
     }
 
+    public function getProcedure($treatment_id){
+        $data = array(TreatmentTable::treatment_id => $treatment_id);
+        $procedure = $this->conn->fetchAll(TreatmentSqlStatement::GET_PROCEDURE, $data);
+        if($procedure) {
+            return $procedure;
+        } else {
+            return array('procedure' => 'No Procedure');
+        }
+    }
+
     public function getPrescriptionByEncounter($encounter_id){
         $data = array(TreatmentTable::encounter_id => $encounter_id);
         $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER, $data);
@@ -81,6 +91,7 @@ class BillingModel extends BaseModel {
         $details['days_spent'] = $this->getDaysSpent($treatment_id);
         $details['prescription'] = $this->getPrescription($treatment_id);
         $details['test'] = $this->getTest($treatment_id);
+        $details['procedure'] = $this->getProcedure($treatment_id);
 
         return $details;
     }
