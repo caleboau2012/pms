@@ -33,6 +33,16 @@ class BillingModel extends BaseModel {
         }
     }
 
+    public function getAdmittedProcedure($treatment_id){
+        $data = array(TreatmentTable::treatment_id => $treatment_id);
+        $procedure = $this->conn->fetchAll(TreatmentSqlStatement::GET_PROCEDURE_ADMITTED, $data);
+        if($procedure) {
+            return $procedure;
+        } else {
+            return array('procedure' => 'Patient may not be admitted');
+        }
+    }
+
     public function getPrescriptionByEncounter($encounter_id){
         $data = array(TreatmentTable::encounter_id => $encounter_id);
         $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER, $data);
@@ -92,6 +102,8 @@ class BillingModel extends BaseModel {
         $details['prescription'] = $this->getPrescription($treatment_id);
         $details['test'] = $this->getTest($treatment_id);
         $details['procedure'] = $this->getProcedure($treatment_id);
+        $details['admitted_procedure'] = $this->getAdmittedProcedure($treatment_id);
+
 
         return $details;
     }
