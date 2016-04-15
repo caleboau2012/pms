@@ -308,20 +308,20 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <br/>
                             <div class="col-sm-12">
                                 <div class="center-block">
-                                    <label>Procedure:</label>
-                                    <textarea type="text" class="form-control" name="consultation"></textarea>
+                                    <label>Complaint and Examination:</label>
+                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
                                 </div>
                             </div>
                             <br/>
                             <div class="col-sm-6">
                                 <br>
-                                <div class="center-block">
-                                    <label>Complaint and Examination:</label>
-                                    <textarea type="text" class="form-control" name="symptoms"></textarea>
-                                </div>
-                                <br/>
                                 <div class="center-block"><label>Diagnosis:</label>
                                     <input type="text" class="form-control" name="diagnosis">
+                                </div>
+                                <br/>
+                                <div class="center-block">
+                                    <label>Procedure:</label>
+                                    <textarea type="text" class="form-control" name="consultation"></textarea>
                                 </div>
                                 <br/>
                                 <div>
