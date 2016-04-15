@@ -981,7 +981,7 @@ class TreatmentSqlStatement {
     const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments, created_date FROM treatment WHERE patient_id=:patient_id";
 
     const CHECK_TREATMENT = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
-    const GET_PROCEDURE = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE treatment_id = :treatment_id AND treatment_status = 2 LIMIT 1";
+    const GET_PROCEDURE = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE treatment_id = :treatment_id AND treatment_status = 2 AND bill_status = 1 LIMIT 1";
     const GET_PROCEDURE_ADMITTED = "SELECT personnel_id, patient_id, admission_id, comments, symptoms, consultation FROM encounter WHERE treatment_id = :treatment_id AND status = 1";
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";

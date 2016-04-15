@@ -32,7 +32,6 @@ Billing = {
         $.getJSON(url, function(data){
             if(data.status == 1){
                 data = data.data;
-                console.log(data);
                 $('#unbilled-patients').empty();
 
                 for(i = 0; i < data.length; i++){
@@ -150,6 +149,7 @@ Billing = {
         }, function(data){
             console.log(data);
             $('#test').empty();
+            $("#procedure").empty();
             var days = "";
             if((data.data.days_spent.days_spent == null) || (data.data.days_spent.days_spent == "No admission")){
                 days = "No admission";
@@ -189,6 +189,21 @@ Billing = {
             }
             if(data.data.test.test){
                 $('#test').append("<p>No Test Performed</p>")
+            }
+
+            if(Array.isArray(data.data.procedure)){
+                $('#procedure').append("<p>"+ data.data.procedure[0].consultation +  "</p>");
+                if(Array.isArray(data.data.admitted_procedure)){
+
+                    for(var i = 0; i < data.data.admitted_procedure.length; i++){
+                        if(data.data.admitted_procedure[i].consultation){
+                            $('#procedure').append("<p>"+ data.data.admitted_procedure[i].consultation +  "</p>");
+                        }
+                    }
+                }
+            }
+            else{
+                $('#procedure').append("<p>No procedure was done during this session</p>");
             }
         });
     },

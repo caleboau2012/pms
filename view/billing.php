@@ -173,6 +173,10 @@ Crave::requireAll(UTIL);
                             <p class="h4 text-center">Lab Tests Performed</p>
                             <p id="test" class="test text-center"></p>
                         </p>
+                        <p class="text-center">
+                            <p class="h4 text-center">Procedure</p>
+                            <div id="procedure" class="text-center"></div>
+                        </p>
                     </div>
                     <div>
                         <br/><br/>

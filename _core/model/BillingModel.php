@@ -104,7 +104,6 @@ class BillingModel extends BaseModel {
         $details['procedure'] = $this->getProcedure($treatment_id);
         $details['admitted_procedure'] = $this->getAdmittedProcedure($treatment_id);
 
-
         return $details;
     }
 
