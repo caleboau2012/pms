@@ -38,7 +38,7 @@ $list_of_staff = $userController->getAllRegisteredUsers();
         <div id='external-events' >
             <div class="roster-list">
                 <div class="roster-list_heading">
-                    <span>ALL STAFFS</span>
+                    <span>ALL STAFF</span>
                     <div class="pull-right pin"></div>
                     <div class="clearfix"></div>
                 </div>
