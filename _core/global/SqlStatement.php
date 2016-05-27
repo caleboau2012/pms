@@ -1057,6 +1057,12 @@ class BillingSqlStatement{
 }
 
 class ReportSqlStatement {
+    // all patients, no date range!
+    const ALL_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date FROM patient WHERE active_fg = 1";
+
+    // all patients, with gender
+    const ALL_PATIENTS_WITH_GENDER = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date FROM patient WHERE sex = :gender AND active_fg = 1";
+
     //  Number  list and graph of new patients from start date to end date
     const NEW_PATIENTS = "SELECT CONCAT(UPPER(surname), ' ', middlename, ' ', firstname) AS patient_name, regNo, sex, created_date
                                 FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
