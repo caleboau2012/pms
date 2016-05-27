@@ -38,7 +38,7 @@ function printElem(title, body, footer){
         html = replaceAll("{{footer}}", footer, html);
 
         var mywindow = window.open('', 'PMS', 'height=400,width=600');
-        mywindow.document.write('<html><head><title>PMS</title>');
+        mywindow.document.write('<html><head><title>ELYON 1.0</title>');
         /*optional stylesheet*/
         mywindow.document.write('<link rel="stylesheet" href="../css/bootstrap/bootstrap.min.css" type="text/css" />');
         mywindow.document.write('</head><body >');

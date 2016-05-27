@@ -19,7 +19,7 @@ Crave::requireAll(UTIL);
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PMS</title>
+    <title>ELYON 1.0</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">

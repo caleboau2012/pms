@@ -97,12 +97,12 @@ var Report = {
                     {
                         "sExtends": "pdf",
                         "sPdfOrientation": "landscape",
-                        //"sPdfMessage": "PMS REPORT.",
+                        //"sPdfMessage": "ELYON 1.0 REPORT.",
                         "bHeader": header,
                         "bFooter": footer
                     },
                     {
-                        //"sMessage": "PMS REPORT.",
+                        //"sMessage": "ELYON 1.0 REPORT.",
                         "sExtends": "print"
                     }
                 ]
@@ -196,11 +196,11 @@ var Report = {
                     {
                         "sExtends": "pdf",
                         "sPdfOrientation": "portrait",
-                        "sPdfMessage": "PMS Report."
+                        "sPdfMessage": "ELYON 1.0 Report."
                     },
                     {
                         "sExtends": "print",
-                        "sMessage": "PMS Report."
+                        "sMessage": "ELYON 1.0 Report."
                     }
                 ]
             }

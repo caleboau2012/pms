@@ -20,7 +20,7 @@ if(!CxSessionHandler::getItem(UserAuthTable::userid)){
     <meta name="author" content="">
     <link rel="icon" href="../favicon.ico">
 
-    <title>PMS Mail</title>
+    <title>ELYON 1.0 Mail</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
