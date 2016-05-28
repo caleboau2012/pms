@@ -105,42 +105,146 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 </script>
 
 <script id="tmplPrint" type="text/html">
-    <div class="row">
-        <div class="pull-left" style="margin: 10px;">
-            <label for="name" class="label label-primary">Name</label>
-            <span name="name" class="btn btn-default">{{name}}</span>
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">Profile</h2>
+
+            <div>Personal Identification Info</div>
         </div>
-        <div class="pull-right" style="margin: 10px;">
-            <label for="regNo" class="label label-primary">Registration No</label>
-            <span name="regNo" class="btn btn-default">{{regNo}}</span>
+        <div class="panel-body">
+            <table class="table table-responsive">
+                <tr>
+                    <td class="form-inline">Name <br/>
+                        <span name="name" class="btn btn-default text-capitalize">{{name}}</span>
+                    </td>
+                    <td class="form-inline">
+                        <div>
+                            Registration <br/>
+                            <span name="regNo" class="btn btn-default">{{regNo}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div>
+                            Occupation <br/>
+                            <span name="occupation" class="btn btn-default">{{occupation}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-inline">
+                        <div class="pull-left">Telephone<br/>
+                            <span name="phone" class="btn btn-default">{{phone}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">GENDER <br/>
+                            <span name="sex" class="btn btn-default">{{sex}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">Date of Birth <br/>
+                            <span name="birth" class="btn btn-default">{{birth}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Local Address <br/>
+                        <span name="addy" class="btn btn-default">{{addy}}</span>
+                    </td>
+                    <td class="form-inline">
+                        <div class="pull-left">Height(m) <br/>
+                            <span name="height" class="btn btn-default">{{height}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">Weight(Kg) <br/>
+                            <span name="weight" class="btn btn-default">{{weight}}</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-    <div class="row">
-        <div class="pull-left" style="margin: 10px;">
-            <label for="addy" class="label label-info">Address</label>
-            <span name="addy" class="btn btn-default">{{addy}}</span>
+
+    <div class="panel panel-info">
+        <div class="panel-heading">
+            <h2 class="panel-title">Next of Kin</h2>
         </div>
-        <div class="pull-left" style="margin: 10px;">
-            <label for="phone" class="label label-info">Telephone</label>
-            <span name="phone" class="btn btn-default">{{phone}}</span>
-        </div>
-        <div class="pull-right" style="margin: 10px;">
-            <label for="sex" class="label label-info">Gender</label>
-            <span name="sex" class="btn btn-default">{{sex}}</span>
+        <div class="panel-body">
+            <table class="table table-responsive">
+                <tr>
+                    <td class="form-inline">Name <br/>
+                        <span name="nok_name" class="btn btn-default">{{nok_name}}</span>
+                    </td>
+                    <td class="form-inline">
+                        <div class="pull-left">Phone number <br/>
+                            <span class="btn btn-default">{{nok_telephone}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">Relationship <br/>
+                            <span class="btn btn-default">{{nok_relationship}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Contact address <br/>
+                        <span name="nok_address" class="btn btn-default">{{nok_address}}</span>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
-    <div class="row">
-        <div class="pull-left" style="margin: 10px;">
-            <label for="height" class="label label-info">Height</label>
-            <span name="height" class="btn btn-default">{{height}}</span>
+
+    <div class="panel panel-default">
+        <div class="panel-heading">
+            <h2 class="panel-title">Demographic</h2>
+            <div>Family Background Info</div>
         </div>
-        <div class="pull-left" style="margin: 10px;">
-            <label for="weight" class="label label-info">Weight</label>
-            <span name="weight" class="btn btn-default">{{weight}}</span>
-        </div>
-        <div class="pull-right" style="margin: 10px;">
-            <label for="birth" class="label label-info">Birth Date</label>
-            <span name="birth" class="btn btn-default">{{birth}}</span>
+        <div class="panel-body">
+            <table class="table table-responsive">
+                <tr>
+                    <td class="form-inline">
+                        <div class="pull-left">
+                            Citizenship:
+                            <span class="btn btn-default">{{citizenship}}</span>
+                        </div>
+                    </td>
+                    <td class="form-inline">
+                        <div class="pull-left">Religion
+                            <span class="btn btn-default">{{religion}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">
+                            position in family:
+                            <span class="btn btn-default">{{family_position}}</span>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-inline">
+                        <div class="pull-left">
+                            Mother is
+                            <span class="btn btn-default">{{mother_status}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">
+                            father is
+                            <span class="btn btn-default">{{father_status}}</span>
+                        </div>
+                    </td>
+                    <td class="form-inline">
+                        <div class="pull-left">Marital Status
+                            <span class="btn btn-default">{{marital_status}}</span>
+                        </div>
+                        <div class="pull-left">No of children
+                            <span class="btn btn-default">{{no_of_children}}</span>
+                        </div>
+                    </td>
+                </tr>
+            </table>
         </div>
     </div>
 </script>

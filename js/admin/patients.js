@@ -78,14 +78,43 @@ function prepareData(patientID){
             data.data.firstname + " " +
             data.data.middlename;
 
+        var nok_name = data.data.nok_surname + " " +
+            data.data.nok_firstname + " " +
+            data.data.nok_middlename;
+
+        var relationship = [
+            "None",
+            "Father",
+            "Mother",
+            "Son",
+            "Daughter",
+            "Brother",
+            "Sister",
+            "Husband",
+            "Wife",
+            "Other"
+        ];
+
         var printHTML = $('#tmplPrint').html().replace('{{name}}', name)
             .replace('{{regNo}}', data.data.regNo)
+            .replace('{{occupation}}', data.data.occupation)
             .replace('{{addy}}', data.data.home_address)
             .replace('{{phone}}', data.data.telephone)
             .replace('{{sex}}', data.data.sex)
             .replace('{{height}}', data.data.height)
             .replace('{{weight}}', data.data.weight)
-            .replace('{{birth}}', data.data.birth_date);
+            .replace('{{birth}}', data.data.birth_date)
+            .replace('{{nok_name}}', nok_name)
+            .replace('{{nok_address}}', data.data.nok_address)
+            .replace('{{nok_telephone}}', data.data.nok_telephone)
+            .replace('{{nok_relationship}}', relationship[data.data.nok_relationship])
+            .replace('{{citizenship}}', data.data.citizenship)
+            .replace('{{religion}}', data.data.religion)
+            .replace('{{family_position}}', data.data.family_position)
+            .replace('{{mother_status}}', data.data.mother_status)
+            .replace('{{father_status}}', data.data.father_status)
+            .replace('{{marital_status}}', data.data.marital_status)
+            .replace('{{no_of_children}}', data.data.no_of_children);
 
         printElem("Patients Details", printHTML, null);
     });
