@@ -994,7 +994,7 @@ class TreatmentSqlStatement {
 
     const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
                             FROM admission
-                            WHERE active_fg = 1 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE status = 1 AND treatment_id = :treatment_id";
