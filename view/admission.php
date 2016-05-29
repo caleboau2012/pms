@@ -289,46 +289,47 @@ $wards = $admission->loadWards();
                             <div class="text-center" id="log_encounter_response"></div>
                             <form id="log_encounter">
                                 <div class="form-group">
+                                    <p class="text-center text-warning">All fields are compulsory</p>
                                     <div class="col-sm-6">
                                         <label for="temp">Temperature</label>
-                                        <input type="text" class="form-control" id="temp" name="temp">
+                                        <input type="text" class="form-control" id="temp" name="temp" required="required">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="pulse">Pulse</label>
-                                        <input type="text" id="pulse" class="form-control" name="pulse">
+                                        <input type="text" id="pulse" class="form-control" name="pulse" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="respiratory_rate">Respiratoty Rate</label>
-                                        <input type="text" class="form-control" id="respiratory_rate" name="respiratory_rate">
+                                        <input type="text" class="form-control" id="respiratory_rate" name="respiratory_rate" required="required">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="blood_pressure">Blood Pressure</label>
-                                        <input type="text" class="form-control" id = "blood_pressure" name="blood_pressure">
+                                        <input type="text" class="form-control" id="blood_pressure" name="blood_pressure" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="height">Height</label>
-                                        <input type="text" class="form-control" id="height" name="height">
+                                        <input type="text" class="form-control" id="height" name="height" required="required">
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="weight">Weight</label>
-                                        <input type="text" class="form-control" id="weight" name="weight">
+                                        <input type="text" class="form-control" id="weight" name="weight" required="required">
                                     </div>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="bmi">BMI</label>
-                                        <input type="text" class="form-control" id="bmi" name="bmi">
+                                        <input type="text" class="form-control" id="bmi" name="bmi" required="required">
                                     </div>
 
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="comment">Comment</label>
-                                        <textarea class="form-control" id="comment" name="comment" required></textarea>
+                                        <textarea class="form-control" id="comment" name="comment" required="required"></textarea>
                                     </div>
                                 </div>
 
