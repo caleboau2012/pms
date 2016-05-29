@@ -171,10 +171,12 @@ Treatment = {
             $('.telephone').text(data.telephone);
 
             //    Pre-populate form
-            document.addTreatmentForm.consultation.value = data.consultation;
-            document.addTreatmentForm.symptoms.value = data.symptoms;
-            document.addTreatmentForm.diagnosis.value = data.diagnosis;
-            document.addTreatmentForm.comment.value = data.comments;
+            if(typeof data.consultation != "undefined"){
+                document.addTreatmentForm.consultation.value = data.consultation;
+                document.addTreatmentForm.symptoms.value = data.symptoms;
+                document.addTreatmentForm.diagnosis.value = data.diagnosis;
+                document.addTreatmentForm.comment.value = data.comments;
+            }
         });
         $('.end').removeClass('hidden');
         $('.well').removeClass('hidden');
