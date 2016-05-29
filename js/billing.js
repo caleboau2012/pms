@@ -34,7 +34,7 @@ Billing = {
                 data = data.data;
                 $('#unbilled-patients').empty();
 
-                for(i = 0; i < data.length; i++){
+                for(var i = 0; i < data.length; i++){
                     if (data[i].regNo.substr(0, 4) == 'EMER') {
                         panel = "panel-danger";
                         patientName = data[i].regNo;
