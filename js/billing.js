@@ -132,7 +132,7 @@ Billing = {
             no = ($(this).val() == "")?0:parseFloat($(this).val());
             sum += no;
         });
-        $('#total').text(sum.toFixed(2));
+        $('#total').text(sum.formatMoney(2));
     },
     addMore: function(){
         var count = $('tbody').children().length;
