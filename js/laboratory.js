@@ -46,7 +46,6 @@ var Laboratory = {
             url : url,
             dataType: 'json',
             success: function(returnedData){
-                console.log(returnedData);
                 var test_data = "";
                 var pending = "";
                 var action;
@@ -109,7 +108,9 @@ var Laboratory = {
                 }
                 $('#test_table tbody').empty().html(test_data);
                 $('#pending .patient-queue__list').empty().html(pending);
-                Laboratory.CONSTANTS.DATA_TABLE = $('table.dataTable').dataTable();
+                Laboratory.CONSTANTS.DATA_TABLE = $('table.dataTable').dataTable({
+                    "aaSorting": [[ 0, "desc" ]]
+                });
             },
 
             error: function(){
