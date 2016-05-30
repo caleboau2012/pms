@@ -45,11 +45,15 @@ Treatment = {
         });
 
         $('#end').click(function(e){
-            Treatment.endTreatment();
+            if(confirm("Are you sure you want to do this?")){
+                Treatment.endTreatment();
+            }
         });
 
         $('#end-incomplete').click(function(e){
-            Treatment.removeFromQueue($('.patient-ID').html());
+            if(confirm("Are you sure you want to do this?")){
+                Treatment.removeFromQueue($('.patient-ID').html());
+            }
         });
 
         $(document.requestTestForm).on('submit', function(e){
@@ -97,7 +101,7 @@ Treatment = {
     addPrescription: function(drug){
         var drugHTML = "";
         drugHTML = "<li class='list-group-item'>" + drug +
-        "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button></li>";
+            "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button></li>";
         $('#prescriptions').append(drugHTML);
     },
     searchResult: function(patientDetails){
@@ -176,6 +180,9 @@ Treatment = {
                 document.addTreatmentForm.symptoms.value = data.symptoms;
                 document.addTreatmentForm.diagnosis.value = data.diagnosis;
                 document.addTreatmentForm.comment.value = data.comments;
+
+                $("#end-incomplete").animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow")
+                    .animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow");
             }
         });
         $('.end').removeClass('hidden');
@@ -388,10 +395,10 @@ Treatment = {
                         "<td>" + data[i].modified_date + "</td>" +
                         "<td>" + status + "</td>" +
                         "<td><a target='_blank' href='" +
-                            host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
-                            "' class='btn btn-sm btn-default'>View</a>" +
+                        host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
+                        "' class='btn btn-sm btn-default'>View</a>" +
                         "</td>" +
-                    "</tr>";
+                        "</tr>";
                 }
 
                 $('.table-data').html(html);

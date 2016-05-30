@@ -200,7 +200,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <div class="panel-heading">
                     <h4 class="pull-left"><span class="label label-info hidden end">Session ID: <span class="treatment-ID"></span></span> <span class="patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></span></h4>
                     <span class="pull-right">
-                        <button id="end-incomplete" class="end hidden btn btn-warning">Adjourn Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
+                        <button id="end-incomplete" class="end hidden btn btn-warning">End <b>Incomplete</b> Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
                         <button id="end" class="end hidden btn btn-danger">End Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
                     </span>
                     <span class="clearfix"></span>
