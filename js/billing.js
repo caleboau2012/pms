@@ -5,7 +5,8 @@ Billing = {
     CONSTANTS: {
         treatment_id: 0,
         REQUEST_SUCCESS : 1,
-        REQUEST_ERROR   : 2
+        REQUEST_ERROR   : 2,
+        INDEX: 4
     },
     init: function(){
         Billing.getQueue();
@@ -22,7 +23,10 @@ Billing = {
         });
         $('#add_more').click(function(e){
             Billing.addMore();
-        })
+        });
+        $('#remove_one').click(function(e){
+            Billing.removeOne();
+        });
         $('#print').click(function(e){
             Billing.endBilling(document.bill);
         });
@@ -132,7 +136,7 @@ Billing = {
     },
     addMore: function(){
         var count = $('tbody').children().length;
-        var html = '<tr>' +
+        var html = '<tr id="extra' + count + '">' +
             '<td><input class="form-control item" name="item[' +
                 count +
                 ']"></td>' +
@@ -140,7 +144,11 @@ Billing = {
                 count +
                 ']"></td>' +
             '</tr>';
+        Billing.CONSTANTS.INDEX = count;
         $('tbody').append(html);
+    },
+    removeOne: function(){
+        $('#extra' + Billing.CONSTANTS.INDEX).remove();
     },
     getDetails: function(){
         $.getJSON(host + 'phase/phase_billing.php', {

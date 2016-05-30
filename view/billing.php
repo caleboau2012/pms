@@ -111,11 +111,16 @@ Crave::requireAll(UTIL);
                             <tbody>
                             </tbody>
                             <tfoot>
-                            <tr>
+                            <tr class="text-right">
                                 <td colspan="2">
-                                    <button type="button" id="add_more" class="btn btn-primary btn-sm pull-right">
-                                        Add More
-                                        <span class="fa fa-angle-down"></span>
+                                    <button type="button" id="add_more" class="btn btn-primary btn-sm">
+                                        Add
+                                        <span class="fa fa-plus"></span>
+                                    </button>
+                                    &nbsp;
+                                    <button type="button" id="remove_one" class="btn btn-primary btn-sm">
+                                        Remove
+                                        <span class="fa fa-minus"></span>
                                     </button>
                                 </td>
                             </tr>
