@@ -1003,22 +1003,22 @@ class TreatmentSqlStatement {
                             WHERE status = 1 AND encounter_id = :encounter_id";
 
     const BLOODTEST = "SELECT haematology_id FROM haematology
-                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const URINETEST = "SELECT urine_id FROM urine
-                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const VISUALTEST = "SELECT visual_profile_id FROM visual_skills_profile
-                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const CHEMICALTEST = "SELECT cpreq_id FROM chemical_pathology_request
-                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const PARATEST = "SELECT preq_id FROM parasitology_req
-                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const RADIOLOGYTEST = "SELECT radiology_id FROM radiology
-                            WHERE status_id = 7 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, created_date)
                             VALUES (:item, :amount, :treatment_id, NOW())";
