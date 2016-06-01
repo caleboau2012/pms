@@ -26,7 +26,7 @@ class VitalsController {
         if (!$feedback) {
             $response = array(
                 P_STATUS    =>  STATUS_ERROR,
-                P_MESSAGE   =>  "No vitals recorded for this user!"
+                P_MESSAGE   =>  "No vitals recorded for this patient!"
             );
 
             return $response;
