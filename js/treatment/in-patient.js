@@ -185,6 +185,7 @@ Treatment = {
             admission_id: Treatment.CONSTANTS.admissionid
         }, function (data) {
             data = data.data;
+            console.log(data);
             Treatment.CONSTANTS.encounterid = data.encounter_id;
             $('.treatment-ID').html(Treatment.CONSTANTS.treatmentid);
             $('.patient-name').html($(patient).find('.patientName').html());
@@ -406,6 +407,11 @@ Treatment = {
                     "</tr>";
                 }
 
+                $('.table-data').html(html);
+                $('.lab-history .dataTable').dataTable();
+            }
+            else if(data.status == 2){
+                var html = "<tr></tr>"
                 $('.table-data').html(html);
                 $('.lab-history .dataTable').dataTable();
             }

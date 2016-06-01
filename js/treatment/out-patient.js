@@ -404,6 +404,11 @@ Treatment = {
                 $('.table-data').html(html);
                 $('.lab-history .dataTable').dataTable();
             }
+            else if(data.status == 2){
+                var html = "<tr></tr>"
+                $('.table-data').html(html);
+                $('.lab-history .dataTable').dataTable();
+            }
         }, 'json');
     },
     getVitals: function(){
