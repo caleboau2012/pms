@@ -888,7 +888,7 @@ class AdmissionSqlStatement {
 
     const IS_ADMITTED = "SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND active_fg = 1";
 
-    const SEARCH_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo, adb.bed_id, bed.ward_id
+    const SEARCH_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo, adb.bed_id, bed.ward_id, bed.bed_description
         FROM admission AS ad
             INNER JOIN treatment AS t
                 ON t.treatment_id = ad.treatment_id

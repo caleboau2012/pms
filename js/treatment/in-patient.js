@@ -29,7 +29,7 @@ Treatment = {
                 "<div class='panel panel-heading' style='margin: 1px'>" +
                 "<p class='panel-title'>" + toTitleCase(item.patient) + "</p>" +
                 "<p class='label label-info' style='margin-right: 10px;'> " + item.regNo + "</p>" +
-                "<p class='label label-default'>Bed " + item.bed_id + "</p>" +
+                "<p class='label label-default'>Bed: " + item.bed_description + "</p>" +
                 "</div>" +
                 "</div>" )
                 .appendTo( ul );
@@ -99,7 +99,7 @@ Treatment = {
         $('#prescriptions').append(drugHTML);
     },
     addToQueue: function (patient){
-        //console.log(patient);
+        console.log(patient);
         //var currentYear = new Date().getFullYear();
         //var age = currentYear - parseInt(data[i].birth_date.split('-')[0]);
         //
@@ -122,7 +122,7 @@ Treatment = {
         patientHTML = replaceAll('{{regNo}}', patient.regNo, patientHTML);
         patientHTML = replaceAll('{{name}}', patientName, patientHTML);
         patientHTML = replaceAll('{{treatment_id}}', patient.treatment_id, patientHTML);
-        patientHTML = replaceAll('{{bed}}', patient.bed_id, patientHTML);
+        patientHTML = replaceAll('{{bed}}', patient.bed_description, patientHTML);
         patientHTML = replaceAll('{{ward_id}}', patient.ward_id, patientHTML);
 
         //console.log(patientHTML);
