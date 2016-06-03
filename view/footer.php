@@ -8,7 +8,7 @@
     <div class="container">
         <div id="footer">
             <p class="text-center">
-                &copy; 2015. Elyon 1.0 <small>by Bathill Capital Limited</small>
+                &copy; 2015. Elyon 1.0 by Bathill Capital Limited
             </p>
         </div>
     </div>
