@@ -154,7 +154,7 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 hidden">
                 <div class="room-overview">
                     <div class="room-overview__heading">
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
@@ -345,7 +345,7 @@ $wards = $admission->loadWards();
                     <div class="clearfix"></div>
                 </div>
             </div>
-            <div class="col-sm-3">
+            <div class="col-sm-3 hidden">
                 <div class="room-overview">
                     <div class="room-overview__heading">
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
