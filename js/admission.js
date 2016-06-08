@@ -471,6 +471,7 @@ Admission = {
         payload.treatment_id =  Admission.GLOBAL.TREATMENT_ID;
         payload.comments = $('#comment').val();
         payload.vitals = {};
+        console.log(payload);
 
         $("#log_encounter input").each(function () {
             if($(this).val() !== "" && $(this).attr("name") !== "comments"){
@@ -478,7 +479,8 @@ Admission = {
             }
         });
 
-        $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
+        $.post(host + 'phase/phase_admission.php', payload, function(data){
+            console.log(data);
             var response;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response = '<div class="alert alert-dismissible alert-success text-center">' +
@@ -503,7 +505,7 @@ Admission = {
             '</div>';
             $('#log_encounter_loading').addClass('hidden');
             $('#log_encounter_response').html(response);
-        });
+        }, 'json');
     },
     dischargePatient: function(){
         payload = {};

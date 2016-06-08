@@ -82,7 +82,7 @@ $wards = $admission->loadWards();
 <div class="container-fluid">
     <div class="row">
         <div class="adm-page-content" id="out-patient-view">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         Pending Request
@@ -92,8 +92,8 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6 patient-content">
-                <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
+            <div class="col-sm-8 col-sm-offset-1 patient-content">
+                <h1 class="text-muted text-center" idcd="empty_active"><br/><br/>&larr; Select patient </h1>
                 <div id="patient-panel" class="panel panel-primary hidden">
                     <div class="panel-heading">
                         <div id="request-heading">
@@ -182,7 +182,7 @@ $wards = $admission->loadWards();
     -->
     <div class="adm-page-content" id="in-patient-view">
         <div class="row">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <form id="in-patient-form">
@@ -198,7 +198,7 @@ $wards = $admission->loadWards();
                 </div>
             </div>
 
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
                     <div id="in-patient-identity">
