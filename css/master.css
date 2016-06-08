@@ -354,9 +354,11 @@ a.dashboard-link:hover, a.dashboard-link:focus {
 #rosterResponse{
     text-align: center;
     color: #4CA618;
-    line-height: 0.4;
-    font-size: 0.9em;
-    height: 0.7em;
+    font-size: 16px;
+    height: 13px;
+}
+#rosterResponse.text-danger{
+    color: #a94442 !important;
 }
 #roster_loading{
     text-align: center;
