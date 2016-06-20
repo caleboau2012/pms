@@ -62,7 +62,7 @@
                    }
                 },
                 eventReceive: function(event, delta, revertFunc){
-                    Roster.sendRoster(event.staff_id, event.dept_id, event.duty, event.start.format());
+                    Roster.sendRoster(event);
                 },
                 eventRender: function(event, element){
                     //AFTERNOON
@@ -97,7 +97,9 @@
             }
             return duty;
         },
-        sendRoster: function(user_id, dept_id, duty, date){
+        sendRoster: function(event){
+            var user_id = event.staff_id,   dept_id = event.dept_id,
+                duty    = event.duty,       date = event.start.format();
             $.post(host + "phase/admin/phase_roster.php",
                 {
                     intent: 'assignTask',
@@ -107,10 +109,28 @@
                     duty_date: date
                 },
                 function(data){
-                    $('#rosterResponse').html('Roster schedule saved');
-                    setTimeout(function(){
-                        $('#rosterResponse').empty();
-                    }, 2000);
+                    var res = JSON.parse(data);
+                    if(res.status == 1){
+                        $('#rosterResponse').html('Roster schedule saved');
+                        setTimeout(function(){
+                            $('#rosterResponse').empty();
+                        }, 2000);
+                    }else if(res.status == 2){
+                        if(res.message == -10){
+                            $('#calendar').fullCalendar('removeEvents', event._id);
+                            $('#rosterResponse').addClass("text-danger").html('Staff already schedule for this duty');
+                            setTimeout(function(){
+                                $('#rosterResponse').empty().removeClass("text-danger");
+                            }, 2000);
+                        }else{
+                            $('#calendar').fullCalendar('removeEvents', event._id);
+                            $('#rosterResponse').addClass("text-danger").html('Unable to complete request');
+                            setTimeout(function(){
+                                $('#rosterResponse').empty().removeClass("text-danger");
+                            }, 2000);
+                        }
+                    }
+
                 }
             ).fail(function(data){
                     console.log(data.responseText);

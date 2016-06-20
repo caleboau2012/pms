@@ -82,7 +82,7 @@ $wards = $ward->loadWards();
     <div class="row">
         <!--   Room management -->
         <div class="room-page-content" id="ward-view">
-            <div class="col-sm-3">
+            <div class="col-sm-4">
                 <div class="panel panel-primary">
                     <div class="panel-heading">
                         <h4 class="pull-left">Wards</h4>
@@ -118,7 +118,7 @@ $wards = $ward->loadWards();
                     </div>
                 </div>
             </div>
-            <div class="col-sm-6">
+            <div class="col-sm-8">
                 <div class="room-bed-list">
                     <div class="bed-list__default-text">
                         <h2 class="text-center text-muted">

@@ -18,10 +18,19 @@ class StaffRosterController{
     }
 
     public function assignTask($userId, $deptId, $duty, $dutyDate, $createdBy){
-        return $this->staffRoster->assignTask(array(RosterTable::user_id => $userId, RosterTable::dept_id => $deptId,
-                                                    RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate,
-                                                    RosterTable::created_by => $createdBy
-                                                   ));
+        $check = $this->staffRoster->periodAvailable(array(
+            RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate
+        ));
+        if($check['count'] == 0){
+            return $this->staffRoster->assignTask(array(RosterTable::user_id => $userId, RosterTable::dept_id => $deptId,
+                RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate,
+                RosterTable::created_by => $createdBy
+            ));
+        }else{
+            /*Coded for already assigned*/
+            return -10;
+        }
+
     }
 
     public function updateTask($roster_id, $dutyDate, $modifiedBy){

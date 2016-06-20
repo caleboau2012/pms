@@ -49,10 +49,14 @@ if ($intent == 'getDepartments') {
 
     $controller = new StaffRosterController();
     $result = $controller->assignTask($userId, $deptId, $duty, $dutyDate, $createdBy);
-    if ($result) {
-        echo JsonResponse::success("Successfully added");
+    if($result) {
+        if($result === -10){
+            echo JsonResponse::error($result);
+        }else{
+            echo JsonResponse::success("Successfully added");
+        }
         exit();
-    } else {
+    }else{
         echo JsonResponse::error('Could not assign task, try again!');
         exit();
     }
