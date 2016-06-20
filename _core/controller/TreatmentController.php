@@ -101,10 +101,9 @@ class TreatmentController{
         $history = $this->treatmentModel->getEncounters($treatmentId);
 
         $billingModel = new BillingModel();
-//        die(var_dump($history));
 
         for($i = 0; $i < sizeof($history); $i++){
-            $prescriptions = $billingModel->getPrescriptionByEncounter($history[$i][TreatmentTable::treatment_id]);
+            $prescriptions = $billingModel->getPrescriptionByEncounter($history[$i][TreatmentTable::encounter_id]);
 //            array_push($history[$i], $prescriptions);
             $history[$i]['prescriptions'] = $prescriptions;
         }
