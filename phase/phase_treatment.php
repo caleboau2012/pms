@@ -629,6 +629,7 @@ elseif($intent == 'labHistory'){
          *  COMMENT the $result = array_merge ($result + array ('encounter_id' => $enc_id ['encounter_id']));
          * if you need to revert to $result as only lab history data, without encounter data added to it
          */
+        //cool
 
         if($result){
             echo JsonResponse::success($result);
