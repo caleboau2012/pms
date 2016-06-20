@@ -636,6 +636,7 @@ class EncounterSqlStatement{
                     AND admission_id = :admission_id AND encounter_id = :encounter_id";
     const CLOSE_SESSION = "UPDATE encounter SET status = :status WHERE encounter_id = :encounter_id AND treatment_id = :treatment_id";
     const GET_ENCOUNTERS = "SELECT * FROM encounter WHERE treatment_id = :treatment_id";
+    const GET_ENCOUNTERS_ID = "SELECT encounter_id FROM encounter WHERE patient_id = :patient_id";
 }
 
 class RadiologyRequestSqlStatement{

@@ -79,6 +79,11 @@ class TreatmentController{
         return $this->treatmentModel->getEncounterHistory($admissionId);
     }
 
+    //used to get encounter_id for Labhistory for a Patient using the Patient ID
+    public function getEncounterIdForLabHistoryOfPatient($patientId){
+        return $this->treatmentModel->getEncounter_id($patientId);
+    }
+
     /*public function logEncounter($doctorId, $patientId, $admissionId, $comments){
         $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
             EncounterTable::admission_id => $admissionId, EncounterTable::comments => $comments);
