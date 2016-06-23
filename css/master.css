@@ -2,7 +2,7 @@
 
 body {
     padding-top: 54px;
-    /*padding-bottom: 40px;*/
+    padding-bottom: 40px;
     background-color: #eee;
     font-family: "Source Sans Pro", "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
 }
@@ -349,7 +349,7 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     color: #409BC8;
 }
 #roster-wrap{
-    padding: 10px 0;
+    margin-top: 40px;
 }
 #rosterResponse{
     text-align: center;
@@ -731,10 +731,6 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     vertical-align: middle;
 }
 
-.add-treatment textarea{
-    height: 70px;
-}
-
 @media (max-width: 1024px) {
     .patient-arrival .form-control {
         display: block;
@@ -811,7 +807,8 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 .haematology, .parasitology{
     min-height:20px;
-    padding:20px;
+    padding:19px;
+    margin-bottom:20px;
     background-color:#ffffff;
     border:1px solid #e3e3e3;border-radius:4px;
     -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.05);
@@ -1145,7 +1142,7 @@ span#loader{
 }
 /*Footer*/
 #footer{
-    /*margin-top: 5px;*/
+    margin-top: 50px;
     /*background: rgba(34, 34, 34, 0.72);*/
     padding: 15px;
     color: #2c2c2c;
@@ -1521,9 +1518,4 @@ input.cmn-toggle-round:checked + label:before{
 }
 input.cmn-toggle-round:checked + label:after{
     margin-left: 30px;
-}
-
-#print {
-    margin-right: 4px;
-    margin-top: 4px;
 }

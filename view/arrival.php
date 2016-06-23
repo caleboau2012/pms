@@ -19,16 +19,14 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Patient Arrival</title>
+    <title>Admin Dashboard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -278,8 +276,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <option value="7">Husband</option>
                                                 <option value="8">Wife</option>
                                                 <option value="9">Other</option>
-                                            </select>
-                                        </div>
+                                            </select></div>
                                     </td>
                                 </tr>
                             </table>
@@ -408,73 +405,73 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <h4 class="modal-title">Add Vitals of Patient</h4>
             </div>
             <div class="modal-body">
-                <div class="panel panel-primary">
-                    <div class="panel-heading">
-                        <h2 class="panel-title" id="patientName"></h2>
-                        <p id="patientRegNo"></p>
-                    </div>
-                    <div class="panel-body">
-                        <div class="div-rounded encounter-icon">
-                            <span class="fa fa-stethoscope"></span>
-                        </div>
-                        <form name="vitalsForm">
-                            <div class="alert hidden alert-danger alert-dismissable" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                                <span class="alertMSG"></span>
-                            </div>
-                            <div class="alert hidden alert-success alert-dismissable" role="alert">
-                                <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
-                                        aria-hidden="true">&times;</span></button>
-                                <span class="successMSG"></span>
-                            </div>
-                            <div class="form-group">
-                                <input class="hidden" name="<?php echo PatientTable::patient_id;?>">
-                                <div class="col-sm-6">
-                                    <label for="temp">Temperature</label>
-                                    <input type="text" class="form-control" name="temp">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="pulse">Pulse</label>
-                                    <input type="text" class="form-control" name="pulse">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="respiratory_rate">Respiratoty Rate</label>
-                                    <input type="text" class="form-control" name="respiratory_rate">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="blood_pressure">Blood Pressure</label>
-                                    <input type="text" class="form-control" name="blood_pressure">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="height">Height</label>
-                                    <input type="text" class="form-control" name="height">
-                                </div>
-                                <div class="col-sm-6">
-                                    <label for="weight">Weight</label>
-                                    <input type="text" class="form-control" name="weight">
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <div class="col-sm-6">
-                                    <label for="bmi">BMI</label>
-                                    <input type="text" class="form-control" id="bmi" name="bmi">
-                                </div>
-                                <div class="col-sm-6">
-                                    <br>
-                                    <input type="submit" class="btn btn-primary">
-                                </div>
-                            </div>
-                        </form>
-                        <div class="clearfix"></div>
-                        <div id="loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
-                        <div class="text-center hidden" id="response"><p class="text-danger">undefined</p></div>
-                    </div>
+            <div class="panel panel-primary">
+                <div class="panel-heading">
+                    <h2 class="panel-title" id="patientName"></h2>
+                    <p id="patientRegNo"></p>
                 </div>
+                <div class="panel-body">
+                    <div class="div-rounded encounter-icon">
+                        <span class="fa fa-stethoscope"></span>
+                    </div>
+                    <form name="vitalsForm">
+                        <div class="alert hidden alert-danger alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <span class="alertMSG"></span>
+                        </div>
+                        <div class="alert hidden alert-success alert-dismissable" role="alert">
+                            <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
+                                    aria-hidden="true">&times;</span></button>
+                            <span class="successMSG"></span>
+                        </div>
+                        <div class="form-group">
+                            <input class="hidden" name="<?php echo PatientTable::patient_id;?>">
+                            <div class="col-sm-6">
+                                <label for="temp">Temperature</label>
+                                <input type="text" class="form-control" name="temp">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="pulse">Pulse</label>
+                                <input type="text" class="form-control" name="pulse">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="respiratory_rate">Respiratoty Rate</label>
+                                <input type="text" class="form-control" name="respiratory_rate">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="blood_pressure">Blood Pressure</label>
+                                <input type="text" class="form-control" name="blood_pressure">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="height">Height</label>
+                                <input type="text" class="form-control" name="height">
+                            </div>
+                            <div class="col-sm-6">
+                                <label for="weight">Weight</label>
+                                <input type="text" class="form-control" name="weight">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <div class="col-sm-6">
+                                <label for="bmi">BMI</label>
+                                <input type="text" class="form-control" id="bmi" name="bmi">
+                            </div>
+                            <div class="col-sm-6">
+                                <br>
+                                <input type="submit" class="btn btn-primary">
+                            </div>
+                        </div>
+                    </form>
+                    <div class="clearfix"></div>
+                    <div id="loading" class="text-center hidden"><span class="fa fa-spinner fa-spin"></span> </div>
+                    <div class="text-center hidden" id="response"><p class="text-danger">undefined</p></div>
+                </div>
+            </div>
             </div>
         </div>
     </div>

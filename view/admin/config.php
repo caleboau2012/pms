@@ -29,7 +29,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
-    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../css/master.css" rel="stylesheet">
@@ -52,7 +51,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="../dashboard.php">
+            <a class="navbar-brand" href="dashboard.php">
                 <?php
                 if(is_null(CxSessionHandler::getItem('hospital_name'))){
                     echo "Patient Management System";
@@ -95,7 +94,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <div class="row">
         <div id="setup-container">
             <div class="bg-info text-center" id="setup-heading">
-                <h4>System Setup</h4>
+                <h4>PMS Setup</h4>
             </div>
             <div id="setup-nav">
 
@@ -228,8 +227,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/constants.js"></script>
 <script type="text/javascript" src="../../js/pinger.js"></script>
 <script type="text/javascript" src="../../js/EditSetup.js"></script>
-
-<?php include('../footer.php'); ?>
 
 </body>
 </html>

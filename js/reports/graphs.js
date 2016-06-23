@@ -20,18 +20,6 @@ var Report = {
     currentDate: function() {
         var now = new Date();
         var year = now.getFullYear().toString();
-        var month = (now.getMonth() + 1).toString();
-        var day = now.getDate().toString();
-
-        month = (month.length < 2) ? ('0' + month) : month;
-        day = (day.length < 2) ? ('0' + day) : day;
-
-        var today = year + "-" + month + "-" + day;
-        return today;
-    },
-    startDate: function() {
-        var now = new Date();
-        var year = now.getFullYear().toString();
         var month = now.getMonth().toString();
         var day = now.getDate().toString();
 
@@ -89,17 +77,7 @@ var Report = {
                 emergencies++;
         }
         if((femaleCount == 0) && (maleCount == 0) && (emergencies == 0)){
-            showAlert('Data here cannot be represented by a pie chart');
-        }
-        else if(param.intent == 'allPatients'){
-            Morris.Donut({
-                element: 'doughnut',
-                data: [
-                    {label: "All Male Patients", value: maleCount},
-                    {label: "All Female Patients", value: femaleCount},
-                    {label: "All Emergencies", value: emergencies}
-                ]
-            });
+            showAlert('No patients to report in the chosen time range');
         }
         else if(param.intent == 'newPatients'){
             Morris.Donut({
@@ -154,10 +132,10 @@ var Report = {
     },
     makeBarChart: function(param, data){
         $('#bar').empty();
-        //console.log({
-        //    data: data,
-        //    params: param
-        //});
+        console.log({
+            data: data,
+            params: param
+        });
 
         var count1_5 = 0;
         var count2_5 = 0;
@@ -217,7 +195,7 @@ var Report = {
         //console.log(graphData);
 
         if((count1_5 == 0) && (count2_5 == 0) && (count3_5 == 0) && (count4_5 == 0) && (count5_5 == 0)){
-            showAlert('Data here cannot be represented by a bar graph');
+            showAlert('No patients to report in the chosen time range');
         }
         else{
             Morris.Bar({
@@ -232,10 +210,9 @@ var Report = {
 };
 
 $(document).ready(function(){
-    $("#end_date").val(Report.currentDate());
-    $("#start_date").val(Report.startDate());
-
     fire();
+
+    $("#start_date, #end_date").val(Report.currentDate());
 
     $("#view, #gender, #start_date, #end_date").on('change', function(e){
         e.preventDefault();

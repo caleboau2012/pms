@@ -121,14 +121,4 @@ class WardModel extends BaseModel {
 
         return $result[COUNT] > 0;
     }
-
-    public function wardBedCounter() {
-        $stmt = WardRefSqlStatement::WARDS_COUNT;
-        $stmt2 = BedSqlStatement::BEDS_COUNT;
-
-        $num_of_wards = $this->conn->fetch($stmt, array());
-        $num_of_beds = $this->conn->fetchAll($stmt2, array());
-
-        return array("wards"=>$num_of_wards, "beds" => $num_of_beds);
-    }
 }

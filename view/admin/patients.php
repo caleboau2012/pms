@@ -29,7 +29,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/print.css" media="print">
-    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../css/master.css" rel="stylesheet">
@@ -522,7 +521,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <!-- Manage Patient Modal -->
 <div class="modal fade" id="managePatientModal" tabindex="-1" role="dialog" aria-labelledby="newPatientModal"
      aria-hidden="true">
-    <div class="modal-dialog modal-lg">
+    <div class="modal-dialog">
         <div class="modal-content">
             <form name="managePatientForm" class="form-group">
                 <div class="modal-header">
@@ -765,8 +764,5 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/constants.js"></script>
 <script type="text/javascript" src="../../js/pinger.js"></script>
 <script src="../../js/admin/patients.js"></script>
-
-<?php include('../footer.php'); ?>
-
 </body>
 </html>

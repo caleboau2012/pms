@@ -54,7 +54,9 @@ class SqlClient {
     public function execute($sql, $params, $zero_allowed=false){
         //handles INSERT, UPDATE and DELETE
         $pds = $this->pdo->prepare($sql);
+//        var_dump($params);
         $check = $pds->execute($params);
+//        var_dump($check);
         if (!$check){
             return false;
         }
@@ -94,6 +96,7 @@ class SqlClient {
         $pattern = '/:(\w*)/';
         preg_match_all($pattern, $stmt, $matches);
         $vars = array_unique($matches[0]);
+//        var_dump($vars);
 
         if(sizeof($vars) != sizeof($data))
             return false;

@@ -22,7 +22,6 @@ $wards = $admission->loadWards();
     <meta charset='utf-8' />
     <title>Admin Dashboard</title>
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
     <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
@@ -160,18 +159,18 @@ $wards = $admission->loadWards();
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <h3>
+                    <p>
                         <span class="fa fa-university text-danger">&nbsp;</span>
-                        <span class="num_of_wards"></span>
-                    </h3>
-                    <h3>
+                        20 Wards
+                    </p>
+                    <p>
                         <span class="fa fa-bed text-danger">&nbsp;</span>
-                        <span class="num_of_beds"></span>
-                    </h3>
-                    <h3>
+                        200 Beds
+                    </p>
+                    <p>
                         <span class="fa fa-bed text-success">&nbsp;</span>
-                        <span class="num_of_available_beds"></span>
-                    </h3>
+                        30 Available Beds
+                    </p>
                 </div>
             </div>
         </div>
@@ -202,34 +201,18 @@ $wards = $admission->loadWards();
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
                     <div id="in-patient-identity">
-                        <h2 class='text-primary text-capitalize' id="patient_name">
-
-                        </h2>
-                        <h4 class="text-muted text-uppercase">
-                            <span class="fa fa-barcode text-success">&nbsp;</span>
-                            <span id="patient_reg_num"></span>
-                        </h4>
-                        <h4 class="text-capitalize text-muted">
-                            <span class="fa fa-stethoscope text-info">&nbsp;</span>
-                            Requested by&nbsp;<span id="req_doctor"></span>
-                        </h4>
+                        <span class="fa fa-pulse fa-spin"></span>
                     </div>
 
                     <ul class="nav nav-tabs nav-pills nav-justified">
                         <li><a href="#home-tab" data-toggle="tab">Details</a></li>
                         <li class="active"><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
-                        <li><a href="#vitals-tab" data-toggle="tab">Vitals</a></li>
+                        <li><a href="#vitals-tab" data-toggle="tab">Log Encounter</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade adm-tab-pane" id="home-tab">
                             <br/>
-                            <div class="div-rounded" style="background: #337AB7;">
-                                <span class="fa fa-calendar"></span>
-                            </div>
-                            <h4 class="text-muted text-center" style="margin-bottom: 0">Admitted on</h4>
-                            <h3 class="text-center text-info" style="margin-top: 5px">
-                                <span id="entry_date"></span>
-                            </h3>
+                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore enim est eum quae quo.
                         </div>
                         <div class="tab-pane fade adm-tab-pane active in" id="switch-tab">
                             <br/>
@@ -351,18 +334,18 @@ $wards = $admission->loadWards();
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <h3>
+                    <p>
                         <span class="fa fa-university text-danger">&nbsp;</span>
-                        <span class="num_of_wards"></span>
-                    </h3>
-                    <h3>
+                        20 Wards
+                    </p>
+                    <p>
                         <span class="fa fa-bed text-danger">&nbsp;</span>
-                        <span class="num_of_beds"></span>
-                    </h3>
-                    <h3>
+                        200 Beds
+                    </p>
+                    <p>
                         <span class="fa fa-bed text-success">&nbsp;</span>
-                        <span class="num_of_available_beds"></span>
-                    </h3>
+                        30 Available Beds
+                    </p>
                 </div>
                 <div class="discharge-container hidden">
                     <br/>

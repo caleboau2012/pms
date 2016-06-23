@@ -359,7 +359,6 @@ $('body').delegate('.remove-patient .fa', 'click', function(e){
 });
 
 function openVitalsModal(e){
-    document.vitalsForm.reset();
     //console.log($(e).parent().children());
     var data = $(e).parent().children();
     $('#patientName').text($(data[0]).text());

@@ -17,11 +17,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Elyon</title>
+    <title>PMS</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -44,7 +43,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <form class="form-signin" id="change-password" autocomplete="off">
         <div class="panel panel-primary form-signin">
             <div class="panel-heading">
-                <h2 class="panel-title">Signin</h2>
+                <h2 class="panel-title">PMS Signin</h2>
             </div>
             <div class="panel-body">
                 <div class="text-center alert alert-warning" id="form-info">
@@ -79,11 +78,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
             </div>
         </div>
     </form>
-</div> <!-- /container -->
 
-<?php
-include("footer.php");
-?>
+
+</div> <!-- /container -->
 
 </body>
 </html>

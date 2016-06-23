@@ -15,7 +15,7 @@ $lab = new LaboratoryController();
 $view_bag = array();
 
 
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 if ($view_bag[HaematologyTable::status_id] == 7){
@@ -40,7 +40,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -61,15 +60,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">
-                <?php
-                if(is_null(CxSessionHandler::getItem('hospital_name'))){
-                    echo "Patient Management System";
-                }else{
-                    echo ucwords(CxSessionHandler::getItem('hospital_name'));
-                }
-                ?>
-            </a>
+            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
@@ -136,20 +127,12 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     </div>
 </script>
 <body>
-
 <div class="container-fluid">
     <div class="row">
-        <br>
-        <div class="col-sm-12">
-            <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
-            <div class="panel panel-default" id="print-head">
+        <div class="col-sm-12 well">
+            <div class="panel panel-default">
                 <div class="panel-heading">
-                    <h2 class="panel-title">
-                        <span style="text-transform: uppercase">
-                            <?php echo $patient['surname']; ?>
-                        </span>
-                        <?php echo $patient['middlename'].' '. $patient['firstname'];  ?>
-                    </h2>
+                    <h2 class="panel-title"><span style="text-transform: uppercase"><?php echo $patient['surname']; ?></span> <?php echo $patient['middlename'].' '. $patient['firstname'];  ?></h2>
                 </div>
                 <div class="panel-body">
                     <p><?php echo $patient['regNo']; ?></p>
@@ -158,7 +141,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                 </div>
             </div>
 
-            <div class="haematology" id="print-body">
+            <div class="haematology">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
@@ -209,6 +192,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_be])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_be]; ?>"></td>
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_re])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_re]; ?>"></td>
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_le])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_le]; ?>"></td>
+
                                         </tr>
                                     </tbody>
                                 </table>
@@ -231,18 +215,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                         <td class="test-label"><span>Amplitude of Accommodation</td>
                                         <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::amplitude_of_accomodation.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::amplitude_of_accomodation])) echo $view_bag[VisualSkillsProfileTable::amplitude_of_accomodation]; ?>"></td>
                                     </tr>
-                                    <tr>
-                                        <td class="test-label">Intra-ocular pressure</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::intra_ocular_pressure.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::intra_ocular_pressure])) echo $view_bag[VisualSkillsProfileTable::intra_ocular_pressure]; ?>"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="test-label">Central Visual Field</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::central_visual_field.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::central_visual_field])) echo $view_bag[VisualSkillsProfileTable::central_visual_field]; ?>"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="test-label">Others</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::others.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::others])) echo $view_bag[VisualSkillsProfileTable::others]; ?>"></td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -261,30 +233,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
         </div>
     </div>
 </div>
-<div class="clearfix"></div>
-<div id="print-footer" class="row hidden">
-    <div class="text-center">
-        <p><?php
-            if(is_null(CxSessionHandler::getItem('hospital_name'))){
-                echo "Patient Management System";
-            }else{
-                echo ucwords(CxSessionHandler::getItem('hospital_name'));
-            }
-            ?>
-        </p>
-        <p>
-            <?php
-            if(is_null(CxSessionHandler::getItem('hospital_address'))){
-            }else{
-                echo ucwords(CxSessionHandler::getItem('hospital_address'));
-            }
-            ?>
-        </p>
-        <p></p>
-    </div>
-</div>
-
-<?php include('footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

@@ -1,0 +1,2 @@
+00 5 * * * /usr/bin/php /var/www/html/pms/phase/db_backup.php
+
