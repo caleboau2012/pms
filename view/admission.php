@@ -92,8 +92,8 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8 col-sm-offset-1 patient-content">
-                <h1 class="text-muted text-center" idcd="empty_active"><br/><br/>&larr; Select patient </h1>
+            <div class="col-sm-8 patient-content">
+                <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
                 <div id="patient-panel" class="panel panel-primary hidden">
                     <div class="panel-heading">
                         <div id="request-heading">
