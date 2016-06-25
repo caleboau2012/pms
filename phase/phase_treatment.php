@@ -285,10 +285,7 @@ elseif  ($intent == 'getTreatmentHistory') {
     }
 
     $treat = new TreatmentController();
-    $history = $treat->getTreatmentHistory($patientid); // send prescription details to data coming from treatment history
-
-
-    //prescription history is already concatenated with the treatment history.
+    $history = $treat->getTreatmentHistory($patientid);
 
     if(is_array($history)){
         echo JsonResponse::success($history);
@@ -506,16 +503,9 @@ elseif  ($intent == 'getEncounterHistory') {
     }
 
     $treat = new TreatmentController();
-    $request_adm = $treat->getTreatmentHistory($admissionId); //Send prescription details  along with data coming from encounter
-
-    // Prescription already come along using the get treatment history.
+    $request_adm = $treat->getTreatmentHistory($admissionId);
 
     if(is_array($request_adm)){
-
-        // if Encounter History is returned, return Presecription history too for the patient
-
-
-
         echo JsonResponse::success($request_adm);
         exit();
     } else {
@@ -617,20 +607,6 @@ elseif($intent == 'labHistory'){
         $lab = new LaboratoryController();
 
         $result = $lab->getLabHistory($type, $patientId);
-
-
-        // getting Encounter_id for a $patient_id
-        $Enc = new TreatmentController();
-        $enc_id = $Enc->getEncounterIdForLabHistoryOfPatient($patientId);
-        // Encounter_id gotten is supplied with the lab_history result.
-        $result = array_merge ($result + array ('encounter_id' => $enc_id ['encounter_id']));
-
-        /*
-         *  COMMENT the $result = array_merge ($result + array ('encounter_id' => $enc_id ['encounter_id']));
-         * if you need to revert to $result as only lab history data, without encounter data added to it
-         */
-        //cool
-
         if($result){
             echo JsonResponse::success($result);
             exit();
