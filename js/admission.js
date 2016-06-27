@@ -480,20 +480,20 @@ Admission = {
         });
 
         $.post(host + 'phase/phase_admission.php', payload, function(data){
-            console.log(data);
+            var res = JSON.parse(data);
             var response;
-            if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
+            if(res.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response = '<div class="alert alert-dismissible alert-success text-center">' +
                 ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                '<strong>' + data.message +'</strong>' +
+                '<strong>' + res.message +'</strong>' +
                 '</div>';
                 $('#log_encounter_response').html(response);
                 $('#log_encounter').trigger('reset');
                 $('#log_encounter_loading').addClass('hidden');
-            }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
+            }else if(res.status == Admission.CONSTANTS.REQUEST_ERROR){
                 response = '<div class="alert alert-dismissible alert-danger text-center">' +
                 ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                '<strong>' + data.message +'</strong><br/> Ensure to enter appropriate values' +
+                '<strong>' + res.message +'</strong><br/> Ensure to enter appropriate values' +
                 '</div>';
                 $('#log_encounter_loading').addClass('hidden');
                 $('#log_encounter_response').html(response);

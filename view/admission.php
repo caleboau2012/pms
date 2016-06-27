@@ -27,6 +27,11 @@ $wards = $admission->loadWards();
     <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
     <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
     <link href="../css/master.css" rel="stylesheet">
+    <style>
+        .form-group{
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -286,18 +291,21 @@ $wards = $admission->loadWards();
                             <!--                                </div>-->
                             <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
                             <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin fa-2x"></span> </div>
-                            <div class="text-center" id="log_encounter_response"></div>
                             <form id="log_encounter">
-                                <div class="form-group">
-                                    <p class="text-center text-warning">All fields are compulsory</p>
+                                <h4 class="text-center text-warning">All fields are compulsory</h4>
+                                <div class="text-center" id="log_encounter_response"></div>
+
+                                    <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="temp">Temperature</label>
                                         <input type="text" class="form-control" id="temp" name="temp" required="required">
+
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="pulse">Pulse</label>
                                         <input type="text" id="pulse" class="form-control" name="pulse" required="required">
                                     </div>
+                                        <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -308,6 +316,7 @@ $wards = $admission->loadWards();
                                         <label for="blood_pressure">Blood Pressure</label>
                                         <input type="text" class="form-control" id="blood_pressure" name="blood_pressure" required="required">
                                     </div>
+                                    <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -318,6 +327,7 @@ $wards = $admission->loadWards();
                                         <label for="weight">Weight</label>
                                         <input type="text" class="form-control" id="weight" name="weight" required="required">
                                     </div>
+                                    <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -331,6 +341,7 @@ $wards = $admission->loadWards();
                                         <label for="comment">Comment</label>
                                         <textarea class="form-control" id="comment" name="comment" required="required"></textarea>
                                     </div>
+                                    <br/>
                                 </div>
 
                                 <div class="col-sm-offset-5 col-sm-3">
