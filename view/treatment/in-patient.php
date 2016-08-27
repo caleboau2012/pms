@@ -316,7 +316,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-6">
                                 <br>
                                 <div class="center-block"><label>Diagnosis:</label>
-                                    <input type="text" class="form-control" name="diagnosis">
+                                    <textarea type="text" class="form-control" name="diagnosis"></textarea>
                                 </div>
                                 <br/>
                                 <div class="center-block">
