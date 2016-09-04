@@ -243,7 +243,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <option id="dept-doctor" value="<?php echo DOCTOR; ?>">Doctor</option>
                                                 <option id="dept-pharmacy" value="<?php echo PHARMACIST; ?>">Pharmacy</option>
                                                 <option id="dept-mro" value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
-                                                <option id="dept-urine" value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
+                                                <option id="dept-urine" value="<?php echo URINE_CONDUCTOR; ?>">Microscopy</option>
                                                 <option id="dept-visual" value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
                                                 <option id="dept-xray" value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
                                                 <option id="dept-parasitology" value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>

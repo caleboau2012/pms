@@ -187,7 +187,7 @@ Billing = {
                 $('#test').append("<p>Radiology Test</p>")
             }
             if(data.data.test.urine_test){
-                $('#test').append("<p>Urine Test</p>")
+                $('#test').append("<p>Microscopy Test</p>")
             }
             if(data.data.test.parasitology_test){
                 $('#test').append("<p>Parasitology Test</p>")
