@@ -67,7 +67,7 @@ if ($intent == 'login') {
         $change = $authenticator->changePassword($_REQUEST['userid'], $_REQUEST['passcode'], $status);
         if($change) {
             //DESTROY SESSION TO LOG USER OUT
-            CxSessionHandler::destroy();
+//            CxSessionHandler::destroy();
 
             //CONSTRUCT RESPONSE
             $response = array();
