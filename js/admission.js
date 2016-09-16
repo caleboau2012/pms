@@ -508,7 +508,7 @@ Admission = {
         }, 'json');
     },
     dischargePatient: function(){
-        payload = {};
+        var payload = {};
         payload.intent = 'dischargePatient';
         payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
 
