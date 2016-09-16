@@ -363,5 +363,8 @@ class TreatmentModel extends BaseModel{
         return 0;
     }
 
-
+    public function makeBillable($treatmentId){
+        $data = array(TreatmentTable::treatment_id => $treatmentId);
+        return $this->conn->execute(TreatmentSqlStatement::MAKE_BILLABLE, $data);
+    }
 }

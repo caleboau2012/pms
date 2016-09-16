@@ -310,8 +310,6 @@ elseif  ($intent == 'requestLabTest') {
 
     if (isset($_REQUEST['treatment_id']) && isset($_REQUEST['doctor_id'])){  // change surname to what you thin should be set.
 
-        // var_dump($_REQUEST);
-
         $doctorId =$_REQUEST[TreatmentTable::doctor_id];
         $treatmentId =$_REQUEST[TreatmentTable::treatment_id];
         $labTestType = $_REQUEST['test_id'];
@@ -337,10 +335,11 @@ elseif  ($intent == 'requestLabTest') {
     }
 
     if($admission_add){
+        $bill = $newaddm->makeBillable($treatmentId);
         echo JsonResponse::success($admission_add);
         exit();
     } else {
-        print_r($_REQUEST);
+//        print_r($_REQUEST);
         echo JsonResponse::error("Error requesting lab test");
         exit();
     }
@@ -630,8 +629,17 @@ elseif($intent == 'labRequest'){
 
         $result = $lab->requestLabTest($type, $doctorId, $treatmentId, $encounterId, $description);
         if($result){
-            echo JsonResponse::success("Request successful");
-            exit();
+            $treatment = new TreatmentController();
+            $bill = $treatment->makeBillable($treatmentId);
+
+            if($bill){
+                echo JsonResponse::success("Request successful. Please have the patient clear the test bill");
+                exit();
+            }
+            else{
+                echo JsonResponse::error("Request successful but an error occurred in adding it to the bill!");
+                exit();
+            }
         } else {
             echo JsonResponse::error("Request unsuccessful. Try again!");
             exit();

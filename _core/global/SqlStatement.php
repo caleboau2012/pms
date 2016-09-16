@@ -10,19 +10,19 @@
  */
 
 class UserAuthSqlStatement {
-        const VERIFY_USER = "SELECT COUNT(*) AS count FROM user_auth WHERE regNo = :regNo AND passcode = :passcode";
-        const ADD = 'INSERT INTO user_auth (regNo, passcode, created_date, modified_date, status) VALUES (:regNo, SHA1(:passcode), NOW(), NOW(), :status)';
-        const DELETE = 'UPDATE user_auth SET active_fg = 0, modified_date = NOW() WHERE userid = :userid';
-        const RESTORE_USER = 'UPDATE user_auth SET active_fg = 1 WHERE userid = :userid';
-        const GET = 'SELECT userid, regNo, created_date, modified_date, status, online_status
+    const VERIFY_USER = "SELECT COUNT(*) AS count FROM user_auth WHERE regNo = :regNo AND passcode = :passcode";
+    const ADD = 'INSERT INTO user_auth (regNo, passcode, created_date, modified_date, status) VALUES (:regNo, SHA1(:passcode), NOW(), NOW(), :status)';
+    const DELETE = 'UPDATE user_auth SET active_fg = 0, modified_date = NOW() WHERE userid = :userid';
+    const RESTORE_USER = 'UPDATE user_auth SET active_fg = 1 WHERE userid = :userid';
+    const GET = 'SELECT userid, regNo, created_date, modified_date, status, online_status
                                 FROM user_auth
                                 WHERE regNo = :regNo AND userid = :userid';
-        const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, ua.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo, ua.active_fg FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid)';
-        const GET_ALL_REGISTERED = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo, ua.active_fg FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid) WHERE ua.status = 1';
-        const CHANGE_PASSCODE = 'UPDATE user_auth SET passcode = SHA1(:passcode), status = :status, modified_date = NOW(), online_status = :online_status WHERE userid = :userid';
-        const CHANGE_ONLINE_STATUS = 'UPDATE user_auth SET online_status = :online_status WHERE userid = :userid';
-        const CHANGE_STATUS = 'UPDATE user_auth SET status = :status WHERE regNo = :regNo';
-        const GET_USER_ROLE = 'SELECT u.userid, u.regNo, p.surname, p.firstname, p.middlename, pr.staff_role_id AS staff_role, pr.staff_permission_id AS staff_permission
+    const GET_ALL = 'SELECT p.surname, p.firstname, p.middlename, ua.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo, ua.active_fg FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid)';
+    const GET_ALL_REGISTERED = 'SELECT p.surname, p.firstname, p.middlename, p.userid, p.department_id, p.work_address, p.home_address, p.telephone, p.sex, p.birth_date, ua.regNo, ua.active_fg FROM profile as p RIGHT JOIN user_auth as ua ON (p.userid = ua.userid) WHERE ua.status = 1';
+    const CHANGE_PASSCODE = 'UPDATE user_auth SET passcode = SHA1(:passcode), status = :status, modified_date = NOW(), online_status = :online_status WHERE userid = :userid';
+    const CHANGE_ONLINE_STATUS = 'UPDATE user_auth SET online_status = :online_status WHERE userid = :userid';
+    const CHANGE_STATUS = 'UPDATE user_auth SET status = :status WHERE regNo = :regNo';
+    const GET_USER_ROLE = 'SELECT u.userid, u.regNo, p.surname, p.firstname, p.middlename, pr.staff_role_id AS staff_role, pr.staff_permission_id AS staff_permission
             FROM user_auth AS u
                 LEFT JOIN profile AS p
                     ON(u.userid = p.userid)
@@ -31,8 +31,8 @@ class UserAuthSqlStatement {
             WHERE pr.staff_role_id = :staff_role_id
                     ORDER by p.surname, p.firstname, p.middlename';
 
-        const UPDATE_STATUS = 'UPDATE user_auth SET status = :status WHERE userid = :userid LIMIT 1';
-        const GET_USER_BY_CREDENTIALS = "SELECT u.userid, u.regNo, u.status, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
+    const UPDATE_STATUS = 'UPDATE user_auth SET status = :status WHERE userid = :userid LIMIT 1';
+    const GET_USER_BY_CREDENTIALS = "SELECT u.userid, u.regNo, u.status, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
             FROM user_auth AS u
                 LEFT JOIN profile AS p
                     ON(u.userid=p.userid)
@@ -40,46 +40,46 @@ class UserAuthSqlStatement {
                 AND passcode=SHA1(:passcode)
                 AND u.active_fg=1";
 
-        const GET_USER_BY_ID = 'SELECT u.userid, u.regNo, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
+    const GET_USER_BY_ID = 'SELECT u.userid, u.regNo, u.online_status, p.profile_id, p.surname, p.firstname, p.middlename, p.department_id, p.sex
         FROM user_auth AS u
             LEFT JOIN profile AS p
                 ON(u.userid=p.userid)
         WHERE u.userid=:userid';
 
-        const FLAG_USER_ONLINE = 'UPDATE user_auth SET online_status = 1 WHERE userid=:userid';
+    const FLAG_USER_ONLINE = 'UPDATE user_auth SET online_status = 1 WHERE userid=:userid';
 
-        const FLAG_USER_OFFLINE = 'UPDATE user_auth SET online_status = 0 WHERE userid=:userid';
+    const FLAG_USER_OFFLINE = 'UPDATE user_auth SET online_status = 0 WHERE userid=:userid';
 
-        const AUTO_LOGOUT = 'UPDATE user_auth SET online_status = 0 WHERE userid IN (:inactive_users)';
+    const AUTO_LOGOUT = 'UPDATE user_auth SET online_status = 0 WHERE userid IN (:inactive_users)';
 
-        const GET_BY_REGNO = 'SELECT userid FROM user_auth WHERE regNo=:regNo';
+    const GET_BY_REGNO = 'SELECT userid FROM user_auth WHERE regNo=:regNo';
 
-        const GET_STATUS = "SELECT status FROM user_auth WHERE userid = :userid";
+    const GET_STATUS = "SELECT status FROM user_auth WHERE userid = :userid";
 }
 
 class ProfileSqlStatement {
-        const ADD = 'INSERT INTO profile (userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex,
+    const ADD = 'INSERT INTO profile (userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex,
                                         height, weight, birth_date, created_date, modified_date)
                                  VALUES (:userid, LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :department_id, LOWER(:work_address), LOWER(:home_address), :telephone, :sex,
                                                         :height, :weight, :birth_date, NOW(), NOW()) ';
-        const GET = 'SELECT ua.regNo, p.userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex, height, weight, birth_date
+    const GET = 'SELECT ua.regNo, p.userid, surname, firstname, middlename, department_id, work_address, home_address, telephone, sex, height, weight, birth_date
             FROM profile AS p
                 INNER JOIN user_auth AS ua
                     ON p.userid = ua.userid
             WHERE regNo = :regNo';
-        const UPDATE = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
-        const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
-        const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department_id, p.work_address, p.home_address, p.telephone, p.sex,
+    const UPDATE = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), work_address = :work_address, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, department_id = :department_id, birth_date = :birth_date, modified_date = NOW() WHERE userid = :userid';
+    const UPDATE_BASIC_INFO = 'UPDATE profile SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), sex = :sex, birth_date = :birth_date, modified_date = now() WHERE userid = :userid';
+    const GET_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, p.department_id, p.work_address, p.home_address, p.telephone, p.sex,
                                         p.height, p.weight, p.birth_date, p.created_date, p.modified_date FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) WHERE ua.regNo = :regNo';
-        const GET_USER_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, dept.department_name, p.work_address, p.home_address, p.telephone, p.sex, p.height, p.weight, p.birth_date, p.created_date, p.modified_date
+    const GET_USER_PROFILE = 'SELECT ua.regNo, p.userid, p.surname, p.firstname, p.middlename, dept.department_name, p.work_address, p.home_address, p.telephone, p.sex, p.height, p.weight, p.birth_date, p.created_date, p.modified_date
                                     FROM profile as p LEFT JOIN user_auth as ua ON(p.userid = ua.userid) INNER JOIN department as dept ON (p.department_id = dept.department_id) WHERE ua.userid = :userid';
-        const GET_USER_AND_DEPT = 'SELECT dept.department_name, p.firstname, p.middlename, p.surname, FROM profile AS p
+    const GET_USER_AND_DEPT = 'SELECT dept.department_name, p.firstname, p.middlename, p.surname, FROM profile AS p
                                    LEFT JOIN department AS dept
                                     ON p.department_id = dept.department_id
                                     WHERE p.active_fg = 1
                                     GROUP BY department_name';
 
-        const SEARCH_BY_NAME = "SELECT userid, CONCAT_WS(' ' , surname, firstname, middlename) AS name
+    const SEARCH_BY_NAME = "SELECT userid, CONCAT_WS(' ' , surname, firstname, middlename) AS name
             FROM profile
             WHERE (surname LIKE  :name
             OR middlename LIKE  :name
@@ -87,37 +87,37 @@ class ProfileSqlStatement {
             AND userid != :userid
             LIMIT 0 , 30";
 
-        const BUILD_CONTACT_LIST = "SELECT userid, surname, firstname, middlename FROM profile";
+    const BUILD_CONTACT_LIST = "SELECT userid, surname, firstname, middlename FROM profile";
 
-        const GET_DOCTOR_NAME_BY_ID = "SELECT surname, firstname, middlename FROM profile WHERE  userid = :userid";
+    const GET_DOCTOR_NAME_BY_ID = "SELECT surname, firstname, middlename FROM profile WHERE  userid = :userid";
 }
 
 class PermissionRoleSqlStatement {
-        const DELETE_STAFF_ROLE = 'UPDATE permission_role SET active_fg = 0, modified_date = NOW() WHERE permission_role_id = :permission_role_id';
-        const UPDATE_ROLE_PERMISSION = 'UPDATE permission_role SET staff_permission_id = :staff_permission_id, modified_date = NOW() WHERE permission_role_id = :permission_role_id';
-        const ADD_STAFF_ROLE = 'INSERT INTO permission_role (userid, staff_permission_id, staff_role_id, created_date, modified_date, active_fg)
+    const DELETE_STAFF_ROLE = 'UPDATE permission_role SET active_fg = 0, modified_date = NOW() WHERE permission_role_id = :permission_role_id';
+    const UPDATE_ROLE_PERMISSION = 'UPDATE permission_role SET staff_permission_id = :staff_permission_id, modified_date = NOW() WHERE permission_role_id = :permission_role_id';
+    const ADD_STAFF_ROLE = 'INSERT INTO permission_role (userid, staff_permission_id, staff_role_id, created_date, modified_date, active_fg)
                                                         VALUES (:userid, :staff_permission_id, :staff_role_id, NOW(), NOW(), 1)';
-        const GET_STAFF_ROLE = "SELECT pr.permission_role_id, pr.staff_role_id, pr.staff_permission_id, pr.userid, sr.role_label, sp.staff_permission FROM permission_role AS pr INNER JOIN staff_role AS sr on pr.staff_role_id = sr.staff_role_id INNER JOIN staff_permission AS sp ON pr.staff_permission_id = sp.staff_permission_id WHERE pr.userid = :userid AND pr.active_fg = 1";
-        const GET_ALL_ROLES = "SELECT staff_role_id, role_label FROM staff_role";
-        const GET_ALL_PERMISSIONS = "SELECT staff_permission_id, staff_permission FROM staff_permission";
-        const CHECK_PERMISSION = "SELECT COUNT(*) AS count FROM staff_permission WHERE staff_permission_id = :staff_permission_id";
-        const CHECK_ROLE = "SELECT COUNT(*) AS count FROM staff_role WHERE staff_role_id = :staff_role_id";
-        const HAS_ROLE = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid AND staff_role_id = :staff_role_id AND active_fg = 1";
-        const HAS_PERMISSION = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid
+    const GET_STAFF_ROLE = "SELECT pr.permission_role_id, pr.staff_role_id, pr.staff_permission_id, pr.userid, sr.role_label, sp.staff_permission FROM permission_role AS pr INNER JOIN staff_role AS sr on pr.staff_role_id = sr.staff_role_id INNER JOIN staff_permission AS sp ON pr.staff_permission_id = sp.staff_permission_id WHERE pr.userid = :userid AND pr.active_fg = 1";
+    const GET_ALL_ROLES = "SELECT staff_role_id, role_label FROM staff_role";
+    const GET_ALL_PERMISSIONS = "SELECT staff_permission_id, staff_permission FROM staff_permission";
+    const CHECK_PERMISSION = "SELECT COUNT(*) AS count FROM staff_permission WHERE staff_permission_id = :staff_permission_id";
+    const CHECK_ROLE = "SELECT COUNT(*) AS count FROM staff_role WHERE staff_role_id = :staff_role_id";
+    const HAS_ROLE = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid AND staff_role_id = :staff_role_id AND active_fg = 1";
+    const HAS_PERMISSION = "SELECT COUNT(*) AS count FROM permission_role WHERE userid = :userid
                                 AND staff_permission_id = :staff_permission_id AND
                                 staff_role_id = :staff_role_id AND active_fg = 1";
 }
 
 class PatientSqlStatement {
-        const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship,
+    const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship,
                                           citizenship,  religion,  family_position,  mother_status,  father_status,    marital_status,  no_of_children, occupation, created_date, modified_date )
                                  VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, :nok_firstname, :nok_middlename, :nok_surname, :nok_address, :nok_telephone, :nok_relationship,
                                           :citizenship,  :religion,  :family_position,  :mother_status,  :father_status,    :marital_status,  :no_of_children, :occupation, NOW(), NOW()  )';
 
-        const GET = 'SELECT * FROM patient WHERE patient_id = :patient_id';
-        const UPDATE_INFO = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
+    const GET = 'SELECT * FROM patient WHERE patient_id = :patient_id';
+    const UPDATE_INFO = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
 
-        const UPDATE ="UPDATE patient SET surname =:surname, firstname =:firstname, middlename =:middlename,
+    const UPDATE ="UPDATE patient SET surname =:surname, firstname =:firstname, middlename =:middlename,
 regNo =:regNo, home_address =:home_address, telephone =:telephone, sex =:sex, height =:height, weight =:weight,
 birth_date =:birth_date, nok_firstname =:nok_firstname, nok_middlename =:nok_middlename, nok_surname =:nok_surname,
 nok_address =:nok_address, nok_telephone =:nok_telephone, nok_relationship =:nok_relationship, citizenship =:citizenship,
@@ -129,22 +129,22 @@ occupation =:occupation,
 modified_date =NOW() WHERE patient_id =:patient_id
 ";
 
-        const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
+    const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';
 
-        const SEARCH = "SELECT DISTINCT(p.patient_id), p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
+    const SEARCH = "SELECT DISTINCT(p.patient_id), p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p
                 LEFT JOIN patient_queue AS pq
                     ON p.patient_id = pq.patient_id
             WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :parameter)
             AND p.patient_id NOT IN
                 (SELECT pq.patient_id FROM patient_queue AS pq WHERE pq.active_fg = 1)";
-        const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
+    const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
 
-        const GET_EXISTING_PATIENT_REG_NO = "SELECT regNo FROM patient order by regNo DESC";
+    const GET_EXISTING_PATIENT_REG_NO = "SELECT regNo FROM patient order by regNo DESC";
 
-        const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
+    const IS_REG_EXISTING = "SELECT COUNT(patient_id) as result FROM patient WHERE regNo = :regNo";
 
     const ADD_EMERGENCY = "INSERT INTO patient (patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, citizenship, religion, family_position, mother_status, father_status, marital_status, no_of_children, occupation, created_date, modified_date, active_fg)
                            VALUES (NULL, '', '', '', '', NULL, NULL, NULL, NULL, NULL, NOW(), NULL, NULL, NULL, NULL, NULL, '9', '', '', '1', '', '', '', '1', '', NOW(), NOW(), '1')";
@@ -1000,32 +1000,52 @@ class TreatmentSqlStatement {
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE status = 1 AND treatment_id = :treatment_id";
 
-   const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
+    const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
                             WHERE status = 1 AND encounter_id = :encounter_id";
 
-    const BLOODTEST = "SELECT haematology_id FROM haematology
-                            WHERE treatment_id = :treatment_id";
+    const BLOODTEST = "SELECT DISTINCT haematology_id, clinical_diagnosis_details, haematology.created_date
+ FROM haematology INNER JOIN treatment ON (treatment.treatment_id = haematology.treatment_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
+                             WHERE haematology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                             ORDER BY haematology.created_date DESC";
 
-    const URINETEST = "SELECT urine_id FROM urine
-                            WHERE treatment_id = :treatment_id";
+    const URINETEST = "SELECT DISTINCT urine_id, clinical_diagnosis_details, urine.created_date
+ FROM urine INNER JOIN treatment ON (treatment.treatment_id = urine.treatment_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
+                             WHERE urine.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                             ORDER BY urine.created_date DESC";
 
-    const VISUALTEST = "SELECT visual_profile_id FROM visual_skills_profile
-                            WHERE treatment_id = :treatment_id";
+    const VISUALTEST = "SELECT DISTINCT visual_profile_id, visual_skills_profile.created_date
+    FROM visual_skills_profile INNER JOIN treatment ON (treatment.treatment_id = visual_skills_profile.treatment_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
+                            WHERE visual_skills_profile.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            ORDER BY visual_skills_profile.created_date DESC";
 
-    const CHEMICALTEST = "SELECT cpreq_id FROM chemical_pathology_request
-                            WHERE treatment_id = :treatment_id";
+    const CHEMICALTEST = "SELECT DISTINCT cpreq_id, clinical_diagnosis, chemical_pathology_request.created_date
+FROM chemical_pathology_request INNER JOIN treatment ON (treatment.treatment_id = chemical_pathology_request.treatment_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
+                            WHERE chemical_pathology_request.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            ORDER BY chemical_pathology_request.created_date DESC";
 
-    const PARATEST = "SELECT preq_id FROM parasitology_req
-                            WHERE treatment_id = :treatment_id";
+    const PARATEST = "SELECT DISTINCT preq_id, parasitology_req.diagnosis, parasitology_req.created_date
+FROM parasitology_req INNER JOIN treatment ON (treatment.treatment_id = parasitology_req.treatment_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
+                            WHERE parasitology_req.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            ORDER BY parasitology_req.created_date DESC";
 
-    const RADIOLOGYTEST = "SELECT radiology_id FROM radiology
-                            WHERE treatment_id = :treatment_id";
+    const RADIOLOGYTEST = "SELECT DISTINCT radiology_id, radiologists_report, radiology.created_date
+FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treatment_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
+                            WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            ORDER BY radiology.created_date DESC";
 
     const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, created_date)
                             VALUES (:item, :amount, :treatment_id, NOW())";
 
     const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
                                     WHERE treatment_id = :treatment_id";
+
+    const MAKE_BILLABLE = "UPDATE treatment SET bill_status = 1 WHERE treatment_id = :treatment_id";
 }
 
 class EmergencySqlStatement {

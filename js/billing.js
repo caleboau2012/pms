@@ -178,25 +178,50 @@ Billing = {
             $('#prescription').html(prescriptionHTML);
 
             if(data.data.test.visual_test){
-                $('#test').append("<p>Visual Test</p>")
+                $('#test').append("<tr>" +
+                    "<td>Visual Test</td>" +
+                    "<td></td>" +
+                    "<td>" + data.data.test.visual_test.created_date + "</td>" +
+                    "</tr>");
             }
             if(data.data.test.chemical_test){
-                $('#test').append("<p>Chemical Test</p>")
+                $('#test').append("<tr>" +
+                    "<td>Chemical Test</td>" +
+                    "<td>" + checkNull(data.data.test.chemical_test.clinical_diagnosis) + "</td>" +
+                    "<td>" + data.data.test.chemical_test.created_date + "</td>" +
+                    "</tr>");
             }
             if(data.data.test.radiology_test){
-                $('#test').append("<p>Radiology Test</p>")
+                $('#test').append("<tr>" +
+                    "<td>Radiology Test</td>" +
+                    "<td>" + checkNull(data.data.test.radiology_test.radiologists_report) + "</td>" +
+                    "<td>" + data.data.test.radiology_test.created_date + "</td>" +
+                    "</tr>");
             }
             if(data.data.test.urine_test){
-                $('#test').append("<p>Microscopy Test</p>")
+                $('#test').append("<tr>" +
+                    "<td>Urine Test</td>" +
+                    "<td>" + checkNull(data.data.test.urine_test.clinical_diagnosis_details) + "</td>" +
+                    "<td>" + data.data.test.urine_test.created_date + "</td>" +
+                    "</tr>")
             }
             if(data.data.test.parasitology_test){
-                $('#test').append("<p>Parasitology Test</p>")
+                $('#test').append("<tr>" +
+                    "<td>Parasitology Test</td>" +
+                    "<td>" + checkNull(data.data.test.parasitology_test.diagnosis) + "</td>" +
+                    "<td>" + data.data.test.parasitology_test.created_date + "</td>" +
+                    "</tr>");
             }
             if(data.data.test.blood_test){
-                $('#test').append("<p>Haematology Test</p>")
+                $('#test').append("<tr>" +
+                    "<td>Haematology Test</td>" +
+                    "<td>" + checkNull(data.data.test.blood_test.clinical_diagnosis_details) +  "</td>" +
+                    "<td>" + data.data.test.blood_test.created_date + "</td>" +
+                    "</tr>");
             }
             if(data.data.test.test){
-                $('#test').append("<p>No Test Performed</p>")
+                $('#test').append("<tr>" +
+                    "<td colspan='3'>No Test Performed</td></tr>")
             }
 
             if(Array.isArray(data.data.procedure)){
@@ -242,6 +267,7 @@ Billing = {
             if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
                 //console.log(bill.html());
                 printElem($('#print-header').html(), $(bill).html(), $('#print-footer').html());
+                location.reload();
             }
         }).fail(function(e){
             console.log({

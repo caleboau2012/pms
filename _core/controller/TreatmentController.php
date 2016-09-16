@@ -110,4 +110,8 @@ class TreatmentController{
 
         return $history;
     }
+
+    public function makeBillable($treatmentId){
+        return $this->treatmentModel->makeBillable($treatmentId);
+    }
 }
