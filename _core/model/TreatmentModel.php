@@ -314,7 +314,8 @@ class TreatmentModel extends BaseModel{
 
     public function createNewEncounter($treatmentId, $patientId, $admissionId, $doctorId){
         $data = array(EncounterTable::treatment_id => $treatmentId, EncounterTable::patient_id => $patientId,
-                      EncounterTable::admission_id => $admissionId, EncounterTable::personnel_id => $doctorId);
+            EncounterTable::admission_id => $admissionId, EncounterTable::personnel_id => $doctorId, EncounterTable::comments => "");
+
         $check = array(EncounterTable::patient_id => $patientId, EncounterTable::admission_id => $admissionId);
 
         /* Check if the patient_id rhymes with admission_id on admission table */
@@ -363,5 +364,8 @@ class TreatmentModel extends BaseModel{
         return 0;
     }
 
-
+    public function makeBillable($treatmentId){
+        $data = array(TreatmentTable::treatment_id => $treatmentId);
+        return $this->conn->execute(TreatmentSqlStatement::MAKE_BILLABLE, $data);
+    }
 }

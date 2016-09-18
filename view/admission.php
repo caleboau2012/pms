@@ -206,19 +206,35 @@ $wards = $admission->loadWards();
             <div class="col-sm-8">
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
-                    <div id="in-patient-identity">
-                        <h2 class='text-primary text-capitalize' id="patient_name">
+                    <div class="col-md-6">
+                        <div id="in-patient-identity">
+                            <h2 class='text-primary text-capitalize' id="patient_name">
 
-                        </h2>
-                        <h4 class="text-muted text-uppercase">
-                            <span class="fa fa-barcode text-success">&nbsp;</span>
-                            <span id="patient_reg_num"></span>
-                        </h4>
-                        <h4 class="text-capitalize text-muted">
-                            <span class="fa fa-stethoscope text-info">&nbsp;</span>
-                            Requested by&nbsp;<span id="req_doctor"></span>
-                        </h4>
+                            </h2>
+                            <h4 class="text-muted text-uppercase">
+                                <span class="fa fa-barcode text-success">&nbsp;</span>
+                                <span id="patient_reg_num"></span>
+                            </h4>
+                            <h4 class="text-capitalize text-muted">
+                                <span class="fa fa-stethoscope text-info">&nbsp;</span>
+                                Requested by&nbsp;<span id="req_doctor"></span>
+                            </h4>
+                            <div>
+
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-md-6" style="padding: 15px;">
+                        <div class="text-right" id="discharge_patient_content">
+                            <button class="btn btn-warning" id="discharge_patient">Discharge</button><br/><br/>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div id="discharge_patient_response" class="text-danger"> </div>
+                    </div>
+                    <div class="clearfix"></div>
+
 
                     <ul class="nav nav-tabs nav-pills nav-justified">
                         <li><a href="#home-tab" data-toggle="tab">Details</a></li>

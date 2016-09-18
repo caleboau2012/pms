@@ -2,8 +2,7 @@
  * Created by olajuwon on 2/10/2015.
  */
 (function ($){
-
-    Roster = {
+    var Roster = {
         init: function(){
             $('#calendar').fullCalendar({
                 header: {

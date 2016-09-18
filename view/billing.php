@@ -18,8 +18,8 @@ Crave::requireAll(UTIL);
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
-<!--    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />-->
-<!--    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />-->
+    <!--    <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />-->
+    <!--    <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />-->
     <link href="../css/master.css" rel="stylesheet">
 </head>
 <body>
@@ -80,10 +80,10 @@ Crave::requireAll(UTIL);
                         <div class="row">
                             <div style="width:50%; padding: 0 20px;" class="pull-left">
 
-                                    <p id="patientRegNo" class="h4"></p>
-                                    <p id="patientName"></p>
-                                    <p id="home_address"></p>
-                                    <p><span class="fa fa-phone"></span> <span id="telephone"></span></p>
+                                <p id="patientRegNo" class="h4"></p>
+                                <p id="patientName"></p>
+                                <p id="home_address"></p>
+                                <p><span class="fa fa-phone"></span> <span id="telephone"></span></p>
 
                             </div>
                             <div style="width: 50%; padding: 0 20px;" class="pull-right">
@@ -171,16 +171,23 @@ Crave::requireAll(UTIL);
                             <span id="days_spent"></span>
                         </p>
                         <p>
-                            <p class="h4 text-center">Prescribed Drugs</p>
-                            <div id="prescription"></div>
+                        <p class="h4 text-center">Prescribed Drugs</p>
+                        <div id="prescription"></div>
                         </p>
                         <p class="text-center">
-                            <p class="h4 text-center">Lab Tests Performed</p>
-                            <p id="test" class="test text-center"></p>
+                        <p class="h4 text-center">Lab Tests Performed</p>
+                        <table class="table table-striped">
+                            <thead text-center><tr>
+                                <th>Test</th>
+                                <th>Diagnosis</th>
+                                <th>Date</th>
+                            </tr></thead>
+                            <tbody id="test" class="test text-center"></tbody>
+                        </table>
                         </p>
                         <p class="text-center">
-                            <p class="h4 text-center">Procedure</p>
-                            <div id="procedure" class="text-center"></div>
+                        <p class="h4 text-center">Procedure</p>
+                        <div id="procedure" class="text-center"></div>
                         </p>
                     </div>
                     <div>
