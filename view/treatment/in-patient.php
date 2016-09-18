@@ -82,11 +82,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     </ul>
                 </li>
             </ul>
-            <form class="treatment navbar-form">
-                <div class="search form-inline">
-                    <input type="text" class="form-control" name="search" placeholder="Search Patients...">
-                </div>
-            </form>
+<!--            <form class="treatment navbar-form">-->
+<!--                <div class="search form-inline">-->
+<!--                    <input type="text" class="form-control" name="search" placeholder="Search Patients...">-->
+<!--                </div>-->
+<!--            </form>-->
         </div>
     </div>
 </nav>
@@ -113,7 +113,8 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <span class="patientName" hidden>{{name}}</span>
                 <span class="treatment_id" hidden>{{treatment_id}}</span>
                 <span class="patientRegNo" hidden>{{regNo}}</span>
-                <span class="bed_id">Bed: {{bed}}</span>
+                <p class="bed_id">Bed: {{bed}}</p>
+                <p class="ward">Ward: {{ward}}</p>
             </div>
         </div>
     </div>
