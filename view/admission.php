@@ -22,10 +22,16 @@ $wards = $admission->loadWards();
     <meta charset='utf-8' />
     <title>Admin Dashboard</title>
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
     <link href='../css/libs/fullCalendar/fullcalendar.print.css' rel='stylesheet' media='print' />
     <link href="../css/master.css" rel="stylesheet">
+    <style>
+        .form-group{
+            margin-bottom: 50px;
+        }
+    </style>
 </head>
 <body>
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -91,8 +97,8 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
             </div>
-            <div class="col-sm-8 col-sm-offset-1 patient-content">
-                <h1 class="text-muted text-center" idcd="empty_active"><br/><br/>&larr; Select patient </h1>
+            <div class="col-sm-8 patient-content">
+                <h1 class="text-muted text-center" id="empty_active"><br/><br/>&larr; Select patient </h1>
                 <div id="patient-panel" class="panel panel-primary hidden">
                     <div class="panel-heading">
                         <div id="request-heading">
@@ -159,18 +165,18 @@ $wards = $admission->loadWards();
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <p>
+                    <h3>
                         <span class="fa fa-university text-danger">&nbsp;</span>
-                        20 Wards
-                    </p>
-                    <p>
+                        <span class="num_of_wards"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-danger">&nbsp;</span>
-                        200 Beds
-                    </p>
-                    <p>
+                        <span class="num_of_beds"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-success">&nbsp;</span>
-                        30 Available Beds
-                    </p>
+                        <span class="num_of_available_beds"></span>
+                    </h3>
                 </div>
             </div>
         </div>
@@ -200,19 +206,51 @@ $wards = $admission->loadWards();
             <div class="col-sm-8">
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
-                    <div id="in-patient-identity">
-                        <span class="fa fa-pulse fa-spin"></span>
+                    <div class="col-md-6">
+                        <div id="in-patient-identity">
+                            <h2 class='text-primary text-capitalize' id="patient_name">
+
+                            </h2>
+                            <h4 class="text-muted text-uppercase">
+                                <span class="fa fa-barcode text-success">&nbsp;</span>
+                                <span id="patient_reg_num"></span>
+                            </h4>
+                            <h4 class="text-capitalize text-muted">
+                                <span class="fa fa-stethoscope text-info">&nbsp;</span>
+                                Requested by&nbsp;<span id="req_doctor"></span>
+                            </h4>
+                            <div>
+
+                            </div>
+                        </div>
                     </div>
+                    <div class="col-md-6" style="padding: 15px;">
+                        <div class="text-right" id="discharge_patient_content">
+                            <button class="btn btn-warning" id="discharge_patient">Discharge</button><br/><br/>
+                        </div>
+
+                    </div>
+                    <div class="col-md-12">
+                        <div id="discharge_patient_response" class="text-danger"> </div>
+                    </div>
+                    <div class="clearfix"></div>
+
 
                     <ul class="nav nav-tabs nav-pills nav-justified">
                         <li><a href="#home-tab" data-toggle="tab">Details</a></li>
                         <li class="active"><a href="#switch-tab" data-toggle="tab">Switch Bed</a></li>
-                        <li><a href="#vitals-tab" data-toggle="tab">Log Encounter</a></li>
+                        <li><a href="#vitals-tab" data-toggle="tab">Vitals</a></li>
                     </ul>
                     <div id="myTabContent" class="tab-content">
                         <div class="tab-pane fade adm-tab-pane" id="home-tab">
                             <br/>
-                            Lorem ipsum dolor sit amet, consectetur adipisicing elit. Corporis dolore enim est eum quae quo.
+                            <div class="div-rounded" style="background: #337AB7;">
+                                <span class="fa fa-calendar"></span>
+                            </div>
+                            <h4 class="text-muted text-center" style="margin-bottom: 0">Admitted on</h4>
+                            <h3 class="text-center text-info" style="margin-top: 5px">
+                                <span id="entry_date"></span>
+                            </h3>
                         </div>
                         <div class="tab-pane fade adm-tab-pane active in" id="switch-tab">
                             <br/>
@@ -269,18 +307,21 @@ $wards = $admission->loadWards();
                             <!--                                </div>-->
                             <!-- <h2 class="text-warning text-center">Log Encounter...</h2>-->
                             <div id="log_encounter_loading" class="text-center hidden"><span class="fa fa-spinner fa-spin fa-2x"></span> </div>
-                            <div class="text-center" id="log_encounter_response"></div>
                             <form id="log_encounter">
-                                <div class="form-group">
-                                    <p class="text-center text-warning">All fields are compulsory</p>
+                                <h4 class="text-center text-warning">All fields are compulsory</h4>
+                                <div class="text-center" id="log_encounter_response"></div>
+
+                                    <div class="form-group">
                                     <div class="col-sm-6">
                                         <label for="temp">Temperature</label>
                                         <input type="text" class="form-control" id="temp" name="temp" required="required">
+
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="pulse">Pulse</label>
                                         <input type="text" id="pulse" class="form-control" name="pulse" required="required">
                                     </div>
+                                        <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -291,6 +332,7 @@ $wards = $admission->loadWards();
                                         <label for="blood_pressure">Blood Pressure</label>
                                         <input type="text" class="form-control" id="blood_pressure" name="blood_pressure" required="required">
                                     </div>
+                                    <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -301,6 +343,7 @@ $wards = $admission->loadWards();
                                         <label for="weight">Weight</label>
                                         <input type="text" class="form-control" id="weight" name="weight" required="required">
                                     </div>
+                                    <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">
@@ -314,6 +357,7 @@ $wards = $admission->loadWards();
                                         <label for="comment">Comment</label>
                                         <textarea class="form-control" id="comment" name="comment" required="required"></textarea>
                                     </div>
+                                    <br/>
                                 </div>
 
                                 <div class="col-sm-offset-5 col-sm-3">
@@ -334,18 +378,18 @@ $wards = $admission->loadWards();
                         <h2 class="text-center"><span class="fa fa-history"></span></h2>
                         <h3 class="text-center">Overview</h3>
                     </div>
-                    <p>
+                    <h3>
                         <span class="fa fa-university text-danger">&nbsp;</span>
-                        20 Wards
-                    </p>
-                    <p>
+                        <span class="num_of_wards"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-danger">&nbsp;</span>
-                        200 Beds
-                    </p>
-                    <p>
+                        <span class="num_of_beds"></span>
+                    </h3>
+                    <h3>
                         <span class="fa fa-bed text-success">&nbsp;</span>
-                        30 Available Beds
-                    </p>
+                        <span class="num_of_available_beds"></span>
+                    </h3>
                 </div>
                 <div class="discharge-container hidden">
                     <br/>

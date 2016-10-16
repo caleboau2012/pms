@@ -351,12 +351,6 @@ class TreatmentModel extends BaseModel{
         return $this->conn->fetchAll(EncounterSqlStatement::GET_ENCOUNTERS, $data);
     }
 
-    // used to get encounter_id for a particular patient_id
-    public function getEncounter_id($patientId){
-        $data = array(EncounterTable::treatment_id => $patientId);
-        return $this->conn->fetch(EncounterSqlStatement::GET_ENCOUNTERS_ID, $data);
-    }
-
     private function getUnclosedEncounterSession($treatmentId, $admissionId){
         $data = array(EncounterTable::treatment_id => $treatmentId, EncounterTable::admission_id => $admissionId);
         $result = $this->conn->fetch(EncounterSqlStatement::GET_UNCLOSED_SESSION,
@@ -369,5 +363,8 @@ class TreatmentModel extends BaseModel{
         return 0;
     }
 
-
+    public function makeBillable($treatmentId){
+        $data = array(TreatmentTable::treatment_id => $treatmentId);
+        return $this->conn->execute(TreatmentSqlStatement::MAKE_BILLABLE, $data);
+    }
 }

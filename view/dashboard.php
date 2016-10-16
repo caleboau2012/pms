@@ -218,7 +218,6 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../js/index.js"></script>
 <script src="../js/backup_restore.js" type="application/javascript"></script>
 <script src='../js/libs/fullcalendar/moment.min.js'></script>
-<script src='../js/bootstrap/jquery-ui.custom.min.js'></script>
 <script src='../js/libs/fullcalendar/fullcalendar.min.js'></script>
 <script src="../js/dashboard-roster.js"></script>
 <?php include('footer.php'); ?>

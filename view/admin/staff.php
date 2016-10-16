@@ -96,7 +96,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
         <td>{{sn}}</td>
         <td>{{staffId}}</td>
         <td>{{name}}</td>
-        <td><button class="btn btn-sm btn-default" userid="{{userid}}" onclick="profileModal(this)">Manage</button></td>
+        <td><button class="btn btn-sm btn-default" data-status="{{profile-status}}" userid="{{userid}}" onclick="profileModal(this)">Manage</button></td>
         <td><button class="btn btn-sm btn-default" userid="{{userid}}" onclick="rapModal(this)">Manage</button></td>
         <td>
             <div class="switch">
@@ -199,7 +199,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                     <div class="text-success text-center hidden" id="form-success"></div>
                                     <form action="#" method="post" role="form"  id="profile-form">
                                         <input type="hidden" id="profile-user-id" name="<?php echo ProfileTable::table_name.'['.ProfileTable::userid.']'?>">
-                                        <input type="hidden" name="intent" value="updateProfile">
+                                        <input type="hidden" name="intent" id="intent" value="updateProfile">
                                         <div class="form-group col-md-4">
                                             <label for="first-name">First Name</label>
                                             <input type="text" class="form-control" id="first-name" name="<?php echo ProfileTable::table_name.'['.ProfileTable::firstname.']'?>" required>
@@ -242,7 +242,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <option id="dept-doctor" value="<?php echo DOCTOR; ?>">Doctor</option>
                                                 <option id="dept-pharmacy" value="<?php echo PHARMACIST; ?>">Pharmacy</option>
                                                 <option id="dept-mro" value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
-                                                <option id="dept-urine" value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
+                                                <option id="dept-urine" value="<?php echo URINE_CONDUCTOR; ?>">Microscopy</option>
                                                 <option id="dept-visual" value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
                                                 <option id="dept-xray" value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
                                                 <option id="dept-parasitology" value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>

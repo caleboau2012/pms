@@ -2,12 +2,11 @@
  * Created by olajuwon on 2/10/2015.
  */
 (function ($){
-
-    Roster = {
+    var Roster = {
         init: function(){
-            $('#dashboard-calendar').fullCalendar({
+            $('#dashboard-calendar').fullCalendar('removeEvents').fullCalendar({
                 header: {
-                    left: 'today',
+                    left: 'prev,next today',
                     center: 'title',
                     right: 'basicWeek, basicDay'
                 },
@@ -21,6 +20,9 @@
                 },
                 loading: function(bool) {
                     $('#roster_loading').toggle(bool);
+                    if(!bool){
+                        Roster.clearDuplicates();
+                    }
                 }
             });
             //*Legend */
@@ -31,6 +33,12 @@
             //              '</div>';
             //$('.fc-toolbar').append(content)
             //console.log((new Date()).toUTCString());
+        },
+        clearDuplicates: function(){
+            console.log($(".fc-event-container"));
+            $(".fc-event-container").each(function(i){
+                $(this).remove();
+            });
         }
     };
     $(function(){

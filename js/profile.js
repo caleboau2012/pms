@@ -28,7 +28,7 @@ $(function(){
                     $('#form-error').addClass('hidden');
                     $('#form-success').removeClass('hidden').html(response.data);
                     setTimeout(function(){
-                        window.location.assign('../view/dashboard.php');
+                        window.location.assign(host + 'view/dashboard.php');
                     }, 2500);
                 }
             }).fail(function(data){

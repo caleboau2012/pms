@@ -108,7 +108,7 @@ $profile = $userController->getUserProfile($_SESSION[UserAuthTable::userid]);
                             <option <?php echo ($profile[ProfileTable::department_id] == 1)?"selected":""?> value="<?php echo DOCTOR; ?>">Doctor</option>
                             <option <?php echo ($profile[ProfileTable::department_id] == 2)?"selected":""?> value="<?php echo PHARMACIST; ?>">Pharmacy</option>
                             <option <?php echo ($profile[ProfileTable::department_id] == 3)?"selected":""?> value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
-                            <option <?php echo ($profile[ProfileTable::department_id] == 7)?"selected":""?> value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
+                            <option <?php echo ($profile[ProfileTable::department_id] == 7)?"selected":""?> value="<?php echo URINE_CONDUCTOR; ?>">Microscopy</option>
                             <option <?php echo ($profile[ProfileTable::department_id] == 5)?"selected":""?> value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
                             <option <?php echo ($profile[ProfileTable::department_id] == 6)?"selected":""?> value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
                             <option <?php echo ($profile[ProfileTable::department_id] == 4)?"selected":""?> value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>

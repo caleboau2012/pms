@@ -65,14 +65,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 <li><a href="#" class="label-default">Patients</a></li>
                 <li><a href="staff.php">Staff</a></li>
                 <li><a href="config.php">Config</a></li>
-                <li class="dropdown navbar-right-text pointer">
-                    <span class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
-                    <img src="../../images/profile.png">
-                    <span>
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" id="dropdownMenu1" data-toggle="dropdown" aria-expanded="true">
+                        <img src="../../images/profile.png">
                         <?php echo ucwords(CxSessionHandler::getItem(ProfileTable::surname).' '.CxSessionHandler::getItem(ProfileTable::firstname))?>
                         <span class="caret"></span>
-                     </span>
-                    </span>
+                    </a>
                     <ul class="dropdown-menu" role="menu" aria-labelledby="dropdownMenu1">
                         <li role="presentation"><a href="../dashboard.php">Dashboard</a></li>
                         <li class="divider"></li>

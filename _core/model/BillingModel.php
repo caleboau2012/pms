@@ -134,7 +134,7 @@ class BillingModel extends BaseModel {
     }
 
     public function editBillItem($id, $bill, $amount){
-        $data = array(BillablesTable::billables_id => $id, BillablesTable::bill => bill,
+        $data = array(BillablesTable::billables_id => $id, BillablesTable::bill => $bill,
                       BillablesTable::amount => $amount);
         return $this->conn->execute(BillingSqlStatement::EDIT_BILL_ITEM, $data);
     }

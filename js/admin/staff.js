@@ -1,7 +1,7 @@
 /**
  * Created by user on 1/27/2015.
  */
-var name;
+var name, status;
 var userid;
 var addNewRoleOptionHTML = "";
 var existingRolesTableHTML = "";
@@ -20,9 +20,11 @@ function init(){
             if(((obj.surname + " " + obj.firstname + " " + obj.middlename).trim() == "")
                 || ((obj.surname + " " + obj.firstname + " " + obj.middlename).trim() == "null null null")){
                 name = "[Incomplete Registration]";
+                status = 0;
             }
             else{
                 name = obj.surname + " " + obj.firstname + " " + obj.middlename;
+                status = 1;
             }
             html += $('#tmplTable').html().replace('{{sn}}', (i + 1) )
                 .replace("{{staffId}}", obj.regNo)
@@ -31,6 +33,7 @@ function init(){
                 .replace("{{userid}}", obj.userid)
                 .replace("{{userid}}", obj.userid)
                 .replace("{{userid}}", obj.userid)
+                .replace("{{profile-status}}", status)
                 .replace("{{userid}}", obj.userid)
                 .replace("{{active_fg}}", obj.active_fg);
         }
@@ -63,7 +66,6 @@ function rapModal(e){
 
 function toggleDelete(e){
     userid = $(e).attr('userid');
-    console.log({origin: $(e).attr('data-origin'), userid: userid});
 
     if($(e).attr('data-origin') == 'auto'){
         return true;
@@ -115,11 +117,29 @@ function toggleDelete(e){
 
 function profileModal(e){
     userid = $(e).attr('userid');
+    status = $(e).attr('data-status');
+
+    $("#profile-form")[0].reset();
+
+    if(status == 1){
+        $("#intent").val("updateProfile")
+    }
+    else{
+        $("#intent").val("addProfile")
+    }
+
+    console.log({
+        userid: userid,
+        status: status,
+        intent: $("#intent").val()
+    });
+
     $.getJSON(host + "phase/phase_profile.php?intent=getProfile&userid=" + userid, function(data){
         console.log(data);
+        $('#profile-user-id').attr('value', userid);
+
         if(data.status == 1){
             data = data.data;
-            $('#profile-user-id').val(userid);
             $('#first-name').val(data.firstname);
             $('#middle-name').val(data.middlename);
             $('#surname').val(data.surname);

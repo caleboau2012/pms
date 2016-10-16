@@ -349,6 +349,7 @@ Treatment = {
             patientId: $('.patient-ID').html(),
             labType: type
         }, function(data){
+            console.log(data);
             if(data.status == 1){
                 data = data.data;
                 var html = "";
@@ -375,7 +376,7 @@ Treatment = {
                         "<td>" + status + "</td>" +
                         "<td><a target='_blank' href='" +
                         host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
-                        "' class='btn btn-sm btn-default'>View</a>" +
+                        "&encounter_id=" + data[i].encounter_id + "' class='btn btn-sm btn-default'>View</a>" +
                         "</td>" +
                         "</tr>";
                 }
