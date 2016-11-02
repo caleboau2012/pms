@@ -164,7 +164,7 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
 
                         <div class="row">
                             <div class="page-header">
-                                <h2 class="page-header__title">Radiology (X-ray)</h2>
+                                <h2 class="page-header__title">Radiology</h2>
                                 <div class="alert hidden alert-danger alert-dismissable" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
@@ -187,9 +187,9 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                                                }
                                                ?>"/>
                                     </div>
-                                    <fieldset class="barX"><legend class="test-label">X-Ray Details</legend>
+                                    <fieldset class="barX"><legend class="test-label">Radiology Details</legend>
                                         <div class="form-group">
-                                            <label for="xray-no" class="test-label col-sm-1 text-right">X-ray No:</label>
+                                            <label for="xray-no" class="test-label col-sm-1 text-right">Radiology No:</label>
                                             <div class="col-sm-2">
                                                 <input type="text" <?php echo $disabled; ?> id="xray-no" class="form-control" name="<?php echo 'data[xray]' . '[' . XrayNoTable::xray_number . ']';  ?>"
                                                 value="<?php
@@ -267,13 +267,13 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
                                         <input type="text" <?php echo $disabled; ?> class="col-sm-12 form-control" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::any_known_allergies . ']'; ?>"
                                                value="<?php if(isset($view_bag['details']['previous_operation'])) echo $view_bag['details']['any_known_allergies']; ?>"/>
                                     </div>
-                                    <div class="test-label">Previous X-ray:
+                                    <div class="test-label">Previous Radiology Test:
                                         <input type="radio" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::previous_xray . ']';  echo $disabled;?>" value="1"
                                         <?php if(isset($view_bag['details']['previous_xray']) AND $view_bag['details']['previous_xray'] == 1) {echo 'checked=checked';}?>/> Yes
                                         <input  type="radio" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::previous_xray . ']'; ?>" value="0"
                                             <?php if(isset($view_bag['details']['previous_xray']) AND $view_bag['details']['previous_xray'] == 0) {echo 'checked=checked';}?>/> No
                                     </div>
-                                    <label class="test-label">Quote X-ray Number</label>
+                                    <label class="test-label">Quote Radiology Test Number</label>
                                     <div class="center-block">
                                         <input type="text" <?php echo $disabled; ?> class="col-sm-12 form-control" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::xray_number . ']'; ?>"
                                         value="<?php if(isset($view_bag['details']['xray_number'])) echo $view_bag['details']['xray_number']; ?>"/>
