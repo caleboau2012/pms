@@ -376,7 +376,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-7 col-md-9">
                                 <label>Description</label>
                                 <textarea id="description" class="form-control" type="text"
-                                          name="description"></textarea>
+                                          name="description" required></textarea>
                             </div>
                         </div>
                     </form>

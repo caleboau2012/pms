@@ -361,6 +361,7 @@ Treatment = {
             labType: form.test_id.value
         }, function(data){
             showSuccess(data.data);
+            form.reset();
         }, 'json')
     },
     getLabHistory: function(type){
