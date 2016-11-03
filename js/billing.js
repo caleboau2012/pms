@@ -24,8 +24,8 @@ Billing = {
         $('#add_more').click(function(e){
             Billing.addMore();
         });
-        $('#remove_one').click(function(e){
-            Billing.removeOne();
+        $(document).delegate('.remove-one', 'click', function(e){
+            Billing.removeOne(this);
         });
         $('#print').click(function(e){
             Billing.endBilling(document.bill);
@@ -75,15 +75,18 @@ Billing = {
                 var html;
 
                 for(i = 0; i < data.length; i++){
-                     html = '<tr>' +
+                    html = '<tr>' +
                         '<td><input class="form-control item" name="item[' +
                         i +
                         ']" disabled value="' + data[i].bill + '"></td> ' +
                         '<td><input class="form-control amount" type="number" name="amount[' +
                         i +
                         ']" value="' + data[i].amount + '"></td>' +
+                        '<td><button type="button" class="remove-one btn btn-warning btn-sm">'
+                        + '<span class="fa fa-minus"></span>' +
+                        '   </button></td>' +
                         '</tr>';
-                    $('tbody').append(html);
+                    $('.bill-body').append(html);
                 }
 
                 Billing.computeTotal();
@@ -136,19 +139,24 @@ Billing = {
     },
     addMore: function(){
         var count = $('tbody').children().length;
-        var html = '<tr id="extra' + count + '">' +
+        var html = '<tr>' +
             '<td><input class="form-control item" name="item[' +
-                count +
-                ']"></td>' +
+            count +
+            ']"></td>' +
             '<td><input class="form-control amount" type="number" name="amount[' +
-                count +
-                ']"></td>' +
+            count +
+            ']"></td>' +
+            '<td><button type="button" class="remove-one btn btn-warning btn-sm">'
+            + '<span class="fa fa-minus"></span>' +
+            '   </button></td>' +
             '</tr>';
         Billing.CONSTANTS.INDEX = count;
-        $('tbody').append(html);
+        $('.bill-body').append(html);
     },
-    removeOne: function(){
-        $('#extra' + Billing.CONSTANTS.INDEX).remove();
+    removeOne: function(button){
+        console.log(button);
+        $(button).parent().parent().remove();
+        //$('#extra' + Billing.CONSTANTS.INDEX).remove();
     },
     getDetails: function(){
         $.getJSON(host + 'phase/phase_billing.php', {
@@ -257,6 +265,8 @@ Billing = {
         });
 
         $("tfoot tr")[0].remove();
+        $(".delete").remove();
+        $(".remove-one").parent().remove();
 
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'post_bills',
