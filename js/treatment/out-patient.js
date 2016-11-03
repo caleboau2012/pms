@@ -44,13 +44,23 @@ Treatment = {
             Treatment.submitTreatment(this);
         });
 
-        $('#end').click(function(e){
+        $('#end').popover({
+            content: "This will terminate the treatment session with the patient permanently",
+            trigger: "hover",
+            title: "What is this?",
+            placement: "bottom"
+        }).click(function(e){
             if(confirm("Are you sure you want to do this?")){
                 Treatment.endTreatment();
             }
         });
 
-        $('#end-incomplete').click(function(e){
+        $('#end-incomplete').popover({
+            content: "This will suspend the treatment session with the patient",
+            trigger: "hover",
+            title: "What is this?",
+            placement: "bottom"
+        }).click(function(e){
             if(confirm("Are you sure you want to do this?")){
                 Treatment.removeFromQueue($('.patient-ID').html());
             }

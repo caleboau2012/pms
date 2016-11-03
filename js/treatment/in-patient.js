@@ -46,8 +46,15 @@ Treatment = {
             Treatment.submitTreatment(this);
         });
 
-        $('#end').click(function(e){
-            Treatment.endTreatment();
+        $('#end').popover({
+            content: "This will terminate the treatment session with the patient permanently",
+            trigger: "hover",
+            title: "What is this?",
+            placement: "bottom"
+        }).click(function(e){
+            if(confirm("Are you sure you want to do this?")){
+                Treatment.endTreatment();
+            }
         });
 
         $(document.requestTestForm).on('submit', function(e){
