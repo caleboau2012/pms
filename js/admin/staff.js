@@ -96,8 +96,14 @@ function toggleDelete(e){
                     intent: 'restoreStaff',
                     userid: userid
                 }, function(data){
-                    console.log(data);
-                    $(e).attr('active_fg', '1');
+                    if(data.status == 1){
+                        $(e).attr('active_fg', '1');
+                    }
+                    else if(data.status == 2){
+                        alert(data.message);
+                        location.reload();
+                    }
+                    //console.log(data);
                 }, 'json');
             }
             else{
