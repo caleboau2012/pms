@@ -226,32 +226,35 @@ Treatment = {
             prescription.push($(this).text().substring(0, $(this).text().length - 1));
         });
 
-        console.log(Treatment.CONSTANTS.treatmentid);
-
         var url = host + "phase/phase_admission_request.php?treatment_id=" + Treatment.CONSTANTS.treatmentid +
             "&intent=requestAdmission";
 
         if(data.admit.checked){
             $.get(url, function(data){
-                console.log(data);
-                if(data.status == 2)
-                    showSuccess('Patient Already Admitted');
+                //console.log(data);
+                Loader.hide();
+                if(data.status == 2){
+                    ResponseModal.show('Patient Already Admitted', true);
+                    //showSuccess('Patient Already Admitted');
+                }
+
             }).fail(function(e){
-                console.log(e.responseText);
+                Loader.hide();
+                ResponseModal.show('Unable to complete request', false);
+                //console.log(e.responseText);
             });
         }
-
-        console.log({
-            intent: "submitTreatment",
-            treatment_id: Treatment.CONSTANTS.treatmentid,
-            doctor_id: Treatment.CONSTANTS.doctorid,
-            patient_id: $('.patient-ID').html(),
-            symptoms: data.symptoms.value,
-            consultation: data.consultation.value,
-            comments: data.comment.value,
-            diagnosis: data.diagnosis.value,
-            prescription: prescription
-        });
+        //console.log({
+        //    intent: "submitTreatment",
+        //    treatment_id: Treatment.CONSTANTS.treatmentid,
+        //    doctor_id: Treatment.CONSTANTS.doctorid,
+        //    patient_id: $('.patient-ID').html(),
+        //    symptoms: data.symptoms.value,
+        //    consultation: data.consultation.value,
+        //    comments: data.comment.value,
+        //    diagnosis: data.diagnosis.value,
+        //    prescription: prescription
+        //});
 
         url = host + "phase/phase_treatment.php";
         $.post(url, {
@@ -267,14 +270,18 @@ Treatment = {
         }, function(response){
             console.log(response);
             $('#loader').addClass('hidden');
+            Loader.hide();
             if(response.status == 1){
-                showSuccess("Done, please end the session if you are done");
+                ResponseModal.show('Done, please end the session if you are done', true);
+                //showSuccess("");
                 $(data)[0].reset();
             }
             else{
-                showAlert(response.message);
+                console.log('ssd');
+                ResponseModal.show(response.message, false);
+                //showAlert(response.message);
             }
-        }, 'json')
+        }, 'json');
     },
     removeFromQueue: function (patient){
         $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
@@ -372,6 +379,7 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
+            //showSuccess(data.data);
             form.reset();
             Loader.hide();
             ResponseModal.show(data.data, true);

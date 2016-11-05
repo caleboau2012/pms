@@ -252,15 +252,18 @@ elseif  ($intent == 'submitTreatment') { //working
 
     if ($admission_add){
 
-        foreach ($prescription as $somepre) {
-            $status = ACTIVE;
-            $mod = DOCTOR;
-            $pre  = new PharmacistController();
-            $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
-            if(!$pre){
-                exit();
+        if($prescription != null){
+            foreach ($prescription as $somepre) {
+                $status = ACTIVE;
+                $mod = DOCTOR;
+                $pre  = new PharmacistController();
+                $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
+                if(!$pre){
+                    exit();
+                }
             }
         }
+
     }
 
     if($admission_add || $pre){
