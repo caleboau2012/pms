@@ -268,7 +268,6 @@ Treatment = {
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
-            console.log(response);
             $('#loader').addClass('hidden');
             Loader.hide();
             if(response.status == 1){
@@ -277,7 +276,6 @@ Treatment = {
                 $(data)[0].reset();
             }
             else{
-                console.log('ssd');
                 ResponseModal.show(response.message, false);
                 //showAlert(response.message);
             }
