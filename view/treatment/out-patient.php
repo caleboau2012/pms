@@ -452,6 +452,16 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     </div>
 </div>
 
+<!--<div id="loaderOverlay">
+    <div id="loader" class="text-center">
+        <h2 class="text-content">Processing...</h2>
+    </div>
+
+</div>-->
+
+
+
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -462,6 +472,9 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../../js/constants.js"></script>
 <script src="../../js/treatment/out-patient.js"></script>
 
+<script>
+
+</script>
 <?php include('../footer.php'); ?>
 
 </body>

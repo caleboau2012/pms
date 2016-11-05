@@ -68,6 +68,7 @@ Treatment = {
 
         $(document.requestTestForm).on('submit', function(e){
             e.preventDefault();
+
             Treatment.requestTest(this);
         });
 
@@ -361,6 +362,7 @@ Treatment = {
         });
     },
     requestTest: function(form){
+        Loader.show();
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "labRequest",
@@ -370,8 +372,9 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            showSuccess(data.data);
             form.reset();
+            Loader.hide();
+            ResponseModal.show(data.data, true);
         }, 'json')
     },
     getLabHistory: function(type){
