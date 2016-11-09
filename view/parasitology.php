@@ -184,7 +184,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                             <div class="col-sm-12">
                                 <div class="center-block">
                                     <fieldset>
-                                        <h4 class="title">Clinical Diagnosis</h4>
+                                        <h4 class="title">Clinical Description</h4>
                                         <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['diagnosis'])){
                                                 echo $view_bag['details']['diagnosis'];

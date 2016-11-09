@@ -22,6 +22,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
 
+//var_dump($view_bag);
 ?>
 
 <!DOCTYPE html>
@@ -185,6 +186,14 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                             <div class="col-sm-12">
                                 <table class="table table-striped table-responsive">
                                     <thead>
+                                    <tr>
+                                        <th class="test-label">
+                                            <h4>Laboratory Report</h4>
+                                        </th>
+                                        <th class="test-label" colspan="2">
+                                            <textarea class="form-control col-sm-8"></textarea>
+                                        </th>
+                                    </tr>
                                     <tr>
                                         <th colspan="4" class="title text-center">Step One</th>
                                     </tr>
