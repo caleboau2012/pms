@@ -293,8 +293,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     </div>
 </div>
 
-<?php include('footer.php'); ?>
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -304,5 +302,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
+
+<?php include('footer.php'); ?>
 </body>
 </html>
