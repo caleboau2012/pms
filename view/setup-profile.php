@@ -102,7 +102,7 @@ Crave::requireAll(UTIL);
                             <option value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
                             <option value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
                             <option value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
-                            <option value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
+                            <option value="<?php echo XRAY_CONDUCTOR; ?>">Radiology</option>
                             <option value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>
                             <option value="<?php echo CHEMICAL_PATHOLOGY_CONDUCTOR; ?>">Chemical Pathology</option>
                         </select>

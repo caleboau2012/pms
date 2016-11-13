@@ -808,7 +808,7 @@ class VisualRequestSqlStatement{
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.active_fg = :active_fg
                           ORDER BY v.created_date DESC";
     const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id";
-    const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
+    const UPDATE_DETAILS = "UPDATE visual_skills_profile SET laboratory_report =:laboratory_report, distance_re = :distance_re, distance_le = :distance_le,
                             distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
                             pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
@@ -901,6 +901,8 @@ class AdmissionSqlStatement {
                 ON ad.admission_id = adb.admission_id
             INNER JOIN bed
                 ON adb.bed_id = bed.bed_id
+            INNER JOIN ward_ref as wr
+                ON wr.ward_ref_id = bed.ward_id
         WHERE ad.active_fg = 1
             AND t.active_fg = 1
             AND p.active_fg = 1
@@ -915,7 +917,7 @@ class AdmissionSqlStatement {
             )
         ORDER BY ad.created_date DESC";
 
-    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo
+    const GET_PATIENTS = "SELECT ad.admission_id, ad.treatment_id, ad.entry_date, CONCAT_WS(' ', p.surname, p.firstname, p.middlename) AS doctor, t.patient_id, CONCAT_WS(' ', pt.surname, pt.firstname, pt.middlename) AS patient, pt.regNo, bed.bed_id, bed.bed_description, bed.ward_id, wr.description
         FROM admission AS ad
             INNER JOIN treatment AS t
                 ON t.treatment_id = ad.treatment_id
@@ -923,6 +925,12 @@ class AdmissionSqlStatement {
                 ON p.userid = t.doctor_id
             INNER JOIN patient AS pt
                 ON pt.patient_id = t.patient_id
+            INNER JOIN admission_bed AS ab
+                ON ab.admission_id = ad.admission_id
+            INNER JOIN bed
+                ON bed.bed_id = ab.bed_id
+            INNER JOIN ward_ref as wr
+                ON wr.ward_ref_id = bed.ward_id
         WHERE ad.active_fg = 1
             AND t.active_fg = 1
             AND p.active_fg = 1

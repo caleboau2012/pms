@@ -2,7 +2,7 @@
 
 body {
     padding-top: 54px;
-    padding-bottom: 40px;
+    /*padding-bottom: 40px;*/
     background-color: #eee;
     font-family: "Source Sans Pro", "Segoe UI", "Ubuntu", Helvetica, Arial, sans-serif;
 }
@@ -349,7 +349,7 @@ a.dashboard-link:hover, a.dashboard-link:focus {
     color: #409BC8;
 }
 #roster-wrap{
-    margin-top: 40px;
+    padding: 10px 0;
 }
 #rosterResponse{
     text-align: center;
@@ -731,6 +731,10 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
     vertical-align: middle;
 }
 
+.add-treatment textarea{
+    height: 70px;
+}
+
 @media (max-width: 1024px) {
     .patient-arrival .form-control {
         display: block;
@@ -807,8 +811,7 @@ a.accordion-toggle:hover, a.accordion-toggle:focus{
 
 .haematology, .parasitology{
     min-height:20px;
-    padding:19px;
-    margin-bottom:20px;
+    padding:20px;
     background-color:#ffffff;
     border:1px solid #e3e3e3;border-radius:4px;
     -webkit-box-shadow:inset 0 1px 1px rgba(0,0,0,.05);
@@ -1142,7 +1145,7 @@ span#loader{
 }
 /*Footer*/
 #footer{
-    margin-top: 50px;
+    /*margin-top: 5px;*/
     /*background: rgba(34, 34, 34, 0.72);*/
     padding: 15px;
     color: #2c2c2c;
@@ -1518,4 +1521,49 @@ input.cmn-toggle-round:checked + label:before{
 }
 input.cmn-toggle-round:checked + label:after{
     margin-left: 30px;
+}
+
+#print {
+    margin-right: 4px;
+    margin-top: 4px;
+}
+
+#loaderOverlay{
+    background-color:rgba(0,0,0,.76);
+    /*display:none;*/
+    height:100%;
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    z-index:1000;
+    color:#fff
+}
+#loaderOverlay #loader .text-content{
+    color:#fff;
+    margin:30% auto;
+    width:70%
+}
+
+#responseOverlay{
+    background-color:rgba(0,0,0,.8);
+    /*display:none;*/
+    height:100%;
+    width:100%;
+    position:fixed;
+    top:0;left:0;
+    z-index:1000;
+}
+#responseOverlay #loader{
+    background-color: rgb(255, 255, 255);
+    width: 500px;
+    min-height: 300px;
+    margin: 50px auto 10px;
+    z-index: 100000;
+}
+#responseOverlay #loader{
+    padding: 5px 15px;
+}
+
+.font-70{
+    font-size: 70px;
 }

@@ -1450,7 +1450,7 @@ INSERT INTO `staff_role` (`staff_role_id`, `created_date`, `modified_date`, `sta
 (5, '2015-01-28 13:01:20', '2015-01-28 13:01:25', 'permission', 'permission_granter', 1),
 (6, '2015-01-28 13:01:58', '2015-01-28 13:02:01', 'urine', 'urine test conductor', 1),
 (7, '2015-01-28 13:02:40', '2015-01-28 13:02:43', 'visual', 'visual test conductor', 1),
-(8, '2015-01-28 13:02:59', '2015-01-28 13:03:03', 'xray ', 'xray test conductor', 1),
+(8, '2015-01-28 13:02:59', '2015-01-28 13:03:03', 'xray ', 'radiology test conductor', 1),
 (9, '2015-01-28 13:03:32', '2015-01-28 13:03:35', 'health_scheme', 'health scheme', 1),
 (10, '2015-01-28 13:04:03', '2015-01-28 13:04:06', 'parasitology', 'parasitology conductor', 1),
 (11, '2015-01-28 13:04:24', '2015-01-28 13:04:26', 'chemical_pathology', 'chemical pathology conductor', 1),

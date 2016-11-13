@@ -163,7 +163,7 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                             <div class="col-sm-6">
                                 <div class="center-block">
                                     <fieldset>
-                                        <h4 class="title">Clinical Diagnosis and Relevant Details</h4>
+                                        <h4 class="title">Clinical Description and Relevant Details</h4>
                                         <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['clinical_diagnosis_details'])){
                                                 echo $view_bag['details']['clinical_diagnosis_details'];

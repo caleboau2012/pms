@@ -82,11 +82,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     </ul>
                 </li>
             </ul>
-            <form class="treatment navbar-form">
-                <div class="search form-inline">
-                    <input type="text" class="form-control" name="search" placeholder="Search Patients...">
-                </div>
-            </form>
+<!--            <form class="treatment navbar-form">-->
+<!--                <div class="search form-inline">-->
+<!--                    <input type="text" class="form-control" name="search" placeholder="Search Patients...">-->
+<!--                </div>-->
+<!--            </form>-->
         </div>
     </div>
 </nav>
@@ -113,7 +113,8 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <span class="patientName" hidden>{{name}}</span>
                 <span class="treatment_id" hidden>{{treatment_id}}</span>
                 <span class="patientRegNo" hidden>{{regNo}}</span>
-                <span class="bed_id">Bed: {{bed}}</span>
+                <p class="bed_id">Bed: {{bed}}</p>
+                <p class="ward">Ward: {{ward}}</p>
             </div>
         </div>
     </div>
@@ -201,7 +202,9 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <div class="panel-heading">
                     <h4 class="pull-left"><span class="label label-info hidden end">Session ID: <span class="treatment-ID"></span></span> <span class="patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></span></h4>
                     <span class="pull-right">
-                        <button id="end" class="hidden end btn btn-warning pull-right">End Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
+                        <button id="end" class="hidden end btn btn-warning pull-right">
+                            End Session <span class="treatment-ID"></span> <span class="fa fa-close"></span>
+                        </button>
                     </span>
                     <span class="clearfix"></span>
                 </div>
@@ -375,7 +378,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-7 col-md-9">
                                 <label>Description</label>
                                 <textarea id="description" class="form-control" type="text"
-                                          name="description"></textarea>
+                                          name="description" required></textarea>
                             </div>
                         </div>
                     </form>

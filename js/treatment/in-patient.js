@@ -46,8 +46,15 @@ Treatment = {
             Treatment.submitTreatment(this);
         });
 
-        $('#end').click(function(e){
-            Treatment.endTreatment();
+        $('#end').popover({
+            content: "This will terminate the treatment session with the patient permanently",
+            trigger: "hover",
+            title: "What is this?",
+            placement: "bottom"
+        }).click(function(e){
+            if(confirm("Are you sure you want to do this?")){
+                Treatment.endTreatment();
+            }
         });
 
         $(document.requestTestForm).on('submit', function(e){
@@ -71,7 +78,8 @@ Treatment = {
             Treatment.getLabHistory(this.value);
         });
 
-        //Treatment.getPatientQueue();
+        Treatment.getAllInPatients();
+
         $('.well').addClass('hidden');
 
         $('#prescriptionInput').keydown(function(e){
@@ -95,11 +103,11 @@ Treatment = {
     addPrescription: function(drug){
         var drugHTML = "";
         drugHTML = "<li class='list-group-item'>" + drug +
-        "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button></li>";
+            "<button type='button' class='close' aria-label='Close'><span aria-hidden='true'>&times;</span></button></li>";
         $('#prescriptions').append(drugHTML);
     },
     addToQueue: function (patient){
-        console.log(patient);
+        //console.log(patient);
         //var currentYear = new Date().getFullYear();
         //var age = currentYear - parseInt(data[i].birth_date.split('-')[0]);
         //
@@ -124,6 +132,7 @@ Treatment = {
         patientHTML = replaceAll('{{treatment_id}}', patient.treatment_id, patientHTML);
         patientHTML = replaceAll('{{bed}}', patient.bed_description, patientHTML);
         patientHTML = replaceAll('{{ward_id}}', patient.ward_id, patientHTML);
+        patientHTML = replaceAll('{{ward}}', patient.description, patientHTML);
 
         //console.log(patientHTML);
 
@@ -237,6 +246,7 @@ Treatment = {
         $('.well').addClass('hidden');
     },
     submitTreatment: function(data){
+        Loader.show();
         $('#loader').removeClass('hidden');
         var prescription = [];
         $('#prescriptions li').each(function(index){
@@ -258,19 +268,19 @@ Treatment = {
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
+            Loader.hide();
             //console.log(response);
             $('#loader').addClass('hidden');
             if(response.status == 1){
-                showSuccess("Done, please end the session if you are done");
+                ResponseModal.show("Done, please end the session if you are done", true);
                 $(data)[0].reset();
             }
             else{
-                showAlert(response.message);
+                ResponseModal.show(response.message, false);
             }
         }, 'json')
     },
     removeFromQueue: function (id){
-        console.log(id);
         $('.patients').find('#heading' + id).parent().remove();
         //$.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
         //+ patient), function(data){
@@ -357,6 +367,7 @@ Treatment = {
         });
     },
     requestTest: function(form){
+        Loader.show();
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "labRequest",
@@ -366,7 +377,9 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            showSuccess(data.data);
+            form.reset();
+            Loader.hide();
+            ResponseModal.show(data.data, true);
         }, 'json')
     },
     getLabHistory: function(type){
@@ -376,12 +389,10 @@ Treatment = {
             patientId: $('.patient-ID').html(),
             labType: type
         }, function(data){
-            console.log(data);
             if(data.status == 1){
                 data = data.data;
                 var html = "";
                 for(var i = 0; i < data.length; i++){
-                    console.log(data[i]);
                     var status;
                     switch(data[i].status){
                         case '5':
@@ -397,15 +408,15 @@ Treatment = {
                             status = "No status put in";
                     }
                     html += "<tr>" +
-                    "<td>" + data[i].treatment_id + "</td>" +
-                    "<td>" + data[i].diagnosis + "</td>" +
-                    "<td>" + data[i].modified_date + "</td>" +
-                    "<td>" + status + "</td>" +
-                    "<td><a target='_blank' href='" +
-                    host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
-                    "&encounter_id=" + data[i].encounter_id + "' class='btn btn-sm btn-default'>View</a>" +
-                    "</td>" +
-                    "</tr>";
+                        "<td>" + data[i].treatment_id + "</td>" +
+                        "<td>" + data[i].diagnosis + "</td>" +
+                        "<td>" + data[i].modified_date + "</td>" +
+                        "<td>" + status + "</td>" +
+                        "<td><a target='_blank' href='" +
+                        host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
+                        "&encounter_id=" + data[i].encounter_id + "' class='btn btn-sm btn-default'>View</a>" +
+                        "</td>" +
+                        "</tr>";
                 }
 
                 $('.table-data').html(html);
@@ -453,6 +464,21 @@ Treatment = {
                 $('.vitals ul').html("<li class='list-group-item'>" + data.message + "</li>")
             }
         }, 'json');
+    },
+    getAllInPatients: function () {
+        var payload = {};
+        payload.intent = "getPatients";
+
+        $.getJSON(host + 'phase/phase_admission.php', payload, function (data) {
+            if(data.status == 1){
+                data = data.data;
+                for(var i = 0; i < data.length; i++){
+                    Treatment.addToQueue(data[i]);
+                }
+            }else{
+                $('#in-patient-result').html("<h4 class='text-muted text-center'>"+ data.message +"</h4>")
+            }
+        });
     }
 };
 

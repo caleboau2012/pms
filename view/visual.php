@@ -40,6 +40,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -60,7 +61,15 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
+            <a class="navbar-brand" href="dashboard.php">
+                <?php
+                if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                    echo "Patient Management System";
+                }else{
+                    echo ucwords(CxSessionHandler::getItem('hospital_name'));
+                }
+                ?>
+            </a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
@@ -127,12 +136,20 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     </div>
 </script>
 <body>
+
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 well">
-            <div class="panel panel-default">
+        <br>
+        <div class="col-sm-12">
+            <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
+            <div class="panel panel-default" id="print-head">
                 <div class="panel-heading">
-                    <h2 class="panel-title"><span style="text-transform: uppercase"><?php echo $patient['surname']; ?></span> <?php echo $patient['middlename'].' '. $patient['firstname'];  ?></h2>
+                    <h2 class="panel-title">
+                        <span style="text-transform: uppercase">
+                            <?php echo $patient['surname']; ?>
+                        </span>
+                        <?php echo $patient['middlename'].' '. $patient['firstname'];  ?>
+                    </h2>
                 </div>
                 <div class="panel-body">
                     <p><?php echo $patient['regNo']; ?></p>
@@ -141,7 +158,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                 </div>
             </div>
 
-            <div class="haematology">
+            <div class="haematology" id="print-body">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
@@ -169,6 +186,14 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                 <table class="table table-striped table-responsive">
                                     <thead>
                                     <tr>
+                                        <th class="test-label">
+                                            <h4>Laboratory Report</h4>
+                                        </th>
+                                        <th class="test-label" colspan="2">
+                                            <textarea class="form-control col-sm-8"></textarea>
+                                        </th>
+                                    </tr>
+                                    <tr>
                                         <th colspan="4" class="title text-center">Step One</th>
                                     </tr>
                                     </thead>
@@ -192,7 +217,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="BE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_be.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_be])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_be]; ?>"></td>
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="RE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_re.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_re])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_re]; ?>"></td>
                                             <td class="test-label"><input type="text" <?php echo $disabled; ?> class="form-control" placeholder="LE" name="<?php echo 'data[details]['.VisualSkillsProfileTable::pinhole_acuity_le.']'; ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::pinhole_acuity_le])) echo $view_bag[VisualSkillsProfileTable::pinhole_acuity_le]; ?>"></td>
-
                                         </tr>
                                     </tbody>
                                 </table>
@@ -233,6 +257,28 @@ if ($view_bag[HaematologyTable::status_id] == 7){
         </div>
     </div>
 </div>
+<div class="clearfix"></div>
+<div id="print-footer" class="row hidden">
+    <div class="text-center">
+        <p><?php
+            if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                echo "Patient Management System";
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_name'));
+            }
+            ?>
+        </p>
+        <p>
+            <?php
+            if(is_null(CxSessionHandler::getItem('hospital_address'))){
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_address'));
+            }
+            ?>
+        </p>
+        <p></p>
+    </div>
+</div>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
@@ -243,5 +289,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
+
+<?php include('footer.php'); ?>
 </body>
 </html>

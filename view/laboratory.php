@@ -142,7 +142,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <?php
                     } else if ($staff[StaffRoleTable::staff_role_id] == XRAY_CONDUCTOR){
                         ?>
-                        <option value="radiology">XRAY</option>
+                        <option value="radiology">RADIOLOGY</option>
                 <?php
                     } else if ($staff[StaffRoleTable::staff_role_id] == VISUAL_CONDUCTOR){
                         ?>
