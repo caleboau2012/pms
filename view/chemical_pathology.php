@@ -10,11 +10,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
 }
 
+
 $lab = new LaboratoryController();
 $view_bag = array();
 $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
-//var_dump($view_bag);
 
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';

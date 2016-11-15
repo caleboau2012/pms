@@ -14,8 +14,7 @@ $lab = new LaboratoryController();
 
 $view_bag = array();
 
-
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 if ($view_bag[HaematologyTable::status_id] == 7){
@@ -190,7 +189,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                             <h4>Laboratory Report</h4>
                                         </th>
                                         <th class="test-label" colspan="2">
-                                            <textarea class="form-control col-sm-8"></textarea>
+                                            <textarea class="form-control col-sm-8" <?php echo $disabled; ?> class="form-control" placeholder="Laboratory Report" name="<?php echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?>" ></textarea>
                                         </th>
                                     </tr>
                                     <tr>
