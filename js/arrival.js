@@ -55,7 +55,7 @@ function init(){
                 showSuccess(data.data);
             }
         }, 'json').fail(function(e){
-            console.log(e.responseText);
+            //console.log(e.responseText);
         });
     });
 
@@ -166,7 +166,7 @@ function pollQueue(){
         $.getJSON(host + 'phase/arrival/phase_patient_arrival.php?intent=pollQueue', {
             LMT: limit
         }, function(data){
-            console.log({limit: limit, data: data});
+            //console.log({limit: limit, data: data});
             if(data.status == 1){
                loadQueue();
             }
@@ -212,8 +212,8 @@ function patientDrop(e, ui){
 function addToQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=addToQueue&patient_id='
     + patient), function(data){
-        console.log('Adding to Gen Queue');
-        console.log(data);
+        //console.log('Adding to Gen Queue');
+        //console.log(data);
     });
 }
 
@@ -227,8 +227,8 @@ function removeFromQueue(patient){
 function switchQueue(patient, fromDoctor, toDoctor){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=switchQueue&patient_id='
     + patient + '&to_doctor=' + toDoctor + '&from_doctor=' + fromDoctor), function(data){
-        console.log('Switching Queues');
-        console.log(data);
+        //console.log('Switching Queues');
+        //console.log(data);
     });
 }
 
@@ -282,7 +282,7 @@ function addPatient(form){
                 },
                 function(data){
                     data = JSON.parse(data);
-                    console.log(data);
+                    //console.log(data);
 
                     var patientHTML = "";
                     patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
@@ -300,11 +300,11 @@ function addPatient(form){
                     draggableDropabble();
 
                 }).fail(function(){
-                    console.log('shing');
+                    //console.log('shing');
                 });
         }
     }, 'json').fail(function(e){
-        console.log(e.responseText);
+        //console.log(e.responseText);
     });
 
     return false;
@@ -359,7 +359,6 @@ $('body').delegate('.remove-patient .fa', 'click', function(e){
 });
 
 function openVitalsModal(e){
-    document.vitalsForm.reset();
     //console.log($(e).parent().children());
     var data = $(e).parent().children();
     $('#patientName').text($(data[0]).text());
@@ -386,7 +385,7 @@ $(document.vitalsForm).on('submit', function(e){
     $('#loading').removeClass('hidden');
 
     $.post(host + 'phase/phase_vitals.php', data, function(data){
-        console.log(data);
+        //console.log(data);
         if(data.status == 1){
             showSuccess(data.message);
         }else{
@@ -396,6 +395,6 @@ $(document.vitalsForm).on('submit', function(e){
     }, 'json').fail(function(data){
         $('#loading').addClass('hidden');
         //$('#response').text(data.responseText).removeClass('hidden');
-        console.log(data.responseText);
+        //console.log(data.responseText);
     });
 });

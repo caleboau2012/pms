@@ -10,8 +10,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
 
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
@@ -26,7 +26,6 @@ $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
-$doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['doctor_id']);
 ?>
 
 <!DOCTYPE html>
@@ -45,7 +44,6 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -66,15 +64,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">
-                <?php
-                if(is_null(CxSessionHandler::getItem('hospital_name'))){
-                    echo "Patient Management System";
-                }else{
-                    echo ucwords(CxSessionHandler::getItem('hospital_name'));
-                }
-                ?>
-            </a>
+            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
@@ -142,10 +132,8 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
 
 <div class="container-fluid">
     <div class="row">
-        <br>
-        <div class="col-sm-12">
-        <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
-        <div class="panel panel-default" id="print-head">
+        <div class="col-sm-12 well">
+            <div class="panel panel-default">
                 <div class="panel-heading">
                     <h2 class="panel-title"><span style="text-transform: uppercase"><?php echo $patient['surname']; ?></span> <?php echo $patient['middlename'].' '. $patient['firstname'];  ?></h2>
                 </div>
@@ -156,7 +144,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                 </div>
             </div>
 
-            <div class="parasitology" id="print-body">
+            <div class="parasitology">
                 <div class="add-parasitology">
                     <form id="addTestForm" class="form">
                         <input type="hidden" name="<?php echo 'data[details]'.'['.ParasitologyRequestTable::preq_id.']'; ?>" value="<?php echo $view_bag['details']['preq_id'] ?>" />
@@ -184,19 +172,13 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                             <div class="col-sm-12">
                                 <div class="center-block">
                                     <fieldset>
-                                        <h4 class="title">Clinical Diagnosis</h4>
+                                        <h4 class="title">Clinical Description</h4>
                                         <textarea disabled="disabled" class="col-sm-12 form-control"><?php
                                             if(isset($view_bag['details']['diagnosis'])){
                                                 echo $view_bag['details']['diagnosis'];
                                             }
                                             ?></textarea>
-                                        <div class="test-label">Requesting Doctor: <?php
-                                            if (!empty($doctor_name)){
-                                                echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
-                                            } else { echo 'no name';}
-                                            ?>
-                                            <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date']; ?></span>
-                                        </div>
+                                        <div class="test-label">Requesting Doctor:<span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date']; ?></span></div>
                                     </fieldset>
                                 </div>
                             </div>
@@ -380,30 +362,6 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
         </div>
     </div>
 </div>
-<div class="clearfix"></div>
-<div id="print-footer" class="row hidden">
-    <div class="text-center">
-        <p><?php
-            if(is_null(CxSessionHandler::getItem('hospital_name'))){
-                echo "Patient Management System";
-            }else{
-                echo ucwords(CxSessionHandler::getItem('hospital_name'));
-            }
-            ?>
-        </p>
-        <p>
-            <?php
-            if(is_null(CxSessionHandler::getItem('hospital_address'))){
-            }else{
-                echo ucwords(CxSessionHandler::getItem('hospital_address'));
-            }
-            ?>
-        </p>
-        <p></p>
-    </div>
-</div>
-
-<?php include('footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->

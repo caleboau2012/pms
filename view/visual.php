@@ -14,7 +14,6 @@ $lab = new LaboratoryController();
 
 $view_bag = array();
 
-
 $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
@@ -186,6 +185,14 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                 <table class="table table-striped table-responsive">
                                     <thead>
                                     <tr>
+                                        <th class="test-label">
+                                            <h4>Laboratory Report</h4>
+                                        </th>
+                                        <th class="test-label" colspan="2">
+                                            <textarea class="form-control col-sm-8" <?php echo $disabled; ?> class="form-control" placeholder="Laboratory Report" name="<?php echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?>" ></textarea>
+                                        </th>
+                                    </tr>
+                                    <tr>
                                         <th colspan="4" class="title text-center">Step One</th>
                                     </tr>
                                     </thead>
@@ -231,18 +238,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                         <td class="test-label"><span>Amplitude of Accommodation</td>
                                         <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::amplitude_of_accomodation.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::amplitude_of_accomodation])) echo $view_bag[VisualSkillsProfileTable::amplitude_of_accomodation]; ?>"></td>
                                     </tr>
-                                    <tr>
-                                        <td class="test-label">Intra-ocular pressure</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::intra_ocular_pressure.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::intra_ocular_pressure])) echo $view_bag[VisualSkillsProfileTable::intra_ocular_pressure]; ?>"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="test-label">Central Visual Field</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::central_visual_field.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::central_visual_field])) echo $view_bag[VisualSkillsProfileTable::central_visual_field]; ?>"></td>
-                                    </tr>
-                                    <tr>
-                                        <td class="test-label">Others</td>
-                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::others.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::others])) echo $view_bag[VisualSkillsProfileTable::others]; ?>"></td>
-                                    </tr>
                                     </tbody>
                                 </table>
                             </div>
@@ -284,8 +279,6 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     </div>
 </div>
 
-<?php include('footer.php'); ?>
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -295,5 +288,7 @@ if ($view_bag[HaematologyTable::status_id] == 7){
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
+
+<?php include('footer.php'); ?>
 </body>
 </html>

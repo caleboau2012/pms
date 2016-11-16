@@ -377,8 +377,6 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     </div>
 </div>
 
-<?php include('footer.php'); ?>
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -396,5 +394,8 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     });
 
 </script>
+
+
+<?php include('footer.php'); ?>
 </body>
 </html>

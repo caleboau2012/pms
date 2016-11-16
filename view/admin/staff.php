@@ -29,8 +29,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
-    <link href="../../css/bootstrap/datepicker.css" rel="stylesheet">
-    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
+    <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../../css/master.css" rel="stylesheet">
@@ -112,7 +111,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <div class='form'>
         <div class="hidden alert alert-danger alert-dismissable" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <p><strong>Warning!</strong> Invalid Registration Number and Password</p>
+            <strong>Warning!</strong> Invalid Registration Number and Password
         </div>
         <input class='form-control' id='regNo' placeholder='Registration No'><br>
         <div class="input-group">

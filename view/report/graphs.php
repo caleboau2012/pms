@@ -18,7 +18,6 @@ Crave::requireAll(UTIL);
     <title>Report Generator</title>
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/libs/morris.css" rel="stylesheet">
-    <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
     <link href="../../css/master.css" rel="stylesheet">
 </head>
 <body>
@@ -73,28 +72,28 @@ Crave::requireAll(UTIL);
     </div>
 </nav>
 
-<!--<script id="tmplPatients" type="text/html">-->
-<!--    <div class="panel {{status}} patient pointer">-->
-<!--        <div class="panel-heading" role="tab" id="heading{{id}}">-->
-<!--            <h4 class="panel-title">-->
-<!--                <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{id}}"-->
-<!--                   href="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">-->
-<!--                    {{regNo}}-->
-<!--                </a>-->
-<!--            </h4>-->
-<!--        </div>-->
-<!--        <div id="collapse{{id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{patientid}}">-->
-<!--            <div class="panel-body">-->
-<!--                <p>{{name}}</p>-->
-<!--                <p class="name hidden">{{name}}</p>-->
-<!--                <p class="regNo hidden">{{regNo}}</p>-->
-<!--                <span class="treatment_id hidden">{{treatment_id}}</span>-->
-<!--                <span class="treatment_status hidden">{{treatment_status}}</span>-->
-<!--                <span class="bill_status hidden">{{bill_status}}</span>-->
-<!--            </div>-->
-<!--        </div>-->
-<!--    </div>-->
-<!--</script>-->
+<script id="tmplPatients" type="text/html">
+    <div class="panel {{status}} patient pointer">
+        <div class="panel-heading" role="tab" id="heading{{id}}">
+            <h4 class="panel-title">
+                <a class="collapsed" data-toggle="collapse" data-parent="#accordion{{id}}"
+                   href="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">
+                    {{regNo}}
+                </a>
+            </h4>
+        </div>
+        <div id="collapse{{id}}" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading{{patientid}}">
+            <div class="panel-body">
+                <p>{{name}}</p>
+                <p class="name hidden">{{name}}</p>
+                <p class="regNo hidden">{{regNo}}</p>
+                <span class="treatment_id hidden">{{treatment_id}}</span>
+                <span class="treatment_status hidden">{{treatment_status}}</span>
+                <span class="bill_status hidden">{{bill_status}}</span>
+            </div>
+        </div>
+    </div>
+</script>
 
 <div class="container-fluid">
     <div class="row">
@@ -104,7 +103,6 @@ Crave::requireAll(UTIL);
                     Select a report to view
                 </label>
                 <select id="view" class="form-control">
-                    <option value="allPatients">All Patients</option>
                     <option value="newPatients">New Patients</option>
                     <option value="currentPatients">Current Patients</option>
                     <option value="inPatients">Inpatients</option>

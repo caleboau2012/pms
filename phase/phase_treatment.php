@@ -11,7 +11,7 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireFiles(UTIL, array('SqlClient', 'JsonResponse', 'CxSessionHandler'));
-Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'PharmacistModel', 'PatientModel', 'BillingModel'));
+Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'PharmacistModel', 'PatientModel'));
 Crave::requireFiles(CONTROLLER, array('TreatmentController', 'LaboratoryController', 'PharmacistController', 'PatientController'));
 
 
@@ -252,15 +252,18 @@ elseif  ($intent == 'submitTreatment') { //working
 
     if ($admission_add){
 
-        foreach ($prescription as $somepre) {
-            $status = ACTIVE;
-            $mod = DOCTOR;
-            $pre  = new PharmacistController();
-            $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
-            if(!$pre){
-                exit();
+        if($prescription != null){
+            foreach ($prescription as $somepre) {
+                $status = ACTIVE;
+                $mod = DOCTOR;
+                $pre  = new PharmacistController();
+                $pre->AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id);
+                if(!$pre){
+                    exit();
+                }
             }
         }
+
     }
 
     if($admission_add || $pre){

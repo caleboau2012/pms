@@ -4,11 +4,6 @@
 var host = "http://localhost/pms/";
 
 function printElem(title, body, footer){
-    console.log({
-        title: title,
-        body: body,
-        footer: footer
-    });
     var data = '';
     $.get(host + 'view/printout.php', function(html){
         if(title != null) {
@@ -30,7 +25,7 @@ function printElem(title, body, footer){
             footer = "<div class='panel-footer'>" + footer + "</div>";
         }
         else {
-            footer = "";
+            var footer = "";
         }
 
         html = replaceAll("{{title}}", title, html);
@@ -58,7 +53,6 @@ function printElem(title, body, footer){
 
 function makeTable(){
     $('.dataTable').dataTable();
-    $('.dataTables_wrapper select, .dataTables_filter input').addClass('btn');
 }
 
 //Sign out
@@ -111,3 +105,45 @@ Number.prototype.formatMoney = function(c, d, t){
         j = (j = i.length) > 3 ? j % 3 : 0;
     return s + (j ? i.substr(0, j) + t : "") + i.substr(j).replace(/(\d{3})(?=\d)/g, "$1" + t) + (c ? d + Math.abs(n - i).toFixed(c).slice(2) : "");
 };
+
+var Loader = {
+    _html : function (text) {
+        return "<div id='loaderOverlay'><div id='loader' class='text-center'>" +
+        "<h2 class='text-content'>" + text + "</h2></div></div>";
+    },
+    content: 'Processing...',
+    show : function(content) {
+        var _html = (content) ? this._html(content) : this._html(this.content);
+        $('body').append(_html);
+    },
+    hide : function() {
+        $('#loaderOverlay').remove();
+    }
+};
+var ResponseModal = {
+    _html : function (text, successful) {
+        var _h = "<div id='responseOverlay'><div id='loader' class='text-center'><h1 class='text-right'><span class='fa fa-close pointer closeResponseOverlay'></span></h1>";
+        if(successful){
+            _h +=  "<h1 class='font-70 text-center text-success'><span class='fa fa-check-circle'></span></h1>";
+        }else{
+            _h +=  "<h1 class='font-70 text-danger text-center'><span class='fa fa-info-circle'></span></h1>";
+        }
+         _h += "<p class='text-center'>" + text + "</p></div></div>";
+        return _h;
+    },
+    content: 'Transaction Completed',
+    show : function(content, successful) {
+        var _html = this._html(content, successful);
+        $('body').append(_html);
+    },
+    hide : function() {
+        $('#responseOverlay').remove();
+    }
+};
+
+//ResponseModal.show('Patient Added', true);
+//Loader.show();
+
+$("body").delegate('.closeResponseOverlay', 'click', function () {
+    ResponseModal.hide();
+});

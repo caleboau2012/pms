@@ -68,6 +68,7 @@ Treatment = {
 
         $(document.requestTestForm).on('submit', function(e){
             e.preventDefault();
+
             Treatment.requestTest(this);
         });
 
@@ -225,32 +226,35 @@ Treatment = {
             prescription.push($(this).text().substring(0, $(this).text().length - 1));
         });
 
-        console.log(Treatment.CONSTANTS.treatmentid);
-
         var url = host + "phase/phase_admission_request.php?treatment_id=" + Treatment.CONSTANTS.treatmentid +
             "&intent=requestAdmission";
 
         if(data.admit.checked){
             $.get(url, function(data){
-                console.log(data);
-                if(data.status == 2)
-                    showSuccess('Patient Already Admitted');
+                //console.log(data);
+                Loader.hide();
+                if(data.status == 2){
+                    ResponseModal.show('Patient Already Admitted', true);
+                    //showSuccess('Patient Already Admitted');
+                }
+
             }).fail(function(e){
-                console.log(e.responseText);
+                Loader.hide();
+                ResponseModal.show('Unable to complete request', false);
+                //console.log(e.responseText);
             });
         }
-
-        console.log({
-            intent: "submitTreatment",
-            treatment_id: Treatment.CONSTANTS.treatmentid,
-            doctor_id: Treatment.CONSTANTS.doctorid,
-            patient_id: $('.patient-ID').html(),
-            symptoms: data.symptoms.value,
-            consultation: data.consultation.value,
-            comments: data.comment.value,
-            diagnosis: data.diagnosis.value,
-            prescription: prescription
-        });
+        //console.log({
+        //    intent: "submitTreatment",
+        //    treatment_id: Treatment.CONSTANTS.treatmentid,
+        //    doctor_id: Treatment.CONSTANTS.doctorid,
+        //    patient_id: $('.patient-ID').html(),
+        //    symptoms: data.symptoms.value,
+        //    consultation: data.consultation.value,
+        //    comments: data.comment.value,
+        //    diagnosis: data.diagnosis.value,
+        //    prescription: prescription
+        //});
 
         url = host + "phase/phase_treatment.php";
         $.post(url, {
@@ -264,16 +268,18 @@ Treatment = {
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
-            console.log(response);
             $('#loader').addClass('hidden');
+            Loader.hide();
             if(response.status == 1){
-                showSuccess("Done, please end the session if you are done");
+                ResponseModal.show('Done, please end the session if you are done', true);
+                //showSuccess("");
                 $(data)[0].reset();
             }
             else{
-                showAlert(response.message);
+                ResponseModal.show(response.message, false);
+                //showAlert(response.message);
             }
-        }, 'json')
+        }, 'json');
     },
     removeFromQueue: function (patient){
         $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
@@ -285,22 +291,13 @@ Treatment = {
     getTreatmentHistory: function() {
         var url = host + "phase/phase_treatment.php?intent=getTreatmentHistory&patient_id=" + $('.patient-ID').html();
         $.getJSON(url, function (data) {
-
+            console.log(data.data);
             data = data.data;
 
             $('.history').empty();
-            var prescriptions, prescriptionHTML, patientHTML;
 
             for(var i = data.length - 1; i >= 0; i--){
-                prescriptions = data[i].prescriptions;
-                prescriptionHTML = "";
-                for(var j = 0; j < prescriptions.length; j++){
-                    prescriptionHTML += $('#tmplPrescription').html();
-                    prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
-                    //console.log(prescriptionHTML);
-                }
-
-                patientHTML = "";
+                var patientHTML = "";
                 patientHTML += $('#tmplTreatmentHistory').html();
                 patientHTML = replaceAll('{{userid}}', Treatment.CONSTANTS.doctorid, patientHTML);
                 patientHTML = replaceAll('{{treatmentid}}', data[i].treatment_id, patientHTML);
@@ -310,7 +307,6 @@ Treatment = {
                 patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                 patientHTML = replaceAll('{{symptoms}}', data[i].symptoms, patientHTML);
                 patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
-                patientHTML = replaceAll('{{prescriptions}}', prescriptionHTML, patientHTML);
 
                 //console.log(patientHTML);
                 $('.history').append(patientHTML);
@@ -318,28 +314,18 @@ Treatment = {
         });
     },
     getEncounterHistory: function(id) {
-        //console.log(id);
+        console.log(id);
         var url = host + "phase/phase_treatment.php?intent=getEncounters&treatment_id=" + id;
         $.getJSON(url, function (data) {
-            //console.log(data);
+            console.log(data);
 
             if(data.status == 1){
                 data = data.data;
 
                 $('#encounteraccordion' + id).empty();
 
-                var prescriptions, prescriptionHTML, patientHTML;
-
                 for(var i = data.length - 1; i >= 0; i--){
-                    prescriptions = data[i].prescriptions;
-                    prescriptionHTML = "";
-                    for(var j = 0; j < prescriptions.length; j++){
-                        prescriptionHTML += $('#tmplPrescription').html();
-                        prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
-                        //console.log(prescriptionHTML);
-                    }
-
-                    patientHTML = "";
+                    var patientHTML = "";
                     patientHTML += $('#tmplEncounterHistory').html();
                     patientHTML = replaceAll('{{userid}}', id, patientHTML);
                     patientHTML = replaceAll('{{treatmentid}}', data[i].encounter_id, patientHTML);
@@ -349,7 +335,6 @@ Treatment = {
                     patientHTML = replaceAll('{{doctorid}}', data[i].doctor_id, patientHTML);
                     patientHTML = replaceAll('{{symptoms}}', checkNull(data[i].symptoms), patientHTML);
                     patientHTML = replaceAll('{{date}}', data[i].created_date, patientHTML);
-                    patientHTML = replaceAll('{{prescriptions}}', prescriptionHTML, patientHTML);
 
                     //console.log(patientHTML);
                     $('#encounteraccordion' + id).append(patientHTML);
@@ -361,6 +346,7 @@ Treatment = {
         });
     },
     requestTest: function(form){
+        Loader.show();
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "labRequest",
@@ -370,8 +356,10 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            showSuccess(data.data);
+            //showSuccess(data.data);
             form.reset();
+            Loader.hide();
+            ResponseModal.show(data.data, true);
         }, 'json')
     },
     getLabHistory: function(type){
@@ -402,7 +390,7 @@ Treatment = {
                             status = "No status put in";
                     }
                     html += "<tr>" +
-                        "<td>" + data[i].treatment_id + "</td>" +
+                        "<td>" + (i + 1) + "</td>" +
                         "<td>" + data[i].diagnosis + "</td>" +
                         "<td>" + data[i].modified_date + "</td>" +
                         "<td>" + status + "</td>" +
