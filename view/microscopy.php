@@ -284,7 +284,8 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                                 <tr>
                                                     <td class="test-label"><?php echo $label->getLabel(); ?></td>
 
-                                                    <td class="text-center"><input type="radio" <?php echo $disabled; ?> name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
+                                                    <td class="text-center"><input type="radi
+                                                    o" <?php echo $disabled; ?> name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '0'){ echo "checked='checked'";	}}?> value='0'  /></td>
                                                     <td class="text-center"><input type="radio" <?php echo $disabled; ?> name="<?php echo 'data['.UrineSensitivityTable::table_name.']['.$label->getId().']' ?>" <?php if (isset($view_bag[UrineSensitivityTable::table_name][$label->getId()])) {	if ($view_bag[UrineSensitivityTable::table_name][$label->getId()] == '1'){ echo "checked='checked'";	}}?> value='1' /></td>
                                                 </tr>
                                             <?php } ?>

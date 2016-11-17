@@ -694,7 +694,7 @@ class HaematologyRequestSqlStatement{
     const GET_ALL_TEST = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.active_fg = :active_fg
                           ORDER BY h.created_date DESC";
-    const GET_DETAILS = "SELECT * FROM haematology AS h INNER JOIN treatment AS t on h.treatment_id = t.treatment_id
+    const GET_DETAILS = "SELECT * FROM haematology AS h LEFT JOIN treatment AS t on h.treatment_id = t.treatment_id
                          WHERE  h.treatment_id = :treatment_id AND h.encounter_id = :encounter_id";
     const UPDATE_DETAILS = "UPDATE haematology SET lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report,
                             laboratory_ref = :laboratory_ref, status_id = :status_id, modified_date = NOW() WHERE haematology_id = :haematology_id";

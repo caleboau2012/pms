@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'UserModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
@@ -22,6 +22,8 @@ $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'],
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
+$doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['doctor_id']);
+var_dump($view_bag);
 
 ?>
 
