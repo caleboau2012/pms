@@ -146,13 +146,12 @@ var ResponseModal = {
     }
 };
 
-//ResponseModal.show('Patient Added', true);
+//ResponseModal.show('Patient Added', true, true);
 //Loader.show();
 
 $("body").delegate('.closeResponseOverlay', 'click', function () {
     ResponseModal.hide();
-});
-$("body").delegate('.closeResponseOverlayReload', 'click', function () {
+}).delegate('.closeResponseOverlayReload', 'click', function () {
     ResponseModal.hide();
     window.location.reload();
 });
