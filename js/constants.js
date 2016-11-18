@@ -121,8 +121,13 @@ var Loader = {
     }
 };
 var ResponseModal = {
-    _html : function (text, successful) {
-        var _h = "<div id='responseOverlay'><div id='loader' class='text-center'><h1 class='text-right'><span class='fa fa-close pointer closeResponseOverlay'></span></h1>";
+    _html : function (text, successful, reload) {
+        var _h;
+        if(reload){
+             _h = "<div id='responseOverlay'><div id='loader' class='text-center'><h1 class='text-right'><span class='fa fa-close pointer closeResponseOverlayReload'></span></h1>";
+        }else{
+            _h = "<div id='responseOverlay'><div id='loader' class='text-center'><h1 class='text-right'><span class='fa fa-close pointer closeResponseOverlay'></span></h1>";
+        }
         if(successful){
             _h +=  "<h1 class='font-70 text-center text-success'><span class='fa fa-check-circle'></span></h1>";
         }else{
@@ -132,8 +137,8 @@ var ResponseModal = {
         return _h;
     },
     content: 'Transaction Completed',
-    show : function(content, successful) {
-        var _html = this._html(content, successful);
+    show : function(content, successful, reload) {
+        var _html = this._html(content, successful, reload);
         $('body').append(_html);
     },
     hide : function() {
@@ -146,4 +151,8 @@ var ResponseModal = {
 
 $("body").delegate('.closeResponseOverlay', 'click', function () {
     ResponseModal.hide();
+});
+$("body").delegate('.closeResponseOverlayReload', 'click', function () {
+    ResponseModal.hide();
+    window.location.reload();
 });

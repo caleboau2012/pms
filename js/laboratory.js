@@ -198,7 +198,7 @@ var Laboratory = {
                 }else if(returnedData.status == 2){
                     ResponseModal.show(returnedData.message, false);
                 } else{
-                    ResponseModal.show(returnedData.data, true);
+                    ResponseModal.show(returnedData.data, true, true);
                     //showSuccess(returnedData.data);
                 }
                 /*if($('#status').attr('value') ==  7){
