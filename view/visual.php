@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'UserModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
@@ -20,6 +20,8 @@ $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id
 if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
+
+$doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id']);
 
 ?>
 
@@ -159,8 +161,8 @@ if ($view_bag[HaematologyTable::status_id] == 7){
 
             <div class="haematology" id="print-body">
                 <div class="add-haematology">
-                    <form id="addTestForm" class="form" method="POST">
-                        <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
+                    <form id="addTestForm" class="form">
+                        <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::id])) echo $view_bag[VisualSkillsProfileTable::id] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]['.VisualSkillsProfileTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::lab_attendant_id])) echo $view_bag[VisualSkillsProfileTable::lab_attendant_id] ?>" />
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="visual">
@@ -189,6 +191,22 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                             <h4>Laboratory Report</h4>
                                         </th>
                                         <th class="test-label" colspan="2">
+                                            <textarea <?php echo $disabled;?> name="<?php echo 'data[details]'.'['.VisualSkillsProfileTable::laboratory_report.']'; ?>" class="form-control col-sm-8">
+                                                <?php
+                                                    if(isset($view_bag['details']['laboratory_report'])){
+                                                        echo $view_bag['details']['laboratory_report'];
+                                                    }
+                                                ?>
+                                            </textarea>
+                                        </th>
+                                        <th>
+                                            <div class="test-label">Requesting Doctor:  <?php
+                                                if (!empty($doctor_name)){
+                                                    echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
+                                                } else { echo 'no name';}
+                                                ?>
+                                                <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span>
+                                            </div>
                                             <textarea class="form-control col-sm-8" <?php echo $disabled; ?> class="form-control" placeholder="Laboratory Report" name="<?php echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?>" ></textarea>
                                         </th>
                                     </tr>
@@ -237,6 +255,18 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                                     <tr>
                                         <td class="test-label"><span>Amplitude of Accommodation</td>
                                         <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::amplitude_of_accomodation.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::amplitude_of_accomodation])) echo $view_bag[VisualSkillsProfileTable::amplitude_of_accomodation]; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="test-label">Intra-ocular pressure</td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::intra_ocular_pressure.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::intra_ocular_pressure])) echo $view_bag[VisualSkillsProfileTable::intra_ocular_pressure]; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="test-label">Central Visual Field</td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::central_visual_field.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::central_visual_field])) echo $view_bag[VisualSkillsProfileTable::central_visual_field]; ?>"></td>
+                                    </tr>
+                                    <tr>
+                                        <td class="test-label">Others</td>
+                                        <td><input class="form-control" type="text" <?php echo $disabled; ?> name="<?php echo 'data[details]['.VisualSkillsProfileTable::others.']';?>" value="<?php if (isset($view_bag[VisualSkillsProfileTable::others])) echo $view_bag[VisualSkillsProfileTable::others]; ?>"></td>
                                     </tr>
                                     </tbody>
                                 </table>

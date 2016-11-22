@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'UserModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
@@ -20,6 +20,7 @@ $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id
 if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
+$doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology']['doctor_id']);
 ?>
 
 <!DOCTYPE html>
@@ -179,22 +180,32 @@ if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
 
                             <div class="col-sm-12">
                                 <div>
-                                    <div class="test-label"> WARD / CLINIC :
-                                        <input type="text" class="form-horizontal" name="<?php echo 'data[radiology]' . '[' . RadiologyTable::ward_clinic_id . ']'; ?>"
-                                               value="<?php
-                                               if(isset($view_bag['radiology']['ward_clinic_id'])){
-                                                   echo $view_bag['radiology']['ward_clinic_id'];
-                                               }
-                                               ?>"/>
+                                    <div class="form-group">
+                                        <div class="test-label"> WARD / CLINIC :
+                                            <input type="text" class="form-horizontal" name="<?php echo 'data[radiology]' . '[' . RadiologyTable::ward_clinic_id . ']'; ?>"
+                                                   value="<?php
+                                                   if(isset($view_bag['radiology']['ward_clinic_id'])){
+                                                       echo $view_bag['radiology']['ward_clinic_id'];
+                                                   }
+                                                   ?>"/>
+                                        </div><br/>
+                                        <div class="test-label">Requesting Doctor:  <?php
+                                            if (!empty($doctor_name)){
+                                                echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
+                                            } else { echo 'no name';}
+                                            ?>
+                                            <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span>
+                                        </div>
                                     </div>
+
                                     <fieldset class="barX"><legend class="test-label">Radiology Details</legend>
                                         <div class="form-group">
                                             <label for="xray-no" class="test-label col-sm-1 text-right">Radiology No:</label>
                                             <div class="col-sm-2">
                                                 <input type="text" <?php echo $disabled; ?> id="xray-no" class="form-control" name="<?php echo 'data[xray]' . '[' . XrayNoTable::xray_number . ']';  ?>"
                                                 value="<?php
-                                                if(isset($view_bag['details']['xray_number'])){
-                                                    echo $view_bag['details']['xray_number'];
+                                                if(isset($view_bag['xray_no']['xray_number'])){
+                                                    echo $view_bag['xray_no']['xray_number'];
                                                 }
                                                 ?>"/>
                                             </div>
