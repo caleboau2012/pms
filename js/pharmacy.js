@@ -41,6 +41,7 @@ Pharmacy = {
         //remove previous error/success message encountered if any
         $('#addToClear').trigger('reset');
         $('#response_msg').empty().removeClass('alert-danger').removeClass('alert-success');
+        Pharmacy.deactivate = false;
 
         //active patient selected
         Pharmacy.selectedPatient = patient;
