@@ -38,6 +38,10 @@ Pharmacy = {
         $(patient).remove();
     },
     transferPatient: function(patient){
+        //remove previous error/success message encountered if any
+        $('#addToClear').trigger('reset');
+        $('#response_msg').empty().removeClass('alert-danger').removeClass('alert-success');
+
         //active patient selected
         Pharmacy.selectedPatient = patient;
         $('#empty_active').hide();
@@ -50,7 +54,6 @@ Pharmacy = {
             treatmentId : $(patient).attr("data-treatment-id"),
             encounterId : $(patient).attr("data-encounter-id")
         };
-        console.log(payload);
         //reset list of prescriptions
         $('.patientPrescriptions').empty();
         //reset selected list of prescription
@@ -59,7 +62,6 @@ Pharmacy = {
         Pharmacy.showClearButton();
 
         Pharmacy.serverReq(host + 'phase/phase_pharmacist.php', payload,function(data){
-            console.log(data);
             if(data.status == Pharmacy.CONSTANTS.REQUEST_SUCCESS){
                 prescriptions = Object.keys(data.data);
                 prescriptions.forEach(function(record){
