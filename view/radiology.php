@@ -192,7 +192,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                                         <div class="test-label">Requesting Doctor:  <?php
                                             if (!empty($doctor_name)){
                                                 echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
-                                            } else { echo 'no name';}
+                                            } else { echo 'Anonymous';}
                                             ?>
                                             <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span>
                                         </div>

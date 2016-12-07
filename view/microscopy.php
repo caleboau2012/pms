@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'UserModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
@@ -18,7 +18,7 @@ $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id
 if ($view_bag['details'][UrineTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
-
+$doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['doctor_id']);
 ?>
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/html">
@@ -170,7 +170,13 @@ if ($view_bag['details'][UrineTable::status_id] == 7){
                                             }
                                             ?>
                                         </textarea>
-                                        <div class="test-label">Doctor: {{Doctor's Name}}<span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span></div>
+                                        <div class="test-label">Doctor:
+                                            <?php
+                                            if (!empty($doctor_name)){
+                                            echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
+                                            } else { echo 'Anonymous';}
+                                            ?>
+                                            <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span></div>
                                     </fieldset>
                                 </div>
                             </div>
