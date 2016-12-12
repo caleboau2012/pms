@@ -360,6 +360,9 @@ class VisualSkillsProfileTable {
     const colour_vision             = 'colour_vision';
     const stereopsis                = 'stereopsis';
     const amplitude_of_accomodation = 'amplitude_of_accomodation';
+    const intra_ocular_pressure     = 'intra_ocular_pressure';
+    const central_visual_field      = 'central_visual_field';
+    const others                    = 'others';
     const create_date               = 'created_date';
     const modified_date             = 'modified_date';
     const active_fg                 = 'active_fg';
