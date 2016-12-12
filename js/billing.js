@@ -34,6 +34,7 @@ Billing = {
     getQueue: function(){
         var url = host + "phase/phase_billing.php?intent=unbilled_treatments";
         $.getJSON(url, function(data){
+            //console.log(data);
             if(data.status == 1){
                 data = data.data;
                 $('#unbilled-patients').empty();
@@ -56,6 +57,7 @@ Billing = {
                     patientHTML = replaceAll('{{regNo}}', data[i].regNo, patientHTML);
                     patientHTML = replaceAll('{{name}}', patientName, patientHTML);
                     patientHTML = replaceAll('{{treatment_id}}', data[i].treatment_id, patientHTML);
+                    patientHTML = replaceAll('{{encounter_id}}', (data[i].encounter_id)?data[i].encounter_id:"", patientHTML);
                     patientHTML = replaceAll('{{treatment_status}}', data[i].treatment_status, patientHTML);
                     patientHTML = replaceAll('{{home_address}}', data[i].home_address, patientHTML);
                     patientHTML = replaceAll('{{telephone}}', data[i].telephone, patientHTML);
@@ -113,6 +115,13 @@ Billing = {
         var address = ($(patient).find('.home_address').text());
         var date = ($(patient).find('.modified_date').text());
         Billing.CONSTANTS.treatment_id = ($(patient).find('.treatment_id').text());
+        Billing.CONSTANTS.encounter_id = ($(patient).find('.encounter_id').text());
+
+        console.log({
+            treatment_id: Billing.CONSTANTS.treatment_id,
+            encounter_id: Billing.CONSTANTS.encounter_id
+        });
+
         Billing.getDetails();
 
         $('.none').addClass('hidden');
@@ -271,6 +280,7 @@ Billing = {
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'post_bills',
             treatment_id: Billing.CONSTANTS.treatment_id,
+            encounter_id: Billing.CONSTANTS.encounter_id,
             item: items,
             amount: amounts
         }, function(data){

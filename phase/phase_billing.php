@@ -46,11 +46,18 @@ if ($intent == 'unbilled_treatments') {
                 $data['item'] = $_REQUEST[ConstantBillsTable::item][$i];
                 $data['amount'] = $_REQUEST[ConstantBillsTable::amount][$i];
                 $data['treatment_id'] = $_REQUEST[ConstantBillsTable::treatment_id];
+                $data['encounter_id'] = ($_REQUEST[ConstantBillsTable::encounter_id] == "")?null:$_REQUEST[ConstantBillsTable::encounter_id];
 
                 $post = $bill->postBills($data);
             }
+
             if ($post) {
-                $bill->billTreatment(array('treatment_id' => $data['treatment_id']));
+                if($data['encounter_id'] == null){
+                    $bill->billTreatment(array('treatment_id' => $data['treatment_id']));
+                }
+                else{
+                    $bill->billEncounter(array('encounter_id' => $data['encounter_id']));
+                }
                 echo JsonResponse::success("Billing is Successful");
                 exit();
             } else {

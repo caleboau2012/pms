@@ -41,6 +41,7 @@ Crave::requireAll(UTIL);
                 <p>{{name}}</p>
                 <p class="name hidden">{{name}}</p>
                 <p class="regNo hidden">{{regNo}}</p>
+                <span class="encounter_id hidden">{{encounter_id}}</span>
                 <span class="treatment_id hidden">{{treatment_id}}</span>
                 <span class="treatment_status hidden">{{treatment_status}}</span>
                 <span class="bill_status hidden">{{bill_status}}</span>

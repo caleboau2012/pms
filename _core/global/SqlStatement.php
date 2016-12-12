@@ -1001,6 +1001,12 @@ class TreatmentSqlStatement {
                                 ON t.patient_id = p.patient_id
                                 WHERE t.bill_status = 1";
 
+    const UNBILLED_ENCOUNTERS = "SELECT p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, e.status, e.bill_status, e.encounter_id, e.treatment_id, e.modified_date
+                                FROM encounter e
+                                LEFT JOIN patient p
+                                ON e.patient_id = p.patient_id
+                                WHERE e.bill_status = 1";
+
     const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
                             FROM admission
                             WHERE treatment_id = :treatment_id";
@@ -1047,11 +1053,14 @@ FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treat
                             WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
                             ORDER BY radiology.created_date DESC";
 
-    const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, created_date)
-                            VALUES (:item, :amount, :treatment_id, NOW())";
+    const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, encounter_id, created_date)
+                            VALUES (:item, :amount, :treatment_id, :encounter_id, NOW())";
 
     const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
                                     WHERE treatment_id = :treatment_id";
+
+    const UPDATE_BILL_ENCOUNTER = "UPDATE encounter SET bill_status = 2
+                                    WHERE encounter_id = :encounter_id";
 
     const MAKE_BILLABLE = "UPDATE treatment SET bill_status = 1 WHERE treatment_id = :treatment_id";
 }

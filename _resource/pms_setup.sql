@@ -241,6 +241,7 @@ CREATE TABLE IF NOT EXISTS `constant_bills` (
   `item` varchar(150) NOT NULL,
   `amount` decimal(5,2) NOT NULL,
   `treatment_id` int(11) unsigned NOT NULL,
+  `encounter_id` int(11) unsigned DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   PRIMARY KEY (`constant_bills_id`),
   KEY `fk_treatment_bills` (`treatment_id`)
@@ -346,6 +347,7 @@ CREATE TABLE IF NOT EXISTS `encounter` (
   `symptoms` varchar(200) DEFAULT NULL,
   `consultation` varchar(200) DEFAULT NULL,
   `status` int(11) NOT NULL DEFAULT '1',
+  `bill_status` int(11) NOT NULL DEFAULT '1',
   `modified_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   `diagnosis` text,
   PRIMARY KEY (`encounter_id`),

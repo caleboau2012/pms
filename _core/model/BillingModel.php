@@ -90,11 +90,18 @@ class BillingModel extends BaseModel {
     }
 
     public function unbilledTreatment() {
-        return $this->conn->fetchAll(TreatmentSqlStatement::UNBILLED_TREATMENT, array());
+        $treatments = $this->conn->fetchAll(TreatmentSqlStatement::UNBILLED_TREATMENT, array());
+        $encounters = $this->conn->fetchAll(TreatmentSqlStatement::UNBILLED_ENCOUNTERS, array());
+
+        return array_merge($treatments, $encounters);
     }
 
     public function billTreatment($treatment_id) {
         return $this->conn->execute(TreatmentSqlStatement::UPDATE_BILL_TREATMENT, $treatment_id);
+    }
+
+    public function billEncounter($encounter_id) {
+        return $this->conn->execute(TreatmentSqlStatement::UPDATE_BILL_ENCOUNTER, $encounter_id);
     }
 
     public function getDetails($treatment_id) {
