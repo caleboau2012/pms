@@ -1011,6 +1011,10 @@ class TreatmentSqlStatement {
                             FROM admission
                             WHERE treatment_id = :treatment_id";
 
+    const DAYS_SPENT_TILL_DATE = "SELECT DATEDIFF(NOW(), entry_date) AS days_spent
+                            FROM admission
+                            WHERE treatment_id = :treatment_id";
+
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE status = 1 AND treatment_id = :treatment_id";
 

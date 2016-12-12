@@ -4,7 +4,7 @@ class BillingModel extends BaseModel {
 
     private function getDaysSpent($treatment_id){
         $data = array(TreatmentTable::treatment_id => $treatment_id);
-        $admitted = $this->conn->fetch(TreatmentSqlStatement::DAYS_SPENT, $data);
+        $admitted = $this->conn->fetch(TreatmentSqlStatement::DAYS_SPENT_TILL_DATE, $data);
 
         if ($admitted){
             return $admitted;
