@@ -22,7 +22,9 @@ if ($intent == 'search') {
             echo json_encode($patient_details);
             exit();
         } else {
-            echo JsonResponse::error("No patient matches your search request!");
+            $patient_details = array('id' => 'empty');
+            echo json_encode($patient_details);
+//            echo JsonResponse::error("No patient matches your search request!");
             exit();
         }
     } else {
