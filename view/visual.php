@@ -15,6 +15,7 @@ $lab = new LaboratoryController();
 $view_bag = array();
 
 $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
+
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
@@ -170,6 +171,13 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id'])
                         <div class="row">
                             <div class="page-header">
                                 <h2 class="page-header__title">Visual Acuity</h2>
+                                <?php
+                                if(($view_bag['description'] != null)){
+                                    $desc_ = $view_bag['description'];
+                                    echo "<h4 class='text-primary'>Description: $desc_</h4>";
+                                }
+
+                                ?>
                                 <div class="alert hidden alert-danger alert-dismissable" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
