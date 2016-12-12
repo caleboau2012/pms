@@ -23,7 +23,6 @@ if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
 $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['doctor_id']);
-var_dump($view_bag);
 
 ?>
 
@@ -176,7 +175,12 @@ var_dump($view_bag);
                                             }
                                             ?>
                                         </textarea>
-                                        <div class="test-label">Doctor: {{Doctor's Name}}<span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span></div>
+                                        <div class="test-label">Doctor: <?php
+                                            if (!empty($doctor_name)){
+                                                echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
+                                            } else { echo 'Anonymous';}
+                                            ?>
+                                            <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span></div>
                                     </fieldset>
                                 </div>
                             </div>

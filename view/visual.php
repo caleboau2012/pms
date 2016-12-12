@@ -207,7 +207,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id'])
                                                 ?>
                                                 <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span>
                                             </div>
-                                            <textarea class="form-control col-sm-8" <?php echo $disabled; ?> class="form-control" placeholder="Laboratory Report" name="<?php echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?>" value="<?php  if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?>" ></textarea>
+<!--                                            <textarea class="form-control col-sm-8" --><?php //echo $disabled; ?><!-- class="form-control" placeholder="Laboratory Report" name="--><?php //echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?><!--" value="--><?php // if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?><!--" ></textarea>-->
                                         </th>
                                     </tr>
                                     <tr>
