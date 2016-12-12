@@ -16,7 +16,6 @@ $view_bag = array();
 
 $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
-
 if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
@@ -203,9 +202,9 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id'])
                                             <div class="test-label">Requesting Doctor:  <?php
                                                 if (!empty($doctor_name)){
                                                     echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
-                                                } else { echo 'no name';}
+                                                } else { echo 'Anonymous';}
                                                 ?>
-                                                <span class="pad5 test-label">Date: <?php if(isset($view_bag['details']['created_date'])) echo $view_bag['details']['created_date'];?></span>
+                                                <span class="pad5 test-label">Date: <?php if(isset($view_bag['created_date'])) echo $view_bag['created_date'];?></span>
                                             </div>
 <!--                                            <textarea class="form-control col-sm-8" --><?php //echo $disabled; ?><!-- class="form-control" placeholder="Laboratory Report" name="--><?php //echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?><!--" value="--><?php // if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?><!--" ></textarea>-->
                                         </th>
@@ -313,6 +312,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id'])
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>

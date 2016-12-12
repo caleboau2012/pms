@@ -190,6 +190,7 @@ var Laboratory = {
             url : url,
             dataType: 'json',
             success: function(returnedData){
+                console.log(returnedData);
                 Loader.hide();
                 $('body,html').animate({scrollTop : 0}, 800);
                 if (returnedData.status == 3){

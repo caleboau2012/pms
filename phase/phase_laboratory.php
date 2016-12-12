@@ -141,8 +141,9 @@ if ($intent == 'getPatientQueue') {
         if($role && RoleController::hasPermission($lab_attendant_id, $role, READ_WRITE)){
             $lab = new LaboratoryController();
             $response = $lab->updateLabDetails($labType, $data);
-            /*echo JsonResponse::success($data);
-            exit();*/
+           echo JsonResponse::success($data);
+            exit();
+             /**/
             if ($response['status']) {
                 echo JsonResponse::success("Successfully updated");
                 exit();
