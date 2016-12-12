@@ -692,6 +692,7 @@ class ConstantBillsTable {
     const item                  = 'item';
     const amount                = 'amount';
     const treatment_id          = 'treatment_id';
+    const encounter_id          = 'encounter_id';
     const created_date          = 'created_date';
 }
 
