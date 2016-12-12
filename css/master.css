@@ -1567,3 +1567,15 @@ input.cmn-toggle-round:checked + label:after{
 .font-70{
     font-size: 70px;
 }
+#search-loader{
+    font-size: 40px;
+    text-align: right;
+    position: absolute;
+    left: 224px;
+    top: 5px;
+}
+#search-empty-text{
+    line-height: 5px;
+    color: #a94442;
+
+}

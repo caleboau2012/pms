@@ -28,9 +28,21 @@ function init(){
             $(this).val(ui.item.value);
             searchResult(ui.item);
             return false;
+        },
+        search: function( event, ui ) {
+            /*start of search*/
+            $("#search-empty-text").addClass('hidden');
+            $("#search-loader").removeClass('hidden');
+        },
+        response: function( event, ui ) {
+            if(ui.content.length == 0){
+                $("#search-empty-text").removeClass('hidden');
+            }else{
+                $("#search-empty-text").addClass('hidden');
+            }
+            $("#search-loader").addClass('hidden');
         }
-    }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-        //console.log(item);
+    }).autocomplete("instance" )._renderItem = function( ul, item ) {
         return $( "<li>" )
             .append( "<div class='panel-success'>" +
             "<div class='panel panel-heading' style='margin: 1px'>" +
@@ -338,6 +350,7 @@ function emergency(){
 }
 
 function searchResult(patientDetails){
+    console.log(patientDetails);
     var patientHTML = "";
     //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
     patientHTML += $('#tmplPatients').html();
