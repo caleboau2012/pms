@@ -795,8 +795,8 @@ class ChemicalPathologyRequestSqlStatement{
 }
 
 class VisualRequestSqlStatement{
-    const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, encounter_id, created_date, modified_date)
-                          VALUES (:doctor_id, :treatment_id, :encounter_id, NOW(), NOW())";
+    const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, encounter_id, description, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, :encounter_id, :description, NOW(), NOW())";
     const GET_HISTORY = "SELECT modified_date as modified_date, status_id as status, treatment_id as treatment_id, encounter_id as encounter_id FROM
                          visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE
                          t.patient_id = :patient_id)";
@@ -817,7 +817,7 @@ class VisualRequestSqlStatement{
 }
 
 class AdmissionReqSqlStatement {
-    const REQUEST_ADMISSION = "INSERT INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
+    const REQUEST_ADMISSION = "INSERTb INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
 
     const DISMISS_REQUEST = "UPDATE admission_req SET active_fg = 0 WHERE treatment_id = :treatment_id";
 

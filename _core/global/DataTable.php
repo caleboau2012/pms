@@ -347,6 +347,7 @@ class VisualSkillsProfileTable {
     const id                        = 'visual_profile_id';
     const treatment_id              = 'treatment_id';
     const encounter_id              = 'encounter_id';
+    const description               = 'description';
     const laboratory_report         = 'laboratory_report';
     const distance_re               = 'distance_re';
     const distance_le               = 'distance_le';

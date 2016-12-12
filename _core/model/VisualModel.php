@@ -1,9 +1,9 @@
 <?php
 class VisualModel extends BaseModel{
 
-    public function visualRequest($doctorId, $treatmentId, $encounterId){
+    public function visualRequest($doctorId, $treatmentId, $encounterId, $description){
         $data = array(VisualSkillsProfileTable::doctor_id => $doctorId, VisualSkillsProfileTable::treatment_id => $treatmentId,
-                      VisualSkillsProfileTable::encounter_id => $encounterId);
+                      VisualSkillsProfileTable::encounter_id => $encounterId, VisualSkillsProfileTable::description => $description);
         return $this->conn->execute(VisualRequestSqlStatement::ADD_REQ_INFO, $data);
     }
 
