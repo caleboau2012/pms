@@ -107,7 +107,6 @@ class LaboratoryController{
             case MICROSCOPY:
                 return $this->microscopy->updateTestDetails($data);
             case VISUAL:
-                return $data;
                 return $this->visual->updateTestDetails($data);
             case RADIOLOGY:
                 return $this->radiology->updateTestDetails($data);

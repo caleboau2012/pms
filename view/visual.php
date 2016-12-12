@@ -192,8 +192,8 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id'])
                                         <th class="test-label" colspan="2">
                                             <textarea <?php echo $disabled;?> name="<?php echo 'data[details]'.'['.VisualSkillsProfileTable::laboratory_report.']'; ?>" class="form-control col-sm-8">
                                                 <?php
-                                                    if(isset($view_bag['details']['laboratory_report'])){
-                                                        echo $view_bag['details']['laboratory_report'];
+                                                    if(isset($view_bag['laboratory_report'])){
+                                                        echo $view_bag['laboratory_report'];
                                                     }
                                                 ?>
                                             </textarea>
