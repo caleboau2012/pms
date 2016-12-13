@@ -1,21 +1,5 @@
 <?php
 class ReportModel extends BaseModel {
-    public static function allPatients($gender = null) {
-        $data = [];
-
-        if ($gender == NULL) {
-            $stmt = ReportSqlStatement::ALL_PATIENTS;
-        } else {
-            $stmt = ReportSqlStatement::ALL_PATIENTS_WITH_GENDER;
-            $data[GENDER] = $gender;
-        }
-
-        $model = new ReportModel();
-
-        $result = $model->conn->fetchAll($stmt, $data);
-        return $result;
-    }
-
     public static function newPatients($gender) {
         $data = array(
             START_DATE  =>  $_REQUEST[START_DATE],

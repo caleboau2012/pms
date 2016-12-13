@@ -96,8 +96,14 @@ function toggleDelete(e){
                     intent: 'restoreStaff',
                     userid: userid
                 }, function(data){
-                    console.log(data);
-                    $(e).attr('active_fg', '1');
+                    if(data.status == 1){
+                        $(e).attr('active_fg', '1');
+                    }
+                    else if(data.status == 2){
+                        alert(data.message);
+                        location.reload();
+                    }
+                    //console.log(data);
                 }, 'json');
             }
             else{
@@ -270,9 +276,9 @@ function addNewStaff(e){
         $.get(host + "phase/admin/phase_admin.php?intent=addNewStaff&regNo=" + regNo + "&passcode=" + password,
             function(data){
                 data = JSON.parse(data);
-                console.log(data);
+                //console.log(data);
                 if(data.status == 2){
-                    $(e).parent().find('.alert').removeClass('hidden').find('p').html(data.message);
+                    $(e).parent().find('.alert').removeClass('hidden');
                 }
                 else{
                     var printHTML = $('#tmplPrint').html().replace('{{username}}', regNo).replace('{{password}}', password);

@@ -182,7 +182,6 @@ class TreatmentTable{
     const table_name = 'treatment';
 
     const treatment_id      = 'treatment_id';
-    const encounter_id      = 'encounter_id';
     const doctor_id         = 'doctor_id';
     const patient_id        = 'patient_id';
     const consultation      = 'consultation';
@@ -348,6 +347,8 @@ class VisualSkillsProfileTable {
     const id                        = 'visual_profile_id';
     const treatment_id              = 'treatment_id';
     const encounter_id              = 'encounter_id';
+    const description               = 'description';
+    const laboratory_report         = 'laboratory_report';
     const distance_re               = 'distance_re';
     const distance_le               = 'distance_le';
     const distance_be               = 'distance_be';
@@ -357,12 +358,12 @@ class VisualSkillsProfileTable {
     const pinhole_acuity_re         = 'pinhole_acuity_re';
     const pinhole_acuity_le         = 'pinhole_acuity_le';
     const pinhole_acuity_be         = 'pinhole_acuity_be';
-    const intra_ocular_pressure     = 'intra_ocular_pressure';
-    const central_visual_field      = 'central_visual_field';
-    const others                    = 'others';
     const colour_vision             = 'colour_vision';
     const stereopsis                = 'stereopsis';
     const amplitude_of_accomodation = 'amplitude_of_accomodation';
+    const intra_ocular_pressure     = 'intra_ocular_pressure';
+    const central_visual_field      = 'central_visual_field';
+    const others                    = 'others';
     const create_date               = 'created_date';
     const modified_date             = 'modified_date';
     const active_fg                 = 'active_fg';
@@ -692,6 +693,7 @@ class ConstantBillsTable {
     const item                  = 'item';
     const amount                = 'amount';
     const treatment_id          = 'treatment_id';
+    const encounter_id          = 'encounter_id';
     const created_date          = 'created_date';
 }
 

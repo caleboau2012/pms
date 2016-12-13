@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel'));
-Crave::requireFiles(CONTROLLER, array('LaboratoryController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel', 'ChemicalPathologyModel', 'HaematologyModel', 'MicroscopyModel', 'ParasitologyModel', 'VisualModel', 'RadiologyModel', 'UserModel'));
+Crave::requireFiles(CONTROLLER, array('LaboratoryController', 'UserController'));
 
 if (!isset($_SESSION[UserAuthTable::userid])) {
     header("Location: ../index.php");
@@ -14,13 +14,14 @@ $lab = new LaboratoryController();
 
 $view_bag = array();
 
-
 $view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
-$patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
+$patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 if ($view_bag[HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
+
+$doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id']);
 
 ?>
 
@@ -160,8 +161,8 @@ if ($view_bag[HaematologyTable::status_id] == 7){
 
             <div class="haematology" id="print-body">
                 <div class="add-haematology">
-                    <form id="addTestForm" class="form" method="POST">
-                        <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php echo $view_bag[VisualSkillsProfileTable::id] ?>" />
+                    <form id="addTestForm" class="form">
+                        <input type="hidden" name="<?php echo 'data[details]['.VisualSkillsProfileTable::id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::id])) echo $view_bag[VisualSkillsProfileTable::id] ?>" />
                         <input type="hidden" name="<?php  echo 'data[details]['.VisualSkillsProfileTable::lab_attendant_id.']' ?>" value="<?php if(isset($view_bag[VisualSkillsProfileTable::lab_attendant_id])) echo $view_bag[VisualSkillsProfileTable::lab_attendant_id] ?>" />
                         <input type="hidden" name="intent" value="updateLabDetails">
                         <input type="hidden" name="labType" value="visual">
@@ -170,6 +171,13 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                         <div class="row">
                             <div class="page-header">
                                 <h2 class="page-header__title">Visual Acuity</h2>
+                                <?php
+                                if(($view_bag['description'] != null)){
+                                    $desc_ = $view_bag['description'];
+                                    echo "<h4 class='text-primary'>Description: $desc_</h4>";
+                                }
+
+                                ?>
                                 <div class="alert hidden alert-danger alert-dismissable" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
@@ -185,6 +193,30 @@ if ($view_bag[HaematologyTable::status_id] == 7){
                             <div class="col-sm-12">
                                 <table class="table table-striped table-responsive">
                                     <thead>
+                                    <tr>
+                                        <th class="test-label">
+                                            <h4>Laboratory Report</h4>
+                                        </th>
+                                        <th class="test-label" colspan="2">
+                                            <textarea <?php echo $disabled;?> name="<?php echo 'data[details]'.'['.VisualSkillsProfileTable::laboratory_report.']'; ?>" class="form-control col-sm-8">
+                                                <?php
+                                                    if(isset($view_bag['laboratory_report'])){
+                                                        echo $view_bag['laboratory_report'];
+                                                    }
+                                                ?>
+                                            </textarea>
+                                        </th>
+                                        <th>
+                                            <div class="test-label">Requesting Doctor:  <?php
+                                                if (!empty($doctor_name)){
+                                                    echo $doctor_name[0]['surname']. ' '. $doctor_name[0]['firstname']. ' ' .$doctor_name[0]['middlename'];
+                                                } else { echo 'Anonymous';}
+                                                ?>
+                                                <span class="pad5 test-label">Date: <?php if(isset($view_bag['created_date'])) echo $view_bag['created_date'];?></span>
+                                            </div>
+<!--                                            <textarea class="form-control col-sm-8" --><?php //echo $disabled; ?><!-- class="form-control" placeholder="Laboratory Report" name="--><?php //echo 'data[details]['.VisualSkillsProfileTable::laboratory_report.']'; ?><!--" value="--><?php // if(isset($view_bag[VisualSkillsProfileTable::laboratory_report])) echo $view_bag[VisualSkillsProfileTable::laboratory_report]; ?><!--" ></textarea>-->
+                                        </th>
+                                    </tr>
                                     <tr>
                                         <th colspan="4" class="title text-center">Step One</th>
                                     </tr>
@@ -284,16 +316,17 @@ if ($view_bag[HaematologyTable::status_id] == 7){
     </div>
 </div>
 
-<?php include('footer.php'); ?>
-
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
+
+<?php include('footer.php'); ?>
 </body>
 </html>

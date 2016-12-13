@@ -200,8 +200,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <div class="panel-heading">
                     <h4 class="pull-left"><span class="label label-info hidden end">Session ID: <span class="treatment-ID"></span></span> <span class="patient-name">Please Select a Patient from the Queue <span class="fa fa-long-arrow-right"></span> <b>or</b> search for patient <span class="fa fa-long-arrow-up"></span></span></h4>
                     <span class="pull-right">
-                        <button id="end-incomplete" class="end hidden btn btn-warning">End <b>Incomplete</b> Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
-                        <button id="end" class="end hidden btn btn-danger">End Session <span class="treatment-ID"></span> <span class="fa fa-close"></span></button>
+                        <button id="end-incomplete" class="end hidden btn btn-warning">
+                            <b>Incomplete</b> Session <span class="treatment-ID"></span> <span class="fa fa-close"></span>
+                        </button>
+                        <a id="end" class="end hidden btn btn-danger">
+                            End Session <span class="treatment-ID"></span> <span class="fa fa-close"></span>
+                        </a>
                     </span>
                     <span class="clearfix"></span>
                 </div>
@@ -376,7 +380,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <div class="col-sm-7 col-md-9">
                                 <label>Description</label>
                                 <textarea id="description" class="form-control" type="text"
-                                          name="description"></textarea>
+                                          name="description" required></textarea>
                             </div>
                         </div>
                     </form>
@@ -448,6 +452,16 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     </div>
 </div>
 
+<!--<div id="loaderOverlay">
+    <div id="loader" class="text-center">
+        <h2 class="text-content">Processing...</h2>
+    </div>
+
+</div>-->
+
+
+
+
 <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
@@ -458,6 +472,9 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../../js/constants.js"></script>
 <script src="../../js/treatment/out-patient.js"></script>
 
+<script>
+
+</script>
 <?php include('../footer.php'); ?>
 
 </body>

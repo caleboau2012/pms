@@ -46,8 +46,15 @@ Treatment = {
             Treatment.submitTreatment(this);
         });
 
-        $('#end').click(function(e){
-            Treatment.endTreatment();
+        $('#end').popover({
+            content: "This will terminate the treatment session with the patient permanently",
+            trigger: "hover",
+            title: "What is this?",
+            placement: "bottom"
+        }).click(function(e){
+            if(confirm("Are you sure you want to do this?")){
+                Treatment.endTreatment();
+            }
         });
 
         $(document.requestTestForm).on('submit', function(e){
@@ -239,6 +246,7 @@ Treatment = {
         $('.well').addClass('hidden');
     },
     submitTreatment: function(data){
+        Loader.show();
         $('#loader').removeClass('hidden');
         var prescription = [];
         $('#prescriptions li').each(function(index){
@@ -260,19 +268,19 @@ Treatment = {
             diagnosis: data.diagnosis.value,
             prescription: prescription
         }, function(response){
+            Loader.hide();
             //console.log(response);
             $('#loader').addClass('hidden');
             if(response.status == 1){
-                showSuccess("Done, please end the session if you are done");
+                ResponseModal.show("Done, please end the session if you are done", true);
                 $(data)[0].reset();
             }
             else{
-                showAlert(response.message);
+                ResponseModal.show(response.message, false);
             }
         }, 'json')
     },
     removeFromQueue: function (id){
-        console.log(id);
         $('.patients').find('#heading' + id).parent().remove();
         //$.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
         //+ patient), function(data){
@@ -359,6 +367,7 @@ Treatment = {
         });
     },
     requestTest: function(form){
+        Loader.show();
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "labRequest",
@@ -368,7 +377,9 @@ Treatment = {
             description: form.description.value,
             labType: form.test_id.value
         }, function(data){
-            showSuccess(data.data);
+            form.reset();
+            Loader.hide();
+            ResponseModal.show(data.data, true);
         }, 'json')
     },
     getLabHistory: function(type){

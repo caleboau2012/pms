@@ -19,16 +19,14 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Patient Arrival</title>
+    <title>Admin Dashboard</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
-
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
     <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -57,6 +55,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                 }
                 ?>
             </a>
+            <span id="search-loader" class="hidden fa fa-spin fa-spinner text-warning"></span>
+
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right nav-pills">
@@ -81,12 +81,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
                 </li>
+
             </ul>
+
             <form id="search-form" class="patient-arrival navbar-form">
-                <div class="search">
-                    <input type="text" class="form-control" name="search" placeholder="Search Returning Patients...">
+                <div class="search text-center">
+                    <input id="search_query" type="text" class="form-control" name="search" placeholder="Search Returning Patients...">
+                    <span id="search-empty-text" class="hidden help-block text-danger" style="line-height: 5px;">No patient found</span>
                 </div>
             </form>
+
         </div>
     </div>
 </nav>
@@ -278,8 +282,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <option value="7">Husband</option>
                                                 <option value="8">Wife</option>
                                                 <option value="9">Other</option>
-                                            </select>
-                                        </div>
+                                            </select></div>
                                     </td>
                                 </tr>
                             </table>

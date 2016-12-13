@@ -127,7 +127,7 @@ class LaboratoryController{
                 return $this->microscopy->microscopyRequest($doctorId, $treatmentId, $encounterId, $description);
 
             case VISUAL:
-                return $this->visual->visualRequest($doctorId, $treatmentId, $encounterId);
+                return $this->visual->visualRequest($doctorId, $treatmentId, $encounterId, $description);
 
             case CHEMICAL_PATHOLOGY:
                 return $this->chemicalPathology->chemicalPathologyRequest($doctorId, $treatmentId, $encounterId, $description);

@@ -27,7 +27,6 @@ Crave::requireAll(UTIL);
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
     <link href="../css/bootstrap/datepicker.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
@@ -103,7 +102,7 @@ Crave::requireAll(UTIL);
                             <option value="<?php echo MEDICAL_RECORD; ?>">Medical Records</option>
                             <option value="<?php echo URINE_CONDUCTOR; ?>">Urine</option>
                             <option value="<?php echo VISUAL_CONDUCTOR; ?>">Visual</option>
-                            <option value="<?php echo XRAY_CONDUCTOR; ?>">XRAY</option>
+                            <option value="<?php echo XRAY_CONDUCTOR; ?>">Radiology</option>
                             <option value="<?php echo PARASITOLOGY_CONDUCTOR; ?>">Parasitology</option>
                             <option value="<?php echo CHEMICAL_PATHOLOGY_CONDUCTOR; ?>">Chemical Pathology</option>
                         </select>
@@ -125,8 +124,6 @@ Crave::requireAll(UTIL);
         </div>
     </div>
 </div> <!-- /container -->
-
-<?php include('footer.php'); ?>
 
 </body>
 </html>

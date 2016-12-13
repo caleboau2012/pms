@@ -18,10 +18,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>Elyon</title>
+    <title>PMS</title>
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href='../css/libs/fullCalendar/fullcalendar.css' rel='stylesheet' />
@@ -41,6 +40,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <div class="container">
     <div class="row">
         <div id="dashboard">
+            <br>
             <div class="dashboard-panels">
                 <div>
                     <div id='roster_loading'>
@@ -88,7 +88,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 <div class="col-xs-3 text-center">
                                     <a href="pharmacy.php" class="dashboard-link">
                                         <img src="../images/pharmacy-icons.png" width="60" height="60">
-                                        <div class="dashboard-desc">Pharmacy</div>
+                                        <div class="dashboard-desc">Pharmacist</div>
                                     </a>
                                 </div>
                             <?php
@@ -96,7 +96,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3 text-center">
                                     <a href="arrival.php" class="dashboard-link">
-                                        <img src="../images/arrival.png" width="60" height="60">
+                                        <img src="../images/arrival.jpg" width="60" height="60">
 
                                         <div class="dashboard-desc">Patient Arrival</div>
                                     </a>
@@ -168,7 +168,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 ?>
                                 <div class="col-xs-3  text-center">
                                     <a href="admin/staff.php" class="dashboard-link">
-                                        <img src="../images/file-edit.gif" width="60" height="60">
+                                        <img src="../images/file-edit.png">
 
                                         <div class="dashboard-desc">Admin Access</div>
                                     </a>

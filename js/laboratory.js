@@ -183,6 +183,7 @@ var Laboratory = {
     },
 
     updateLabDetails: function(url, data, request_type){
+        Loader.show();
         $.ajax({
             type : request_type,
             data : data,
@@ -190,20 +191,25 @@ var Laboratory = {
             dataType: 'json',
             success: function(returnedData){
                 console.log(returnedData);
+                Loader.hide();
                 $('body,html').animate({scrollTop : 0}, 800);
                 if (returnedData.status == 3){
-                    showAlert(returnedData.message);
+                    ResponseModal.show(returnedData.message, false);
+                    //showAlert(returnedData.message);
+                }else if(returnedData.status == 2){
+                    ResponseModal.show(returnedData.message, false);
                 } else{
-                    showSuccess(returnedData.data);
+                    ResponseModal.show(returnedData.data, true, true);
+                    //showSuccess(returnedData.data);
                 }
-                if($('#status').attr('value') ==  7){
+                /*if($('#status').attr('value') ==  7){
                     location.reload();
-                }
+                }*/
             },
             error: function(data){
-                console.log(data.responseText);
                 $('body,html').animate({scrollTop : 0}, 800);
-                showAlert("Update not Successful. Check your input")
+                ResponseModal.show("Update not Successful. Check your input", false);
+                //showAlert("Update not Successful. Check your input")
             }
         });
     }

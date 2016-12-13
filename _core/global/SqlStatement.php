@@ -694,7 +694,7 @@ class HaematologyRequestSqlStatement{
     const GET_ALL_TEST = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE h.active_fg = :active_fg
                           ORDER BY h.created_date DESC";
-    const GET_DETAILS = "SELECT * FROM haematology AS h INNER JOIN treatment AS t on h.treatment_id = t.treatment_id
+    const GET_DETAILS = "SELECT * FROM haematology AS h LEFT JOIN treatment AS t on h.treatment_id = t.treatment_id
                          WHERE  h.treatment_id = :treatment_id AND h.encounter_id = :encounter_id";
     const UPDATE_DETAILS = "UPDATE haematology SET lab_attendant_id = :lab_attendant_id, laboratory_report = :laboratory_report,
                             laboratory_ref = :laboratory_ref, status_id = :status_id, modified_date = NOW() WHERE haematology_id = :haematology_id";
@@ -795,8 +795,8 @@ class ChemicalPathologyRequestSqlStatement{
 }
 
 class VisualRequestSqlStatement{
-    const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, encounter_id, created_date, modified_date)
-                          VALUES (:doctor_id, :treatment_id, :encounter_id, NOW(), NOW())";
+    const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, encounter_id, description, created_date, modified_date)
+                          VALUES (:doctor_id, :treatment_id, :encounter_id, :description, NOW(), NOW())";
     const GET_HISTORY = "SELECT modified_date as modified_date, status_id as status, treatment_id as treatment_id, encounter_id as encounter_id FROM
                          visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE
                          t.patient_id = :patient_id)";
@@ -808,8 +808,8 @@ class VisualRequestSqlStatement{
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.active_fg = :active_fg
                           ORDER BY v.created_date DESC";
     const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id";
-    const UPDATE_DETAILS = "UPDATE visual_skills_profile SET distance_re = :distance_re, distance_le = :distance_le,
-                            distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
+    const UPDATE_DETAILS = "UPDATE visual_skills_profile SET laboratory_report =:laboratory_report, distance_re = :distance_re, distance_le = :distance_le,
+                            central_visual_field = :central_visual_field, intra_ocular_pressure = :intra_ocular_pressure, others = :others, distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,
                             pinhole_acuity_be = :pinhole_acuity_be, colour_vision = :colour_vision, stereopsis = :stereopsis,
                             amplitude_of_accomodation = :amplitude_of_accomodation, modified_date = NOW(),
@@ -817,7 +817,7 @@ class VisualRequestSqlStatement{
 }
 
 class AdmissionReqSqlStatement {
-    const REQUEST_ADMISSION = "INSERT INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
+    const REQUEST_ADMISSION = "INSERTb INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
 
     const DISMISS_REQUEST = "UPDATE admission_req SET active_fg = 0 WHERE treatment_id = :treatment_id";
 
@@ -1001,7 +1001,17 @@ class TreatmentSqlStatement {
                                 ON t.patient_id = p.patient_id
                                 WHERE t.bill_status = 1";
 
+    const UNBILLED_ENCOUNTERS = "SELECT p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, e.status, e.bill_status, e.encounter_id, e.treatment_id, e.modified_date
+                                FROM encounter e
+                                LEFT JOIN patient p
+                                ON e.patient_id = p.patient_id
+                                WHERE e.bill_status = 1";
+
     const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
+                            FROM admission
+                            WHERE treatment_id = :treatment_id";
+
+    const DAYS_SPENT_TILL_DATE = "SELECT DATEDIFF(NOW(), entry_date) AS days_spent
                             FROM admission
                             WHERE treatment_id = :treatment_id";
 
@@ -1047,11 +1057,14 @@ FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treat
                             WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
                             ORDER BY radiology.created_date DESC";
 
-    const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, created_date)
-                            VALUES (:item, :amount, :treatment_id, NOW())";
+    const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, encounter_id, created_date)
+                            VALUES (:item, :amount, :treatment_id, :encounter_id, NOW())";
 
     const UPDATE_BILL_TREATMENT = "UPDATE treatment SET bill_status = 2
                                     WHERE treatment_id = :treatment_id";
+
+    const UPDATE_BILL_ENCOUNTER = "UPDATE encounter SET bill_status = 2
+                                    WHERE encounter_id = :encounter_id";
 
     const MAKE_BILLABLE = "UPDATE treatment SET bill_status = 1 WHERE treatment_id = :treatment_id";
 }

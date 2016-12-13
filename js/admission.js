@@ -60,9 +60,6 @@ Admission = {
         });
         //
 
-        /*Get All In Patients*/
-        Admission.getAllInPatients();
-
         //IN-PATIENTS
         $('#in-patient-form').on('submit', function(e){
             e.preventDefault();
@@ -78,8 +75,6 @@ Admission = {
                 Admission.dischargePatient();
             }
         });
-
-        Admission.getWardBedCounter();
 
     },
     switchMenu : function(obj){
@@ -115,7 +110,7 @@ Admission = {
                 if(data.data === undefined){
                     $('.pending-list').html("<h2 class='text-center text-muted'>" + data.message + "</h2>");
                 }else{
-                    var content = "<ul class='patients-queue list-group'>";
+                    content = "<ul class='patients-queue list-group'>";
                     data.data.forEach(function(record){
                         content += "<li class='list-group-item pointer patient patient-pill text-capitalize' data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor-id = " + record.doctor_id +" data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_req_id + " data-regNo = "+ record.regNo +">" +
                         record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
@@ -128,7 +123,7 @@ Admission = {
                     });
                 }
             }else if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
-                $('.pending-list').html("<h2 class='text-center text-muted'>Unable to complete request at the moment</h2>");
+                console.log('Error in page');
             }
         });
     },
@@ -141,7 +136,7 @@ Admission = {
         Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
         //$('#empty_active').hide();
         //$('#patient-panel').removeClass('hidden');
-        var content = "<h2 class='panel-title text-capitalize'>" + $(patient).attr('data-patient-name') +"</h2>";
+        content = "<h2 class='panel-title text-capitalize'>" + $(patient).attr('data-patient-name') +"</h2>";
         content += "<p>" + $(patient).attr('data-regNum') +"</p>";
         $('#request-heading').html(content);
 
@@ -366,21 +361,9 @@ Admission = {
         $('#assignPatient').removeClass('hidden');
     }
     //IN-PATIENTS
-    ,getAllInPatients: function () {
-        var payload = {};
-        payload.intent = "getPatients";
-
-        $.getJSON(host + 'phase/phase_admission.php', payload, function (data) {
-            if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                Admission.prepareInPatients(data.data);
-            }else{
-                $('#in-patient-result').html("<h4 class='text-muted text-center'>"+ data.message +"</h4>")
-            }
-        });
-    }
     ,getInPatients: function(){
-        var query = $('#patient_query').val();
-        var payload = {};
+        query = $('#patient_query').val();
+        payload = {};
         payload.intent = "searchPatients";
         if(query !== ''){
             payload.term = query;
@@ -388,28 +371,22 @@ Admission = {
                 if(data.status == Admission.CONSTANTS.REQUEST_ERROR){
                     $('#in-patient-result').html("<h4 class='text-muted text-center'>"+ data.message +"</h4>")
                 }else if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                    Admission.prepareInPatients(data.data);
+                    content = "<ul class='patients-queue list-group'>";
+                    data.data.forEach(function(record){
+                        content += "<li class='text-capitalize list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +">" +
+                        record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
+                    });
+                    content += "</ul>";
+                    $('#in-patient-result').html(content);
+                    $('.in-patient').bind('click', function(){
+                        Admission.attendToInPatient(this);
+                        Admission.getPatientRoomDetails(this);
+                    })
                 }
             }).fail(function(data){
-                $('#in-patient-result').html("<h4 class='text-muted text-center'>Unable to complete request at the moment</h4>")
+                console.log(data.responseText);
             });
-        }else{
-            //    get all in patients
-            Admission.getAllInPatients();
         }
-    },
-    prepareInPatients: function (patients) {
-        var content = "<ul class='patients-queue list-group'>";
-        patients.forEach(function(record){
-            content += "<li class='text-capitalize list-group-item pointer in-patient patient-pill' data-ward-id =" +  record.ward_id +" data-bed-id="+ record.bed_id  +" data-regNum = '"+ record.regNo +"' data-patient-name = '" + record.patient + "' data-doctor = '" + record.doctor + "' data-patient-id = " + record.patient_id +" data-treatment-id = " + record.treatment_id + " data-admission-id = " + record.admission_id + " data-regNo = "+ record.regNo +" data-entry-date ='"+ record.entry_date +"'>" +
-            record.patient + "<div class='small text-muted'>" + record.regNo +"</div></li>";
-        });
-        content += "</ul>";
-        $('#in-patient-result').html(content);
-        $('.in-patient').bind('click', function(){
-            Admission.attendToInPatient(this);
-            Admission.getPatientRoomDetails(this);
-        });
     }
     ,attendToInPatient: function(patient){
         //remove patient from search queue
@@ -419,13 +396,10 @@ Admission = {
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-patient-id");
         Admission.GLOBAL.PATIENT_ADMISSION_ID = $(patient).attr("data-admission-id");
         Admission.GLOBAL.ACTIVE_PATIENT_ID = $(patient).attr('data-patient-id');
-        Admission.GLOBAL.TREATMENT_ID = $(patient).attr('data-treatment-id');
-
-        $("#patient_name").empty().html($(patient).attr('data-patient-name'));
-        $("#patient_reg_num").empty().html($(patient).attr('data-regNo'));
-        $("#req_doctor").empty().html($(patient).attr('data-doctor'));
-
-        //$('#in-patient-identity').html(patient_identity);
+        patient_identity = "<h2 class='text-primary text-capitalize'>"+ $(patient).attr('data-patient-name') + "</h2>";
+        patient_identity += "<p>" + $(patient).attr('data-regNo') +"</p>";
+        patient_identity += "<p class='small text-capitalize'>Requested by " + $(patient).attr('data-doctor') +"</p>";
+        $('#in-patient-identity').html(patient_identity);
 
         $(".admitted-patients-in-ward li").click(function(){
             Admission.getWardAvailableBeds(this, Admission.prepareInPatientBedList);
@@ -433,9 +407,9 @@ Admission = {
         //Get patient details
         Admission.getPatientRoomDetails(patient);
 
+
     },
     getPatientRoomDetails: function(patient){
-        //console.log(patient);
         //set patient bed id
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-bed-id");
 
@@ -449,10 +423,6 @@ Admission = {
         $("#empty_active_in_patient").addClass("hidden");
         $(".in-patient-content").removeClass("hidden");
         $(".discharge-container").removeClass("hidden");
-
-        /*Admission Details*/
-        var format_datetime = Admission.toDateString($(patient).attr('data-entry-date')) + " by " + Admission.toLocaleTimeString($(patient).attr('data-entry-date'));
-        $("#entry_date").html(format_datetime);
     },
     prepareAdmissionSwitch: function () {
         $('.assign-patient-column #ward_chosen').html(Admission.GLOBAL.SELECTED_WARD).removeClass('hidden');
@@ -464,11 +434,10 @@ Admission = {
     logEncounter: function(){
         $('#log_encounter_response').empty();
         $('#log_encounter_loading').removeClass('hidden');
-        var payload = {};
+        payload = {};
         payload.intent = 'logEncounter';
         payload.admission_id = Admission.GLOBAL.PATIENT_ADMISSION_ID;
         payload.patient_id =  Admission.GLOBAL.ACTIVE_PATIENT_ID;
-        payload.treatment_id =  Admission.GLOBAL.TREATMENT_ID;
         payload.comments = $('#comment').val();
         payload.vitals = {};
         console.log(payload);
@@ -529,56 +498,6 @@ Admission = {
                 $("#discharge_patient_response").html(response_msg);
             }
         });
-    },
-    toDateString: function (dateString){
-        date = new Date(dateString);
-        if(isNaN(date.getTime())){
-            return dateString.substr(0, 10);
-        }
-        else{
-            //console.log(date instanceof String)
-            return date.toDateString();
-        }
-    },
-    toLocaleTimeString: function (dateString){
-        date = new Date(dateString);
-        if(isNaN(date.getTime())){
-            return dateString.substr(dateString.length - 8);
-        }
-        else{
-            //console.log(date instanceof String)
-            return date.toLocaleTimeString();
-        }
-    },
-    getWardBedCounter: function(){
-        var payload = {};
-        payload.intent = "getWardBedCounter";
-        $.getJSON(host + "phase/phase_ward.php", payload, function (data) {
-
-            if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
-                var num_of_wards = data.data.wards;
-                if(num_of_wards > 1){
-                    $(".num_of_wards").html(num_of_wards + " wards");
-                }else{
-                    $(".num_of_wards").html(num_of_wards + " ward");
-
-                }
-                var num_of_available_beds = data.data.beds.available;
-                if(num_of_available_beds > 1){
-                    $(".num_of_available_beds").html(num_of_available_beds + " available beds");
-                }else{
-                    $(".num_of_available_beds").html(num_of_available_beds + " available bed");
-                }
-                var num_of_beds = parseInt(data.data.beds.occupied) + parseInt(data.data.beds.available);
-                if(num_of_beds > 1){
-                    $(".num_of_beds").html(num_of_beds + " beds");
-                }else{
-                    $(".num_of_beds").html(num_of_beds + " bed");
-                }
-            }else{
-
-            }
-        })
     }
 };
 

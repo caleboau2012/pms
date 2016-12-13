@@ -35,7 +35,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -102,7 +101,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <table id="test_table" class="table table-stripped table-responsive dataTable">
                         <thead>
                         <tr>
-                            <th>Session ID</th>
+                            <th>S/N</th>
                             <th>Name</th>
                             <th>Identification No.</th>
                             <th>Test Type</th>
@@ -115,7 +114,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                         </tbody>
                         <tfoot>
                         <tr>
-                            <th>Session ID</th>
+                            <th>S/N</th>
                             <th>Name</th>
                             <th>Identification No.</th>
                             <th>Test Type</th>
@@ -129,7 +128,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
             </div>
         </div>
         <div class="col-sm-3">
-            <br>
             <label>Select Test</label>
             <select id="type" class="form-control" name="test_id" onchange="Laboratory.onTestChange()">
                 <?php
@@ -144,7 +142,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 <?php
                     } else if ($staff[StaffRoleTable::staff_role_id] == XRAY_CONDUCTOR){
                         ?>
-                        <option value="radiology">XRAY</option>
+                        <option value="radiology">RADIOLOGY</option>
                 <?php
                     } else if ($staff[StaffRoleTable::staff_role_id] == VISUAL_CONDUCTOR){
                         ?>

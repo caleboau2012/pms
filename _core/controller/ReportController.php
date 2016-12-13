@@ -1,9 +1,5 @@
 <?php
 class ReportController {
-    public static function allPatients() {
-        return ReportModel::allPatients(ReportController::getGender());
-    }
-
     public static function newPatients() {
         return ReportModel::newPatients(ReportController::getGender());
     }

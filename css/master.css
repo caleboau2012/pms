@@ -1527,3 +1527,55 @@ input.cmn-toggle-round:checked + label:after{
     margin-right: 4px;
     margin-top: 4px;
 }
+
+#loaderOverlay{
+    background-color:rgba(0,0,0,.76);
+    /*display:none;*/
+    height:100%;
+    position:fixed;
+    top:0;left:0;
+    width:100%;
+    z-index:1000;
+    color:#fff
+}
+#loaderOverlay #loader .text-content{
+    color:#fff;
+    margin:30% auto;
+    width:70%
+}
+
+#responseOverlay{
+    background-color:rgba(0,0,0,.8);
+    /*display:none;*/
+    height:100%;
+    width:100%;
+    position:fixed;
+    top:0;left:0;
+    z-index:1000;
+}
+#responseOverlay #loader{
+    background-color: rgb(255, 255, 255);
+    width: 500px;
+    min-height: 300px;
+    margin: 50px auto 10px;
+    z-index: 100000;
+}
+#responseOverlay #loader{
+    padding: 5px 15px;
+}
+
+.font-70{
+    font-size: 70px;
+}
+#search-loader{
+    font-size: 40px;
+    text-align: right;
+    position: absolute;
+    left: 224px;
+    top: 5px;
+}
+#search-empty-text{
+    line-height: 5px;
+    color: #a94442;
+
+}

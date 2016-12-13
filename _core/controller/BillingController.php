@@ -21,6 +21,10 @@ class BillingController {
         return $this->systemBilling->billTreatment($treatment_id);
     }
 
+    public function billEncounter($encounter_id) {
+        return $this->systemBilling->billEncounter($encounter_id);
+    }
+
     public function getDetails($treatment_id) {
         return $this->systemBilling->getDetails($treatment_id);
     }

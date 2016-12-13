@@ -41,6 +41,7 @@ Crave::requireAll(UTIL);
                 <p>{{name}}</p>
                 <p class="name hidden">{{name}}</p>
                 <p class="regNo hidden">{{regNo}}</p>
+                <span class="encounter_id hidden">{{encounter_id}}</span>
                 <span class="treatment_id hidden">{{treatment_id}}</span>
                 <span class="treatment_status hidden">{{treatment_status}}</span>
                 <span class="bill_status hidden">{{bill_status}}</span>
@@ -106,27 +107,25 @@ Crave::requireAll(UTIL);
                             <tr>
                                 <th>Item</th>
                                 <th>Amount</th>
+                                <th class="delete">Delete?</th>
                             </tr>
                             </thead>
-                            <tbody>
+                            <tbody class="bill-body">
                             </tbody>
                             <tfoot>
-                            <tr class="text-right">
-                                <td colspan="2">
+                            <tr>
+                                <td colspan="2"></td>
+                                <td>
                                     <button type="button" id="add_more" class="btn btn-primary btn-sm">
                                         Add
                                         <span class="fa fa-plus"></span>
-                                    </button>
-                                    &nbsp;
-                                    <button type="button" id="remove_one" class="btn btn-primary btn-sm">
-                                        Remove
-                                        <span class="fa fa-minus"></span>
                                     </button>
                                 </td>
                             </tr>
                             <tr>
                                 <th>Total</th>
                                 <th id="total">0.00</th>
+                                <td class="delete"></td>
                             </tr>
                             </tfoot>
                         </table>

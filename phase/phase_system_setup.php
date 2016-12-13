@@ -54,7 +54,7 @@ if ($intent == 'initialSetup') {
         exit;
     }
 } elseif($intent == 'addHospitalInfoAndUnits'){
-   /* $hospital_name = $_REQUEST['name'];
+    $hospital_name = $_REQUEST['name'];
     $hospital_address = $_REQUEST['address'];
     $values = $_REQUEST['values'];
     $hospital = new HospitalDetailsController();
@@ -64,9 +64,9 @@ if ($intent == 'initialSetup') {
         $units = new PharmacistController();
         $units_added = $units->addDrugUnits($values);
 
-        if($units_added){*/
+        if($units_added){
             echo JsonResponse::success('Successfully added hospital information and drug units');
-      /*      exit;
+            exit;
         } else {
             echo JsonResponse::error('Could not add drug units');
             exit;
@@ -74,7 +74,7 @@ if ($intent == 'initialSetup') {
     } else {
         echo JsonResponse::error('Adding hospital information unsuccessful');
         exit;
-    }*/
+    }
 } elseif($intent == 'addBillingItems'){
     $values = $_REQUEST['billItems'];
     $bills = new BillingController();

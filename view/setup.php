@@ -16,10 +16,10 @@ if (file_exists("../_resource/setup")){
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
-    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
+
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
@@ -35,7 +35,7 @@ if (file_exists("../_resource/setup")){
     <div class="row">
         <div id="setup-container">
             <div class="bg-info text-center" id="setup-heading">
-                <h4>System Setup</h4>
+                <h4>PMS Setup</h4>
             </div>
             <div id="setup-nav">
 
@@ -185,8 +185,6 @@ if (file_exists("../_resource/setup")){
         </div>
 
     </div> <!-- /container -->
-    <?php include('footer.php'); ?>
-
     <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="../js/constants.js"></script>
     <script src="../js/index.js"></script>

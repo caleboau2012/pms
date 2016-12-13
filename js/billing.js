@@ -24,8 +24,8 @@ Billing = {
         $('#add_more').click(function(e){
             Billing.addMore();
         });
-        $('#remove_one').click(function(e){
-            Billing.removeOne();
+        $(document).delegate('.remove-one', 'click', function(e){
+            Billing.removeOne(this);
         });
         $('#print').click(function(e){
             Billing.endBilling(document.bill);
@@ -34,6 +34,7 @@ Billing = {
     getQueue: function(){
         var url = host + "phase/phase_billing.php?intent=unbilled_treatments";
         $.getJSON(url, function(data){
+            //console.log(data);
             if(data.status == 1){
                 data = data.data;
                 $('#unbilled-patients').empty();
@@ -56,6 +57,7 @@ Billing = {
                     patientHTML = replaceAll('{{regNo}}', data[i].regNo, patientHTML);
                     patientHTML = replaceAll('{{name}}', patientName, patientHTML);
                     patientHTML = replaceAll('{{treatment_id}}', data[i].treatment_id, patientHTML);
+                    patientHTML = replaceAll('{{encounter_id}}', (data[i].encounter_id)?data[i].encounter_id:"", patientHTML);
                     patientHTML = replaceAll('{{treatment_status}}', data[i].treatment_status, patientHTML);
                     patientHTML = replaceAll('{{home_address}}', data[i].home_address, patientHTML);
                     patientHTML = replaceAll('{{telephone}}', data[i].telephone, patientHTML);
@@ -75,15 +77,18 @@ Billing = {
                 var html;
 
                 for(i = 0; i < data.length; i++){
-                     html = '<tr>' +
+                    html = '<tr>' +
                         '<td><input class="form-control item" name="item[' +
                         i +
                         ']" disabled value="' + data[i].bill + '"></td> ' +
                         '<td><input class="form-control amount" type="number" name="amount[' +
                         i +
                         ']" value="' + data[i].amount + '"></td>' +
+                        '<td><button type="button" class="remove-one btn btn-warning btn-sm">'
+                        + '<span class="fa fa-minus"></span>' +
+                        '   </button></td>' +
                         '</tr>';
-                    $('tbody').append(html);
+                    $('.bill-body').append(html);
                 }
 
                 Billing.computeTotal();
@@ -110,6 +115,13 @@ Billing = {
         var address = ($(patient).find('.home_address').text());
         var date = ($(patient).find('.modified_date').text());
         Billing.CONSTANTS.treatment_id = ($(patient).find('.treatment_id').text());
+        Billing.CONSTANTS.encounter_id = ($(patient).find('.encounter_id').text());
+
+        console.log({
+            treatment_id: Billing.CONSTANTS.treatment_id,
+            encounter_id: Billing.CONSTANTS.encounter_id
+        });
+
         Billing.getDetails();
 
         $('.none').addClass('hidden');
@@ -136,19 +148,24 @@ Billing = {
     },
     addMore: function(){
         var count = $('tbody').children().length;
-        var html = '<tr id="extra' + count + '">' +
+        var html = '<tr>' +
             '<td><input class="form-control item" name="item[' +
-                count +
-                ']"></td>' +
+            count +
+            ']"></td>' +
             '<td><input class="form-control amount" type="number" name="amount[' +
-                count +
-                ']"></td>' +
+            count +
+            ']"></td>' +
+            '<td><button type="button" class="remove-one btn btn-warning btn-sm">'
+            + '<span class="fa fa-minus"></span>' +
+            '   </button></td>' +
             '</tr>';
         Billing.CONSTANTS.INDEX = count;
-        $('tbody').append(html);
+        $('.bill-body').append(html);
     },
-    removeOne: function(){
-        $('#extra' + Billing.CONSTANTS.INDEX).remove();
+    removeOne: function(button){
+        console.log(button);
+        $(button).parent().parent().remove();
+        //$('#extra' + Billing.CONSTANTS.INDEX).remove();
     },
     getDetails: function(){
         $.getJSON(host + 'phase/phase_billing.php', {
@@ -257,10 +274,13 @@ Billing = {
         });
 
         $("tfoot tr")[0].remove();
+        $(".delete").remove();
+        $(".remove-one").parent().remove();
 
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'post_bills',
             treatment_id: Billing.CONSTANTS.treatment_id,
+            encounter_id: Billing.CONSTANTS.encounter_id,
             item: items,
             amount: amounts
         }, function(data){

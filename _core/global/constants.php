@@ -130,7 +130,6 @@ define('HOST', "http://code.caleb.com.ng/pms/");
 
 // Hospital Info
 define('HOSPITAL_NAME', 'hospital_name');
-define('HOSPITAL_ADDRESS', 'hospital_address');
 
 //Folder Aliases
 define('HEADERS', 'view/header/');
