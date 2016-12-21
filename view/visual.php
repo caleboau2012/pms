@@ -137,7 +137,6 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['doctor_id'])
     </div>
 </script>
 <body>
-
 <div class="container-fluid">
     <div class="row">
         <br>

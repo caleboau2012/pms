@@ -42,6 +42,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -62,7 +63,15 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="dashboard.php">Patient Management System</a>
+            <a class="navbar-brand" href="dashboard.php">
+                <?php
+                if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                    echo "Patient Management System";
+                }else{
+                    echo ucwords(CxSessionHandler::getItem('hospital_name'));
+                }
+                ?>
+            </a>
         </div>
         <div class="navbar-collapse collapse navbar-right">
             <ul class="nav navbar-nav">
@@ -129,8 +138,10 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
 
 <div class="container-fluid">
     <div class="row">
-        <div class="col-sm-12 well">
-            <div class="panel panel-default">
+        <br>
+        <div class="col-sm-12">
+            <button class="btn btn-default pull-right" id="print"><i class="fa fa-print"></i> Print</button>
+            <div class="panel panel-default" id="print-head">
                 <div class="panel-heading">
                     <h2 class="panel-title"><span style="text-transform: uppercase"><?php echo $patient['surname']; ?></span> <?php echo $patient['middlename'].' '. $patient['firstname'];  ?></h2>
                 </div>
@@ -141,7 +152,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                 </div>
             </div>
 
-            <div class="haematology">
+            <div class="haematology" id="print-body">
                 <div class="add-haematology">
                     <form id="addTestForm" class="form" method="POST">
                         <input type="hidden" name="<?php echo 'data[details]'.'['.HaematologyTable::haematology_id.']'; ?>" value="<?php echo $view_bag['details']['haematology_id'] ?>" />
@@ -331,6 +342,30 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
         </div>
     </div>
 </div>
+<div class="clearfix"></div>
+<div id="print-footer" class="row hidden">
+    <div class="text-center">
+        <p><?php
+            if(is_null(CxSessionHandler::getItem('hospital_name'))){
+                echo "Patient Management System";
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_name'));
+            }
+            ?>
+        </p>
+        <p>
+            <?php
+            if(is_null(CxSessionHandler::getItem('hospital_address'))){
+            }else{
+                echo ucwords(CxSessionHandler::getItem('hospital_address'));
+            }
+            ?>
+        </p>
+        <p></p>
+    </div>
+</div>
+
+<?php include('footer.php'); ?>
 
 <!-- Bootstrap core JavaScript
 ================================================== -->
