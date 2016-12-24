@@ -817,7 +817,7 @@ class VisualRequestSqlStatement{
 }
 
 class AdmissionReqSqlStatement {
-    const REQUEST_ADMISSION = "INSERTb INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
+    const REQUEST_ADMISSION = "INSERT INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
 
     const DISMISS_REQUEST = "UPDATE admission_req SET active_fg = 0 WHERE treatment_id = :treatment_id";
 
