@@ -99,6 +99,14 @@ if ($intent == 'loadWards') {
         echo JsonResponse::error("Incomplete request parameters!");
         exit();
     }
+} elseif ($intent == 'getWardBedCounter') {
+    $warden = new WardController();
+    $response = $warden->wardBedCounter();
+    if ($response) {
+        echo JsonResponse::success($response);
+    } else {
+        echo JsonResponse::error("Unable to get details");
+    }
 }else {
     echo JsonResponse::error("Invalid intent!");
     exit();

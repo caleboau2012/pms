@@ -197,7 +197,7 @@ Billing = {
             if(data.data.test.visual_test){
                 $('#test').append("<tr>" +
                     "<td>Visual Test</td>" +
-                    "<td></td>" +
+                    "<td>" + checkNull(data.data.test.visual_test.description) + "</td>" +
                     "<td>" + data.data.test.visual_test.created_date + "</td>" +
                     "</tr>");
             }

@@ -19,11 +19,12 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="author" content="">
     <link rel="icon" href="../../favicon.ico">
 
-    <title>Admin Dashboard</title>
+    <title>Patient Arrival</title>
 
     <!-- Bootstrap core CSS -->
     <link href="../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../css/bootstrap/jquery-ui.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="../css/master.css" rel="stylesheet">
@@ -81,16 +82,13 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                         <li role="presentation"><a href="#" id="sign-out">Sign out</a></li>
                     </ul>
                 </li>
-
             </ul>
-
             <form id="search-form" class="patient-arrival navbar-form">
                 <div class="search text-center">
                     <input id="search_query" type="text" class="form-control" name="search" placeholder="Search Returning Patients...">
                     <span id="search-empty-text" class="hidden help-block text-danger" style="line-height: 5px;">No patient found</span>
                 </div>
             </form>
-
         </div>
     </div>
 </nav>
@@ -282,7 +280,8 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                                 <option value="7">Husband</option>
                                                 <option value="8">Wife</option>
                                                 <option value="9">Other</option>
-                                            </select></div>
+                                            </select>
+                                        </div>
                                     </td>
                                 </tr>
                             </table>

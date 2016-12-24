@@ -13,7 +13,16 @@ if (isset($_REQUEST['intent'])) {
     exit();
 }
 
-if ($intent == 'newPatients') {
+if ($intent == 'allPatients') {
+    $result = ReportController::allPatients();
+    if (is_array($result)) {
+        echo JsonResponse::success($result);
+        exit();
+    } else {
+        echo JsonResponse::error("Unable to retrieve report of all patients!");
+        exit();
+    }
+} elseif ($intent == 'newPatients') {
     ReportController::datesIncluded();
     $result = ReportController::newPatients();
     if (is_array($result)) {

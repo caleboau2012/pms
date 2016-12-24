@@ -178,7 +178,7 @@ Crave::requireAll(UTIL);
                         <table class="table table-striped">
                             <thead text-center><tr>
                                 <th>Test</th>
-                                <th>Diagnosis</th>
+                                <th>Description</th>
                                 <th>Date</th>
                             </tr></thead>
                             <tbody id="test" class="test text-center"></tbody>

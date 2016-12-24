@@ -134,13 +134,13 @@ if ($intent == 'admitPatient') {
         }
 
         $warden = new AdmissionController();
-        $response = $warden->logEncounter($personnel_id, $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $vitals_data);
-
+        $response = $warden->logEncounter($personnel_id, $_REQUEST[EncounterTable::treatment_id], $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $vitals_data);
+//$response = false;
         if ($response) {
             echo JsonResponse::message(STATUS_OK, "Encounter logged successfully!");
             exit();
         } else {
-            echo JsonResponse::error("Unable to log encounter!");
+            echo JsonResponse::error($_REQUEST);
             exit();
         }
     } else {

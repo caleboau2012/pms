@@ -56,6 +56,7 @@ if ($intent == 'addVitals') {
                 echo JsonResponse::error($response[P_MESSAGE]);
                 exit();
             } else {
+                array_reverse($response);
                 echo JsonResponse::success($response);
                 exit();
             }

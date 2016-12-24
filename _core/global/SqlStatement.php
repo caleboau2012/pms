@@ -817,7 +817,7 @@ class VisualRequestSqlStatement{
 }
 
 class AdmissionReqSqlStatement {
-    const REQUEST_ADMISSION = "INSERTb INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
+    const REQUEST_ADMISSION = "INSERT INTO admission_req(treatment_id, created_date, modified_date, active_fg) VALUES(:treatment_id, NOW(), NOW(), 1)";
 
     const DISMISS_REQUEST = "UPDATE admission_req SET active_fg = 0 WHERE treatment_id = :treatment_id";
 
@@ -1033,7 +1033,7 @@ class TreatmentSqlStatement {
                              WHERE urine.treatment_id = :treatment_id AND patient_queue.active_fg = 0
                              ORDER BY urine.created_date DESC";
 
-    const VISUALTEST = "SELECT DISTINCT visual_profile_id, visual_skills_profile.created_date
+    const VISUALTEST = "SELECT DISTINCT visual_profile_id, description, visual_skills_profile.created_date
     FROM visual_skills_profile INNER JOIN treatment ON (treatment.treatment_id = visual_skills_profile.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
                             WHERE visual_skills_profile.treatment_id = :treatment_id AND patient_queue.active_fg = 0

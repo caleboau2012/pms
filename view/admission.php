@@ -206,23 +206,18 @@ $wards = $admission->loadWards();
             <div class="col-sm-8">
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
-                    <div class="col-md-6">
-                        <div id="in-patient-identity">
-                            <h2 class='text-primary text-capitalize' id="patient_name">
+                    <div id="in-patient-identity">
+                        <h2 class='text-primary text-capitalize' id="patient_name">
 
-                            </h2>
-                            <h4 class="text-muted text-uppercase">
-                                <span class="fa fa-barcode text-success">&nbsp;</span>
-                                <span id="patient_reg_num"></span>
-                            </h4>
-                            <h4 class="text-capitalize text-muted">
-                                <span class="fa fa-stethoscope text-info">&nbsp;</span>
-                                Requested by&nbsp;<span id="req_doctor"></span>
-                            </h4>
-                            <div>
-
-                            </div>
-                        </div>
+                        </h2>
+                        <h4 class="text-muted text-uppercase">
+                            <span class="fa fa-barcode text-success">&nbsp;</span>
+                            <span id="patient_reg_num"></span>
+                        </h4>
+                        <h4 class="text-capitalize text-muted">
+                            <span class="fa fa-stethoscope text-info">&nbsp;</span>
+                            Requested by&nbsp;<span id="req_doctor"></span>
+                        </h4>
                     </div>
                     <div class="col-md-6" style="padding: 15px;">
                         <div class="text-right" id="discharge_patient_content">
@@ -315,13 +310,11 @@ $wards = $admission->loadWards();
                                     <div class="col-sm-6">
                                         <label for="temp">Temperature</label>
                                         <input type="text" class="form-control" id="temp" name="temp" required="required">
-
                                     </div>
                                     <div class="col-sm-6">
                                         <label for="pulse">Pulse</label>
                                         <input type="text" id="pulse" class="form-control" name="pulse" required="required">
                                     </div>
-                                        <br/>
                                 </div>
                                 <div class="form-group">
                                     <div class="col-sm-6">

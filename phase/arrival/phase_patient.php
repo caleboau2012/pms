@@ -233,59 +233,34 @@ else if ($intent == 'ManagePatient') { //working
 
         $result = $patientController->checkEmergencyStatus($patient_id); // return  the status, 1 active, 2 upgraded, 3 treatment...
 
-//        echo $result;
-        $result = is_array( $result);
-
-        if ($result){
-            $result=1;
-        }
-        else{
-            $result=0;
-        }
-
-        if ($result == 1 || $result == 0) { //
-
-
-            $surname = $_REQUEST[PatientTable::surname];
-            $firstname = $_REQUEST[PatientTable::firstname];
-            $middlename = $_REQUEST[PatientTable::middlename];
-            $regNo = $_REQUEST[PatientTable::regNo];
-            $home_address = $_REQUEST[PatientTable::home_address];
-            $telephone = $_REQUEST[PatientTable::telephone];
-            $sex = $_REQUEST[PatientTable::sex];
-            $height = $_REQUEST[PatientTable::height];
-            $weight = $_REQUEST[PatientTable::weight];
-            $birth_date = $_REQUEST[PatientTable::birth_date];
-            $nok_firstname = $_REQUEST[PatientTable::nok_firstname];
-            $nok_middlename = $_REQUEST[PatientTable::nok_middlename];
-            $nok_surname = $_REQUEST[PatientTable::nok_surname];
-            $nok_address = $_REQUEST[PatientTable::nok_address];
-            $nok_telephone = $_REQUEST[PatientTable::nok_telephone];
-            $nok_relationship = $_REQUEST[PatientTable::nok_relationship];
-            $citizenship = $_REQUEST[PatientTable::citizenship];
-            $religion = $_REQUEST[PatientTable::religion];
-            $family_position = $_REQUEST[PatientTable::family_position];
-            $mother_status = $_REQUEST[PatientTable::mother_status];
-            $father_status = $_REQUEST[PatientTable::father_status];
-            $marital_status = $_REQUEST[PatientTable::marital_status];
-            $no_of_children = $_REQUEST[PatientTable::no_of_children];
-            $occupation = $_REQUEST[PatientTable::occupation];
-
-
-        } else if ($result == 2) {
-            echo JsonResponse::error('Emergency Patient already upgraded');
-            exit();
-        } else if ($result == 3) {
-            echo JsonResponse::error('Emergency Patient receiving treatment');
-            exit();
-        }
-
-        $patientUp = null;
+        $surname = $_REQUEST[PatientTable::surname];
+        $firstname = $_REQUEST[PatientTable::firstname];
+        $middlename = $_REQUEST[PatientTable::middlename];
+        $regNo = $_REQUEST[PatientTable::regNo];
+        $home_address = $_REQUEST[PatientTable::home_address];
+        $telephone = $_REQUEST[PatientTable::telephone];
+        $sex = $_REQUEST[PatientTable::sex];
+        $height = $_REQUEST[PatientTable::height];
+        $weight = $_REQUEST[PatientTable::weight];
+        $birth_date = $_REQUEST[PatientTable::birth_date];
+        $nok_firstname = $_REQUEST[PatientTable::nok_firstname];
+        $nok_middlename = $_REQUEST[PatientTable::nok_middlename];
+        $nok_surname = $_REQUEST[PatientTable::nok_surname];
+        $nok_address = $_REQUEST[PatientTable::nok_address];
+        $nok_telephone = $_REQUEST[PatientTable::nok_telephone];
+        $nok_relationship = $_REQUEST[PatientTable::nok_relationship];
+        $citizenship = $_REQUEST[PatientTable::citizenship];
+        $religion = $_REQUEST[PatientTable::religion];
+        $family_position = $_REQUEST[PatientTable::family_position];
+        $mother_status = $_REQUEST[PatientTable::mother_status];
+        $father_status = $_REQUEST[PatientTable::father_status];
+        $marital_status = $_REQUEST[PatientTable::marital_status];
+        $no_of_children = $_REQUEST[PatientTable::no_of_children];
+        $occupation = $_REQUEST[PatientTable::occupation];
 
         if (empty($surname) || empty($firstname) || empty($middlename) || empty($regNo) || empty($home_address) || empty($telephone) || empty($birth_date) || empty($nok_firstname) || empty($nok_middlename) || empty($nok_surname) || empty($nok_address) || empty($nok_telephone)
             || empty($citizenship) || empty($religion) || empty($mother_status) || empty($father_status) || empty($marital_status) || empty ($occupation)
         ) {
-
             //print_r($_REQUEST);
             echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
             exit();
@@ -299,40 +274,25 @@ else if ($intent == 'ManagePatient') { //working
         }
 
         if ($patientUp) {
-            // change status of emergency table of emergency patient from 1 to 2;
+            if($result[EmergencyTable::emergency_status_id] == 1){
+                // change status of emergency table of emergency patient from 1 to 2;
 
-            //create new Editinfo for updating emergency to enable rollback functionality.
-            $status = 2;
-            $emergencyreg = $patient_id;
-
-
-
-            $change = 0;
-
-            if ($result!= 0) {
+                //create new Editinfo for updating emergency to enable rollback functionality.
+                $status = 2;
+                $emergencyreg = $patient_id;
 
                 $change = $patientController->changeEmergencyStatus($emergencyreg, 2);
 
-
-            }
-
-            // var_dump($result);
-
-            if ($change == 0 || $change == 1 || $result==0) {
-                if ($change !=0){
+                if($change){
                     echo JsonResponse::message(1, "Emergency Patient sucessfully upgraded");
+                    exit();
                 }
 
-                if ($result== 0) {
-                    echo JsonResponse::message(1, "Patient sucessfully updated");
-
-                }
-
-                exit();
             }
 
+            echo JsonResponse::message(1, "Patient sucessfully updated");
+            exit();
         } else {
-//        print_r($_REQUEST);
             echo JsonResponse::error("Error upgrading patient.");
             exit();
         }

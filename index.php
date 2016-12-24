@@ -13,10 +13,11 @@
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PMS</title>
+    <title>Elyon</title>
 
     <!-- Bootstrap core CSS -->
     <link href="css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="css/master.css" rel="stylesheet">
@@ -38,7 +39,7 @@
     <form class="" id="login">
         <div class="panel panel-primary form-signin">
             <div class="panel-heading">
-                <h2 class="panel-title">PMS Signin</h2>
+                <h2 class="panel-title"><span class="fa fa-lock"></span> Login</h2>
             </div>
             <div class="panel-body">
                 <div class="hidden text-center" id="form-loading"><img src="images/loading.gif"></div>
@@ -67,6 +68,10 @@
         </div>
     </form>
 </div> <!-- /container -->
+
+<?php
+include("view/footer.php");
+?>
 
 </body>
 </html>

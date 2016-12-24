@@ -17,9 +17,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <meta name="description" content="">
     <meta name="author" content="">
 
-    <title>PMS</title>
+    <title>Elyon</title>
     <!-- Bootstrap core CSS -->
     <link href="<?php echo HOST?>css/bootstrap/bootstrap.min.css" rel="stylesheet">
+    <link href="../css/sticky-footer-navbar.css" rel="stylesheet">
 
     <!-- Custom styles for this template -->
     <link href="<?php echo HOST?>css/master.css" rel="stylesheet">
@@ -52,13 +53,9 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     </div>
 </div> <!-- /container -->
 
-<div class="navbar navbar-fixed-bottom">
-    <div class="container-fluid">
-        <div class="text-center">
-            &copy; 2015. Patient Management System
-        </div>
-    </div>
-</div>
+<br>
+
+<?php include('footer.php'); ?>
 
 <script src="<?php echo HOST?>js/bootstrap/jquery-1.10.2.min.js"></script>
 <script>
