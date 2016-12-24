@@ -28,8 +28,8 @@ class RadiologyModel extends BaseModel{
         return true;
     }
 
-    public function getLabHistory($patientId, $encounter_id){
-        $data = array(TreatmentTable::patient_id => $patientId, TreatmentTable::encounter_id => $encounter_id);
+    public function getLabHistory($patientId){
+        $data = array(TreatmentTable::patient_id => $patientId);
         return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_HISTORY, $data);
     }
 
