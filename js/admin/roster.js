@@ -21,6 +21,7 @@
                     staff_id: $(this).attr('data-id'),
                     duty: $(this).attr('data-duty'),
                     dept_id : $(this).attr('data-dept_id'),
+                    color : $(this).attr('data-color'),
                     name: $(this).attr('data-name'),
                     stick: true // maintain when user navigates (see docs on the renderEvent method)
                 });
@@ -54,9 +55,8 @@
                     Roster.updateRoster(event.roster_id, event.start.format())
                 },
                 eventClick: function(event, element){
-                    //console.log(event);
-                    info = event.title + "schedule on " + event.start.format() + " for " + Roster.getDuty(event.color) + " duty";
-                    if(confirm("Are you sure yo want to delete " + info)){
+                    var info = event.title + " schedule on " + event.start.format() + " for " + Roster.getDuty(event.color) + " duty";
+                    if(confirm("Are you sure you want to delete " + info)){
                        Roster.deleteRoster(event.roster_id);
                        $('#calendar').fullCalendar('removeEvents', event._id);
                    }
@@ -80,7 +80,7 @@
             $('.fc-toolbar').append(response);
         },
         getDuty : function(colorCode){
-            duty = '';
+           var  duty = '';
             switch (colorCode){
                 case  Roster.CONSTANTS.MORNING_DUTY:
                     duty = 'Morning';

@@ -19,7 +19,7 @@ class StaffRosterController{
 
     public function assignTask($userId, $deptId, $duty, $dutyDate, $createdBy){
         $check = $this->staffRoster->periodAvailable(array(
-            RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate
+            RosterTable::duty => $duty, RosterTable::duty_date => $dutyDate, RosterTable::user_id => $userId
         ));
         if($check['count'] == 0){
             return $this->staffRoster->assignTask(array(RosterTable::user_id => $userId, RosterTable::dept_id => $deptId,

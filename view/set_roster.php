@@ -50,13 +50,13 @@ $list_of_staff = $userController->getAllRegisteredUsers();
                             <div class="col-xs-5">
                                 <?php echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname'] ?>
                             </div>
-                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event m-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=8 >
+                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event m-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=8 data-color="#3A87AD">
                                 M
                             </div>
-                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event a-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=9 >
+                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event a-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=9  data-color="#4CA618">
                                 A
                             </div>
-                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event n-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=10 >
+                            <div data-id="<?php echo $staff['userid'] ?>" class="col-xs-2 staff-duty fc-event n-duty" data-dept_id = "<?php echo $staff['department_id']; ?>" data-name = "<?php   echo $staff['firstname'] . " " .$staff['middlename']. " ".$staff['surname']?>" data-duty=10 data-color="#3F3C3C">
                                 N
                             </div>
                             <div class="clearfix"></div>
