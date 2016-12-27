@@ -22,7 +22,7 @@ function init(){
 
     $("input[name='search']").autocomplete({
         source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
-        minLength : 3,
+        minLength : 1,
         select : function(event, ui) {
             //$(this).attr("id", "user-" + ui.item.userid);
             $(this).val(ui.item.value);

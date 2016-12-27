@@ -13,12 +13,25 @@ Treatment = {
 
         $("input[name='search']").autocomplete({
             source : host + "phase/arrival/phase_patient_arrival.php?intent=search",
-            minLength : 3,
+            minLength : 1,
             select : function(event, ui) {
                 //$(this).attr("id", "user-" + ui.item.userid);
                 $(this).val(ui.item.value);
                 Treatment.searchResult(ui.item);
                 return false;
+            },
+            search: function( event, ui ) {;
+                /*start of search*/
+                $("#search-empty-text").addClass('hidden');
+                $("#search-loader").removeClass('hidden');
+            },
+            response: function( event, ui ) {
+                if(ui.content.length == 0){
+                    $("#search-empty-text").removeClass('hidden');
+                }else{
+                    $("#search-empty-text").addClass('hidden');
+                }
+                $("#search-loader").addClass('hidden');
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
             //console.log(item);
