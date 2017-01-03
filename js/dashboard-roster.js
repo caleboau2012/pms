@@ -35,7 +35,6 @@
             //console.log((new Date()).toUTCString());
         },
         clearDuplicates: function(){
-            console.log($(".fc-event-container"));
             $(".fc-event-container").each(function(i){
                 $(this).remove();
             });

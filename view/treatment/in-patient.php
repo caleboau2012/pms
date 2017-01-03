@@ -57,6 +57,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                 }
                 ?>
             </a>
+            <span id="search-loader" class="hidden fa fa-spin fa-spinner text-warning"></span>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
             <ul class="nav navbar-nav navbar-right nav-pills">
@@ -82,11 +83,12 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     </ul>
                 </li>
             </ul>
-<!--            <form class="treatment navbar-form">-->
-<!--                <div class="search form-inline">-->
-<!--                    <input type="text" class="form-control" name="search" placeholder="Search Patients...">-->
-<!--                </div>-->
-<!--            </form>-->
+            <form id="search-form" class="treatment navbar-form">
+                <div class="search text-center">
+                    <input type="text" class="form-control" name="search" placeholder="Search Patients...">
+                    <span id="search-empty-text" class="hidden help-block text-danger" style="line-height: 5px;">No patient found</span>
+                </div>
+            </form>
         </div>
     </div>
 </nav>

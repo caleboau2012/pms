@@ -34,7 +34,7 @@ Treatment = {
                 $("#search-loader").addClass('hidden');
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            //console.log(item);
+            console.log(item);
             return $( "<li>" )
                 .append( "<div class='panel-success'>" +
                 "<div class='panel panel-heading' style='margin: 1px'>" +
