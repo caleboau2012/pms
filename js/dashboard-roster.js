@@ -16,7 +16,7 @@
                 editable: false,
                 droppable: false, // this allows things to be dropped onto the calendar
                 events:{
-                    url: host + 'phase/admin/phase_roster.php?intent=getStaffRoster'
+                    url: host + 'phase/admin/phase_roster.php?intent=getAllRoster'
                 },
                 loading: function(bool) {
                     $('#roster_loading').toggle(bool);
