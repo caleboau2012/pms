@@ -60,6 +60,7 @@ $list_of_staff = $userController->getAllUsers();
 <script src='../js/libs/fullcalendar/moment.min.js'></script>
 <script src='../js/bootstrap/jquery-ui.custom.min.js'></script>
 <script src='../js/libs/fullcalendar/fullcalendar.min.js'></script>
+<script src="../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/roster.js"></script>
 <?php include('footer.php'); ?>

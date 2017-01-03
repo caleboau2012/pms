@@ -189,8 +189,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
+<script src="../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/laboratory.js"></script>
+
 <a href="#" class="l-back-to-top" style="display: none;">Back to top</a>
 <script>
     var toTop = $(".l-back-to-top");

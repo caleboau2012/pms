@@ -214,6 +214,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/index.js"></script>
 <script src="../js/backup_restore.js" type="application/javascript"></script>

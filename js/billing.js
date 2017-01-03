@@ -163,7 +163,6 @@ Billing = {
         $('.bill-body').append(html);
     },
     removeOne: function(button){
-        console.log(button);
         $(button).parent().parent().remove();
         Billing.computeTotal();
         //$('#extra' + Billing.CONSTANTS.INDEX).remove();
@@ -173,7 +172,6 @@ Billing = {
             intent: 'details',
             treatment_id: Billing.CONSTANTS.treatment_id
         }, function(data){
-            console.log(data);
             $('#test').empty();
             $("#procedure").empty();
             var days = "";

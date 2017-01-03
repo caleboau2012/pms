@@ -170,6 +170,7 @@ $wards = $ward->loadWards();
 <!--  -->
 <script src='../js/bootstrap/jquery.min.js'></script>
 <script src='../js/bootstrap/bootstrap.min.js'></script>
+<script src="../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="../js/constants.js"></script>
 <script src="../js/room-mgt.js"></script>
 <?php include('footer.php'); ?>
