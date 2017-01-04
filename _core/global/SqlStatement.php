@@ -654,15 +654,14 @@ class RadiologyRequestSqlStatement{
                           rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
                           r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
                           WHERE rr.active_fg = :active_fg ORDER BY rr.created_date DESC";
-    const GET_DETAILS = "SELECT * FROM radiology_request WHERE radiology_id IN (SELECT radiology_id FROM radiology WHERE
-                         treatment_id = :treatment_id AND encounter_id = :encounter_id)";
-    const GET_RADIOLOGY_VALS = "SELECT * FROM radiology WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id";
+    const GET_DETAILS = "SELECT * FROM radiology_request WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id AND radiology_id = :radiology_id";
+    const GET_RADIOLOGY_VALS = "SELECT * FROM radiology WHERE radiology_id = :radiology_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id";
     const UPDATE_DETAILS = "UPDATE radiology_request SET previous_operation = :previous_operation,
                             any_known_allergies = :any_known_allergies, previous_xray = :previous_xray,
                             xray_number = :xray_number, modified_date = NOW() WHERE radiology_id = :radiology_id";
     const GET_XRAY_NO_VALS = "SELECT xray_number,casual_no,gp_no,ante_natal_no
-                                FROM xray_no WHERE radiology_id IN (SELECT radiology_id FROM radiology WHERE
-                                treatment_id = :treatment_id AND encounter_id = :encounter_id)";
+                                FROM xray_no WHERE
+                                treatment_id = :treatment_id AND encounter_id = :encounter_id AND radiology_id = :radiology_id";
 }
 
 class RadiologySqlStatement{
@@ -805,7 +804,7 @@ class VisualRequestSqlStatement{
     const GET_ALL_TEST = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON v.treatment_id  = t.treatment_id
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE v.active_fg = :active_fg
                           ORDER BY v.created_date DESC";
-    const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id";
+    const GET_DETAILS = "SELECT * FROM visual_skills_profile WHERE visual_profile_id = :visual_profile_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id";
     const UPDATE_DETAILS = "UPDATE visual_skills_profile SET laboratory_report =:laboratory_report, distance_re = :distance_re, distance_le = :distance_le,
                             central_visual_field = :central_visual_field, intra_ocular_pressure = :intra_ocular_pressure, others = :others, distance_be = :distance_be, near_re  = :near_re, near_le = :near_le, near_be = :near_be,
                             pinhole_acuity_re = :pinhole_acuity_re, pinhole_acuity_le = :pinhole_acuity_le,

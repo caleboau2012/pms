@@ -26,8 +26,8 @@ class VisualModel extends BaseModel{
         return $this->conn->fetchAll(VisualRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId, $encounterId){
-        $data = array(VisualSkillsProfileTable::treatment_id => $treatmentId, VisualSkillsProfileTable::encounter_id => $encounterId);
+    public function getTestDetails($testId, $treatmentId, $encounterId){
+        $data = array(VisualSkillsProfileTable::id => $testId, VisualSkillsProfileTable::treatment_id => $treatmentId, VisualSkillsProfileTable::encounter_id => $encounterId);
         return $this->conn->fetch(VisualRequestSqlStatement::GET_DETAILS, $data);
     }
 

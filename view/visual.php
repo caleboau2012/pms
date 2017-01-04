@@ -14,7 +14,7 @@ $lab = new LaboratoryController();
 
 $view_bag = array();
 
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['testId'], $_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 if ($view_bag[HaematologyTable::status_id] == 7){

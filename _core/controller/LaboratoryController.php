@@ -65,9 +65,9 @@ class LaboratoryController{
             case MICROSCOPY:
                 return $this->microscopy->getTestDetails($testId, $treatmentId, $encounterId);
             case VISUAL:
-                return $this->visual->getTestDetails($treatmentId, $encounterId);
+                return $this->visual->getTestDetails($testId, $treatmentId, $encounterId);
             case RADIOLOGY:
-                return $this->radiology->getTestDetails($treatmentId, $encounterId);
+                return $this->radiology->getTestDetails($testId, $treatmentId, $encounterId);
             default:
                 return array();
         }

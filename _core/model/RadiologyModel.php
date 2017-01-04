@@ -43,9 +43,9 @@ class RadiologyModel extends BaseModel{
         return $this->conn->fetchAll(RadiologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId, $encounterId){
+    public function getTestDetails($testId, $treatmentId, $encounterId){
         $result = array();
-        $data = array(RadiologyTable::treatment_id => $treatmentId, RadiologyTable::encounter_id => $encounterId);
+        $data = array(RadiologyTable::radiology_id => $testId, RadiologyTable::treatment_id => $treatmentId, RadiologyTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_DETAILS, $data);
         $result['radiology'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_RADIOLOGY_VALS, $data);
         $result['xray_no'] = $this->conn->fetch(RadiologyRequestSqlStatement::GET_XRAY_NO_VALS, $data);
