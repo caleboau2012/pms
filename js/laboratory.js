@@ -90,7 +90,7 @@ var Laboratory = {
                             testId = this.preq_id
                         }else if(labSelected == "chemical_pathology"){
                             testId = this.cpreq_id
-                        }else if(labSelected == "haematologyhaematology"){
+                        }else if(labSelected == "haematology"){
                             testId = this.haematology_id
                         }
                         test_data += '<td><a target="_blank" href='+labSelected+'.php?labType='+labSelected+'&treatment_id='+this.treatment_id+'&encounter_id='+this.encounter_id+'&testId='+testId;
