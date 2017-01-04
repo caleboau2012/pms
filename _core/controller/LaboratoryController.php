@@ -54,7 +54,7 @@ class LaboratoryController{
         }
     }
 
-    public function getLabDetails($labType, $treatmentId, $encounterId){
+    public function getLabDetails($testId, $labType, $treatmentId, $encounterId){
         switch($labType){
             case CHEMICAL_PATHOLOGY:
                 return $this->chemicalPathology->getTestDetails($treatmentId, $encounterId);
@@ -63,7 +63,7 @@ class LaboratoryController{
             case PARASITOLOGY:
                 return $this->parasitology->getTestDetails($treatmentId, $encounterId);
             case MICROSCOPY:
-                return $this->microscopy->getTestDetails($treatmentId, $encounterId);
+                return $this->microscopy->getTestDetails($testId, $treatmentId, $encounterId);
             case VISUAL:
                 return $this->visual->getTestDetails($treatmentId, $encounterId);
             case RADIOLOGY:

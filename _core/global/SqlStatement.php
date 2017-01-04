@@ -431,8 +431,7 @@ class UrinalysisSqlStatement {
 
     const ADD    = 'INSERT INTO urinalysis(urine_id, appearance, ph, glucose, protein, bilirubin, urobillinogen, created_date, modified_date) VALUES(:urine_id, :appearance, :ph, :glucose, :protein, :bilirubin, :urobillinogen, NOW(), NOW())';
     const DELETE = 'DELETE FROM urinalysis WHERE treatment_id = :treatment_id';
-    const GET    = 'SELECT * FROM urinalysis u WHERE u.urine_id IN (SELECT urine_id FROM urine WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id)
-                    ORDER BY u.created_date DESC LIMIT 1';
+    const GET    = 'SELECT * FROM urinalysis u WHERE u.urine_id = :urine_id ORDER BY u.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT ur.*, u.urine_id FROM urine u, urinalysis ur WHERE ur.urine_id=:urine_id AND u.urine_id=ur.urine_id LIMIT 1';
     const ADD_UPDATE = 'INSERT INTO urinalysis(urine_id, appearance, ph, glucose, protein, bilirubin, urobillinogen, created_date, modified_date) VALUES(:urine_id, :appearance, :ph, :glucose, :protein, :bilirubin, :urobillinogen, NOW(), NOW())
                         ON DUPLICATE KEY
@@ -472,8 +471,7 @@ class MicroscopySqlStatement {
     const DELETE = 'DELETE FROM microscopy WHERE urine_id = :urine_id';
     const GET    = 'SELECT m.urine_id, m.pus_cells, m.red_cells, m.epithelial_cells, m.casts, m.crystals, m.others, m.created_date, m.modified_date
                         FROM microscopy m
-                        WHERE m.urine_id IN (SELECT urine_id FROM urine WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id)
-                        ORDER BY m.modified_date DESC LIMIT 1';
+                        WHERE m.urine_id = :urine_id ORDER BY m.modified_date DESC LIMIT 1';
     const GET_TEST = 'SELECT m.pus_cells,m.red_cells,m.epithelial_cells,m.casts,m.crystals,m.others, m.modified_date, u.urine_id FROM urine u, microscopy m
                             WHERE m.urine_id=:urine_id AND u.urine_id=m.urine_id LIMIT 1';
     const ADD_UPDATE = 'INSERT INTO microscopy (urine_id,pus_cells, red_cells, epithelial_cells, casts, crystals, others, created_date, modified_date)
@@ -763,7 +761,7 @@ class MicroscopyRequestSqlStatment{
                           INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.active_fg = :active_fg
                           ORDER BY u.created_date DESC";
     const GET_DETAILS = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON t.treatment_id  WHERE u.treatment_id = :treatment_id
-                         AND encounter_id = :encounter_id";
+                         AND encounter_id = :encounter_id AND urine_id = :urine_id";
 }
 
 class ChemicalPathologyRequestSqlStatement{

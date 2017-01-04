@@ -22,12 +22,12 @@ class MicroscopyModel extends BaseModel{
         return $this->conn->fetchAll(MicroscopyRequestSqlStatment::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId, $encounterId){
+    public function getTestDetails($testId, $treatmentId, $encounterId){
         $result = array();
-        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
+        $data = array(UrineTable::urine_d => $testId, UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(MicroscopyRequestSqlStatment::GET_DETAILS, $data);
-        $result['urinalysis'] = $this->getUrinalysisDetails($treatmentId, $encounterId);
-        $result['microscopy'] = $this->getMicroscopyDetails($treatmentId, $encounterId);
+        $result['urinalysis'] = $this->getUrinalysisDetails($testId);
+        $result['microscopy'] = $this->getMicroscopyDetails($testId);
         $result['urine_sensitivity'] = $this->getUrineSensitivityDetails($treatmentId, $encounterId);
 
         return $result;
@@ -68,8 +68,8 @@ class MicroscopyModel extends BaseModel{
 
 /*--------------------------------------- Urinalysis Section -------------------------------------------*/
 
-    private function getUrinalysisDetails($treatmentId, $encounterId){
-        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
+    private function getUrinalysisDetails($testId){
+        $data = array(UrineTable::urine_d => $testId);
         return $this->conn->fetch(UrinalysisSqlStatement::GET, $data);
     }
 
@@ -89,8 +89,8 @@ class MicroscopyModel extends BaseModel{
 
 /*----------------------------------------Microscopy Section -------------------------------------------*/
 
-    private function getMicroscopyDetails($treatmentId, $encounterId){
-        $data = array(UrineTable::treatment_id => $treatmentId, UrineTable::encounter_id => $encounterId);
+    private function getMicroscopyDetails($testId){
+        $data = array(UrineTable::urine_d => $testId);
         return $this->conn->fetch(MicroscopySqlStatement::GET, $data);
     }
 
