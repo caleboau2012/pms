@@ -77,7 +77,23 @@ var Laboratory = {
                             action = "View";
                             test_data += "<td>" + Laboratory.CONSTANTS.SEVEN + "</td>";
                         }
-                        test_data += '<td><a target="_blank" href='+Laboratory.selectedOption()+'.php?labType='+Laboratory.selectedOption()+'&treatment_id='+this.treatment_id+'&encounter_id='+this.encounter_id;
+                        var labSelected = Laboratory.selectedOption();
+
+                        var testId;
+                        if(labSelected == "microscopy"){
+                            testId = this.urine_id
+                        }else if(labSelected == "visual"){
+                            testId = this.visual_profile_id
+                        }else if(labSelected == "radiology"){
+                            testId = this.radiology_request_id
+                        }else if(labSelected == "parasitology"){
+                            testId = this.preq_id
+                        }else if(labSelected == "chemical_pathology"){
+                            testId = this.cpreq_id
+                        }else if(labSelected == "haematology"){
+                            testId = this.haematology_id
+                        }
+                        test_data += '<td><a target="_blank" href='+labSelected+'.php?labType='+labSelected+'&treatment_id='+this.treatment_id+'&encounter_id='+this.encounter_id+'&testId='+testId;
                         test_data += ' data-id='+this.treatment_id + ' data-status='+this.status_id + ' data-regNo='+this.regNo + ' data-sex='+this.sex;
                         test_data += ' data-surname='+this.surname;
                         test_data += ' data-firstname='+this.firstname;
@@ -87,7 +103,7 @@ var Laboratory = {
                         test_data += "<td>" + this.created_date + "</td>";
                         test_data += "</tr>";
 
-                        pending += '<a target="_blank" href='+Laboratory.selectedOption()+'.php?labType='+Laboratory.selectedOption()+'&treatment_id='+this.treatment_id+'&encounter_id='+this.encounter_id;
+                        pending += '<a target="_blank" href='+Laboratory.selectedOption()+'.php?labType='+Laboratory.selectedOption()+'&treatment_id='+this.treatment_id+'&encounter_id='+this.encounter_id+'&testId='+testId;
                         pending += ' data-id='+this.treatment_id + ' data-status='+this.status_id + ' data-regNo='+this.regNo + ' data-sex='+this.sex;
                         pending += ' data-surname='+this.surname + ' data-encounter_id='+this.encounter_id;
                         pending += ' data-firstname='+this.firstname;

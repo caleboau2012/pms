@@ -127,25 +127,20 @@ var Loader = {
     }
 };
 var ResponseModal = {
-    _html : function (text, successful, reload) {
-        var _h;
-        if(reload){
-             _h = "<div id='responseOverlay'><div id='loader' class='text-center'><h1 class='text-right'><span class='fa fa-close pointer closeResponseOverlayReload'></span></h1>";
-        }else{
-            _h = "<div id='responseOverlay'><div id='loader' class='text-center'><h1 class='text-right'><span class='fa fa-close pointer closeResponseOverlay'></span></h1>";
-        }
-        if(successful){
-            _h +=  "<h1 class='font-70 text-center text-success'><span class='fa fa-check-circle'></span></h1>";
-        }else{
-            _h +=  "<h1 class='font-70 text-danger text-center'><span class='fa fa-info-circle'></span></h1>";
-        }
-         _h += "<p class='text-center'>" + text + "</p></div></div>";
-        return _h;
-    },
     content: 'Transaction Completed',
     show : function(content, successful, reload) {
-        var _html = this._html(content, successful, reload);
-        $('body').append(_html);
+        var notifyType = (successful) ? 'success' : 'danger';
+        $.notify({
+                message: content
+            },{
+                type: notifyType,
+                timer: 1000
+            }
+        );
+        if(reload){
+            window.location.reload();
+        }
+        //$('body').append(_html);
     },
     hide : function() {
         $('#responseOverlay').remove();

@@ -54,20 +54,20 @@ class LaboratoryController{
         }
     }
 
-    public function getLabDetails($labType, $treatmentId, $encounterId){
+    public function getLabDetails($testId, $labType, $treatmentId, $encounterId){
         switch($labType){
             case CHEMICAL_PATHOLOGY:
-                return $this->chemicalPathology->getTestDetails($treatmentId, $encounterId);
+                return $this->chemicalPathology->getTestDetails($testId, $treatmentId, $encounterId);
             case HAEMATOLOGY:
-                return $this->haematology->getTestDetails($treatmentId, $encounterId);
+                return $this->haematology->getTestDetails($testId, $treatmentId, $encounterId);
             case PARASITOLOGY:
-                return $this->parasitology->getTestDetails($treatmentId, $encounterId);
+                return $this->parasitology->getTestDetails($testId, $treatmentId, $encounterId);
             case MICROSCOPY:
-                return $this->microscopy->getTestDetails($treatmentId, $encounterId);
+                return $this->microscopy->getTestDetails($testId, $treatmentId, $encounterId);
             case VISUAL:
-                return $this->visual->getTestDetails($treatmentId, $encounterId);
+                return $this->visual->getTestDetails($testId, $treatmentId, $encounterId);
             case RADIOLOGY:
-                return $this->radiology->getTestDetails($treatmentId, $encounterId);
+                return $this->radiology->getTestDetails($testId, $treatmentId, $encounterId);
             default:
                 return array();
         }

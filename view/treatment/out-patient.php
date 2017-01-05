@@ -471,6 +471,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../../js/bootstrap/bootstrap.min.js"></script>
 <script src="../../js/bootstrap/jquery-ui.min.js"></script>
+<script src="../../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="../../js/constants.js"></script>
 <script src="../../js/treatment/out-patient.js"></script>
 

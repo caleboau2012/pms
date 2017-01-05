@@ -16,14 +16,28 @@ Treatment = {
 
         $("input[name='search']").autocomplete({
             source : host + "phase/phase_admission.php?intent=searchPatientsJQueryUI",
-            minLength : 3,
+            minLength : 1,
             select : function(event, ui) {
+                //$("#search-empty-text").addClass('hidden');
+                //$("#search-loader").removeClass('hidden');
                 $(this).val(ui.item.patient);
                 Treatment.addToQueue(ui.item);
                 return false;
+            },
+            search: function( event, ui ) {
+                /*start of search*/
+                $("#search-empty-text").addClass('hidden');
+                $("#search-loader").removeClass('hidden');
+            },
+            response: function( event, ui ) {
+                if(ui.content.length == 0){
+                    $("#search-empty-text").removeClass('hidden');
+                }else{
+                    $("#search-empty-text").addClass('hidden');
+                }
+                $("#search-loader").addClass('hidden');
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            //console.log(item);
             return $( "<li>" )
                 .append( "<div class='panel-success'>" +
                 "<div class='panel panel-heading' style='margin: 1px'>" +

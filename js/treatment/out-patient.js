@@ -34,7 +34,7 @@ Treatment = {
                 $("#search-loader").addClass('hidden');
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            //console.log(item);
+            console.log(item);
             return $( "<li>" )
                 .append( "<div class='panel-success'>" +
                 "<div class='panel panel-heading' style='margin: 1px'>" +
@@ -177,7 +177,6 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
-            console.log(data);
             document.addTreatmentForm.reset();
             data = data.data;
             $('.treatment-ID').html(data.treatment_id);

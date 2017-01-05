@@ -20,7 +20,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 $lab = new LaboratoryController();
 $view_bag = array();
-$view_bag = $lab->getLabDetails($_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
+$view_bag = $lab->getLabDetails($_REQUEST['testId'], $_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
@@ -411,6 +411,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
 <script src="../js/bootstrap/bootstrap.min.js"></script>
 <script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/constants.js"></script>
+<script src="../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
 <script src="../js/laboratory.js" type="text/javascript"></script>
 </body>
 </html>

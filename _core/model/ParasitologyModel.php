@@ -22,9 +22,9 @@ class ParasitologyModel extends BaseModel{
         return $this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_ALL_TEST, $data);
     }
 
-    public function getTestDetails($treatmentId, $encounterId, $activeFg = 1){
+    public function getTestDetails($testId, $treatmentId, $encounterId, $activeFg = 1){
         $result = array();
-        $data = array(ParasitologyRequestTable::treatment_id => $treatmentId, ParasitologyRequestTable::encounter_id => $encounterId,
+        $data = array(ParasitologyRequestTable::preq_id => $testId, ParasitologyRequestTable::treatment_id => $treatmentId, ParasitologyRequestTable::encounter_id => $encounterId,
                       ParasitologyRequestTable::active_fg => $activeFg);
         $result['details'] = $this->conn->fetch(ParasitologyRequestSqlStatement::GET_DETAILS, $data);
         $result['parasites'] = $this->formatValues($this->conn->fetchAll(ParasitologyRequestSqlStatement::GET_PARASITES, $data));

@@ -78,7 +78,10 @@ if ($intent == 'admitPatient') {
             echo json_encode($patient_details);
             exit();
         } else {
-            echo JsonResponse::error("No admitted patients match the search parameter!");
+            $patient_details = array('id' => 'empty');
+            echo json_decode($patient_details);
+            exit();
+//            echo JsonResponse::error("No admitted patients match the search parameter!");
         }
     } else {
         echo JsonResponse::error("Incomplete request parameters!");
