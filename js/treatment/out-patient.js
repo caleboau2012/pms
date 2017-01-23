@@ -231,7 +231,7 @@ Treatment = {
         //$('.well').addClass('hidden');
     },
     submitTreatment: function(data){
-        $('#loader').removeClass('hidden');
+        Loader.show();
         var prescription = [];
         $('#prescriptions li').each(function(index){
             //console.log(index + ": " + $(this).text());
@@ -251,7 +251,6 @@ Treatment = {
                 }
 
             }).fail(function(e){
-                Loader.hide();
                 ResponseModal.show('Unable to complete request', false);
                 //console.log(e.responseText);
             });
@@ -296,7 +295,6 @@ Treatment = {
     removeFromQueue: function (patient){
         $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
         + patient), function(data){
-            console.log(data);
             location.reload();
         });
     },
@@ -429,7 +427,7 @@ Treatment = {
                         "<td>" + status + "</td>" +
                         "<td><a target='_blank' href='" +
                         host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
-                        "&encounter_id=" + data[i].encounter_id + "' class='btn btn-sm btn-default'>View</a>" +
+                        "&encounter_id=" + data[i].encounter_id +  "&testId=" + data[i].testId + "' class='btn btn-sm btn-default'>View</a>" +
                         "</td>" +
                         "</tr>";
                 }

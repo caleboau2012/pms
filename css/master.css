@@ -1528,6 +1528,17 @@ input.cmn-toggle-round:checked + label:after{
     margin-top: 4px;
 }
 
+
+#loader #dismiss{
+    position: absolute;
+    bottom: 0px;
+    right: 0;
+    left: 0;
+    border-radius: 0;
+    padding: 10px;
+    font-size: 18px;
+    text-transform: UPPERCASE;
+}
 #loaderOverlay{
     background-color:rgba(0,0,0,.76);
     /*display:none;*/
@@ -1555,13 +1566,14 @@ input.cmn-toggle-round:checked + label:after{
 }
 #responseOverlay #loader{
     background-color: rgb(255, 255, 255);
-    width: 500px;
-    min-height: 300px;
+    width: 400px;
+    min-height: 210px;
     margin: 50px auto 10px;
     z-index: 100000;
 }
 #responseOverlay #loader{
     padding: 5px 15px;
+    position: relative;
 }
 
 .font-70{

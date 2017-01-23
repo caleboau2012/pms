@@ -471,7 +471,6 @@ Admission = {
         payload.treatment_id =  Admission.GLOBAL.TREATMENT_ID;
         payload.comments = $('#comment').val();
         payload.vitals = {};
-        console.log(payload);
 
         $("#log_encounter input").each(function () {
             if($(this).val() !== "" && $(this).attr("name") !== "comments"){

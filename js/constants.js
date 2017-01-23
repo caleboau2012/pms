@@ -127,20 +127,28 @@ var Loader = {
     }
 };
 var ResponseModal = {
+    _html : function (text, successful, reload) {
+        var _h = "<div id='responseOverlay'><div id='loader' class='text-center'>";
+
+        if(successful){
+            _h +=  "<h1 class='font-70 text-center text-success'><span class='fa fa-check-circle'></span></h1>";
+        }else{
+            _h +=  "<h1 class='font-70 text-danger text-center'><span class='fa fa-info-circle'></span></h1>";
+        }
+         _h += "<p class='text-center'>" + text + "</p>" +
+         "<div class='text-center'>";
+        if(reload){
+            _h +=   "<button id='dismiss' class='btn btn-danger btn-block closeResponseOverlayReload'>Dismiss</button></div></div>";
+        }else{
+            _h +=  "<button id='dismiss' class='btn btn-danger btn-block closeResponseOverlay'>Dismiss</button></div></div>";
+        }
+
+        return _h;
+    },
     content: 'Transaction Completed',
     show : function(content, successful, reload) {
-        var notifyType = (successful) ? 'success' : 'danger';
-        $.notify({
-                message: content
-            },{
-                type: notifyType,
-                timer: 1000
-            }
-        );
-        if(reload){
-            window.location.reload();
-        }
-        //$('body').append(_html);
+        var _html = this._html(content, successful, reload);
+        $('body').append(_html);
     },
     hide : function() {
         $('#responseOverlay').remove();
@@ -156,3 +164,4 @@ $("body").delegate('.closeResponseOverlay', 'click', function () {
     ResponseModal.hide();
     window.location.reload();
 });
+//ResponseModal.show("Treatement ended successfully", true, false);

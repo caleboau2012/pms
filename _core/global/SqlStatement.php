@@ -542,7 +542,7 @@ class ParasitologyRefSqlStatement {
 class ParasitologyRequestSqlStatement {
     const ADD_REQ_INFO = "INSERT INTO parasitology_req (doctor_id, treatment_id, encounter_id, diagnosis, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :encounter_id, :diagnosis, NOW(), NOW())";
-    const GET_HISTORY = "SELECT diagnosis as diagnosis, modified_date as modified_date, status_id
+    const GET_HISTORY = "SELECT preq_id as testId, diagnosis as diagnosis, modified_date as modified_date, status_id
                          as status, treatment_id as treatment_id, encounter_id as encounter_id FROM parasitology_req WHERE treatment_id IN
                          (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM parasitology_req AS pr INNER JOIN treatment AS t ON pr.treatment_id  = t.treatment_id
@@ -641,7 +641,7 @@ class RadiologyRequestSqlStatement{
                           VALUES (:doctor_id, :treatment_id, :encounter_id, NOW(), NOW())";
     const ADD_RAD_REQ_INFO = "INSERT INTO radiology_request (radiology_id, clinical_diagnosis_details, created_date, modified_date)
                               VALUES (:radiology_id, :clinical_diagnosis_details, NOW(), NOW())";
-    const GET_HISTORY = "SELECT rr.clinical_diagnosis_details as diagnosis, r.modified_date as modified_date, r.status_id
+    const GET_HISTORY = "SELECT rr.	radiology_request_id as testId,rr.clinical_diagnosis_details as diagnosis, r.modified_date as modified_date, r.status_id
                          as status, r.treatment_id as treatment_id, r.encounter_id as encounter_id FROM radiology AS r INNER JOIN radiology_request AS rr
                          ON(r.radiology_id = rr.radiology_id) WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t
                          WHERE t.patient_id = :patient_id)";
@@ -682,7 +682,7 @@ class XRaySqlStatement{
 class HaematologyRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO haematology (doctor_id, treatment_id, encounter_id, clinical_diagnosis_details, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :encounter_id, :clinical_diagnosis_details, NOW(), NOW())";
-    const GET_HISTORY = "SELECT h.clinical_diagnosis_details as diagnosis, h.modified_date as modified_date, h.status_id
+    const GET_HISTORY = "SELECT h.haematology_id as testId, h.clinical_diagnosis_details as diagnosis, h.modified_date as modified_date, h.status_id
                          as status, h.treatment_id as treatment_id, h.encounter_id as encounter_id FROM haematology AS h WHERE treatment_id IN
                          (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM haematology AS h INNER JOIN treatment AS t ON h.treatment_id  = t.treatment_id
@@ -751,7 +751,7 @@ class DifferentialCountSqlStatement {
 class MicroscopyRequestSqlStatment{
     const ADD_REQ_INFO = "INSERT INTO urine (doctor_id, treatment_id, encounter_id, clinical_diagnosis_details, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :encounter_id, :clinical_diagnosis_details, NOW(), NOW())";
-    const GET_HISTORY = "SELECT clinical_diagnosis_details as diagnosis, modified_date as modified_date, status_id
+    const GET_HISTORY = "SELECT urine_id as testId, clinical_diagnosis_details as diagnosis, modified_date as modified_date, status_id
                          as status, treatment_id as treatment_id, encounter_id as encounter_id FROM urine WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM urine AS u INNER JOIN treatment AS t ON u.treatment_id  = t.treatment_id
                                INNER JOIN patient AS p ON t.patient_id = p.patient_id WHERE u.status_id = :status_id
@@ -766,7 +766,7 @@ class MicroscopyRequestSqlStatment{
 class ChemicalPathologyRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO chemical_pathology_request (doctor_id, treatment_id, encounter_id, clinical_diagnosis, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :encounter_id, :clinical_diagnosis, NOW(), NOW())";
-    const GET_HISTORY = "SELECT clinical_diagnosis as diagnosis, modified_date as modified_date, status_id
+    const GET_HISTORY = "SELECT cpreq_id as testId, clinical_diagnosis as diagnosis, modified_date as modified_date, status_id
                          as status, treatment_id as treatment_id, encounter_id as encounter_id FROM chemical_pathology_request WHERE treatment_id IN
                          (SELECT treatment_id FROM treatment AS t WHERE t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM chemical_pathology_request AS c INNER JOIN treatment AS t ON c.treatment_id  = t.treatment_id
@@ -793,7 +793,7 @@ class ChemicalPathologyRequestSqlStatement{
 class VisualRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, encounter_id, description, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :encounter_id, :description, NOW(), NOW())";
-    const GET_HISTORY = "SELECT modified_date as modified_date, status_id as status, treatment_id as treatment_id, encounter_id as encounter_id FROM
+    const GET_HISTORY = "SELECT visual_profile_id as testId, modified_date as modified_date, status_id as status, treatment_id as treatment_id, encounter_id as encounter_id FROM
                          visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE
                          t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON
