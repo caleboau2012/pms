@@ -270,7 +270,7 @@ Treatment = {
 
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
-            intent: "logEncounter",
+            intent: "submitTreatment",
             treatment_id: Treatment.CONSTANTS.treatmentid,
             admission_id: Treatment.CONSTANTS.admissionid,
             encounter_id: Treatment.CONSTANTS.encounterid,

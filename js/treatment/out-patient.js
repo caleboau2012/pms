@@ -231,7 +231,7 @@ Treatment = {
         //$('.well').addClass('hidden');
     },
     submitTreatment: function(data){
-        $('#loader').removeClass('hidden');
+        Loader.show();
         var prescription = [];
         $('#prescriptions li').each(function(index){
             //console.log(index + ": " + $(this).text());
@@ -251,7 +251,6 @@ Treatment = {
                 }
 
             }).fail(function(e){
-                Loader.hide();
                 ResponseModal.show('Unable to complete request', false);
                 //console.log(e.responseText);
             });
