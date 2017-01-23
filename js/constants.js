@@ -164,4 +164,4 @@ $("body").delegate('.closeResponseOverlay', 'click', function () {
     ResponseModal.hide();
     window.location.reload();
 });
-ResponseModal.show("Treatement ended successfully", true, false);
+//ResponseModal.show("Treatement ended successfully", true, false);
