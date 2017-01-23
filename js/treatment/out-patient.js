@@ -295,7 +295,6 @@ Treatment = {
     removeFromQueue: function (patient){
         $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id='
         + patient), function(data){
-            console.log(data);
             location.reload();
         });
     },
