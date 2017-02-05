@@ -15,6 +15,7 @@ $lab = new LaboratoryController();
 $view_bag = array();
 
 $view_bag = $lab->getLabDetails($_REQUEST['testId'], $_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
+//die(json_encode($view_bag));
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
@@ -165,6 +166,11 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                         <div class="row">
                             <div class="page-header">
                                 <h2 class="page-header__title">Radiology</h2>
+                                <h4 class='text-primary'>Description: <?php
+                                    if(isset($view_bag['details'][RadiologyRequestTable::clinical_diagnosis_details])){
+                                        echo $view_bag['details'][RadiologyRequestTable::clinical_diagnosis_details];
+                                    }
+                                    ?></h4>
                                 <div class="alert hidden alert-danger alert-dismissable" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
@@ -202,20 +208,20 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                                             <label for="xray-no" class="test-label col-sm-1 text-right">Radiology No:</label>
                                             <div class="col-sm-2">
                                                 <input type="text" <?php echo $disabled; ?> id="xray-no" class="form-control" name="<?php echo 'data[xray]' . '[' . XrayNoTable::xray_number . ']';  ?>"
-                                                value="<?php
-                                                if(isset($view_bag['xray_no']['xray_number'])){
-                                                    echo $view_bag['xray_no']['xray_number'];
-                                                }
-                                                ?>"/>
+                                                       value="<?php
+                                                       if(isset($view_bag['xray_no']['xray_number'])){
+                                                           echo $view_bag['xray_no']['xray_number'];
+                                                       }
+                                                       ?>"/>
                                             </div>
                                             <label for="casual-no" class="test-label col-sm-1 text-right">Casual No:</label>
                                             <div class="col-sm-2">
                                                 <input type="text" <?php echo $disabled; ?> id="casual-no" class="form-control" name="<?php echo 'data[xray]' . '[' . XrayNoTable::casual_no . ']'; ?>"
-                                                value="<?php
-                                                if(isset($view_bag['xray_no']['casual_no'])){
-                                                    echo $view_bag['xray_no']['casual_no'];
-                                                }
-                                                ?>"/>
+                                                       value="<?php
+                                                       if(isset($view_bag['xray_no']['casual_no'])){
+                                                           echo $view_bag['xray_no']['casual_no'];
+                                                       }
+                                                       ?>"/>
                                             </div>
                                             <label for="gp-no" class="test-label col-sm-1 text-right">G.P No:</label>
                                             <div class="col-sm-2">
@@ -270,7 +276,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                                     <label class="test-label">Previous Operation</label>
                                     <div class="center-block">
                                         <input type="text" <?php echo $disabled; ?> class="col-sm-12 form-control" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::previous_operation . ']'; ?>"
-                                        value="<?php if(isset($view_bag['details']['previous_operation'])) echo $view_bag['details']['previous_operation']; ?>"/>
+                                               value="<?php if(isset($view_bag['details']['previous_operation'])) echo $view_bag['details']['previous_operation']; ?>"/>
                                     </div>
                                     <label class="test-label">Any Known Allergies</label>
                                     <div class="center-block">
@@ -279,14 +285,14 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                                     </div>
                                     <div class="test-label">Previous Radiology Test:
                                         <input type="radio" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::previous_xray . ']';  echo $disabled;?>" value="1"
-                                        <?php if(isset($view_bag['details']['previous_xray']) AND $view_bag['details']['previous_xray'] == 1) {echo 'checked=checked';}?>/> Yes
+                                            <?php if(isset($view_bag['details']['previous_xray']) AND $view_bag['details']['previous_xray'] == 1) {echo 'checked=checked';}?>/> Yes
                                         <input  type="radio" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::previous_xray . ']'; ?>" value="0"
                                             <?php if(isset($view_bag['details']['previous_xray']) AND $view_bag['details']['previous_xray'] == 0) {echo 'checked=checked';}?>/> No
                                     </div>
                                     <label class="test-label">Quote Radiology Test Number</label>
                                     <div class="center-block">
                                         <input type="text" <?php echo $disabled; ?> class="col-sm-12 form-control" name="<?php echo 'data[details]' . '[' . ExaminationRequestedTable::xray_number . ']'; ?>"
-                                        value="<?php if(isset($view_bag['details']['xray_number'])) echo $view_bag['details']['xray_number']; ?>"/>
+                                               value="<?php if(isset($view_bag['details']['xray_number'])) echo $view_bag['details']['xray_number']; ?>"/>
                                     </div>
                                 </fieldset>
                                 <fieldset class="barX"><legend class="test-label">For Completion By Physician:</legend>
@@ -322,7 +328,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                                         </table>
                                     </div>
                                     <div class="test-label">Checked by:  <input type="text" <?php echo $disabled; ?> class="form-horizontal" name="<?php echo 'data[radiology][' . RadiologyTable::checked_by . ']'; ?>"
-                                        value="<?php if(isset($view_bag['radiology']['checked_by'])) echo $view_bag['radiology']['checked_by']; ?>"/>
+                                                                                value="<?php if(isset($view_bag['radiology']['checked_by'])) echo $view_bag['radiology']['checked_by']; ?>"/>
                                     </div>
                                 </fieldset>
                             </div>
