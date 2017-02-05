@@ -509,9 +509,11 @@ Admission = {
     dischargePatient: function(){
         var payload = {};
         payload.intent = 'dischargePatient';
+        payload.treatment_id = Admission.GLOBAL.TREATMENT_ID;
         payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
+            console.log(data);
             var response_msg;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response_msg = '<br/><div class="alert alert-dismissible alert-success text-center">' +

@@ -400,12 +400,10 @@ Treatment = {
             patientId: $('.patient-ID').html(),
             labType: type
         }, function(data){
-            console.log(data);
             if(data.status == 1){
                 data = data.data;
                 var html = "";
                 for(var i = 0; i < data.length; i++){
-                    console.log(data[i]);
                     var status;
                     switch(data[i].status){
                         case '5':
