@@ -13,7 +13,6 @@ $(document).ready(function(){
 function init(){
     $.get(host + "phase/admin/phase_admin.php?intent=getAllUsers", function(data){
         data = JSON.parse(data);
-        console.log(data);
         var  html = "";
         for(var i = 0; i < data.data.length; i++){
             var obj = data.data[i];
@@ -80,7 +79,6 @@ function toggleDelete(e){
                     intent: 'deleteStaff',
                     userid: userid
                 }, function(data){
-                    console.log(data);
                     $(e).attr('active_fg', '0');
                 }, 'json');
             }
@@ -103,7 +101,6 @@ function toggleDelete(e){
                         alert(data.message);
                         location.reload();
                     }
-                    //console.log(data);
                 }, 'json');
             }
             else{
@@ -134,14 +131,7 @@ function profileModal(e){
         $("#intent").val("addProfile")
     }
 
-    console.log({
-        userid: userid,
-        status: status,
-        intent: $("#intent").val()
-    });
-
     $.getJSON(host + "phase/phase_profile.php?intent=getProfile&userid=" + userid, function(data){
-        console.log(data);
         $('#profile-user-id').attr('value', userid);
 
         if(data.status == 1){
@@ -200,7 +190,6 @@ function initProfileModal(){
 function initModal(){
     $.get(host + "phase/admin/phase_admin.php?intent=getStaffDetails&userid=" + userid, function(data){
         data = JSON.parse(data);
-        console.log(data);
         if(data.data.surname == null){
             name = ""
         }
@@ -276,7 +265,6 @@ function addNewStaff(e){
         $.get(host + "phase/admin/phase_admin.php?intent=addNewStaff&regNo=" + regNo + "&passcode=" + password,
             function(data){
                 data = JSON.parse(data);
-                console.log(data);
                 if(data.status == 2){
                     $(e).parent().find('.alert').removeClass('hidden').find('p').html(data.message);
                 }
@@ -299,7 +287,6 @@ function addNewRole(e){
     var role_id = e.role.value;
     var permission_id = e.permission.value;
 
-    console.log(userid + " " + role_id + " " + permission_id);
 
     $.get(host + "phase/admin/phase_role.php?intent=assignRole&userid=" + userid +
         "&role_id=" + role_id + "&permission_id=" + permission_id,
