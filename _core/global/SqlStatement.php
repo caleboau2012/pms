@@ -793,7 +793,7 @@ class ChemicalPathologyRequestSqlStatement{
 class VisualRequestSqlStatement{
     const ADD_REQ_INFO = "INSERT INTO visual_skills_profile (doctor_id, treatment_id, encounter_id, description, created_date, modified_date)
                           VALUES (:doctor_id, :treatment_id, :encounter_id, :description, NOW(), NOW())";
-    const GET_HISTORY = "SELECT visual_profile_id as testId, modified_date as modified_date, status_id as status, treatment_id as treatment_id, encounter_id as encounter_id FROM
+    const GET_HISTORY = "SELECT visual_profile_id as testId, modified_date as modified_date, status_id as status, treatment_id as treatment_id, encounter_id as encounter_id, description as diagnosis FROM
                          visual_skills_profile WHERE treatment_id IN (SELECT treatment_id FROM treatment AS t WHERE
                          t.patient_id = :patient_id)";
     const GET_PATIENT_QUEUE = "SELECT * FROM visual_skills_profile AS v INNER JOIN treatment AS t ON
