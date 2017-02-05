@@ -337,11 +337,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 <div class="btn-group" role="group">
                                     <span class="btn btn-sm btn-default">
                                         <input name="permission" type="radio" value="1" checked class="radio radio-inline">
-                                        <span>Read_Only</span>
+                                        <span>View</span>
                                     </span>
                                     <span class="btn btn-sm btn-default">
                                         <input name="permission" type="radio" value="2" class="radio radio-inline">
-                                        <span>Read_Write</span>
+                                        <span>View & Edit</span>
                                     </span>
                                 </div>
                                 <button type="submit" class="btn btn-sm btn-primary">Add</button>

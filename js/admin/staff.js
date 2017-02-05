@@ -207,7 +207,7 @@ function initModal(){
 
         for(var i = 0; i < existingRoles.length; i++){
             existingRolesTableHTML += "<tr></tr><td>" + existingRoles[i].role_label + "</td>" +
-            "<td>" + existingRoles[i].staff_permission + "</td>" +
+            "<td>" + interpretPermission(existingRoles[i].staff_permission) + "</td>" +
             "<td><button class='btn btn-sm btn-default' onclick='deleteRole(\"" +
             existingRoles[i].userid + "\", \"" + existingRoles[i].permission_role_id + "\"" +
             ")'>Delete</button></td></tr>";
@@ -219,6 +219,21 @@ function initModal(){
         addNewRoleOptionHTML = existingRolesTableHTML = "";
         $('#rapModal').modal('show');
     });
+}
+
+function interpretPermission(role_id){
+    var role;
+    switch (role_id){
+        case 'read_write':
+            role = 'View & Edit';
+            break;
+        case 'read_only':
+            role = 'View';
+            break;
+        default :
+            role = role_id;
+    }
+    return role;
 }
 //
 //$('#rapModal').on('show.bs.modal', function (event) {
