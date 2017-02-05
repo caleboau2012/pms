@@ -345,14 +345,6 @@ $wards = $admission->loadWards();
                                     </div>
 
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-6">
-                                        <label for="comment">Comment</label>
-                                        <textarea class="form-control" id="comment" name="comment" required="required"></textarea>
-                                    </div>
-                                    <br/>
-                                </div>
-
                                 <div class="col-sm-offset-5 col-sm-3">
                                     <br/>
                                     <input type="submit" class="btn btn-lg btn-primary">

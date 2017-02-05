@@ -119,7 +119,7 @@ if ($intent == 'admitPatient') {
         exit();
     }
 } elseif ($intent == 'logEncounter') {
-    if (isset($_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $_REQUEST[AdmissionTable::patient_id])) {
+    if (isset($_REQUEST[AdmissionTable::admission_id], $_REQUEST[AdmissionTable::patient_id])) {
         $personnel_id = CxSessionHandler::getItem(UserAuthTable::userid);
 
         if (isset($_REQUEST[VITALS])) {
@@ -137,10 +137,9 @@ if ($intent == 'admitPatient') {
         }
 
         $warden = new AdmissionController();
-        $response = $warden->logEncounter($personnel_id, $_REQUEST[EncounterTable::treatment_id], $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $vitals_data);
-//$response = false;
+        $response = $warden->logEncounter($personnel_id, $_REQUEST[EncounterTable::treatment_id], $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $vitals_data);
         if ($response) {
-            echo JsonResponse::message(STATUS_OK, "Encounter logged successfully!");
+            echo JsonResponse::message(STATUS_OK, "Vitals successfully saved!");
             exit();
         } else {
             echo JsonResponse::error($_REQUEST);
