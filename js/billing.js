@@ -216,7 +216,7 @@ Billing = {
             }
             if(data.data.test.urine_test){
                 $('#test').append("<tr>" +
-                    "<td>Urine Test</td>" +
+                    "<td>Microscopy Test</td>" +
                     "<td>" + checkNull(data.data.test.urine_test.clinical_diagnosis_details) + "</td>" +
                     "<td>" + data.data.test.urine_test.created_date + "</td>" +
                     "</tr>")

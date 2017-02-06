@@ -94,6 +94,7 @@ var Report = {
         else if(param.intent == 'allPatients'){
             Morris.Donut({
                 element: 'doughnut',
+                colors: ['#008040','#0582cc',  '#f43b31'],
                 data: [
                     {label: "All Male Patients", value: maleCount},
                     {label: "All Female Patients", value: femaleCount},
@@ -104,6 +105,7 @@ var Report = {
         else if(param.intent == 'newPatients'){
             Morris.Donut({
                 element: 'doughnut',
+                colors: ['#008040','#0582cc',  '#f43b31'],
                 data: [
                     {label: "New Male Patients", value: maleCount},
                     {label: "New Female Patients", value: femaleCount},
@@ -114,6 +116,7 @@ var Report = {
         else if(param.intent == 'currentPatients'){
             Morris.Donut({
                 element: 'doughnut',
+                colors: ['#008040','#0582cc',  '#f43b31'],
                 data: [
                     {label: "Current Male Patients", value: maleCount},
                     {label: "Current Female Patients", value: femaleCount},
@@ -124,6 +127,7 @@ var Report = {
         else if(param.intent == 'inPatients'){
             Morris.Donut({
                 element: 'doughnut',
+                colors: ['#008040','#0582cc',  '#f43b31'],
                 data: [
                     {label: "Admitted Male Patients", value: maleCount},
                     {label: "Admitted Female Patients", value: femaleCount},
@@ -134,6 +138,7 @@ var Report = {
         else if(param.intent == 'consultationReport'){
             Morris.Donut({
                 element: 'doughnut',
+                colors: ['#008040','#0582cc',  '#f43b31'],
                 data: [
                     {label: "Male Patients with Consultations", value: maleCount},
                     {label: "Female Patients with consultations", value: femaleCount},
@@ -144,6 +149,7 @@ var Report = {
         else if(param.intent == 'patientDiagnosis'){
             Morris.Donut({
                 element: 'doughnut',
+                colors: ['#008040','#0582cc',  '#f43b31'],
                 data: [
                     {label: "Male Patients Diagnosed", value: maleCount},
                     {label: "Female Patients Diagnosed", value: femaleCount},
@@ -223,6 +229,7 @@ var Report = {
             Morris.Bar({
                 element: 'bar',
                 data: graphData,
+                barColors: ['#f43b31', '#008040', '#0582cc'],
                 xkey: 'date',
                 ykeys: ['count'],
                 labels: ['Date', 'Number']
@@ -245,6 +252,7 @@ $(document).ready(function(){
 
 function fire(){
     var intent = $('#view').val(), template = "", total = "";
+    $('.bar_description').html(setGraphLabel(intent));
     var start_date = $('#start_date').val(), end_date = $('#end_date').val(), gender = $('#gender').val(), param;
     param = Report.payload(intent, start_date, end_date, gender, null);
     //console.log(param);
@@ -257,4 +265,31 @@ function fire(){
             Report.makeBarChart(param, data);
         }
     }, 'GET');
+}
+
+function setGraphLabel(label){
+    var response;
+    switch (label){
+        case 'allPatients':
+            response = 'All Patients';
+            break;
+        case 'newPatients':
+            response = 'New Patients';
+            break;
+        case 'currentPatients':
+            response = 'Current Patients';
+            break;
+        case 'inPatients':
+            response = 'In-Patients';
+            break;
+        case 'consultationReport':
+            response = 'Consultation';
+            break;
+        case 'patientDiagnosis':
+            response = 'Diagnosis';
+            break;
+        default :
+            break;
+    }
+    return response;
 }

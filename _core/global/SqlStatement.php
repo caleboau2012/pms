@@ -553,7 +553,7 @@ class ParasitologyRequestSqlStatement {
                           ORDER BY pr.created_date DESC";
     const GET_DETAILS = "SELECT * FROM parasitology_req WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id
                          AND preq_id = :preq_id AND active_fg = :active_fg";
-    const GET_PARASITES = "SELECT pref_id FROM parasitology_details WHERE preq_id = :preq_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id AND active_fg = :active_fg";
+    const GET_PARASITES = "SELECT pref_id FROM parasitology_details WHERE preq_id = :preq_id AND active_fg = :active_fg";
     const UPDATE_DETAILS = "UPDATE parasitology_req SET nature_of_specimen = :nature_of_specimen,
                             investigation_req = :investigation_req, lab_num = :lab_num, lab_comment = :lab_comment,
                             lab_attendant_id = :lab_attendant_id, status_id =:status_id, modified_date = NOW() WHERE preq_id = :preq_id";
@@ -1012,10 +1012,10 @@ class TreatmentSqlStatement {
                             WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
-                            WHERE status = 1 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
-                            WHERE status = 1 AND encounter_id = :encounter_id";
+                            WHERE encounter_id = :encounter_id";
 
     const BLOODTEST = "SELECT DISTINCT haematology_id, clinical_diagnosis_details, haematology.created_date
  FROM haematology INNER JOIN treatment ON (treatment.treatment_id = haematology.treatment_id)
@@ -1136,9 +1136,9 @@ class ReportSqlStatement {
                             WHERE DATE(a.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // Number and list of consultations from start date to an end date
-    const CONSULTATIONS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.created_date AS consultation_date FROM treatment AS t
+    const CONSULTATIONS = "SELECT CONCAT(d.surname, ' ', d.middlename, ' ', d.firstname) AS doctor_name, CONCAT(p.surname, ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.doctor_id, t.created_date AS consultation_date FROM treatment AS t
                                 LEFT JOIN patient AS p
-                                ON t.patient_id = p.patient_id
+                                ON t.patient_id = p.patient_id left JOIN profile AS d ON d.userid = t.doctor_id
                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient  against diagnosis from a start date to an end date
