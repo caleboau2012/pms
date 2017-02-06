@@ -628,7 +628,7 @@ class EncounterSqlStatement{
     const GET_HISTORY = 'SELECT * FROM encounter AS e WHERE admission_id = :admission_id ORDER BY e.created_date DESC';
     const CHECK_PATIENT_ID_AND_ADMISSION_ID = 'SELECT COUNT(*) AS count FROM admission WHERE patient_id = :patient_id AND admission_id = :admission_id AND exit_date IS NULL';
     const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, comments, created_date, modified_date, active_fg) VALUES (:personnel_id, :patient_id, :admission_id, :treatment_id, :comments, NOW(), NOW(), 1)";
-    const GET_UNCLOSED_SESSION = "SELECT encounter_id FROM encounter WHERE treatment_id = :treatment_id AND admission_id = :admission_id AND status = 1";
+    const GET_UNCLOSED_SESSION = "SELECT * FROM encounter WHERE treatment_id = :treatment_id AND admission_id = :admission_id AND status = 1";
     const UPDATE = "UPDATE encounter SET personnel_id = :personnel_id, consultation = :consultation, symptoms = :symptoms,
                     diagnosis = :diagnosis, comments = :comments, modified_date = NOW() WHERE treatment_id = :treatment_id AND patient_id = :patient_id
                     AND admission_id = :admission_id AND encounter_id = :encounter_id";

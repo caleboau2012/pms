@@ -363,7 +363,7 @@ elseif($intent == 'getEncounterId'){
     $patientData = $newpat->retrievePatientInfo($patient_id);
 
     if($response['result']){
-        $all_info = array_merge(array('encounter_id' => $response['value']), $patientData);
+        $all_info = array_merge(array('encounter_id' => $response['value']), $patientData, $response['data']);
         echo JsonResponse::success($all_info);
         exit;
     } else {

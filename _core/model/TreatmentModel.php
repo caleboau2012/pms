@@ -327,15 +327,17 @@ class TreatmentModel extends BaseModel{
             $this->conn->beginTransaction();
 
             /* Other things come here! */
-            $id = $this->getUnclosedEncounterSession($treatmentId, $admissionId);
-            if(!$id){
+            $result = $this->getUnclosedEncounterSession($treatmentId, $admissionId);
+            $id = $data[EncounterTable::encounter_id];
+            if(!is_array($result)){
                 if(!$this->conn->execute(EncounterSqlStatement::ADD, $data)){
                     throw new Exception('Could not add a new encounter session');
                 }
                 $id = $this->conn->getLastInsertedId();
+                $result = array();
             }
             $this->conn->commit();
-            return array('result' => true, 'value' => $id);
+            return array('result' => true, 'value' => $id, 'data' => $result);
         } catch(Exception $ex) {
             $this->conn->rollBack();
             return array('result' => false, 'message' => $ex->getMessage());
@@ -358,7 +360,7 @@ class TreatmentModel extends BaseModel{
                                      $data);
 
         if($result[EncounterTable::encounter_id]){
-            return $result[EncounterTable::encounter_id];
+            return $result;
         }
 
         return 0;
