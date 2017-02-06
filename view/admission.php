@@ -202,7 +202,6 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
             </div>
-
             <div class="col-sm-8">
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">

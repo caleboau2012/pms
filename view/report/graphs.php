@@ -148,6 +148,7 @@ Crave::requireAll(UTIL);
                 <div class="graph" id="doughnut">
 
                 </div>
+                <h3 class="bar_description text-primary"></h3>
             </div>
         </div>
         <div class="col-sm-6 text-center">
@@ -160,6 +161,7 @@ Crave::requireAll(UTIL);
                 <div class="graph" id="bar">
 
                 </div>
+                <h3 class="bar_description text-primary"></h3>
             </div>
         </div>
     </div>

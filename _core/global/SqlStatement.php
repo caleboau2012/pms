@@ -1136,9 +1136,9 @@ class ReportSqlStatement {
                             WHERE DATE(a.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // Number and list of consultations from start date to an end date
-    const CONSULTATIONS = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.created_date AS consultation_date FROM treatment AS t
+    const CONSULTATIONS = "SELECT CONCAT(d.surname, ' ', d.middlename, ' ', d.firstname) AS doctor_name, CONCAT(p.surname, ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, p.sex, t.doctor_id, t.created_date AS consultation_date FROM treatment AS t
                                 LEFT JOIN patient AS p
-                                ON t.patient_id = p.patient_id
+                                ON t.patient_id = p.patient_id left JOIN profile AS d ON d.userid = t.doctor_id
                                 WHERE DATE(t.created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     // A graphical representation of patient  against diagnosis from a start date to an end date
