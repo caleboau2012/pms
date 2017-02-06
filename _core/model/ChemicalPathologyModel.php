@@ -37,7 +37,7 @@ class ChemicalPathologyModel extends BaseModel{
             ChemicalPathologyRequestTable::treatment_id => $treatmentId,
                       ChemicalPathologyRequestTable::encounter_id => $encounterId);
         $result['details'] = $this->conn->fetch(ChemicalPathologyRequestSqlStatement::GET_DETAILS, $data);
-        $values = $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_VALUES, $data);
+        $values = $this->conn->fetchAll(ChemicalPathologyRequestSqlStatement::GET_VALUES, array(ChemicalPathologyRequestTable::cpreq_id => $testId));
         $result['values'] = $this->formatValues($values);
         return $result;
     }
@@ -110,6 +110,10 @@ class ChemicalPathologyModel extends BaseModel{
     }
 
     private function updateDetails($data){
+        if(!$data['laboratory_comment'])
+            $data['laboratory_comment'] = '';
+        $data['laboratory_ref'] = $data['cpreq_id'];
+
         if(!$this->conn->checkParams(ChemicalPathologyRequestSqlStatement::UPDATE_DETAILS, $data))
             throw new Exception("Non-matching number of params in chemical pathology details");
         if(!$this->conn->execute(ChemicalPathologyRequestSqlStatement::UPDATE_DETAILS, $data))

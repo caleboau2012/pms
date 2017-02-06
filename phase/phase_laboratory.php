@@ -115,6 +115,8 @@ if ($intent == 'getPatientQueue') {
     if (isset($_REQUEST['labType']) && isset($_REQUEST['data'])) {
         $labType = $_REQUEST['labType'];
         $role = isset($labType_Role[$labType]) ? $labType_Role[$labType] : null;
+        /*echo JsonResponse::success($data);
+        exit;*/
 
         if($role && RoleController::hasPermission($lab_attendant_id, $role, READ_WRITE)){
             $lab = new LaboratoryController();
@@ -138,6 +140,8 @@ if ($intent == 'getPatientQueue') {
     if (isset($_REQUEST['labType']) && $data) {
         $labType = $_REQUEST['labType'];
         $role = isset($labType_Role[$labType]) ? $labType_Role[$labType] : null;
+        /*echo JsonResponse::success($data);
+        exit;*/
 
         if($role && RoleController::hasPermission($lab_attendant_id, $role, READ_WRITE)){
             $lab = new LaboratoryController();
