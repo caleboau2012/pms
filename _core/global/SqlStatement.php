@@ -553,7 +553,7 @@ class ParasitologyRequestSqlStatement {
                           ORDER BY pr.created_date DESC";
     const GET_DETAILS = "SELECT * FROM parasitology_req WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id
                          AND preq_id = :preq_id AND active_fg = :active_fg";
-    const GET_PARASITES = "SELECT pref_id FROM parasitology_details WHERE preq_id = :preq_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id AND active_fg = :active_fg";
+    const GET_PARASITES = "SELECT pref_id FROM parasitology_details WHERE preq_id = :preq_id AND active_fg = :active_fg";
     const UPDATE_DETAILS = "UPDATE parasitology_req SET nature_of_specimen = :nature_of_specimen,
                             investigation_req = :investigation_req, lab_num = :lab_num, lab_comment = :lab_comment,
                             lab_attendant_id = :lab_attendant_id, status_id =:status_id, modified_date = NOW() WHERE preq_id = :preq_id";
@@ -654,7 +654,7 @@ class RadiologyRequestSqlStatement{
                           rr.radiology_id = r.radiology_id INNER JOIN treatment AS t ON
                           r.treatment_id  = t.treatment_id INNER JOIN patient AS p ON t.patient_id = p.patient_id
                           WHERE rr.active_fg = :active_fg ORDER BY rr.created_date DESC";
-    const GET_DETAILS = "SELECT * FROM radiology_request WHERE treatment_id = :treatment_id AND encounter_id = :encounter_id AND radiology_id = :radiology_id";
+    const GET_DETAILS = "SELECT * FROM radiology_request WHERE radiology_id = :radiology_id";
     const GET_RADIOLOGY_VALS = "SELECT * FROM radiology WHERE radiology_id = :radiology_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id";
     const UPDATE_DETAILS = "UPDATE radiology_request SET previous_operation = :previous_operation,
                             any_known_allergies = :any_known_allergies, previous_xray = :previous_xray,

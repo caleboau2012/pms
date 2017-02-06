@@ -39,6 +39,7 @@ var Laboratory = {
         })
     },
 
+
     ajaxRequest:function(url, data, request_type){
         $.ajax({
             type : request_type,
