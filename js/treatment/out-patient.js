@@ -346,6 +346,7 @@ Treatment = {
 
                 var prescriptions, prescriptionHTML, patientHTML;
 
+
                 for(var i = data.length - 1; i >= 0; i--){
                     prescriptions = data[i].prescriptions;
                     prescriptionHTML = "";

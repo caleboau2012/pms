@@ -1012,10 +1012,10 @@ class TreatmentSqlStatement {
                             WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
-                            WHERE status = 1 AND treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
-                            WHERE status = 1 AND encounter_id = :encounter_id";
+                            WHERE encounter_id = :encounter_id";
 
     const BLOODTEST = "SELECT DISTINCT haematology_id, clinical_diagnosis_details, haematology.created_date
  FROM haematology INNER JOIN treatment ON (treatment.treatment_id = haematology.treatment_id)
