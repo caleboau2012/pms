@@ -211,6 +211,7 @@ Treatment = {
             console.log(data);
             Treatment.CONSTANTS.encounterid = data.encounter_id;
             $('.treatment-ID').html(Treatment.CONSTANTS.treatmentid);
+            $('.encounter-ID').html(Treatment.CONSTANTS.encounterid);
             $('.patient-name').html($(patient).find('.patientName').html());
             $('.patient-RegNo').html(data.regNo);
             $('.patient-Sex').html(data.sex);
@@ -227,13 +228,16 @@ Treatment = {
             $('.weight').text(data.weight);
             $('.telephone').text(data.telephone);
 
-            //console.log(data);
+            //    Pre-populate form
+            if(typeof data.consultation != "undefined"){
+                document.addTreatmentForm.consultation.value = data.consultation;
+                document.addTreatmentForm.symptoms.value = data.symptoms;
+                document.addTreatmentForm.diagnosis.value = data.diagnosis;
+                document.addTreatmentForm.comment.value = data.comments;
 
-            //$('.patient-name').html($(patient).find('.patientName').html());
-            //$('.patient-RegNo').html($(patient).find('.patientRegNo').html());
-            //$('.patient-Sex').html($(patient).find('.patientSex').html());
-            //$('.patient-Age').html($(patient).find('.patientAge').html());
-            //$('.patient-ID').html($(patient).find('.patient_id').html());
+                $("#end-incomplete").animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow")
+                    .animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow");
+            }
         });
 
         $('.end').removeClass('hidden');
@@ -246,6 +250,7 @@ Treatment = {
         $.getJSON(url, function (data) {
             console.log(data);
             showSuccess(data.data);
+            $(document.addTreatmentForm)[0].reset();
             //$('.treatment-ID').html(data.data);
             //Treatment.CONSTANTS.treatmentid = $('.treatment-ID').html();
             //$('.patient-name').html($(patient).find('.patientName').html());
@@ -254,9 +259,9 @@ Treatment = {
             //$('.patient-Age').html($(patient).find('.patientAge').html());
             //$('.patient-ID').html($(patient).find('.patientid').html());
         });
-        Treatment.removeFromQueue($('.patient-ID').html());
         $('.patient-name').html("Please Select a Patient from the Queue <span class='fa fa-long-arrow-right'></span> ");
-        $('#end').addClass('hidden');
+        Treatment.removeFromQueue($('.patient-ID').html());
+        $('.end').addClass('hidden');
         $('.well').addClass('hidden');
     },
     submitTreatment: function(data){
@@ -270,7 +275,7 @@ Treatment = {
 
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
-            intent: "submitTreatment",
+            intent: "logEncounter",
             treatment_id: Treatment.CONSTANTS.treatmentid,
             admission_id: Treatment.CONSTANTS.admissionid,
             encounter_id: Treatment.CONSTANTS.encounterid,
@@ -434,7 +439,8 @@ Treatment = {
                 }
 
                 $('.table-data').html(html);
-                $('.lab-history .dataTable').dataTable();
+                if(data.length > 0)
+                    $('.lab-history .dataTable').dataTable();
             }
             else if(data.status == 2){
                 var html = "<tr></tr>"

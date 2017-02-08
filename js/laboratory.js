@@ -39,6 +39,7 @@ var Laboratory = {
         })
     },
 
+
     ajaxRequest:function(url, data, request_type){
         $.ajax({
             type : request_type,
@@ -199,6 +200,7 @@ var Laboratory = {
     },
 
     updateLabDetails: function(url, data, request_type){
+        console.log(data);
         Loader.show();
         $.ajax({
             type : request_type,

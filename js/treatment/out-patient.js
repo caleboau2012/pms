@@ -346,6 +346,7 @@ Treatment = {
 
                 var prescriptions, prescriptionHTML, patientHTML;
 
+
                 for(var i = data.length - 1; i >= 0; i--){
                     prescriptions = data[i].prescriptions;
                     prescriptionHTML = "";
@@ -400,12 +401,10 @@ Treatment = {
             patientId: $('.patient-ID').html(),
             labType: type
         }, function(data){
-            console.log(data);
             if(data.status == 1){
                 data = data.data;
                 var html = "";
                 for(var i = 0; i < data.length; i++){
-                    console.log(data[i]);
                     var status;
                     switch(data[i].status){
                         case '5':
@@ -433,7 +432,8 @@ Treatment = {
                 }
 
                 $('.table-data').html(html);
-                $('.lab-history .dataTable').dataTable();
+                if(data.length > 0)
+                    $('.lab-history .dataTable').dataTable();
             }
             else if(data.status == 2){
                 var html = "<tr></tr>"

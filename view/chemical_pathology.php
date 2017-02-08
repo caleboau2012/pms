@@ -199,7 +199,7 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['details']['d
                                                 echo $view_bag['details'][ChemicalPathologyRequestTable::laboratory_comment];
                                             }
                                             ?></textarea>
-                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name="<?php echo 'data[details]['.ChemicalPathologyRequestTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details'][ChemicalPathologyRequestTable::laboratory_ref])) echo $view_bag['details'][ChemicalPathologyRequestTable::laboratory_ref]; ?>"></span></div>
+                                        <div class="test-label">Laboratory Ref: <span><input type="text" class="form-inline form-margin" name=<?php echo 'data[details]['.ChemicalPathologyRequestTable::laboratory_ref.']'; ?>" value="<?php if (isset($view_bag['details'][ChemicalPathologyRequestTable::laboratory_ref])) echo $view_bag['details'][ChemicalPathologyRequestTable::laboratory_ref]; ?>"></span></div>
                                     </fieldset>
                                 </div>
                             </div>

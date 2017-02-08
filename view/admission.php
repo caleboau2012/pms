@@ -202,7 +202,6 @@ $wards = $admission->loadWards();
                     </div>
                 </div>
             </div>
-
             <div class="col-sm-8">
                 <h1 class="text-muted text-center" id="empty_active_in_patient"><br/><br/>&larr; Select patient </h1>
                 <div id="active_in_patient" class="in-patient-content hidden">
@@ -345,14 +344,6 @@ $wards = $admission->loadWards();
                                     </div>
 
                                 </div>
-                                <div class="form-group">
-                                    <div class="col-sm-6">
-                                        <label for="comment">Comment</label>
-                                        <textarea class="form-control" id="comment" name="comment" required="required"></textarea>
-                                    </div>
-                                    <br/>
-                                </div>
-
                                 <div class="col-sm-offset-5 col-sm-3">
                                     <br/>
                                     <input type="submit" class="btn btn-lg btn-primary">

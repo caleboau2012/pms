@@ -3,8 +3,8 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
-Crave::requireFiles(MODEL, array('BaseModel', 'AdmissionModel', 'RoleModel', 'BedModel', 'WardModel', 'VitalsModel'));
-Crave::requireFiles(CONTROLLER, array('AdmissionController', 'RoleController', 'VitalsController', 'WardController'));
+Crave::requireFiles(MODEL, array('BaseModel', 'TreatmentModel', 'AdmissionModel', 'RoleModel', 'BedModel', 'WardModel', 'VitalsModel'));
+Crave::requireFiles(CONTROLLER, array('TreatmentController', 'AdmissionController', 'RoleController', 'VitalsController', 'WardController'));
 
 if (isset($_REQUEST['intent'])) {
     $intent = $_REQUEST['intent'];
@@ -97,7 +97,7 @@ if ($intent == 'admitPatient') {
         exit();
     }
 } elseif ($intent == 'dischargePatient') {
-    if (isset($_REQUEST[AdmissionTable::patient_id])) {
+    if (isset($_REQUEST[AdmissionTable::patient_id]) && isset($_REQUEST[AdmissionTable::treatment_id])) {
         $patient_id = $_REQUEST[AdmissionTable::patient_id];
         if (!AdmissionController::isAdmitted($patient_id)) {
             echo JsonResponse::error("Cannot discharge a patient that is not admitted!");
@@ -107,6 +107,8 @@ if ($intent == 'admitPatient') {
         $discharged_by = CxSessionHandler::getItem(UserAuthTable::userid);
         $warden = new AdmissionController();
         $response = $warden->dischargePatient($patient_id, $discharged_by);
+        $treatment = new TreatmentController();
+        $bill = $treatment->makeBillable($_REQUEST[AdmissionTable::treatment_id]);
         if ($response) {
             echo JsonResponse::message(STATUS_OK, "Patient successfully discharged!");
             exit();
@@ -119,7 +121,7 @@ if ($intent == 'admitPatient') {
         exit();
     }
 } elseif ($intent == 'logEncounter') {
-    if (isset($_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $_REQUEST[AdmissionTable::patient_id])) {
+    if (isset($_REQUEST[AdmissionTable::admission_id], $_REQUEST[AdmissionTable::patient_id])) {
         $personnel_id = CxSessionHandler::getItem(UserAuthTable::userid);
 
         if (isset($_REQUEST[VITALS])) {
@@ -137,10 +139,9 @@ if ($intent == 'admitPatient') {
         }
 
         $warden = new AdmissionController();
-        $response = $warden->logEncounter($personnel_id, $_REQUEST[EncounterTable::treatment_id], $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $_REQUEST[EncounterTable::comments], $vitals_data);
-//$response = false;
+        $response = $warden->logEncounter($personnel_id, $_REQUEST[EncounterTable::treatment_id], $_REQUEST[AdmissionTable::patient_id], $_REQUEST[AdmissionTable::admission_id], $vitals_data);
         if ($response) {
-            echo JsonResponse::message(STATUS_OK, "Encounter logged successfully!");
+            echo JsonResponse::message(STATUS_OK, "Vitals successfully saved!");
             exit();
         } else {
             echo JsonResponse::error($_REQUEST);

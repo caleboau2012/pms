@@ -435,7 +435,6 @@ Admission = {
 
     },
     getPatientRoomDetails: function(patient){
-        //console.log(patient);
         //set patient bed id
         Admission.GLOBAL.ACTIVE_IN_PATIENT_BED_ID = $(patient).attr("data-bed-id");
 
@@ -469,7 +468,6 @@ Admission = {
         payload.admission_id = Admission.GLOBAL.PATIENT_ADMISSION_ID;
         payload.patient_id =  Admission.GLOBAL.ACTIVE_PATIENT_ID;
         payload.treatment_id =  Admission.GLOBAL.TREATMENT_ID;
-        payload.comments = $('#comment').val();
         payload.vitals = {};
 
         $("#log_encounter input").each(function () {
@@ -477,10 +475,9 @@ Admission = {
                 payload.vitals[$(this).attr("name")] = $(this).val();
             }
         });
-
+        var response;
         $.post(host + 'phase/phase_admission.php', payload, function(data){
             var res = JSON.parse(data);
-            var response;
             if(res.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response = '<div class="alert alert-dismissible alert-success text-center">' +
                 ' <button type="button" class="close" data-dismiss="alert">×</button>' +
@@ -509,9 +506,11 @@ Admission = {
     dischargePatient: function(){
         var payload = {};
         payload.intent = 'dischargePatient';
+        payload.treatment_id = Admission.GLOBAL.TREATMENT_ID;
         payload.patient_id = Admission.GLOBAL.ACTIVE_PATIENT_ID;
 
         $.getJSON(host + 'phase/phase_admission.php', payload, function(data){
+            console.log(data);
             var response_msg;
             if(data.status == Admission.CONSTANTS.REQUEST_SUCCESS){
                 response_msg = '<br/><div class="alert alert-dismissible alert-success text-center">' +

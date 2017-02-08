@@ -152,30 +152,15 @@ class AdmissionModel extends BaseModel {
         $begin = $this->conn->beginTransaction();
 
         if ($begin) {
-            //Insert encounter details
-            $stmt = EncounterSqlStatement::ADD;
-
-            if (isset($encounter_data[VITALS])) {
                 $vitals_data = $encounter_data[VITALS];
-                unset($encounter_data[VITALS]);
-            }
-
-            $result = $this->conn->execute($stmt, $encounter_data, true);
-
-            if ($result) {
                 if (is_array($vitals_data)) {
                     //Add vitals
-                    $encounter_id = $this->conn->getLastInsertedId();
-
                     $vitals_data[VitalsTable::added_by] = $encounter_data[EncounterTable::personnel_id];
-                    $vitals_data[VitalsTable::encounter_id] = $encounter_id;
                     $vitals_data[VitalsTable::patient_id] = $encounter_data[EncounterTable::patient_id];
-
 
                     $vitals_model = new VitalsModel($vitals_data, $this->conn);
                     $vitals_added = $vitals_model->add();
 
-                    //var_dump($vitals_data, $vitals_added);
                     if ($vitals_added) {
                         //Vitals added successfully...Commit database transactions
                         $this->conn->commit();
@@ -185,11 +170,6 @@ class AdmissionModel extends BaseModel {
                         $this->conn->rollBack();
                         return false;
                     }
-                } else {
-                    //No vitals...Commit inserted encounter
-                    $this->conn->commit();
-                    return true;
-                }
             } else {
                 //Unable to insert encounter details...Roll back!
                 $this->conn->rollBack();
