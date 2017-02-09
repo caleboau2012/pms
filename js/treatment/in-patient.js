@@ -443,9 +443,9 @@ Treatment = {
                     $('.lab-history .dataTable').dataTable();
             }
             else if(data.status == 2){
-                var html = "<tr></tr>"
+                var html = "<tr><td class='text-center' colspan='5'>" + data.message +  "</td></tr>"
                 $('.table-data').html(html);
-                $('.lab-history .dataTable').dataTable();
+                //$('.lab-history .dataTable').dataTable();
             }
         }, 'json');
     },
