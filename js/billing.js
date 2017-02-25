@@ -34,7 +34,7 @@ Billing = {
     getQueue: function(){
         var url = host + "phase/phase_billing.php?intent=unbilled_treatments";
         $.getJSON(url, function(data){
-            //console.log(data);
+            console.log(data);
             if(data.status == 1){
                 data = data.data;
                 $('#unbilled-patients').empty();
@@ -170,8 +170,10 @@ Billing = {
     getDetails: function(){
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'details',
-            treatment_id: Billing.CONSTANTS.treatment_id
+            treatment_id: Billing.CONSTANTS.treatment_id,
+            encounter_id: Billing.CONSTANTS.encounter_id
         }, function(data){
+            console.log(data);
             $('#test').empty();
             $("#procedure").empty();
             var days = "";
@@ -241,15 +243,22 @@ Billing = {
             }
 
             if(Array.isArray(data.data.procedure)){
-                $('#procedure').append("<p>"+ data.data.procedure[0].consultation +  "</p>");
-                if(Array.isArray(data.data.admitted_procedure)){
-
-                    for(var i = 0; i < data.data.admitted_procedure.length; i++){
-                        if(data.data.admitted_procedure[i].consultation){
-                            $('#procedure').append("<p>"+ data.data.admitted_procedure[i].consultation +  "</p>");
-                        }
-                    }
+                var text;
+                for(var i = 0; i < data.data.procedure.length; i++){
+                    text = "No procedure";
+                    //console.log(data.data.procedure[i].consultation == null);
+                    if(data.data.procedure[i].consultation != null)
+                        text = data.data.procedure[i].consultation;
+                    $('#procedure').append("<p>"+ text +  "</p>");
                 }
+                //if(Array.isArray(data.data.admitted_procedure)){
+                //
+                //    for(var i = 0; i < data.data.admitted_procedure.length; i++){
+                //        if(data.data.admitted_procedure[i].consultation){
+                //            $('#procedure').append("<p>"+ data.data.admitted_procedure[i].consultation +  "</p>");
+                //        }
+                //    }
+                //}
             }
             else{
                 $('#procedure').append("<p>No procedure was done during this session</p>");

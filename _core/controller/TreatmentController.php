@@ -111,7 +111,7 @@ class TreatmentController{
         return $history;
     }
 
-    public function makeBillable($treatmentId){
-        return $this->treatmentModel->makeBillable($treatmentId);
+    public function makeBillable($treatmentId, $encounterId = 0){
+        return $this->treatmentModel->makeBillable($treatmentId, $encounterId);
     }
 }
