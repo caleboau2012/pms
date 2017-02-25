@@ -713,7 +713,7 @@ class BloodTestSqlStatement {
     const UPDATE = 'UPDATE blood_test SET pcv = :pcv,hb = :hb, hchc = :hchc,wbc = :wbc,eosinophils = :eosinophils,platelets = :platelets,rectis = :rectis ,rectis_index = :rectis_index,e_s_r = :e_s_r,microfilaria = :microfilaria,malaria_parasites = :malaria_parasites, modified_date = now() WHERE haematology_id = :haematology_id';
     const GET    = 'SELECT haematology_id, pcv, hb, hchc, wbc, eosinophils, platelets, rectis, rectis_index, e_s_r, microfilaria, malaria_parasites, created_date, modified_date
                     FROM blood_test
-                    WHERE haematology_id = :haematology_id  AND treatment_id = :treatment_id AND encounter_id = :encounter_id
+                    WHERE haematology_id = :haematology_id
                     ORDER BY created_date DESC LIMIT 1';
 
 }
@@ -729,7 +729,7 @@ class FilmAppearanceSqlStatement {
                  hypochromia = :hypochromia, sickle_cells = :sickle_cells, target_cells = :target_cells,
                  spherocytes = :spherocytes, nucleated_rbc = :nucleated_rbc, sickling_test = :sickling_test, modified_date = NOW()';
     const DELETE = 'DELETE FROM film_appearance WHERE haematology_id= :haematology_id';
-    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,created_date,modified_date FROM film_appearance f WHERE haematology_id = :haematology_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id ORDER BY f.created_date DESC LIMIT 1';
+    const GET    = 'SELECT film_appearance_id, haematology_id,aniscocytosis,poikilocytosis,polychromasia,macrocytosis,microcytosis,hypochromia,sickle_cells,target_cells,spherocytes,nucleated_rbc,sickling_test,created_date,modified_date FROM film_appearance f WHERE haematology_id = :haematology_id ORDER BY f.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT f.haematology_id,f.aniscocytosis,f.poikilocytosis,f.polychromasia,f.macrocytosis,f.microcytosis,f.hypochromia,f.sickle_cells,f.target_cells,f.spherocytes,f.nucleated_rbc,f.sickling_test,f.create_date,f.modified_date, h.haematology_id FROM haematology h, film_appearance f WHERE f.haematology_id=:haematology_id AND h.haematology_id=f.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE film_appearance SET aniscocytosis = :aniscocytosis,poikilocytosis = :poikilocytosis,polychromasia = :polychromasia,macrocytosis = :macrocytosis,microcytosis = :microcytosis,hypochromia = :hypochromia,sickle_cells =:sickle_cells,target_cells = :target_cells,spherocytes = :spherocytes,nucleated_rbc = :nucleated_rbc,sickling_test = :sickling_test, modified_date = NOW() WHERE haematology_id=:haematology_id';
 }
@@ -742,7 +742,7 @@ class DifferentialCountSqlStatement {
                  monocytes = :monocytes, eosinophils = :eosinophils, basophils = :basophils, widals_test = :widals_test,
                  blood_group = :blood_group, rhesus_factor = :rhesus_factor, genotype = :genotype, modified_date = NOW()';
     const DELETE = 'DELETE FROM differential_count WHERE haematology_id = :haematology_id';
-    const GET    = 'SELECT * FROM differential_count d WHERE d.haematology_id = :haematology_id AND treatment_id = :treatment_id AND encounter_id = :encounter_id ORDER BY d.created_date DESC LIMIT 1';
+    const GET    = 'SELECT * FROM differential_count d WHERE d.haematology_id = :haematology_id ORDER BY d.created_date DESC LIMIT 1';
     const GET_TEST = 'SELECT dc.polymorphs_neutrophils,dc.lymphocytes,dc.monocytes,dc.eosinophils,dc.basophils,dc.widals_test,dc.blood_group,dc.rhesus_factor,dc.genotype, dc.modified_date, h.haematology_id FROM haematology h, differential_count dc WHERE dc.haematology_id=:haematology_id AND h.haematology_id=dc.haematology_id LIMIT 1';
     const UPDATE = 'UPDATE differential_count SET polymorphs_neutrophils = :polymorphs_neutrophils, lymphocytes = :lymphocytes, monocytes = :monocytes, eosinophils = :eosinophils, basophils = :basophils, widals_test = :widals_test, blood_group = :blood_group, rhesus_factor = :rhesus_factor, genotype = :genotype, modified_date = NOW() WHERE haematology_id = :haematology_id';
 
