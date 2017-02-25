@@ -71,6 +71,17 @@ Treatment = {
             }
         });
 
+        $('#end-incomplete').popover({
+            content: "This will suspend the treatment session with the patient",
+            trigger: "hover",
+            title: "What is this?",
+            placement: "bottom"
+        }).click(function(e){
+            if(confirm("Are you sure you want to do this?")){
+                Treatment.removeFromQueue($('.patient-ID').html());
+            }
+        });
+
         $(document.requestTestForm).on('submit', function(e){
             e.preventDefault();
             Treatment.requestTest(this);
@@ -208,7 +219,6 @@ Treatment = {
             admission_id: Treatment.CONSTANTS.admissionid
         }, function (data) {
             data = data.data;
-            console.log(data);
             Treatment.CONSTANTS.encounterid = data.encounter_id;
             $('.treatment-ID').html(Treatment.CONSTANTS.treatmentid);
             $('.encounter-ID').html(Treatment.CONSTANTS.encounterid);
@@ -248,7 +258,6 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=closeEncounter&treatment_id=" + Treatment.CONSTANTS.treatmentid
             + "&encounter_id=" + Treatment.CONSTANTS.encounterid;
         $.getJSON(url, function (data) {
-            console.log(data);
             showSuccess(data.data);
             $(document.addTreatmentForm)[0].reset();
             //$('.treatment-ID').html(data.data);
@@ -312,7 +321,6 @@ Treatment = {
         $.getJSON(url, function (data) {
 
             data = data.data;
-            console.log(data);
 
             $('.history').empty();
             var prescriptions, prescriptionHTML, patientHTML;
@@ -349,7 +357,6 @@ Treatment = {
         $.getJSON(url, function (data) {
             if(data.status == 1){
                 data = data.data;
-                console.log(data);
 
                 $('#encounteraccordion' + id).empty();
 
@@ -394,7 +401,8 @@ Treatment = {
             patient_id: $('.patient-ID').html(),
             treatmentId: Treatment.CONSTANTS.treatmentid,
             description: form.description.value,
-            labType: form.test_id.value
+            labType: form.test_id.value,
+            encounterId: Treatment.CONSTANTS.encounterid
         }, function(data){
             form.reset();
             Loader.hide();

@@ -328,7 +328,7 @@ class TreatmentModel extends BaseModel{
 
             /* Other things come here! */
             $result = $this->getUnclosedEncounterSession($treatmentId, $admissionId);
-            $id = $data[EncounterTable::encounter_id];
+            $id = 0;//$data[EncounterTable::encounter_id];
             if(!is_array($result)){
                 if(!$this->conn->execute(EncounterSqlStatement::ADD, $data)){
                     throw new Exception('Could not add a new encounter session');
@@ -366,8 +366,14 @@ class TreatmentModel extends BaseModel{
         return 0;
     }
 
-    public function makeBillable($treatmentId){
-        $data = array(TreatmentTable::treatment_id => $treatmentId);
-        return $this->conn->execute(TreatmentSqlStatement::MAKE_BILLABLE, $data);
+    public function makeBillable($treatmentId, $encounterId = 0){
+        if($encounterId == 0){
+            $data = array(TreatmentTable::treatment_id => $treatmentId);
+            return $this->conn->execute(TreatmentSqlStatement::MAKE_BILLABLE, $data);
+        }
+        else{
+            $data = array(TreatmentTable::encounter_id => $encounterId);
+            return $this->conn->execute(TreatmentSqlStatement::MAKE_BILLABLE_ENCOUNTER, $data);
+        }
     }
 }

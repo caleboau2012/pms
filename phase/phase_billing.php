@@ -27,9 +27,10 @@ if ($intent == 'unbilled_treatments') {
     }
 } elseif ($intent == 'details') {
     $details = new BillingController();
-    $id = isset($_REQUEST['treatment_id']) ? $_REQUEST['treatment_id'] : null;
+    $treatment_id = isset($_REQUEST['treatment_id']) ? $_REQUEST['treatment_id'] : null;
+    $encounter_id = isset($_REQUEST['encounter_id']) ? $_REQUEST['encounter_id'] : null;
 
-    $response = $details->getDetails($id);
+    $response = $details->getDetails($treatment_id, $encounter_id);
 
     if (is_array($response) || !empty($response)) {
         echo JsonResponse::success($response);
