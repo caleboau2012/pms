@@ -394,7 +394,8 @@ Treatment = {
             patient_id: $('.patient-ID').html(),
             treatmentId: Treatment.CONSTANTS.treatmentid,
             description: form.description.value,
-            labType: form.test_id.value
+            labType: form.test_id.value,
+            encounterId: Treatment.CONSTANTS.encounterid
         }, function(data){
             form.reset();
             Loader.hide();

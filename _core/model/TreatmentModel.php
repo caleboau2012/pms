@@ -328,7 +328,7 @@ class TreatmentModel extends BaseModel{
 
             /* Other things come here! */
             $result = $this->getUnclosedEncounterSession($treatmentId, $admissionId);
-            $id = $data[EncounterTable::encounter_id];
+            $id = 0;//$data[EncounterTable::encounter_id];
             if(!is_array($result)){
                 if(!$this->conn->execute(EncounterSqlStatement::ADD, $data)){
                     throw new Exception('Could not add a new encounter session');
