@@ -18,7 +18,6 @@ $view_bag = array();
 $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id']);
 
 $view_bag = $lab->getLabDetails($_REQUEST['testId'], $_REQUEST['labType'], $_REQUEST['treatment_id'], $_REQUEST['encounter_id']);
-
 if ($view_bag['details'][HaematologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
