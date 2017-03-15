@@ -1047,8 +1047,9 @@ FROM parasitology_req INNER JOIN treatment ON (treatment.treatment_id = parasito
                             WHERE parasitology_req.treatment_id = :treatment_id AND patient_queue.active_fg = 0
                             ORDER BY parasitology_req.created_date DESC";
 
-    const RADIOLOGYTEST = "SELECT DISTINCT radiology_id, radiologists_report, radiology.created_date
+    const RADIOLOGYTEST = "SELECT DISTINCT radiology_request.clinical_diagnosis_details, radiology.radiology_id, radiologists_report, radiology.created_date
 FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treatment_id)
+                            INNER JOIN radiology_request ON (radiology_request.radiology_request_id = radiology.radiology_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
                             WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
                             ORDER BY radiology.created_date DESC";

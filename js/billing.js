@@ -210,7 +210,7 @@ Billing = {
             if(data.data.test.radiology_test){
                 $('#test').append("<tr>" +
                     "<td>Radiology Test</td>" +
-                    "<td>" + checkNull(data.data.test.radiology_test.radiologists_report) + "</td>" +
+                    "<td>" + checkNull(data.data.test.radiology_test.clinical_diagnosis_details) + "</td>" +
                     "<td>" + data.data.test.radiology_test.created_date + "</td>" +
                     "</tr>");
             }
