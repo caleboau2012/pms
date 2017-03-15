@@ -34,7 +34,6 @@ Billing = {
     getQueue: function(){
         var url = host + "phase/phase_billing.php?intent=unbilled_treatments";
         $.getJSON(url, function(data){
-            console.log(data);
             if(data.status == 1){
                 data = data.data;
                 $('#unbilled-patients').empty();
@@ -117,11 +116,6 @@ Billing = {
         Billing.CONSTANTS.treatment_id = ($(patient).find('.treatment_id').text());
         Billing.CONSTANTS.encounter_id = ($(patient).find('.encounter_id').text());
 
-        console.log({
-            treatment_id: Billing.CONSTANTS.treatment_id,
-            encounter_id: Billing.CONSTANTS.encounter_id
-        });
-
         Billing.getDetails();
 
         $('.none').addClass('hidden');
@@ -173,7 +167,6 @@ Billing = {
             treatment_id: Billing.CONSTANTS.treatment_id,
             encounter_id: Billing.CONSTANTS.encounter_id
         }, function(data){
-            console.log(data);
             $('#test').empty();
             $("#procedure").empty();
             var days = "";
@@ -298,11 +291,11 @@ Billing = {
                 location.reload();
             }
         }).fail(function(e){
-            console.log({
+            /*console.log({
                 data: e.responseText,
                 items: items,
                 amount: amounts
-            });
+            });*/
         });
     }
 };
