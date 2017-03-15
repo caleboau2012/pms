@@ -630,7 +630,7 @@ class EncounterSqlStatement{
     const ADD = "INSERT INTO encounter (personnel_id, patient_id, admission_id, treatment_id, comments, created_date, modified_date, active_fg) VALUES (:personnel_id, :patient_id, :admission_id, :treatment_id, :comments, NOW(), NOW(), 1)";
     const GET_UNCLOSED_SESSION = "SELECT * FROM encounter WHERE treatment_id = :treatment_id AND admission_id = :admission_id AND status = 1";
     const UPDATE = "UPDATE encounter SET personnel_id = :personnel_id, consultation = :consultation, symptoms = :symptoms,
-                    diagnosis = :diagnosis, comments = :comments, modified_date = NOW() WHERE treatment_id = :treatment_id AND patient_id = :patient_id
+                    diagnosis = :diagnosis, bill_status = 1, comments = :comments, modified_date = NOW() WHERE treatment_id = :treatment_id AND patient_id = :patient_id
                     AND admission_id = :admission_id AND encounter_id = :encounter_id";
     const CLOSE_SESSION = "UPDATE encounter SET status = :status WHERE encounter_id = :encounter_id AND treatment_id = :treatment_id";
     const GET_ENCOUNTERS = "SELECT * FROM encounter WHERE treatment_id = :treatment_id";
@@ -986,8 +986,9 @@ class TreatmentSqlStatement {
     const GET_TREATMENT = "SELECT treatment_id, doctor_id, consultation, symptoms, diagnosis, comments, created_date FROM treatment WHERE patient_id=:patient_id";
 
     const CHECK_TREATMENT = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
-    const GET_PROCEDURE = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE treatment_id = :treatment_id AND bill_status = 1 LIMIT 1";
-    const GET_PROCEDURE_ADMITTED = "SELECT personnel_id, patient_id, admission_id, comments, symptoms, consultation FROM encounter WHERE treatment_id = :treatment_id AND status = 1";
+    const GET_PROCEDURE = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE treatment_id = :treatment_id AND encounter_id = 0 AND bill_status = 1 LIMIT 1";
+    //const GET_PROCEDURE_ADMITTED = "SELECT personnel_id, patient_id, admission_id, comments, symptoms, consultation FROM encounter WHERE treatment_id = :treatment_id AND status = 1";
+    const GET_PROCEDURE_ADMITTED = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM encounter WHERE encounter_id = :encounter_id AND status = 1";
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
@@ -1012,7 +1013,7 @@ class TreatmentSqlStatement {
                             WHERE treatment_id = :treatment_id";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
-                            WHERE treatment_id = :treatment_id";
+                            WHERE treatment_id = :treatment_id AND encounter_id = 0";
 
     const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
                             WHERE encounter_id = :encounter_id";
@@ -1020,38 +1021,74 @@ class TreatmentSqlStatement {
     const BLOODTEST = "SELECT DISTINCT haematology_id, clinical_diagnosis_details, haematology.created_date
  FROM haematology INNER JOIN treatment ON (treatment.treatment_id = haematology.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
-                             WHERE haematology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                             WHERE haematology.treatment_id = :treatment_id AND patient_queue.active_fg = 0 AND haematology.encounter_id = 0
+                             ORDER BY haematology.created_date DESC";
+
+    const BLOODTEST_BY_ENCOUNTER = "SELECT DISTINCT haematology_id, clinical_diagnosis_details, haematology.created_date
+ FROM haematology INNER JOIN encounter ON (encounter.encounter_id = haematology.encounter_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                             WHERE haematology.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                              ORDER BY haematology.created_date DESC";
 
     const URINETEST = "SELECT DISTINCT urine_id, clinical_diagnosis_details, urine.created_date
  FROM urine INNER JOIN treatment ON (treatment.treatment_id = urine.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
-                             WHERE urine.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                             WHERE urine.treatment_id = :treatment_id AND patient_queue.active_fg = 0 AND urine.encounter_id = 0
+                             ORDER BY urine.created_date DESC";
+
+    const URINETEST_BY_ENCOUNTER = "SELECT DISTINCT urine_id, clinical_diagnosis_details, urine.created_date
+ FROM urine INNER JOIN encounter ON (encounter.encounter_id = urine.encounter_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                             WHERE urine.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                              ORDER BY urine.created_date DESC";
 
     const VISUALTEST = "SELECT DISTINCT visual_profile_id, description, visual_skills_profile.created_date
     FROM visual_skills_profile INNER JOIN treatment ON (treatment.treatment_id = visual_skills_profile.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
-                            WHERE visual_skills_profile.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            WHERE visual_skills_profile.treatment_id = :treatment_id AND patient_queue.active_fg = 0 AND visual_skills_profile.encounter_id = 0
+                            ORDER BY visual_skills_profile.created_date DESC";
+
+    const VISUALTEST_BY_ENCOUNTER = "SELECT DISTINCT visual_profile_id, description, visual_skills_profile.created_date
+    FROM visual_skills_profile INNER JOIN encounter ON (encounter.encounter_id = visual_skills_profile.encounter_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                            WHERE visual_skills_profile.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                             ORDER BY visual_skills_profile.created_date DESC";
 
     const CHEMICALTEST = "SELECT DISTINCT cpreq_id, clinical_diagnosis, chemical_pathology_request.created_date
 FROM chemical_pathology_request INNER JOIN treatment ON (treatment.treatment_id = chemical_pathology_request.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
-                            WHERE chemical_pathology_request.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            WHERE chemical_pathology_request.treatment_id = :treatment_id AND patient_queue.active_fg = 0 AND chemical_pathology_request.encounter_id = 0
+                            ORDER BY chemical_pathology_request.created_date DESC";
+
+    const CHEMICALTEST_BY_ENCOUNTER = "SELECT DISTINCT cpreq_id, clinical_diagnosis, chemical_pathology_request.created_date
+FROM chemical_pathology_request INNER JOIN encounter ON (encounter.encounter_id = chemical_pathology_request.encounter_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                            WHERE chemical_pathology_request.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                             ORDER BY chemical_pathology_request.created_date DESC";
 
     const PARATEST = "SELECT DISTINCT preq_id, parasitology_req.diagnosis, parasitology_req.created_date
 FROM parasitology_req INNER JOIN treatment ON (treatment.treatment_id = parasitology_req.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
-                            WHERE parasitology_req.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            WHERE parasitology_req.treatment_id = :treatment_id AND patient_queue.active_fg = 0 AND parasitology_req.encounter_id = 0
+                            ORDER BY parasitology_req.created_date DESC";
+
+    const PARATEST_BY_ENCOUNTER = "SELECT DISTINCT preq_id, parasitology_req.diagnosis, parasitology_req.created_date
+FROM parasitology_req INNER JOIN encounter ON (encounter.encounter_id = parasitology_req.encounter_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                            WHERE parasitology_req.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                             ORDER BY parasitology_req.created_date DESC";
 
     const RADIOLOGYTEST = "SELECT DISTINCT radiology_request.clinical_diagnosis_details, radiology.radiology_id, radiologists_report, radiology.created_date
 FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treatment_id)
                             INNER JOIN radiology_request ON (radiology_request.radiology_request_id = radiology.radiology_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
-                            WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
+                            WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0 AND radiology.encounter_id = 0
+                            ORDER BY radiology.created_date DESC";
+
+    const RADIOLOGYTEST_BY_ENCOUNTER = "SELECT DISTINCT radiology_id, radiologists_report, radiology.created_date
+FROM radiology INNER JOIN encounter ON (encounter.encounter_id = radiology.encounter_id)
+                            INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                            WHERE radiology.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                             ORDER BY radiology.created_date DESC";
 
     const POSTBILLS = "INSERT INTO constant_bills (item, amount, treatment_id, encounter_id, created_date)
@@ -1064,6 +1101,8 @@ FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treat
                                     WHERE encounter_id = :encounter_id";
 
     const MAKE_BILLABLE = "UPDATE treatment SET bill_status = 1 WHERE treatment_id = :treatment_id";
+
+    const MAKE_BILLABLE_ENCOUNTER = "UPDATE encounter SET bill_status = 1 WHERE encounter_id = :encounter_id";
 }
 
 class EmergencySqlStatement {
