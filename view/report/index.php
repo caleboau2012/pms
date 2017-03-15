@@ -112,7 +112,7 @@ Crave::requireAll(UTIL);
                                     <option opt="yes" value="newPatient">New Patients</option>
                                     <option opt="yes" value="currentPatients">Current Patients</option>
                                     <option opt="no" value="patientsAge">Patients with their Age</option>
-                                    <option opt="day" value="patientVisits">Patients Visits / Encounter</option>
+                                    <option opt="day" value="patientVisits">Patients Encounter</option>
                                     <option opt="no" value="inPatients">Inpatients</option>
                                     <option opt="no" value="consultationReport">Consultation</option>
                                     <option opt="no" value="patientDiagnosis">Patient with Diagnosis</option>
@@ -142,7 +142,7 @@ Crave::requireAll(UTIL);
                                     <input type="date" name="end_date" id="end_date" class="form-control"/>
                                 </div>
                             </div>
-                            <div id="day" class="r-margin">
+                            <div id="day_" class="r-margin">
                                 <label>
                                     Select Day
                                 </label>

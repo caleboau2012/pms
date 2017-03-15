@@ -115,13 +115,13 @@ var Report = {
         var opt = $('option:selected', '#view').attr('opt');
         var gender = $('#gender'), ifram = $("#report_iframe"), start_date = $('#start_date'), end_date = $('#end_date');
         if (opt == 'no') {
-            $('#day').hide();
+            $('#day_').hide();
             $('#range').show();
             $('#gender').hide();
             gender.attr('disabled', 'disabled');
         }
         else if (opt == 'yes') {
-            $('#day').hide();
+            $('#day_').hide();
             $('#range').show();
             $("#gender").show();
             gender.removeAttr('disabled');
@@ -129,11 +129,11 @@ var Report = {
         else if (opt == 'day') {
             $('#range').hide();
             $("#day").val(Report.currentDate());
-            $('#day').show();
+            $('#day_').show();
 
         }
         else if (opt == 'all') {
-            $('#day').hide();
+            $('#day_').hide();
             $('#range').hide();
         }
 
@@ -222,9 +222,9 @@ $(document).ready(function(){
     $("#start_date").val(Report.yestardayDate());
     $("#end_date").val(Report.currentDate());
     $('#range').hide();
-    $("#day").hide();
 
-
+    $("#day").val(Report.currentDate());
+    $("#day_").hide();
     $('#report_iframe').attr('src', "allpatients.php");
     Report.table();
 
