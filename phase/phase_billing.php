@@ -59,6 +59,9 @@ if ($intent == 'unbilled_treatments') {
                 else{
                     $bill->billEncounter(array('encounter_id' => $data['encounter_id']));
                 }
+
+                $bill->updateDetails(array('treatment_id' => $data['treatment_id'], 'encounter_id' => $data['encounter_id']));
+
                 echo JsonResponse::success("Billing is Successful");
                 exit();
             } else {

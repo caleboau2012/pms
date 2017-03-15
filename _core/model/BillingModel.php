@@ -139,6 +139,39 @@ class BillingModel extends BaseModel {
         return $details;
     }
 
+    public function updateDetails($data){
+        $begin = $this->conn->beginTransaction();
+
+        if($begin){
+            $stmt = TreatmentSqlStatement::UPDATE_BLOOD_TEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::UPDATE_CHEMICALTEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::UPDATE_PARATEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::UPDATE_PRESCRIPTION_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::UPDATE_RADIOLOGYTEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::UPDATE_URINETEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::UPDATE_VISUALTEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $this->conn->commit();
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+
     public function postBills($data) {
         $this->conn->execute(TreatmentSqlStatement::POSTBILLS, $data);
         $res = $this->conn->getLastInsertedId();
