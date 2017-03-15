@@ -1106,8 +1106,9 @@ FROM parasitology_req INNER JOIN encounter ON (encounter.encounter_id = parasito
     const UPDATE_PARATEST_BILLING = "UPDATE parasitology_req SET bill_status = 2
                                     WHERE treatment_id = :treatment_id OR encounter_id = :encounter_id";
 
-    const RADIOLOGYTEST = "SELECT DISTINCT radiology_id, radiologists_report, radiology.created_date
+    const RADIOLOGYTEST = "SELECT DISTINCT radiology_request.clinical_diagnosis_details, radiology.radiology_id, radiologists_report, radiology.created_date
 FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treatment_id)
+                            INNER JOIN radiology_request ON (radiology_request.radiology_request_id = radiology.radiology_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
                             WHERE radiology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
                             AND radiology.encounter_id = 0 AND radiology.bill_status = 1
