@@ -1013,10 +1013,10 @@ class TreatmentSqlStatement {
                             WHERE treatment_id = :treatment_id AND bill_status = 1";
 
     const PRESCRIPTION = "SELECT prescription FROM prescription
-                            WHERE treatment_id = :treatment_id AND encounter_id = 0 AND bill_status = 1";
+                            WHERE treatment_id = :treatment_id AND encounter_id = 0";
 
     const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
-                            WHERE encounter_id = :encounter_id AND bill_status = 1";
+                            WHERE encounter_id = :encounter_id";
 
     const UPDATE_PRESCRIPTION_BILLING = "UPDATE prescription SET bill_status = 2
                                     WHERE treatment_id = :treatment_id OR encounter_id = :encounter_id";
