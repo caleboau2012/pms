@@ -285,6 +285,7 @@ Treatment = {
                 ResponseModal.show('Done, please end the session if you are done', true);
                 //showSuccess("");
                 $(data)[0].reset();
+                $('#prescriptions > li').remove();
             }
             else{
                 ResponseModal.show(response.message, false);

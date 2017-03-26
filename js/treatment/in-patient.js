@@ -283,6 +283,7 @@ Treatment = {
         });
 
         var url = host + "phase/phase_treatment.php";
+
         $.post(url, {
             intent: "logEncounter",
             treatment_id: Treatment.CONSTANTS.treatmentid,
@@ -302,6 +303,7 @@ Treatment = {
             if(response.status == 1){
                 ResponseModal.show("Done, please end the session if you are done", true);
                 $(data)[0].reset();
+                $('#prescriptions > li').remove();
             }
             else{
                 ResponseModal.show(response.message, false);
