@@ -413,7 +413,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <thead>
                             <tr>
                                 <th>Session ID</th>
-                                <th>Diagnosis</th>
+                                <th>Description</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Acton</th>
@@ -424,7 +424,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             <tfoot>
                             <tr>
                                 <th>Session ID</th>
-                                <th>Diagnosis</th>
+                                <th>Description</th>
                                 <th>Date</th>
                                 <th>Status</th>
                                 <th>Acton</th>

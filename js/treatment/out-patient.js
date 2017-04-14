@@ -452,7 +452,6 @@ Treatment = {
                                     aaSorting : [[2, 'desc']]
                                 } );
                         }
-
                     }
 
                 }
