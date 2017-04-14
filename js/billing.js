@@ -188,6 +188,7 @@ Billing = {
             }
             $('#prescription').html(prescriptionHTML);
 
+
             if(data.data.test.visual_test){
                 $('#test').append("<tr>" +
                     "<td>Visual Test</td>" +

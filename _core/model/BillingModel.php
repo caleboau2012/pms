@@ -80,8 +80,6 @@ class BillingModel extends BaseModel {
             $radiology = $this->conn->fetch(TreatmentSqlStatement::RADIOLOGYTEST_BY_ENCOUNTER, $data);
         }
 
-//        die(var_dump($blood, $urine, $visual, $chemical, $para, $radiology));
-
         $test = array();
         if ($blood && !empty($blood)){
             $test['blood_test'] = $blood;
