@@ -6,6 +6,9 @@ Treatment = {
         doctorid: $('#doctorid').html(),
         treatmentid: null
     },
+    Global: {
+        Lab_Table: null
+    },
     init: function(){
         $('.navbar-form').on('submit', function(e){
             e.preventDefault();
@@ -34,7 +37,6 @@ Treatment = {
                 $("#search-loader").addClass('hidden');
             }
         }).autocomplete( "instance" )._renderItem = function( ul, item ) {
-            console.log(item);
             return $( "<li>" )
                 .append( "<div class='panel-success'>" +
                 "<div class='panel panel-heading' style='margin: 1px'>" +
@@ -121,6 +123,7 @@ Treatment = {
             //console.log([e, this]);
             Treatment.getEncounterHistory($(this).parent().find('.treatmentid').html());
         });
+
     },
     addPrescription: function(drug){
         var drugHTML = "";
@@ -396,54 +399,71 @@ Treatment = {
         }, 'json')
     },
     getLabHistory: function(type){
-        var url = host + "phase/phase_treatment.php";
-        $.post(url, {
-            intent: "labHistory",
-            patientId: $('.patient-ID').html(),
-            labType: type
-        }, function(data){
-            if(data.status == 1){
-                data = data.data;
-                var html = "";
-                for(var i = 0; i < data.length; i++){
-                    var status;
-                    switch(data[i].status){
-                        case '5':
-                            status = "Pending";
-                            break;
-                        case '6':
-                            status = "Processing";
-                            break;
-                        case '7':
-                            status = "Completed";
-                            break;
-                        default :
-                            status = "No status put in";
+            var url = host + "phase/phase_treatment.php";
+            $.post(url, {
+                intent: "labHistory",
+                patientId: $('.patient-ID').html(),
+                labType: type
+            }, function(data){
+                if(data.status == 1){
+                    data = data.data;
+                    var html = "";
+                    for(var i = 0; i < data.length; i++){
+                        var status;
+                        switch(data[i].status){
+                            case '5':
+                                status = "Pending";
+                                break;
+                            case '6':
+                                status = "Processing";
+                                break;
+                            case '7':
+                                status = "Completed";
+                                break;
+                            default :
+                                status = "No status put in";
+                        }
+                        html += "<tr>" +
+                            "<td>" + data[i].treatment_id + "</td>" +
+                            "<td>" + data[i].diagnosis + "</td>" +
+                            "<td>" + data[i].modified_date + "</td>" +
+                            "<td>" + status + "</td>" +
+                            "<td><a target='_blank' href='" +
+                            host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
+                            "&encounter_id=" + data[i].encounter_id +  "&testId=" + data[i].testId + "' class='btn btn-sm btn-default'>View</a>" +
+                            "</td>" +
+                            "</tr>";
                     }
-                    html += "<tr>" +
-                        "<td>" + data[i].treatment_id + "</td>" +
-                        "<td>" + data[i].diagnosis + "</td>" +
-                        "<td>" + data[i].modified_date + "</td>" +
-                        "<td>" + status + "</td>" +
-                        "<td><a target='_blank' href='" +
-                        host + "view/" + type + ".php?labType=" + type + "&treatment_id=" + data[i].treatment_id +
-                        "&encounter_id=" + data[i].encounter_id +  "&testId=" + data[i].testId + "' class='btn btn-sm btn-default'>View</a>" +
-                        "</td>" +
-                        "</tr>";
-                }
 
-                $('.table-data').html(html);
-                if(data.length > 0)
-                    $('.lab-history .dataTable').dataTable({
-                        aaSorting : [[0, 'desc']]
-                    });
-            }
-            else if(data.status == 2){
-                var html = "<tr><td class='text-center' colspan='5'>" + data.message +  "</td></tr>"
-                $('.table-data').html(html);
-                //$('.lab-history .dataTable').dataTable();
-            }
-        }, 'json');
+
+                    if(data.length > 0){
+                        if(!Treatment.Global.Lab_Table) {
+                            $('.table-data').html(html);
+                            Treatment.Global.Lab_Table =
+                                $('.lab-history .dataTable').dataTable( {
+                                    aaSorting : [[2, 'desc']]
+                                } );
+                        }else{
+                            $('.lab-history .dataTable').dataTable().fnClearTable();
+                            $('.table-data').html(html);
+                            $('.lab-history .dataTable').dataTable().fnDestroy();
+                            Treatment.Global.Lab_Table =
+                                $('.lab-history .dataTable').dataTable( {
+                                    aaSorting : [[2, 'desc']]
+                                } );
+                        }
+
+                    }
+
+                }
+                else if(data.status == 2){
+                    var html = "<tr><td class='text-center' colspan='5'>" + data.message +  "</td></tr>"
+                    $('.table-data').html(html);
+                    //$('.lab-history .dataTable').dataTable();
+                }
+            }, 'json');
+
+
     },
     getVitals: function(){
         var url = host + "phase/phase_vitals.php";

@@ -16,11 +16,11 @@ class BillingModel extends BaseModel {
     public function getPrescription($treatment_id, $encounter_id = ""){
         if($encounter_id == ""){
             $data = array(TreatmentTable::treatment_id => $treatment_id);
-            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION, $data);
+            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_TREATMENT_UNBILLED, $data);
         }
         else{
             $data = array(TreatmentTable::encounter_id => $encounter_id);
-            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER, $data);
+            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER_UNBILLED, $data);
         }
 
         if($prescription) {
