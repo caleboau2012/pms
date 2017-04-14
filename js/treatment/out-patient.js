@@ -434,7 +434,9 @@ Treatment = {
 
                 $('.table-data').html(html);
                 if(data.length > 0)
-                    $('.lab-history .dataTable').dataTable();
+                    $('.lab-history .dataTable').dataTable({
+                        aaSorting : [[0, 'desc']]
+                    });
             }
             else if(data.status == 2){
                 var html = "<tr><td class='text-center' colspan='5'>" + data.message +  "</td></tr>"
