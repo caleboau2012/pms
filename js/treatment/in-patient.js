@@ -9,6 +9,9 @@ Treatment = {
         admissionid: 0,
         patientid: 0
     },
+    Global: {
+        Lab_Table: null
+    },
     init: function(){
         $('.navbar-form').on('submit', function(e){
             e.preventDefault();
@@ -448,9 +451,22 @@ Treatment = {
                         "</tr>";
                 }
 
-                $('.table-data').html(html);
                 if(data.length > 0)
-                    $('.lab-history .dataTable').dataTable();
+                    if(!Treatment.Global.Lab_Table) {
+                        $('.table-data').html(html);
+                        Treatment.Global.Lab_Table =
+                            $('.lab-history .dataTable').dataTable( {
+                                aaSorting : [[2, 'desc']]
+                            } );
+                    }else{
+                        $('.lab-history .dataTable').dataTable().fnClearTable();
+                        $('.table-data').html(html);
+                        $('.lab-history .dataTable').dataTable().fnDestroy();
+                        Treatment.Global.Lab_Table =
+                            $('.lab-history .dataTable').dataTable( {
+                                aaSorting : [[2, 'desc']]
+                            } );
+                    }
             }
             else if(data.status == 2){
                 var html = "<tr><td class='text-center' colspan='5'>" + data.message +  "</td></tr>"

@@ -16,11 +16,11 @@ class BillingModel extends BaseModel {
     public function getPrescription($treatment_id, $encounter_id = ""){
         if($encounter_id == ""){
             $data = array(TreatmentTable::treatment_id => $treatment_id);
-            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION, $data);
+            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_TREATMENT_UNBILLED, $data);
         }
         else{
             $data = array(TreatmentTable::encounter_id => $encounter_id);
-            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER, $data);
+            $prescription = $this->conn->fetchAll(TreatmentSqlStatement::PRESCRIPTION_BY_ENCOUNTER_UNBILLED, $data);
         }
 
         if($prescription) {
@@ -63,24 +63,22 @@ class BillingModel extends BaseModel {
     private function getTest($treatment_id, $encounter_id) {
         if($encounter_id == ""){
             $data = array(TreatmentTable::treatment_id => $treatment_id);
-            $blood = $this->conn->fetch(TreatmentSqlStatement::BLOODTEST, $data);
-            $urine = $this->conn->fetch(TreatmentSqlStatement::URINETEST, $data);
-            $visual = $this->conn->fetch(TreatmentSqlStatement::VISUALTEST, $data);
-            $chemical = $this->conn->fetch(TreatmentSqlStatement::CHEMICALTEST, $data);
-            $para = $this->conn->fetch(TreatmentSqlStatement::PARATEST, $data);
-            $radiology = $this->conn->fetch(TreatmentSqlStatement::RADIOLOGYTEST, $data);
+            $blood = $this->conn->fetchAll(TreatmentSqlStatement::BLOODTEST, $data);
+            $urine = $this->conn->fetchAll(TreatmentSqlStatement::URINETEST, $data);
+            $visual = $this->conn->fetchAll(TreatmentSqlStatement::VISUALTEST, $data);
+            $chemical = $this->conn->fetchAll(TreatmentSqlStatement::CHEMICALTEST, $data);
+            $para = $this->conn->fetchAll(TreatmentSqlStatement::PARATEST, $data);
+            $radiology = $this->conn->fetchAll(TreatmentSqlStatement::RADIOLOGYTEST, $data);
         }
         else{
             $data = array(TreatmentTable::encounter_id => $encounter_id);
-            $blood = $this->conn->fetch(TreatmentSqlStatement::BLOODTEST_BY_ENCOUNTER, $data);
-            $urine = $this->conn->fetch(TreatmentSqlStatement::URINETEST_BY_ENCOUNTER, $data);
-            $visual = $this->conn->fetch(TreatmentSqlStatement::VISUALTEST_BY_ENCOUNTER, $data);
-            $chemical = $this->conn->fetch(TreatmentSqlStatement::CHEMICALTEST_BY_ENCOUNTER, $data);
-            $para = $this->conn->fetch(TreatmentSqlStatement::PARATEST_BY_ENCOUNTER, $data);
-            $radiology = $this->conn->fetch(TreatmentSqlStatement::RADIOLOGYTEST_BY_ENCOUNTER, $data);
+            $blood = $this->conn->fetchAll(TreatmentSqlStatement::BLOODTEST_BY_ENCOUNTER, $data);
+            $urine = $this->conn->fetchAll(TreatmentSqlStatement::URINETEST_BY_ENCOUNTER, $data);
+            $visual = $this->conn->fetchAll(TreatmentSqlStatement::VISUALTEST_BY_ENCOUNTER, $data);
+            $chemical = $this->conn->fetchAll(TreatmentSqlStatement::CHEMICALTEST_BY_ENCOUNTER, $data);
+            $para = $this->conn->fetchAll(TreatmentSqlStatement::PARATEST_BY_ENCOUNTER, $data);
+            $radiology = $this->conn->fetchAll(TreatmentSqlStatement::RADIOLOGYTEST_BY_ENCOUNTER, $data);
         }
-
-//        die(var_dump($blood, $urine, $visual, $chemical, $para, $radiology));
 
         $test = array();
         if ($blood && !empty($blood)){

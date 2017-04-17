@@ -988,7 +988,7 @@ class TreatmentSqlStatement {
     const CHECK_TREATMENT = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE patient_id = :patient_id AND treatment_status = 1 LIMIT 1";
     const GET_PROCEDURE = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM treatment WHERE treatment_id = :treatment_id AND bill_status = 1 LIMIT 1";
     //const GET_PROCEDURE_ADMITTED = "SELECT personnel_id, patient_id, admission_id, comments, symptoms, consultation FROM encounter WHERE treatment_id = :treatment_id AND status = 1";
-    const GET_PROCEDURE_ADMITTED = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM encounter WHERE encounter_id = :encounter_id AND status = 1";
+    const GET_PROCEDURE_ADMITTED = "SELECT treatment_id, consultation, symptoms, diagnosis, comments FROM encounter WHERE encounter_id = :encounter_id AND bill_status = 1";
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
@@ -1015,8 +1015,14 @@ class TreatmentSqlStatement {
     const PRESCRIPTION = "SELECT prescription FROM prescription
                             WHERE treatment_id = :treatment_id AND encounter_id = 0";
 
+    const PRESCRIPTION_BY_TREATMENT_UNBILLED = "SELECT prescription FROM prescription
+                            WHERE treatment_id = :treatment_id AND bill_status = 1";
+
     const PRESCRIPTION_BY_ENCOUNTER = "SELECT prescription FROM prescription
                             WHERE encounter_id = :encounter_id";
+
+    const PRESCRIPTION_BY_ENCOUNTER_UNBILLED= "SELECT prescription FROM prescription
+                            WHERE encounter_id = :encounter_id  AND bill_status = 1";
 
     const UPDATE_PRESCRIPTION_BILLING = "UPDATE prescription SET bill_status = 2
                                     WHERE treatment_id = :treatment_id OR encounter_id = :encounter_id";
@@ -1025,14 +1031,14 @@ class TreatmentSqlStatement {
  FROM haematology INNER JOIN treatment ON (treatment.treatment_id = haematology.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
                              WHERE haematology.treatment_id = :treatment_id AND patient_queue.active_fg = 0
-                              AND haematology.encounter_id = 0 AND bill_status = 1
+                              AND haematology.encounter_id = 0 AND haematology.bill_status = 1
                              ORDER BY haematology.created_date DESC";
 
     const BLOODTEST_BY_ENCOUNTER = "SELECT DISTINCT haematology_id, clinical_diagnosis_details, haematology.created_date
  FROM haematology INNER JOIN encounter ON (encounter.encounter_id = haematology.encounter_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
                              WHERE haematology.encounter_id = :encounter_id AND patient_queue.active_fg = 0
-                             AND bill_status = 1
+                             AND haematology.bill_status = 1
                              ORDER BY haematology.created_date DESC";
 
     const UPDATE_BLOOD_TEST_BILLING = "UPDATE haematology SET bill_status = 2
@@ -1042,14 +1048,14 @@ class TreatmentSqlStatement {
  FROM urine INNER JOIN treatment ON (treatment.treatment_id = urine.treatment_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = treatment.patient_id)
                              WHERE urine.treatment_id = :treatment_id AND patient_queue.active_fg = 0
-                             AND urine.encounter_id = 0 AND bill_status = 1
+                             AND urine.encounter_id = 0 AND urine.bill_status = 1
                              ORDER BY urine.created_date DESC";
 
     const URINETEST_BY_ENCOUNTER = "SELECT DISTINCT urine_id, clinical_diagnosis_details, urine.created_date
  FROM urine INNER JOIN encounter ON (encounter.encounter_id = urine.encounter_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
                              WHERE urine.encounter_id = :encounter_id AND patient_queue.active_fg = 0
-                             AND bill_status = 1
+                             AND urine.bill_status = 1
                              ORDER BY urine.created_date DESC";
 
     const UPDATE_URINETEST_BILLING = "UPDATE urine SET bill_status = 2
@@ -1114,9 +1120,10 @@ FROM radiology INNER JOIN treatment ON (treatment.treatment_id = radiology.treat
                             AND radiology.encounter_id = 0 AND radiology.bill_status = 1
                             ORDER BY radiology.created_date DESC";
 
-    const RADIOLOGYTEST_BY_ENCOUNTER = "SELECT DISTINCT radiology_id, radiologists_report, radiology.created_date
+    const RADIOLOGYTEST_BY_ENCOUNTER = "SELECT DISTINCT radiology_request.clinical_diagnosis_details, radiology.radiology_id, radiologists_report, radiology.created_date
 FROM radiology INNER JOIN encounter ON (encounter.encounter_id = radiology.encounter_id)
                             INNER JOIN patient_queue ON (patient_queue.patient_id = encounter.patient_id)
+                            INNER JOIN radiology_request ON (radiology_request.radiology_request_id = radiology.radiology_id)
                             WHERE radiology.encounter_id = :encounter_id AND patient_queue.active_fg = 0
                             AND radiology.bill_status = 1
                             ORDER BY radiology.created_date DESC";

@@ -635,7 +635,7 @@ elseif($intent == 'labRequest'){
             $treatment = new TreatmentController();
             $bill = $treatment->makeBillable($treatmentId, $encounterId);
 
-            if($bill){
+           if($bill){
                 echo JsonResponse::success("Request successful. Please have the patient clear the test bill");
                 exit();
             }

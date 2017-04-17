@@ -176,7 +176,7 @@ Crave::requireAll(UTIL);
                         <p class="text-center">
                         <p class="h4 text-center">Lab Tests Performed</p>
                         <table class="table table-striped">
-                            <thead text-center><tr>
+                            <thead><tr>
                                 <th>Test</th>
                                 <th>Description</th>
                                 <th>Date</th>
