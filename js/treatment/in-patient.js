@@ -1,6 +1,7 @@
 /**
  * Created by user on 2/27/2015.
  */
+var labTable;
 Treatment = {
     CONSTANTS: {
         doctorid: $('#doctorid').html(),
@@ -8,9 +9,6 @@ Treatment = {
         encounterid: 0,
         admissionid: 0,
         patientid: 0
-    },
-    Global: {
-        Lab_Table: null
     },
     init: function(){
         $('.navbar-form').on('submit', function(e){
@@ -95,7 +93,7 @@ Treatment = {
         });
 
         $('.lh').click(function(){
-            Treatment.getLabHistory("radiology");
+            Treatment.getLabHistory();
         });
 
         $('.vi').click(function(){
@@ -103,7 +101,7 @@ Treatment = {
         });
 
         $('#type').change(function(e){
-            Treatment.getLabHistory(this.value);
+            Treatment.getLabHistory();
         });
 
         Treatment.getAllInPatients();
@@ -414,7 +412,8 @@ Treatment = {
             ResponseModal.show(data.data, true);
         }, 'json')
     },
-    getLabHistory: function(type){
+    getLabHistory: function(){
+        var type = $("#type").val();
         var url = host + "phase/phase_treatment.php";
         $.post(url, {
             intent: "labHistory",
@@ -452,20 +451,18 @@ Treatment = {
                 }
 
                 if(data.length > 0)
-                    if(!Treatment.Global.Lab_Table) {
+                    if($.fn.dataTable.isDataTable('#labHistoryTable')) {
+                        labTable.destroy();
                         $('.table-data').html(html);
-                        Treatment.Global.Lab_Table =
-                            $('.lab-history .dataTable').dataTable( {
-                                aaSorting : [[2, 'desc']]
-                            } );
-                    }else{
-                        $('.lab-history .dataTable').dataTable().fnClearTable();
+                        labTable = $('#labHistoryTable').DataTable( {
+                            aaSorting : [[2, 'desc']]
+                        } );
+                    }
+                    else {
                         $('.table-data').html(html);
-                        $('.lab-history .dataTable').dataTable().fnDestroy();
-                        Treatment.Global.Lab_Table =
-                            $('.lab-history .dataTable').dataTable( {
-                                aaSorting : [[2, 'desc']]
-                            } );
+                        labTable = $('#labHistoryTable').DataTable( {
+                            aaSorting : [[2, 'desc']]
+                        } );
                     }
             }
             else if(data.status == 2){
