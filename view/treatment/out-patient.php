@@ -468,7 +468,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
 <script src="../../js/bootstrap/jquery-1.10.2.min.js"></script>
-<script src="../../js/bootstrap/jquery.dataTables.js"></script>
+<script src="../../js/bootstrap/jquery.dataTables.min.js"></script>
 <script src="../../js/bootstrap/bootstrap.min.js"></script>
 <script src="../../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
