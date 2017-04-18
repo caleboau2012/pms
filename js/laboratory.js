@@ -225,6 +225,7 @@ var Laboratory = {
                 }*/
             },
             error: function(data){
+                console.log(data);
                 $('body,html').animate({scrollTop : 0}, 800);
                 ResponseModal.show("Update not Successful. Check your input", false);
                 //showAlert("Update not Successful. Check your input")

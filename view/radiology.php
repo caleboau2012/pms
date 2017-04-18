@@ -20,6 +20,7 @@ $patient = (new PatientModel())->getPatientByTreatmentId($_REQUEST['treatment_id
 if ($view_bag[RadiologyTable::table_name][RadiologyTable::status_id] == 7){
     $disabled = 'disabled="disabled"';
 }else { $disabled = '';}
+
 $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology']['doctor_id']);
 ?>
 
@@ -166,11 +167,21 @@ $doctor_name = (new UserController())->getDoctorNameById($view_bag['radiology'][
                         <div class="row">
                             <div class="page-header">
                                 <h2 class="page-header__title">Radiology</h2>
-                                <h4 class='text-primary'>Description: <?php
+                                <?php
                                     if(isset($view_bag['details'][RadiologyRequestTable::clinical_diagnosis_details])){
-                                        echo $view_bag['details'][RadiologyRequestTable::clinical_diagnosis_details];
+                                        ?>
+                                    <div class="">
+                                        <fieldset class="barX"><legend class="test-label">Description:</legend>
+                                            <div class="center-block">
+                                                <?php
+                                                echo $view_bag['details'][RadiologyRequestTable::clinical_diagnosis_details];
+                                                ?>
+                                                </div>
+                                        </fieldset>
+                                    </div>
+                                    <?php
                                     }
-                                    ?></h4>
+                                    ?>
                                 <div class="alert hidden alert-danger alert-dismissable" role="alert">
                                     <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span
                                             aria-hidden="true">&times;</span></button>
