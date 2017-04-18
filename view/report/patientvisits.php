@@ -23,6 +23,7 @@ $patient_visits = ReportController::patientVisits();
             <th>S/N</th>
             <th>Name</th>
             <th>Registration Number</th>
+            <th>Attended By</th>
         </tr>
         </thead>
         <tbody id="new_patient">
@@ -37,8 +38,9 @@ $patient_visits = ReportController::patientVisits();
             <?php foreach ($patient_visits as $patient) { ?>
                 <tr>
                     <td><?php echo ++$counter; ?></td>
-                    <td><?php echo $patient['patient_name']; ?></td>
+                    <td class="text-capitalize"><?php echo $patient['patient_name']; ?></td>
                     <td><?php echo $patient['regNo']; ?></td>
+                    <td class="text-capitalize"><?php echo $patient['doctor']; ?></td>
                 </tr>
             <?php } ?>
         <?php } ?>

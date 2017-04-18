@@ -110,11 +110,11 @@ Crave::requireAll(UTIL);
                                 <select id="view" onchange="Report.switcher()" class="form-control">
                                     <option opt="all" value="allPatients">All Patients</option>
                                     <option opt="yes" value="newPatient">New Patients</option>
-                                    <option opt="yes" value="currentPatients">Current Patients</option>
+<!--                                    <option opt="yes" value="currentPatients">Current Patients</option>-->
                                     <option opt="no" value="patientsAge">Patients with their Age</option>
-                                    <option opt="day" value="patientVisits">Patients Encounter</option>
-                                    <option opt="no" value="inPatients">Inpatients</option>
-                                    <option opt="no" value="consultationReport">Consultation</option>
+                                    <option opt="day" value="patientVisits">In-Patients Encounter</option>
+                                    <option opt="no" value="inPatients">In-patients</option>
+                                    <option opt="no" value="consultationReport">Out-Patients Consultation</option>
                                     <option opt="no" value="patientDiagnosis">Patient with Diagnosis</option>
                                 </select>
                             </div>

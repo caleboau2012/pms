@@ -1203,9 +1203,10 @@ class ReportSqlStatement {
                                             FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     //  Number and list of patients visits/encounter hospital per day
-    const PATIENTS_VISIT_PER_DAY = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, e.created_date FROM encounter AS e
+    const PATIENTS_VISIT_PER_DAY = "SELECT CONCAT(UPPER(d.surname), ' ', d.firstname) AS doctor, CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, e.created_date FROM encounter AS e
                                         LEFT JOIN patient AS p
                                         ON e.patient_id = p.patient_id
+                                        left JOIN profile AS d ON d.userid = e.personnel_id
                                         WHERE DATE(e.created_date) = :day";
 
     // Number and list of inpatient from start date to an end date
