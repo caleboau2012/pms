@@ -279,6 +279,8 @@ class CommunicationSqlStatement {
 class PrescriptionSqlStatement{
     const GET_PRESCRIPTION = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id AND
                               p.encounter_id = :encounter_id AND status = 1";
+    const GET_TREATMENT_PRESCRIPTIONS = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id
+                            ";
     const GET_QUEUE = "SELECT t.treatment_id, p.encounter_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id, p.encounter_id

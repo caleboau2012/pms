@@ -51,11 +51,10 @@ class TreatmentController{
 
     public function getTreatmentHistory($patientId){
         $history = $this->treatmentModel->getTreatmentHistory($patientId);
-        $billingModel = new BillingModel();
-//        die(var_dump($history));
+        $prescriptionModel = new PharmacistModel();
 
         for($i = 0; $i < sizeof($history); $i++){
-            $prescriptions = $billingModel->getPrescription($history[$i][TreatmentTable::treatment_id]);
+            $prescriptions = $prescriptionModel->getAllTreatmentPrescriptions($history[$i][TreatmentTable::treatment_id]);
 //            array_push($history[$i], $prescriptions);
             $history[$i]['prescriptions'] = $prescriptions;
         }
