@@ -26,6 +26,11 @@ class PharmacistModel extends BaseModel{
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_PRESCRIPTION, $data);
     }
 
+    public function getAllTreatmentPrescriptions($treatmentId){
+        $data = array(PrescriptionTable::treatment_id => $treatmentId);
+        return $this->conn->fetchAll(PrescriptionSqlStatement::GET_TREATMENT_PRESCRIPTIONS, $data);
+    }
+
     public function AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id){
         $data = array(PrescriptionTable::prescription => $somepre, PrescriptionTable::treatment_id => $treatment_id,
                       PrescriptionTable::status => $status, PrescriptionTable::modified_by => $mod,

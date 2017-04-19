@@ -40,7 +40,7 @@ $consultation = ReportController::consultationReport();
             <?php foreach ($consultation as $patient) { ?>
                 <tr>
                     <td><?php echo ++$counter; ?></td>
-                    <td 0class="text-capitalize"><?php echo $patient['patient_name']; ?></td>
+                    <td class="text-capitalize"><?php echo $patient['patient_name']; ?></td>
                     <td><?php echo $patient['regNo']; ?></td>
                     <td class="text-capitalize"><?php echo $patient['doctor_name']; ?></td>
                     <td><?php echo $patient['consultation_date']; ?></td>

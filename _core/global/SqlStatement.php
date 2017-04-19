@@ -279,6 +279,8 @@ class CommunicationSqlStatement {
 class PrescriptionSqlStatement{
     const GET_PRESCRIPTION = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id AND
                               p.encounter_id = :encounter_id AND status = 1";
+    const GET_TREATMENT_PRESCRIPTIONS = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id
+                            ";
     const GET_QUEUE = "SELECT t.treatment_id, p.encounter_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id, p.encounter_id
@@ -660,8 +662,7 @@ class RadiologyRequestSqlStatement{
                             any_known_allergies = :any_known_allergies, previous_xray = :previous_xray,
                             xray_number = :xray_number, modified_date = NOW() WHERE radiology_id = :radiology_id";
     const GET_XRAY_NO_VALS = "SELECT xray_number,casual_no,gp_no,ante_natal_no
-                                FROM xray_no WHERE
-                                treatment_id = :treatment_id AND encounter_id = :encounter_id AND radiology_id = :radiology_id";
+                                FROM xray_no WHERE radiology_id = :radiology_id";
 }
 
 class RadiologySqlStatement{
@@ -1204,9 +1205,10 @@ class ReportSqlStatement {
                                             FROM patient WHERE DATE(created_date) BETWEEN DATE(:start_date) AND DATE(:end_date)";
 
     //  Number and list of patients visits/encounter hospital per day
-    const PATIENTS_VISIT_PER_DAY = "SELECT CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, e.created_date FROM encounter AS e
+    const PATIENTS_VISIT_PER_DAY = "SELECT CONCAT(UPPER(d.surname), ' ', d.firstname) AS doctor, CONCAT(UPPER(p.surname), ' ', p.middlename, ' ', p.firstname) AS patient_name, p.regNo, e.created_date FROM encounter AS e
                                         LEFT JOIN patient AS p
                                         ON e.patient_id = p.patient_id
+                                        left JOIN profile AS d ON d.userid = e.personnel_id
                                         WHERE DATE(e.created_date) = :day";
 
     // Number and list of inpatient from start date to an end date

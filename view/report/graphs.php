@@ -106,9 +106,9 @@ Crave::requireAll(UTIL);
                 <select id="view" class="form-control">
                     <option value="allPatients">All Patients</option>
                     <option value="newPatients">New Patients</option>
-                    <option value="currentPatients">Current Patients</option>
-                    <option value="inPatients">Inpatients</option>
-                    <option value="consultationReport">Consultation</option>
+<!--                    <option value="currentPatients">Current Patients</option>-->
+                    <option value="inPatients">In-patients</option>
+                    <option value="consultationReport">Out-Patient Consultation</option>
                     <option value="patientDiagnosis">Patients and Diagnosis</option>
                 </select>
             </div>
