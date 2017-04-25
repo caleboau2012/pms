@@ -316,9 +316,11 @@ Treatment = {
                 prescriptions = data[i].prescriptions;
                 prescriptionHTML = "";
                 for(var j = 0; j < prescriptions.length; j++){
-                    prescriptionHTML += $('#tmplPrescription').html();
-                    prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
-                    //console.log(prescriptionHTML);
+                    /*Show only prescription prescribed when patient was */
+                    if(prescriptions[j].encounter_id == 0) {
+                        prescriptionHTML += $('#tmplPrescription').html();
+                        prescriptionHTML = replaceAll('{{prescription}}', prescriptions[j].prescription, prescriptionHTML);
+                    }
                 }
 
                 patientHTML = "";

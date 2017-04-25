@@ -283,7 +283,7 @@ elseif  ($intent == 'getTreatmentHistory') {
         $patientid = $_REQUEST['patient_id'];
     }
     else{
-        echo JsonResponse::error("patient_id not Set");
+        echo JsonResponse::error("Patient ID not Set");
         exit();
     }
 
