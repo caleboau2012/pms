@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `billables` (
   `amount` float(8,2) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_date` datetime DEFAULT NULL,
-  `modified_date` timestamp NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP,
+  `modified_date` datetime DEFAULT NULL,
   PRIMARY KEY (`billables_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
