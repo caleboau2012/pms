@@ -1169,7 +1169,7 @@ class HospitalInfoSqlStatement {
 }
 
 class BillingSqlStatement{
-    const ADD_BILL_ITEMS = "INSERT INTO billables (bill, amount) VALUES ";
+    const ADD_BILL_ITEMS = "INSERT INTO billables (bill, amount) VALUES (:bill, :amount)";
     const GET_BILL_ITEMS = "SELECT billables_id, bill, amount FROM billables WHERE status = 1";
     const DELETE_BILL_ITEM = "UPDATE billables SET status = 0 WHERE billables_id = :billables_id";
     const EDIT_BILL_ITEM = "UPDATE billables SET bill = :bill, amount = :amount WHERE billables_id = :billables_id";
