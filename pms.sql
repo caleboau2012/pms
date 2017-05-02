@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Mar 26, 2017 at 10:31 PM
+-- Generation Time: May 02, 2017 at 08:53 AM
 -- Server version: 5.6.24
 -- PHP Version: 5.6.27
 
@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS `admission` (
   `modified_date` datetime NOT NULL,
   `active_fg` tinyint(1) NOT NULL DEFAULT '1',
   `bill_status` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=20 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admission`
@@ -64,7 +64,9 @@ INSERT INTO `admission` (`admission_id`, `admitted_by`, `discharged_by`, `patien
 (16, 1, 1, 1, 34, '2016-12-24 18:56:23', NULL, NULL, '2016-12-24 18:56:23', '2017-02-25 10:53:40', 0, 1),
 (17, 1, 1, 4, 37, '2017-02-25 10:03:48', NULL, NULL, '2017-02-25 10:03:48', '2017-02-25 10:38:28', 0, 1),
 (18, 1, 1, 4, 38, '2017-02-25 10:39:32', NULL, NULL, '2017-02-25 10:39:32', '2017-02-25 10:39:53', 0, 1),
-(19, 1, NULL, 1, 40, '2017-02-25 11:00:31', NULL, NULL, '2017-02-25 11:00:31', '2017-02-25 11:00:31', 1, 1);
+(19, 1, 1, 1, 40, '2017-02-25 11:00:31', NULL, NULL, '2017-02-25 11:00:31', '2017-03-27 00:14:39', 0, 1),
+(20, 1, 1, 1, 41, '2017-03-27 00:14:46', NULL, NULL, '2017-03-27 00:14:46', '2017-03-27 00:20:55', 0, 1),
+(21, 1, NULL, 1, 42, '2017-03-27 00:21:04', NULL, NULL, '2017-03-27 00:21:04', '2017-03-27 00:21:04', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -79,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `admission_bed` (
   `active_fg` int(1) NOT NULL,
   `created_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=21 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `admission_bed`
@@ -105,7 +107,9 @@ INSERT INTO `admission_bed` (`admission_bed_id`, `admission_id`, `bed_id`, `acti
 (17, 16, 1, 0, '2016-12-24 18:56:23', '2016-12-24 18:56:23'),
 (18, 17, 2, 0, '2017-02-25 10:03:48', '2017-02-25 10:03:48'),
 (19, 18, 2, 0, '2017-02-25 10:39:32', '2017-02-25 10:39:32'),
-(20, 19, 1, 1, '2017-02-25 11:00:31', '2017-02-25 11:00:31');
+(20, 19, 1, 0, '2017-02-25 11:00:31', '2017-02-25 11:00:31'),
+(21, 20, 1, 0, '2017-03-27 00:14:46', '2017-03-27 00:14:46'),
+(22, 21, 2, 1, '2017-03-27 00:21:04', '2017-03-27 00:21:04');
 
 -- --------------------------------------------------------
 
@@ -119,7 +123,7 @@ CREATE TABLE IF NOT EXISTS `admission_req` (
   `created_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `active_fg` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `admission_req`
@@ -145,7 +149,8 @@ INSERT INTO `admission_req` (`admission_req_id`, `treatment_id`, `created_date`,
 (18, 37, '2017-02-25 09:56:33', '2017-02-25 09:56:33', 0),
 (19, 38, '2017-02-25 10:37:20', '2017-02-25 10:37:20', 0),
 (20, 40, '2017-02-25 10:57:07', '2017-02-25 10:57:07', 0),
-(21, 41, '2017-03-15 23:37:02', '2017-03-15 23:37:02', 1);
+(21, 41, '2017-03-15 23:37:02', '2017-03-15 23:37:02', 0),
+(22, 42, '2017-03-27 00:20:38', '2017-03-27 00:20:38', 0);
 
 -- --------------------------------------------------------
 
@@ -168,8 +173,8 @@ CREATE TABLE IF NOT EXISTS `bed` (
 --
 
 INSERT INTO `bed` (`bed_id`, `bed_description`, `bed_status`, `ward_id`, `created_date`, `modified_date`, `active_fg`) VALUES
-(1, 'Bed 001', 1, 1, '2015-09-03 17:00:53', '2015-09-03 17:00:53', 1),
-(2, 'Bed 002', 0, 1, '2015-09-14 18:54:23', '2015-09-14 18:54:23', 1),
+(1, 'Bed 001', 0, 1, '2015-09-03 17:00:53', '2015-09-03 17:00:53', 1),
+(2, 'Bed 002', 1, 1, '2015-09-14 18:54:23', '2015-09-14 18:54:23', 1),
 (3, 'Bed 003', 0, 2, '2015-10-11 15:10:43', '2015-10-11 15:10:43', 1),
 (4, 'Bed 004', 0, 2, '2016-04-28 22:56:36', '2016-04-28 22:56:36', 1);
 
@@ -185,7 +190,7 @@ CREATE TABLE IF NOT EXISTS `billables` (
   `amount` float(8,2) DEFAULT NULL,
   `status` tinyint(1) NOT NULL DEFAULT '1',
   `created_date` datetime DEFAULT NULL,
-  `modified_date` timestamp NULL DEFAULT '0000-00-00 00:00:00' ON UPDATE CURRENT_TIMESTAMP
+  `modified_date` timestamp NULL DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 
 --
@@ -428,7 +433,7 @@ CREATE TABLE IF NOT EXISTS `constant_bills` (
   `treatment_id` int(11) unsigned NOT NULL,
   `encounter_id` int(11) DEFAULT NULL,
   `created_date` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
-) ENGINE=InnoDB AUTO_INCREMENT=203 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=230 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `constant_bills`
@@ -636,7 +641,34 @@ INSERT INTO `constant_bills` (`constant_bills_id`, `item`, `amount`, `treatment_
 (199, 'Consultation', '1000.00', 41, NULL, '2017-03-15 22:53:14'),
 (200, 'Consultation', '10000.00', 41, NULL, '2017-03-15 23:03:55'),
 (201, 'Treatment', '10000.00', 41, NULL, '2017-03-15 23:03:55'),
-(202, 'Consultation', '1000.00', 41, NULL, '2017-03-15 23:03:55');
+(202, 'Consultation', '1000.00', 41, NULL, '2017-03-15 23:03:55'),
+(203, 'Consultation', '10000.00', 42, NULL, '2017-03-26 23:10:54'),
+(204, 'Treatment', '10000.00', 42, NULL, '2017-03-26 23:10:54'),
+(205, 'Consultation', '1000.00', 42, NULL, '2017-03-26 23:10:54'),
+(206, 'Consultation', '10000.00', 41, NULL, '2017-03-26 23:11:01'),
+(207, 'Treatment', '10000.00', 41, NULL, '2017-03-26 23:11:01'),
+(208, 'Consultation', '1000.00', 41, NULL, '2017-03-26 23:11:01'),
+(209, 'Consultation', '10000.00', 41, 31, '2017-03-26 23:16:57'),
+(210, 'Treatment', '10000.00', 41, 31, '2017-03-26 23:16:57'),
+(211, 'Consultation', '1000.00', 41, 31, '2017-03-26 23:16:57'),
+(212, 'Consultation', '10000.00', 40, NULL, '2017-03-26 23:17:07'),
+(213, 'Treatment', '10000.00', 40, NULL, '2017-03-26 23:17:07'),
+(214, 'Consultation', '1000.00', 40, NULL, '2017-03-26 23:17:07'),
+(215, 'Consultation', '10000.00', 41, 31, '2017-03-26 23:21:21'),
+(216, 'Treatment', '10000.00', 41, 31, '2017-03-26 23:21:21'),
+(217, 'Consultation', '1000.00', 41, 31, '2017-03-26 23:21:21'),
+(218, 'Consultation', '10000.00', 42, NULL, '2017-03-26 23:21:27'),
+(219, 'Treatment', '10000.00', 42, NULL, '2017-03-26 23:21:27'),
+(220, 'Consultation', '1000.00', 42, NULL, '2017-03-26 23:21:27'),
+(221, 'Consultation', '10000.00', 41, NULL, '2017-03-26 23:21:34'),
+(222, 'Treatment', '10000.00', 41, NULL, '2017-03-26 23:21:34'),
+(223, 'Consultation', '1000.00', 41, NULL, '2017-03-26 23:21:34'),
+(224, 'Consultation', '10000.00', 42, 32, '2017-03-26 23:24:00'),
+(225, 'Treatment', '10000.00', 42, 32, '2017-03-26 23:24:00'),
+(226, 'Consultation', '1000.00', 42, 32, '2017-03-26 23:24:00'),
+(227, 'Consultation', '10000.00', 42, 32, '2017-03-26 23:28:22'),
+(228, 'Treatment', '10000.00', 42, 32, '2017-03-26 23:28:22'),
+(229, 'Consultation', '1000.00', 42, 32, '2017-03-26 23:28:22');
 
 -- --------------------------------------------------------
 
@@ -787,7 +819,7 @@ CREATE TABLE IF NOT EXISTS `encounter` (
   `bill_status` int(11) DEFAULT '1',
   `modified_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
   `diagnosis` text
-) ENGINE=InnoDB AUTO_INCREMENT=31 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=33 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `encounter`
@@ -823,7 +855,9 @@ INSERT INTO `encounter` (`encounter_id`, `personnel_id`, `patient_id`, `admissio
 (27, 1, 1, 19, 'A comment', '2017-02-25 11:00:37', 1, 40, 'A complaint', 'A procedure', 2, 2, '2017-02-25 10:12:51', 'A diagnosis'),
 (28, 1, 1, 19, '', '2017-02-25 11:22:23', 1, 40, NULL, NULL, 2, 2, '2017-02-25 10:22:23', NULL),
 (29, 1, 1, 19, 'Comment', '2017-02-25 11:23:20', 1, 40, 'Complaint', 'Procedure', 2, 2, '2017-02-25 10:28:50', 'Diagnosis'),
-(30, 1, 1, 19, 'Comment', '2017-02-25 11:32:22', 1, 40, 'Complaint', 'Procedure', 1, 2, '2017-02-25 10:34:08', 'Diagnosis');
+(30, 1, 1, 19, 'Comment', '2017-02-25 11:32:22', 1, 40, 'Complaint', 'Procedure', 2, 2, '2017-02-25 10:34:08', 'Diagnosis'),
+(31, 1, 1, 20, 'Comment', '2017-03-27 00:16:27', 1, 41, 'Complaint', 'Proc', 2, 2, '2017-03-26 23:17:17', 'Diag'),
+(32, 1, 1, 21, 'A comment', '2017-03-27 00:22:12', 1, 42, 'A C & E', 'A Proc', 1, 2, '2017-03-26 23:27:30', 'A Diagnosis');
 
 -- --------------------------------------------------------
 
@@ -990,7 +1024,7 @@ CREATE TABLE IF NOT EXISTS `outgoing_drugs` (
   `created_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
   `active_fg` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `outgoing_drugs`
@@ -1008,7 +1042,9 @@ INSERT INTO `outgoing_drugs` (`outgoing_drugs_id`, `drug_id`, `qty`, `unit_id`, 
 (9, 7, 2, 1, '2016-05-30 02:09:08', '2016-05-30 02:09:08', 1),
 (10, 3, 2, 1, '2016-12-24 18:57:05', '2016-12-24 18:57:05', 1),
 (11, 8, 2, 1, '2017-01-20 23:20:46', '2017-01-20 23:20:46', 1),
-(12, 1, 2, 1, '2017-02-05 23:38:38', '2017-02-05 23:38:38', 1);
+(12, 1, 2, 1, '2017-02-05 23:38:38', '2017-02-05 23:38:38', 1),
+(13, 1, 2, 1, '2017-03-27 00:25:49', '2017-03-27 00:25:49', 1),
+(14, 1, 2, 1, '2017-03-27 00:27:58', '2017-03-27 00:27:58', 1);
 
 -- --------------------------------------------------------
 
@@ -1175,7 +1211,7 @@ CREATE TABLE IF NOT EXISTS `patient_queue` (
   `active_fg` tinyint(1) NOT NULL DEFAULT '1',
   `created_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=65 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=66 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `patient_queue`
@@ -1245,7 +1281,8 @@ INSERT INTO `patient_queue` (`patient_queue_id`, `patient_id`, `doctor_id`, `act
 (61, 4, 1, 0, '2017-02-25 10:36:57', '2017-02-25 10:54:32'),
 (62, 1, 1, 0, '2017-02-25 10:54:54', '2017-02-25 10:55:38'),
 (63, 1, 1, 0, '2017-02-25 10:56:09', '2017-02-25 10:57:22'),
-(64, 1, 1, 1, '2017-03-15 23:36:27', '2017-03-15 23:36:27');
+(64, 1, 1, 0, '2017-03-15 23:36:27', '2017-03-27 00:09:55'),
+(65, 1, 1, 1, '2017-03-27 00:10:03', '2017-03-27 00:10:03');
 
 -- --------------------------------------------------------
 
@@ -1314,7 +1351,7 @@ CREATE TABLE IF NOT EXISTS `pharmacist_outgoing_drug` (
   `outgoing_drug_id` int(11) unsigned NOT NULL,
   `created_date` datetime NOT NULL,
   `active_fg` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `pharmacist_outgoing_drug`
@@ -1332,7 +1369,9 @@ INSERT INTO `pharmacist_outgoing_drug` (`pharmacist_outgoing_drug_id`, `pharmaci
 (9, 1, 9, '2016-05-30 02:09:08', 1),
 (10, 1, 10, '2016-12-24 18:57:05', 1),
 (11, 1, 11, '2017-01-20 23:20:46', 1),
-(12, 1, 12, '2017-02-05 23:38:38', 1);
+(12, 1, 12, '2017-02-05 23:38:38', 1),
+(13, 1, 13, '2017-03-27 00:25:49', 1),
+(14, 1, 14, '2017-03-27 00:27:58', 1);
 
 -- --------------------------------------------------------
 
@@ -1351,7 +1390,7 @@ CREATE TABLE IF NOT EXISTS `prescription` (
   `modified_date` datetime NOT NULL,
   `active_fg` tinyint(1) NOT NULL DEFAULT '1',
   `bill_status` int(11) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=53 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=56 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prescription`
@@ -1408,8 +1447,11 @@ INSERT INTO `prescription` (`prescription_id`, `prescription`, `treatment_id`, `
 (48, 'exasperin', 40, 30, 1, 1, '2017-02-25 11:34:09', '2017-02-25 11:34:09', 1, 2),
 (49, 'indomin', 40, 30, 1, 1, '2017-02-25 11:34:09', '2017-02-25 11:34:09', 1, 2),
 (50, 'melanin', 40, 30, 1, 1, '2017-02-25 11:34:09', '2017-02-25 11:34:09', 1, 2),
-(51, 'panadol', 41, 0, 1, 2, '2017-03-15 23:37:02', '2017-03-15 23:37:02', 1, 2),
-(52, 'panadol', 41, 0, 1, 2, '2017-03-16 00:07:36', '2017-03-16 00:07:36', 1, 1);
+(51, 'panadol', 41, 0, 2, 2, '2017-03-15 23:37:02', '2017-03-15 23:37:02', 1, 2),
+(52, 'panadol', 41, 0, 2, 2, '2017-03-16 00:07:36', '2017-03-16 00:07:36', 1, 2),
+(53, 'panadol', 42, 0, 1, 2, '2017-03-27 00:10:33', '2017-03-27 00:10:33', 1, 2),
+(54, 'panadol', 41, 31, 2, 1, '2017-03-27 00:17:17', '2017-03-27 00:17:17', 1, 2),
+(55, 'panadol', 42, 32, 1, 1, '2017-03-27 00:23:32', '2017-03-27 00:23:32', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -1423,7 +1465,7 @@ CREATE TABLE IF NOT EXISTS `prescription_outgoing_drug` (
   `outgoing_drug_id` int(11) unsigned NOT NULL,
   `created_date` datetime NOT NULL,
   `active_fg` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=22 DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `prescription_outgoing_drug`
@@ -1447,7 +1489,10 @@ INSERT INTO `prescription_outgoing_drug` (`prescription_outgoing_drug_id`, `pres
 (15, 28, 10, '2016-12-24 18:57:05', 1),
 (16, 29, 11, '2017-01-20 23:20:46', 1),
 (17, 30, 11, '2017-01-20 23:20:46', 1),
-(18, 26, 12, '2017-02-05 23:38:38', 1);
+(18, 26, 12, '2017-02-05 23:38:38', 1),
+(19, 51, 13, '2017-03-27 00:25:49', 1),
+(20, 52, 13, '2017-03-27 00:25:49', 1),
+(21, 54, 14, '2017-03-27 00:27:58', 1);
 
 -- --------------------------------------------------------
 
@@ -1531,7 +1576,7 @@ INSERT INTO `radiology` (`radiology_id`, `doctor_id`, `lab_attendant_id`, `ward_
 (12, 1, 1, '001', 6, 1, 34, 0, '3', '1', '2', 'A report', '2016-11-26 01:25:37', '2016-12-08 00:42:11', '', 1, 7, 1),
 (13, 1, NULL, NULL, NULL, NULL, 34, 0, NULL, NULL, NULL, NULL, '2017-01-20 23:10:42', '2017-01-20 23:10:42', NULL, 1, 5, 1),
 (14, 1, NULL, NULL, NULL, NULL, 37, 25, NULL, NULL, NULL, NULL, '2017-02-25 10:25:02', '2017-02-25 10:25:02', NULL, 1, 5, 1),
-(15, 1, NULL, NULL, NULL, NULL, 41, 0, NULL, NULL, NULL, NULL, '2017-03-16 00:17:18', '2017-03-16 00:17:18', NULL, 1, 5, 1);
+(15, 1, NULL, NULL, NULL, NULL, 41, 0, NULL, NULL, NULL, NULL, '2017-03-16 00:17:18', '2017-03-16 00:17:18', NULL, 1, 5, 2);
 
 -- --------------------------------------------------------
 
@@ -1729,7 +1774,7 @@ CREATE TABLE IF NOT EXISTS `treatment` (
   `treatment_status` int(11) unsigned NOT NULL DEFAULT '1',
   `bill_status` int(11) unsigned NOT NULL DEFAULT '1',
   `active_fg` tinyint(1) NOT NULL DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=42 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=43 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `treatment`
@@ -1758,8 +1803,9 @@ INSERT INTO `treatment` (`treatment_id`, `doctor_id`, `patient_id`, `consultatio
 (37, 1, 4, 'Moses Procedure', 'Moses Complaint and Examination', 'Moses Diagnosis', 'Moses Comments', '2017-02-25 09:56:33', '2017-02-25 10:38:28', 2, 2, 1),
 (38, 1, 4, 'Procedure', 'A complaint', 'Diagnosis', 'A comment', '2017-02-25 10:37:20', '2017-02-25 10:39:53', 2, 2, 1),
 (39, 1, 4, ' ', ' ', ' ', ' ', '2017-02-25 10:54:27', '2017-02-25 10:54:27', 2, 2, 1),
-(40, 1, 1, ' Kill him', ' The guy is mad', ' He is mad no ni', ' Just play with him jare then kill him.', '2017-02-25 10:57:08', '2017-02-25 10:57:08', 2, 2, 1),
-(41, 1, 1, 'Onise Iyanu', 'If I give you the world', 'Bomb', 'A comment', '2017-03-16 00:09:51', '2017-03-16 00:09:51', 1, 1, 1);
+(40, 1, 1, ' Kill him', ' The guy is mad', ' He is mad no ni', ' Just play with him jare then kill him.', '2017-02-25 10:57:08', '2017-03-27 00:14:39', 2, 2, 1),
+(41, 1, 1, 'Onise Iyanu', 'If I give you the world', 'Bomb', 'A comment', '2017-03-27 00:09:43', '2017-03-27 00:20:55', 2, 2, 1),
+(42, 1, 1, 'Procedure', 'A C & E', 'Diagnosis', 'A comment', '2017-03-27 00:20:38', '2017-03-27 00:20:38', 1, 2, 1);
 
 -- --------------------------------------------------------
 
@@ -1880,7 +1926,7 @@ INSERT INTO `urine` (`urine_id`, `treatment_id`, `encounter_id`, `lab_attendant_
 (2, 26, 0, 1, 'A description of a test request', '2', 1, 'A Repot                            ', '1', '50', '2016-03-13 00:54:08', '2016-03-15 21:38:43', 7, 1, 1),
 (3, 34, 0, 1, 'A microscopy test', '10', 1, 'A report                                                                        ', '10', 'Culture', '2016-09-16 08:34:19', '2016-11-16 21:36:05', 7, 1, 1),
 (4, 37, 26, NULL, 'A microscopy test', NULL, 1, NULL, NULL, NULL, '2017-02-25 10:32:38', '2017-02-25 10:32:38', 5, 1, 1),
-(5, 41, 0, NULL, 'Description', NULL, 1, NULL, NULL, NULL, '2017-03-16 00:04:13', '2017-03-16 00:04:13', 5, 1, 1);
+(5, 41, 0, NULL, 'Description', NULL, 1, NULL, NULL, NULL, '2017-03-16 00:04:13', '2017-03-16 00:04:13', 5, 1, 2);
 
 -- --------------------------------------------------------
 
@@ -2597,17 +2643,17 @@ ALTER TABLE `xray_size`
 -- AUTO_INCREMENT for table `admission`
 --
 ALTER TABLE `admission`
-  MODIFY `admission_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=20;
+  MODIFY `admission_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `admission_bed`
 --
 ALTER TABLE `admission_bed`
-  MODIFY `admission_bed_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=21;
+  MODIFY `admission_bed_id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `admission_req`
 --
 ALTER TABLE `admission_req`
-  MODIFY `admission_req_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
+  MODIFY `admission_req_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
 --
 -- AUTO_INCREMENT for table `bed`
 --
@@ -2652,7 +2698,7 @@ ALTER TABLE `communication`
 -- AUTO_INCREMENT for table `constant_bills`
 --
 ALTER TABLE `constant_bills`
-  MODIFY `constant_bills_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=203;
+  MODIFY `constant_bills_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=230;
 --
 -- AUTO_INCREMENT for table `department`
 --
@@ -2682,7 +2728,7 @@ ALTER TABLE `emergency_detail`
 -- AUTO_INCREMENT for table `encounter`
 --
 ALTER TABLE `encounter`
-  MODIFY `encounter_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=31;
+  MODIFY `encounter_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=33;
 --
 -- AUTO_INCREMENT for table `film_appearance`
 --
@@ -2712,7 +2758,7 @@ ALTER TABLE `nok_relationship`
 -- AUTO_INCREMENT for table `outgoing_drugs`
 --
 ALTER TABLE `outgoing_drugs`
-  MODIFY `outgoing_drugs_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `outgoing_drugs_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `parasitology_details`
 --
@@ -2737,7 +2783,7 @@ ALTER TABLE `patient`
 -- AUTO_INCREMENT for table `patient_queue`
 --
 ALTER TABLE `patient_queue`
-  MODIFY `patient_queue_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=65;
+  MODIFY `patient_queue_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=66;
 --
 -- AUTO_INCREMENT for table `permission_role`
 --
@@ -2747,17 +2793,17 @@ ALTER TABLE `permission_role`
 -- AUTO_INCREMENT for table `pharmacist_outgoing_drug`
 --
 ALTER TABLE `pharmacist_outgoing_drug`
-  MODIFY `pharmacist_outgoing_drug_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=13;
+  MODIFY `pharmacist_outgoing_drug_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
 --
 -- AUTO_INCREMENT for table `prescription`
 --
 ALTER TABLE `prescription`
-  MODIFY `prescription_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=53;
+  MODIFY `prescription_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=56;
 --
 -- AUTO_INCREMENT for table `prescription_outgoing_drug`
 --
 ALTER TABLE `prescription_outgoing_drug`
-  MODIFY `prescription_outgoing_drug_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=19;
+  MODIFY `prescription_outgoing_drug_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=22;
 --
 -- AUTO_INCREMENT for table `profile`
 --
@@ -2797,7 +2843,7 @@ ALTER TABLE `status`
 -- AUTO_INCREMENT for table `treatment`
 --
 ALTER TABLE `treatment`
-  MODIFY `treatment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=42;
+  MODIFY `treatment_id` int(11) unsigned NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=43;
 --
 -- AUTO_INCREMENT for table `treatment_status`
 --

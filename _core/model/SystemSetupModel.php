@@ -74,8 +74,8 @@ class SystemSetupModel{
     }
 
     public function setupComplete(){
-        var_dump($this->path);
-        var_dump(system($this->path."permission.php"));
+//        var_dump($this->path);
+//        var_dump(system($this->path."permission.php"));
 //        if(system($this->path."permission.php")){
             $result = touch($this->path.'setup');
 //        die(var_dump($result));

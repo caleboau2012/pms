@@ -55,9 +55,9 @@ $(function(){
                     $('#form-success').removeClass('hidden');
                     $('#form-success').html(response.data.message);
 
-                    //setTimeout(function(){
-                    //    window.location.href = host;
-                    //}, 1500);
+                    setTimeout(function(){
+                        window.location.href = host;
+                    }, 1500);
                 }else if(response.status == 2){
                     $('#form-loading').addClass('hidden');
                         $('#form-error').removeClass('hidden');
