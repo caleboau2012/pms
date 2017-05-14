@@ -114,7 +114,7 @@ Pharmacy = {
                 //console.log(drugId);
                 drugUnit = $('#drugUnit').val();
                 if(drugName !== ''){
-                    content = "<div class='clearDrug' data-drug-quantity = "+ drugQuantity +" data-quantity-unit = "+  $('#drugUnit :selected').html() +">" +
+                    content = "<div class='clearDrug' data-drug-quantity = "+ drugQuantity +" data-quantity-unit = "+  $('#drugUnit :selected').val() +">" +
                     "<span class='cancelClear small pull-right fa fa-close pointer'>&nbsp;</span>" +
                     "<h5 data-drug-id="+ drugId +">" + drugName.toUpperCase() + "</h5>" +
                     "<span class='small'>(" + drugQuantity + " " + $('#drugUnit :selected').html() + ")</span>" +
@@ -195,10 +195,12 @@ Pharmacy = {
       $('.clearDrug').each(function(){
           var drugName = $(this).children('h5').html();
           var temp = {};
+          // console.log($(this));
+          // return;
           temp.drugId = $(this).children('h5').attr('data-drug-id');
           temp.drugName = $(this).children('h5').html();
-          temp.quantity = 2;
-          temp.unitId = 1;
+          temp.quantity = $(this).attr('data-drug-quantity');
+          temp.unitId = $(this).attr('data-quantity-unit');
           temp.prescription = [];
           var prescriptions = [];
           $(this).find('li').each(function() {
