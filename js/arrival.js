@@ -183,7 +183,7 @@ function pollQueue(){
                loadQueue();
             }
         })
-    }, 10000);
+    }, 300000);
 }
 
 function draggableDropabble(){
