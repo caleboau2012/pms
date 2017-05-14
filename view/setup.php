@@ -185,7 +185,6 @@ if (file_exists("../_resource/setup")){
         </div>
 
     </div> <!-- /container -->
-    <?php include('footer.php'); ?>
 
     <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
     <script src="../js/constants.js"></script>
