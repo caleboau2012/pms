@@ -204,7 +204,7 @@ Mail.Template = {
     },
 
     replySuffix : function(msg_data) {
-        var date_obj = new Date(msg_data.created_date);
+        var date_obj = new Date(Date.parse(msg_data.created_date.replace('-','/','g')));
         var date = date_obj.toDateString();
         var time = date_obj.toLocaleTimeString();
         var text = "On " + date + " at " + time + ", " + msg_data.sender_name + " wrote: " + "\n";
@@ -214,7 +214,8 @@ Mail.Template = {
 
     forwardSuffix : function(msg_data) {
         var from, to;
-        var date_obj = new Date(msg_data.created_date);
+        var date_obj = new Date(Date.parse(msg_data.created_date.replace('-','/','g')));
+console.log(msg_data, date_obj);
         var date = date_obj.toDateString();
         var time = date_obj.toLocaleTimeString();
         if (msg_data.msg_type == Mail.CONSTANTS.MSG_TYPE.INBOX_MESSAGE) {
@@ -231,7 +232,7 @@ Mail.Template = {
     },
 
     formatDate : function(date_string) {
-        var date_obj = new Date(date_string);
+        var date_obj = new Date(Date.parse(date_string.replace('-','/','g')));
 
         var now_date_obj = new Date();
         var now_date = now_date_obj.getDate();

@@ -28,6 +28,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
     <!-- Bootstrap core CSS -->
     <link href="../../css/bootstrap/bootstrap.min.css" rel="stylesheet">
     <link href="../../css/bootstrap/jquery.dataTables.css" rel="stylesheet">
+    <link href="../../css/bootstrap/datepicker.css" rel="stylesheet">
     <link rel="stylesheet" href="../../css/print.css" media="print">
     <link href="../../css/sticky-footer-navbar.css" rel="stylesheet">
 
@@ -348,7 +349,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                             </select>
                                         </div>
                                         <div class="pull-left">Date of Birth <br/>
-                                            <input type="date" name="<?php echo PatientTable::birth_date ;?>" class="form-control" required/>
+                                            <input name="<?php echo PatientTable::birth_date ;?>" class="date-picker form-control" required/>
                                         </div>
                                     </td>
                                 </tr>
@@ -760,9 +761,11 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 <script src="../../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../../js/bootstrap/bootstrap.min.js"></script>
+<script src="../../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../../js/constants.js"></script>
 <script src="../../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script type="text/javascript" src="../../js/pinger.js"></script>
+<script src="../../js/pinger.js"></script>
+<script src="../../js/profile.js"></script>
 <script src="../../js/admin/patients.js"></script>
 
 <?php include('../footer.php'); ?>

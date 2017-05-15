@@ -29,7 +29,7 @@ var longPoll = function(url, payload, callback, payload_update) {
     if (currObj.stopRequest === undefined) {
       window.setTimeout(function(){
         currObj.start();
-      }, 5000);
+      }, 100000);
     }
   }
 
