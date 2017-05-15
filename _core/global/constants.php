@@ -14,7 +14,7 @@ define('P_ACCESS_TOKEN', 'access_token');
 //ONLINE STATUS CODES
 define('ONLINE', 1);
 define('OFFLINE', 0);
-define('MAX_INACTIVE_TIME', 300); // Time after which user would be automatically logged out (in seconds)
+define('MAX_INACTIVE_TIME', 600); // Time after which user would be automatically logged out (in seconds)
 
 //user type
 define('PATIENT', 1);
