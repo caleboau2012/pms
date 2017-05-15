@@ -32,5 +32,24 @@
             }
             return false;
         }
+
+        public static function viewLicence(){
+            $project_name = 'pms';
+
+            $path_arr = explode($project_name, __DIR__);
+            $project_root = $path_arr[0] . $project_name;
+
+            $licence_file_path = $project_root . '/lic.pms';
+            $passkey_file_path = $project_root . '/pass.pms';
+            // AES decrypt file
+            $decryption_command = "openssl aes-256-cbc -in " . $licence_file_path . " -d -pass file:" . $passkey_file_path;
+            $licence_string = shell_exec($decryption_command);
+
+            return [
+                "license_file" => $licence_file_path,
+                "passkey_file" => $passkey_file_path,
+                "license" => $licence_string
+                ];
+        }
     }
 ?>

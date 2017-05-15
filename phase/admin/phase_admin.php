@@ -61,7 +61,18 @@ if ($intent == 'getStaffDetails') {
         echo JsonResponse::error("Failed! User already exist");
         exit();
     }
-} elseif($intent == 'deleteStaff'){
+} elseif($intent == 'viewLicence') {
+    $userController = new UserController();
+    $feedback = $userController->viewLicence();
+
+    if($feedback) {
+        echo JsonResponse::message(STATUS_OK, $feedback);
+        exit();
+    } else {
+        echo JsonResponse::error("Failed! User already exist");
+        exit();
+    }
+}elseif ($intent == 'deleteStaff'){
     // check that userid of staff to be deleted is specified
     if (!isset($_POST['userid'])) {
         echo JsonResponse::error("Incomplete parameters for delete user intent");

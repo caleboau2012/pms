@@ -63,6 +63,10 @@ class UserController {
         return $this->user->addAuthInfo($authData);
     }
 
+    public function viewLicence(){
+        return Licence::viewLicence();
+    }
+
     public function deleteUser($userid){
         $loggedInUser = CxSessionHandler::getItem('userid');
 
