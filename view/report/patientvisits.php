@@ -30,6 +30,7 @@ $patient_visits = ReportController::patientVisits();
         <?php if (count($patient_visits) == 0) {?>
             <tr>
                 <td></td>
+                <td></td>
                 <td class="text-center">No patients found</td>
                 <td></td>
 
