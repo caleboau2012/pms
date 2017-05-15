@@ -138,6 +138,16 @@ modified_date =NOW() WHERE patient_id =:patient_id
                     ON p.patient_id = pq.patient_id
             WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :parameter)
             AND p.patient_id NOT IN
+                (SELECT pq.patient_id FROM patient_queue AS pq WHERE pq.active_fg = 1)
+                AND p.patient_id NOT IN
+                (SELECT a.patient_id FROM admission AS a WHERE a.exit_date IS NULL)";
+
+    const SEARCH_ALL = "SELECT DISTINCT(p.patient_id), p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
+            FROM patient AS p
+                LEFT JOIN patient_queue AS pq
+                    ON p.patient_id = pq.patient_id
+            WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :parameter)
+            AND p.patient_id NOT IN
                 (SELECT pq.patient_id FROM patient_queue AS pq WHERE pq.active_fg = 1)";
     const SEARCH_BY_NAME_OR_REG_NO = 'SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.sex, pq.active_fg AS queue_status
             FROM patient AS p WHERE (surname LIKE :wildcard OR firstname LIKE :wildcard OR middlename LIKE :wildcard OR regNo = :regNo)';
