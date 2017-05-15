@@ -33,5 +33,8 @@ if ($intent == 'markPresence') {
     }
 } elseif ($intent == 'sweep') {
     $sweepResult = LookoutController::sweep();
-    var_dump($sweepResult);
+    if($sweepResult)
+        echo JsonResponse::message(STATUS_OK, "Sweep Successful");
+    else
+        echo JsonResponse::error("Unable to execute any clean ups");
 }

@@ -10,19 +10,19 @@ class BackupAndRestoreModel{
     }
 
     public function backupDB(){
-        $path = dirname(__FILE__);
+//        $path = dirname(__FILE__);
         $hostname = DB_HOST;
-//        $username = DB_USERNAME;
-        $username = 'root';
-//        $password = DB_PASSWORD;
-        $password = 'admin';
-//        $databasename = DBNAME;
-        $databasename = 'pms';
+        $username = DB_USERNAME;
+//        $username = 'root';
+        $password = DB_PASSWORD;
+//        $password = 'admin';
+        $databasename = DBNAME;
+//        $databasename = 'pms';
 
         $now = str_replace(":", "", date("Y-m-d H:i:s"));
         $outputFilename = 'backup' . '-' . $now . '.sql';
         $outputFilename = str_replace(" ", "-", $outputFilename);
-        $outputFilename = $path . '/' . $outputFilename;
+        $outputFilename = $this->path . '/' . $outputFilename;
 
         //Dump the MySQL database
         //$cmd = 'mysqldump -u '. $username .' -p'. $password .' '. $databasename .' > '. $outputFilename;
