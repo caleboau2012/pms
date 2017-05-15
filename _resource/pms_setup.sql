@@ -39,6 +39,7 @@ CREATE TABLE IF NOT EXISTS `admission` (
   `comments` text,
   `created_date` datetime NOT NULL,
   `modified_date` datetime NOT NULL,
+  `bill_status` int(11) DEFAULT '1',
   `active_fg` tinyint(1) NOT NULL DEFAULT '1',
   PRIMARY KEY (`admission_id`),
   KEY `fk_AdmittedBy` (`admitted_by`),
