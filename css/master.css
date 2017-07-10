@@ -142,7 +142,7 @@ System setup
     border-color: #eeeeee;
     padding: 1em;
 }
-a#add-unit:hover, a#add-unit:focus, a#add-unit:active, {
+a#add-unit:hover, a#add-unit:focus, a#add-unit:active {
     text-decoration: none;
 }
 ol#units-list{
