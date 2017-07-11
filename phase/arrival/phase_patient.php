@@ -227,6 +227,7 @@ else if ($intent == 'ManagePatient') { //working
     $nok_telephone = "";
     $nok_relationship  ="";
     $citizenship ="";
+    $hmo = "";
     $religion="";
 //    $family_position="";
 //    $mother_status="";
@@ -281,10 +282,10 @@ else if ($intent == 'ManagePatient') { //working
         $surgical_history =$_REQUEST[PatientTable::surgical_history];
 
         if (empty($surname) ||empty($firstname) || empty($middlename)||empty($regNo)||empty($home_address)|| empty($telephone)||empty($birth_date)||empty($nok_firstname)||empty($nok_middlename)||empty($nok_surname)||empty($nok_address)||empty($nok_telephone)
-            ||empty($citizenship)||empty($religion)|| empty($marital_status) || empty ($occupation)
+            ||empty($citizenship)||empty($religion)|| empty($marital_status) || empty ($occupation) || empty($hmo)
             || empty($allergies) || empty($medical_history) || empty($alcohol_usage) || empty($tobacco_usage) || empty($family_history) || empty($surgical_history)
         ){
-            //print_r($_REQUEST);
+            print_r($_REQUEST);
             echo JsonResponse::error("Some fields are not filled, Ensure All fields are filled");
             exit();
         } else {
@@ -292,7 +293,7 @@ else if ($intent == 'ManagePatient') { //working
                 $surname, $firstname, $middlename, $regNo,
                 $home_address, $telephone, $sex, $height, $weight,
                 $birth_date, $nok_firstname, $nok_middlename,
-                $nok_surname, $nok_address, $nok_telephone, $nok_relationship, $citizenship, $religion, $marital_status, $occupation, $hmo, $registrationDate,
+                $nok_surname, $nok_address, $nok_telephone, $nok_relationship, $citizenship, $religion, $marital_status, $occupation, $patient_id, $hmo, $registrationDate,
                 $allergies, $surgical_history, $family_history, $tobacco_usage, $medical_history, $alcohol_usage);
         }
 

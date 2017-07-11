@@ -126,9 +126,8 @@ nok_address =:nok_address, nok_telephone =:nok_telephone, nok_relationship =:nok
 religion =:religion,
 marital_status =:marital_status,
 occupation =:occupation, hmo = :hmo, registration_date = :registration_date, allergies = :allergies, medical_history = :medical_history, alcohol_usage = :alcohol_usage, 
-tobacco_usage = :tobacco_usage, family_history = :family_history, surgical_history =:surgical_history
-modified_date =NOW() WHERE patient_id =:patient_id
-";
+tobacco_usage = :tobacco_usage, family_history = :family_history, surgical_history =:surgical_history,
+modified_date =NOW() WHERE patient_id =:patient_id";
 
     const GET_ALL = 'SELECT patient_id, surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship, created_date, modified_date
                                     FROM patient';

@@ -112,6 +112,7 @@ class PatientController {
 
         $data = array(
 
+            PatientTable::patient_id => $patient_id,
             PatientTable::surname => $surname,
             PatientTable::firstname => $firstname,
             PatientTable::middlename => $middlename,
@@ -132,7 +133,6 @@ class PatientController {
             PatientTable::religion => $religion,
             PatientTable::marital_status => $marital_status,
             PatientTable::occupation => $occupation,
-            PatientTable::patient_id =>$patient_id,
             PatientTable::hmo => $hmo,
             PatientTable::registration_date => $registrationDate,
             PatientTable::allergies => $allergies,

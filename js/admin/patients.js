@@ -209,9 +209,14 @@ function manage(id){
             form.nok_relationship.value = data.nok_relationship;
             form.citizenship.value = data.citizenship;
             form.religion.value = data.religion;
-            form.family_position.value = data.family_position;
-            form.mother_status.value = data.mother_status;
-            form.father_status.value = data.father_status;
+            form.hmo.value = data.hmo;
+            form.registration_date.value = data.registration_date;
+            form.allergies.value = data.allergies;
+            form.medical_history.value = data.medical_history;
+            form.alcohol_usage.value = data.alcohol_usage;
+            form.tobacco_usage.value = data.tobacco_usage;
+            form.surgical_history.value = data.surgical_history;
+            form.family_history.value = data.family_history;
             form.marital_status.value = data.marital_status;
 
             $('#managePatientModal').modal({
@@ -246,18 +251,27 @@ function manage(id){
                 nok_relationship  : form.nok_relationship.value,
                 citizenship : form.citizenship.value,
                 religion : form.religion.value,
-                family_position : form.family_position.value,
-                mother_status : form.mother_status.value,
-                father_status : form.father_status.value,
                 marital_status : form.marital_status.value,
-                no_of_children : form.no_of_children.value
+                registration_date : form.registration_date.value,
+                hmo : form.hmo.value,
+                allergies : form.allergies.value,
+                medical_history : form.medical_history.value,
+                alcohol_usage : form.alcohol_usage.value,
+                tobacco_usage : form.tobacco_usage.value,
+                surgical_history : form.surgical_history.value,
+                family_history : form.family_history.value
             },
             function(data){
                 console.log(data);
-                showSuccess(data.message);
-                $('#managePatientModal').modal('hide');
-                init();
-            }, 'json').fail(function(){
+                if(data.status == 2){
+                    showAlert(data.message);
+                }else{
+                    $('#managePatientModal').modal('hide');
+                    init();
+                }
+
+            }, 'json').fail(function(data){
+                showAlert(data.message);
                 console.log('shing');
             });
     });
