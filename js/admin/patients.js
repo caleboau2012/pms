@@ -155,15 +155,20 @@ function addPatient(form){
             nok_relationship  : form.nok_relationship.value,
             citizenship : citizenship,
             religion : form.religion.value,
-            family_position : form.family_position.value,
-            mother_status : form.mother_status.value,
-            father_status : form.father_status.value,
             marital_status : form.marital_status.value,
-            no_of_children : form.no_of_children.value
+            registration_date : form.registration_date.value,
+            hmo : form.hmo.value,
+            allergies : form.allergies.value,
+            medical_history : form.medical_history.value,
+            alcohol_usage : form.alcohol_usage.value,
+            tobacco_usage : form.tobacco_usage.value,
+            surgical_history : form.surgical_history.value,
+            family_history : form.family_history.value
+
         },
         function(data){
-            data = JSON.parse(data);
             console.log(data);
+            data = JSON.parse(data);
             if(data.data){
                 $('#newPatientModal').modal('hide');
                 init();

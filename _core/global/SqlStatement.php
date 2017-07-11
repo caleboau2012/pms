@@ -110,9 +110,11 @@ class PermissionRoleSqlStatement {
 
 class PatientSqlStatement {
     const ADD = 'INSERT INTO patient (surname, firstname, middlename, regNo, home_address, telephone, sex, height, weight, birth_date, nok_firstname, nok_middlename, nok_surname, nok_address, nok_telephone, nok_relationship,
-                                          citizenship,  religion,  family_position,  mother_status,  father_status,    marital_status,  no_of_children, occupation, created_date, modified_date )
+                                          citizenship,  religion, marital_status, occupation, hmo, registration_date, allergies,  surgical_history, family_history, tobacco_usage, medical_history, alcohol_usage,
+                                           created_date, modified_date )
                                  VALUES (LOWER(:surname), LOWER(:firstname), LOWER(:middlename), :regNo, :home_address, :telephone, :sex, :height, :weight, :birth_date, :nok_firstname, :nok_middlename, :nok_surname, :nok_address, :nok_telephone, :nok_relationship,
-                                          :citizenship,  :religion,  :family_position,  :mother_status,  :father_status,    :marital_status,  :no_of_children, :occupation, NOW(), NOW()  )';
+                                          :citizenship,  :religion,  :marital_status,  :occupation, :hmo, :registration_date, :allergies, :medical_history, :alcohol_usage, :tobacco_usage,
+                                          :family_history, :surgical_history, NOW(), NOW()  )';
 
     const GET = 'SELECT * FROM patient WHERE patient_id = :patient_id';
     const UPDATE_INFO = 'UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()';
@@ -121,11 +123,10 @@ class PatientSqlStatement {
 regNo =:regNo, home_address =:home_address, telephone =:telephone, sex =:sex, height =:height, weight =:weight,
 birth_date =:birth_date, nok_firstname =:nok_firstname, nok_middlename =:nok_middlename, nok_surname =:nok_surname,
 nok_address =:nok_address, nok_telephone =:nok_telephone, nok_relationship =:nok_relationship, citizenship =:citizenship,
-religion =:religion, family_position =:family_position, mother_status =:mother_status,
-father_status =:father_status,
+religion =:religion,
 marital_status =:marital_status,
-no_of_children =:no_of_children,
-occupation =:occupation,
+occupation =:occupation, hmo = :hmo, registration_date = :registration_date, allergies = :allergies, medical_history = :medical_history, alcohol_usage = :alcohol_usage, 
+tobacco_usage = :tobacco_usage, family_history = :family_history, surgical_history =:surgical_history
 modified_date =NOW() WHERE patient_id =:patient_id
 ";
 
@@ -164,6 +165,8 @@ modified_date =NOW() WHERE patient_id =:patient_id
     const UPDATE_BASIC_INFO = "UPDATE patient SET surname = LOWER(:surname), firstname = LOWER(:firstname), middlename = LOWER(:middlename), regNo = :regNo, home_address = :home_address, telephone = :telephone, sex = :sex, height = :height, weight = :weight, birth_date = :birth_date, nok_firstname = :nok_firstname, nok_middlename = :nok_middlename, nok_surname = :nok_surname, nok_address = :nok_address, nok_telephone = :nok_telephone, nok_relationship = :nok_relationship, modified_date = NOW()";
 
     const GET_BY_TMT_ID = "SELECT surname, middlename, firstname, regNo, sex FROM patient WHERE patient_id IN (SELECT patient_id FROM treatment WHERE treatment_id = :treatment_id)";
+
+    const GET_AVAILABLE_HMO = "SELECT id, name, address FROM hmo";
 
 }
 

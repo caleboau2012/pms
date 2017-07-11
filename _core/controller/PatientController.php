@@ -32,8 +32,8 @@ class PatientController {
         $surname, $firstname, $middlename, $regNo,
         $home_address, $telephone, $sex, $height, $weight,
         $birth_date, $nok_firstname, $nok_middlename,
-        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-        $mother_status, $father_status, $marital_status, $no_of_children, $occupation )
+        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion,
+        $marital_status, $occupation, $hmo, $registrationDate, $allergies, $surgical_history, $family_history, $tobacco_usage, $medical_history, $alcohol_usage)
     {
 
 
@@ -58,13 +58,16 @@ class PatientController {
             PatientTable::nok_relationship => $nok_relationship,
             PatientTable::citizenship => $citizenship,
             PatientTable::religion => $religion,
-            PatientTable::family_position => $family_position,
-            PatientTable::mother_status => $mother_status,
-            PatientTable::father_status=> $father_status,
             PatientTable::marital_status => $marital_status,
-            PatientTable::no_of_children =>$no_of_children,
-            PatientTable::occupation => $occupation
-
+            PatientTable::occupation => $occupation,
+            PatientTable::hmo => $hmo,
+            PatientTable::registration_date => $registrationDate,
+            PatientTable::allergies => $allergies,
+            PatientTable::surgical_history => $surgical_history,
+            PatientTable::family_history => $family_history,
+            PatientTable::tobacco_usage => $tobacco_usage,
+            PatientTable::medical_history => $medical_history,
+            PatientTable::alcohol_usage => $alcohol_usage,
 
         );
 
@@ -103,8 +106,9 @@ class PatientController {
         $surname, $firstname, $middlename, $regNo,
         $home_address, $telephone, $sex, $height, $weight,
         $birth_date, $nok_firstname, $nok_middlename,
-        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion, $family_position,
-        $mother_status, $father_status, $marital_status, $no_of_children, $occupation, $patient_id  ){
+        $nok_surname, $nok_address, $nok_telephone, $nok_relationship,$citizenship, $religion,
+        $marital_status, $occupation, $patient_id, $hmo, $registrationDate, $allergies, $surgical_history, $family_history, $tobacco_usage,
+        $medical_history, $alcohol_usage){
 
         $data = array(
 
@@ -126,13 +130,17 @@ class PatientController {
             PatientTable::nok_relationship => $nok_relationship,
             PatientTable::citizenship => $citizenship,
             PatientTable::religion => $religion,
-            PatientTable::family_position => $family_position,
-            PatientTable::mother_status => $mother_status,
-            PatientTable::father_status=> $father_status,
             PatientTable::marital_status => $marital_status,
-            PatientTable::no_of_children =>$no_of_children,
             PatientTable::occupation => $occupation,
-            PatientTable::patient_id =>$patient_id
+            PatientTable::patient_id =>$patient_id,
+            PatientTable::hmo => $hmo,
+            PatientTable::registration_date => $registrationDate,
+            PatientTable::allergies => $allergies,
+            PatientTable::surgical_history => $surgical_history,
+            PatientTable::family_history => $family_history,
+            PatientTable::tobacco_usage => $tobacco_usage,
+            PatientTable::medical_history => $medical_history,
+            PatientTable::alcohol_usage => $alcohol_usage,
 
         );
 
@@ -171,5 +179,9 @@ class PatientController {
 
     public function regNoExists($regNo){
         return $this->patient->isRegNumExisting($regNo);
+    }
+
+    public function getAllHMO(){
+        return $this->patient->getAvailableHMO();
     }
 }

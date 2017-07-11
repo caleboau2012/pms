@@ -9,9 +9,16 @@ require_once '../../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel'));
+Crave::requireFiles(CONTROLLER, array('PatientController', 'UserController'));
+
+
 if(!isset($_SESSION[UserAuthTable::userid])){
     header("Location: ../../index.php");
 }
+$patientController = new PatientController();
+$hmos = $patientController->getAllHMO();
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -318,7 +325,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">
-                                            Registration <br/>
+                                            Registration No.<br/>
                                             <div class="input-group">
                                                 <input list="regNos" name="<?php echo PatientTable::regNo ?>" class="form-control <?php echo PatientTable::regNo ?>" placeholder='Registration No' aria-describedby="verify">
                                                 <span class="btn btn-info input-group-addon verify">Verify</span>
@@ -328,6 +335,10 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                         <div class="pull-left">
                                             Occupation <br/>
                                             <input name="<?php echo PatientTable::occupation ;?>" class="form-control" required/>
+                                        </div>
+                                        <div class="pull-left">
+                                            Registration Date <br/>
+                                            <input name="<?php echo PatientTable::registration_date ;?>" class="date-picker form-control" required/>
                                         </div>
                                     </td>
                                 </tr>
@@ -351,15 +362,42 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                         <div class="pull-left">Date of Birth <br/>
                                             <input name="<?php echo PatientTable::birth_date ;?>" class="date-picker form-control" required/>
                                         </div>
+                                        <div class="pull-left">Religion <br>
+                                            <select name="<?php echo PatientTable::religion ;?>" class="form-control">
+                                                <option value="" selected="selected">Select One...</option>
+                                                <option value="ISLAM">ISLAM</option>
+                                                <option value="CHRISTAINITY">CHRISTAINITY</option>
+                                                <option value="OTHERS">OTHERS</option>
+                                            </select>
+                                        </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
+                                        <div class="pull-left">Marital Status <br/>
+                                            <select name="<?php echo PatientTable::marital_status ;?>" required class="form-control">
+                                                <option value="">Choose martial status...</option>
+                                                <option value="SINGLE">SINGLE</option>
+                                                <option value="MARRIED">MARRIED</option>
+                                                <option value="DIVORCED">DIVORCED</option>
+                                                <option value="SEPERATED">SEPERATED</option>
+                                                <option value="WIDOWED">WIDOWED</option>
+                                            </select>
+                                        </div>
                                         <div class="pull-left">Height(m) <br/>
                                             <input name="<?php echo PatientTable::height ;?>" class="form-control" required/>
                                         </div>
                                         <div class="pull-left">Weight(Kg) <br/>
                                             <input name="<?php echo PatientTable::weight ;?>" class="form-control" required/>
+                                        </div>
+                                        <div class="pull-left">HMO<br/>
+                                            <select name="<?php echo PatientTable::hmo ;?>" required class="form-control">
+                                                <?php
+                                                    foreach ($hmos as $hmo){
+                                                        echo "<option value='". $hmo['id'] ."'>". $hmo['name'] ."</option>";
+                                                    }
+                                                ?>
+                                            </select>
                                         </div>
                                     </td>
                                 </tr>
@@ -410,8 +448,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
 
                     <div class="panel panel-default">
                         <div class="panel-heading">
-                            <h2 class="panel-title">Demographic</h2>
-                            <div>Family Background Info</div>
+                            <h2 class="panel-title">Medical / Social History</h2>
                         </div>
                         <div class="panel-body">
                             <table class="table table-responsive">
@@ -430,78 +467,42 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
-                                        <div class="pull-left">Religion
-                                            <select name="<?php echo PatientTable::religion ;?>" class="form-control">
-                                                <option value="" selected="selected">Select One...</option>
-                                                <option value="ISLAM">ISLAM</option>
-                                                <option value="CHRISTAINITY">CHRISTAINITY</option>
-                                                <option value="OTHERS">OTHERS</option>
-                                            </select>
-                                        </div>
                                         <div class="pull-left">
-                                            position in family:
-                                            <select name="<?php echo PatientTable::family_position ;?>" required class="form-control">
-                                                <option value="">Choose position...</option>
-                                                <option value="1">1st</option>
-                                                <option value="2">2nd</option>
-                                                <option value="3">3rd</option>
-                                                <option value="4">4th</option>
-                                                <option value="5">5th</option>
-                                                <option value="6">6th</option>
-                                                <option value="7">7th</option>
-                                                <option value="8">8th</option>
-                                                <option value="9">9th</option>
-                                                <option value="10">10th</option>
-                                            </select>
+                                            <label for="allergies">Allergies</label><br>
+                                            <textarea id="allergies" name="<?php echo PatientTable::allergies ;?>" class="form-control"></textarea>
+                                        </div>
+                                    </td>
+                                    <td class="form-inline">
+                                        <div class="pull-left">
+                                            <label for="med_history">Medical History</label><br>
+                                            <textarea id="med_history" name="<?php echo PatientTable::medical_history ;?>" class="form-control"></textarea>
+                                        </div>
+                                    </td>
+                                    <td class="form-inline">
+                                        <div class="pull-left">
+                                            <label for="alcohol_usage">Alcohol Usage</label><br>
+                                            <textarea id="alcohol_usage" name="<?php echo PatientTable::alcohol_usage ;?>" class="form-control"></textarea>
+                                        </div>
+                                    </td>
+                                    <td class="form-inline">
+                                        <div class="pull-left">
+                                            <label for="tobacco_usage">Tobacco Usage</label><br>
+                                            <textarea id="tobacco_usage" name="<?php echo PatientTable::tobacco_usage ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
                                         <div class="pull-left">
-                                            Mother is
-                                            <select name="<?php echo PatientTable::mother_status ;?>" required class="form-control">
-                                                <option value="" >Select One...</option>
-                                                <option value="ALIVE">Alive</option>
-                                                <option value="DEAD">Deceased</option>
-                                            </select>
-                                        </div>
-                                        <div class="pull-left">
-                                            father is
-                                            <select name="<?php echo PatientTable::father_status ;?>" required class="form-control">
-                                                <option value="">Select One...</option>
-                                                <option value="ALIVE">Alive</option>
-                                                <option value="DEAD">Deceased</option>
-                                            </select>
+                                            <label for="family_history">Family History</label><br>
+                                            <textarea id="family_history" name="<?php echo PatientTable::family_history ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
-                                </tr>
-                                <tr>
                                     <td class="form-inline">
-                                        <div class="pull-left">Marital Status
-                                            <select name="<?php echo PatientTable::marital_status ;?>" required class="form-control">
-                                                <option value="">Choose martial status...</option>
-                                                <option value="SINGLE">SINGLE</option>
-                                                <option value="MARRIED">MARRIED</option>
-                                                <option value="DIVORCED">DIVORCED</option>
-                                                <option value="SEPERATED">SEPERATED</option>
-                                                <option value="WIDOWED">WIDOWED</option>
-                                            </select>
-                                        </div>
-                                        <div class="pull-left">No of children
-                                            <select name="<?php echo PatientTable::no_of_children ;?>" class="form-control">
-                                                <option value="0">None</option>
-                                                <option value="1">1</option>
-                                                <option value="2">2</option>
-                                                <option value="3">3</option>
-                                                <option value="4">4</option>
-                                                <option value="5">5</option>
-                                                <option value="6">6</option>
-                                                <option value="7">7</option>
-                                                <option value="8">8</option>
-                                                <option value="9">9</option>
-                                                <option value="10">10</option>
-                                            </select>
+                                        <div class="pull-left">
+                                            <label for="surgical_history">Surgical History</label><br>
+                                            <textarea id="surgical_history" name="<?php echo PatientTable::surgical_history ;?>" class="form-control">
+                                            </textarea>
                                         </div>
                                     </td>
                                 </tr>
