@@ -99,7 +99,7 @@ $hmos = $patientController->getAllHMO();
     <tr>
         <td>{{sn}}</td>
         <td>{{regNo}}</td>
-        <td>{{name}}</td>
+        <td class="text-capitalize">{{name}}</td>
         <td>{{dob}}</td>
         <td>
             <button class="btn btn-sm btn-default" patientId="{{patient_id}}" onclick="printDetails(this)">Print</button>
@@ -135,6 +135,12 @@ $hmos = $patientController->getAllHMO();
                             <span name="occupation" class="btn btn-default">{{occupation}}</span>
                         </div>
                     </td>
+                    <td>
+                        <div>
+                            Registration Date <br/>
+                            <span name="registration_date" class="btn btn-default">{{registration_date}}</span>
+                        </div>
+                    </td>
                 </tr>
                 <tr>
                     <td class="form-inline">
@@ -150,6 +156,11 @@ $hmos = $patientController->getAllHMO();
                     <td>
                         <div class="pull-left">Date of Birth <br/>
                             <span name="birth" class="btn btn-default">{{birth}}</span>
+                        </div>
+                    </td>
+                    <td>
+                        <div class="pull-left">Religion
+                            <span class="btn btn-default">{{religion}}</span>
                         </div>
                     </td>
                 </tr>
@@ -204,8 +215,7 @@ $hmos = $patientController->getAllHMO();
 
     <div class="panel panel-default">
         <div class="panel-heading">
-            <h2 class="panel-title">Demographic</h2>
-            <div>Family Background Info</div>
+            <h2 class="panel-title">Medical / Social History</h2>
         </div>
         <div class="panel-body">
             <table class="table table-responsive">
@@ -216,37 +226,40 @@ $hmos = $patientController->getAllHMO();
                             <span class="btn btn-default">{{citizenship}}</span>
                         </div>
                     </td>
+                </tr>
+                <tr>
                     <td class="form-inline">
-                        <div class="pull-left">Religion
-                            <span class="btn btn-default">{{religion}}</span>
+                        <div class="pull-left">
+                            Allergies: <br>
+                            <span class="btn btn-default">{{allergies}}</span>
                         </div>
                     </td>
-                    <td>
+                    <td class="form-inline">
                         <div class="pull-left">
-                            position in family:
-                            <span class="btn btn-default">{{family_position}}</span>
+                            Medical History <br>
+                            <span class="btn btn-default">{{medical_history}}</span>
                         </div>
                     </td>
                 </tr>
                 <tr>
                     <td class="form-inline">
-                        <div class="pull-left">
-                            Mother is
-                            <span class="btn btn-default">{{mother_status}}</span>
+                        <div class="pull-left">Alcohol Usage <br>
+                            <span class="btn btn-default">{{alcohol_usage}}</span>
                         </div>
-                    </td>
-                    <td>
-                        <div class="pull-left">
-                            father is
-                            <span class="btn btn-default">{{father_status}}</span>
+                        <div class="pull-left">Tobacco Usage <br>
+                            <span class="btn btn-default">{{tobacco_usage}}</span>
                         </div>
                     </td>
                     <td class="form-inline">
-                        <div class="pull-left">Marital Status
-                            <span class="btn btn-default">{{marital_status}}</span>
+                        <div class="pull-left">Family History <br>
+                            <span class="btn btn-default">{{family_history}}</span>
                         </div>
-                        <div class="pull-left">No of children
-                            <span class="btn btn-default">{{no_of_children}}</span>
+                    </td>
+                </tr>
+                <tr>
+                    <td class="form-inline">
+                        <div class="pull-left">Surgical History <br>
+                            <span class="btn btn-default">{{surgical_history}}</span>
                         </div>
                     </td>
                 </tr>

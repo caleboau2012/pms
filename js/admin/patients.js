@@ -73,7 +73,6 @@ function printDetails(e){
 function prepareData(patientID){
     $.get(host + "phase/arrival/phase_patient.php?intent=getPatient&patientId=" + patientID, function(data){
         data = JSON.parse(data);
-        console.log(data.data);
         name = data.data.surname + " " +
             data.data.firstname + " " +
             data.data.middlename;
@@ -110,11 +109,13 @@ function prepareData(patientID){
             .replace('{{nok_relationship}}', relationship[data.data.nok_relationship])
             .replace('{{citizenship}}', data.data.citizenship)
             .replace('{{religion}}', data.data.religion)
-            .replace('{{family_position}}', data.data.family_position)
-            .replace('{{mother_status}}', data.data.mother_status)
-            .replace('{{father_status}}', data.data.father_status)
-            .replace('{{marital_status}}', data.data.marital_status)
-            .replace('{{no_of_children}}', data.data.no_of_children);
+            .replace('{{allergies}}', data.data.allergies)
+            .replace('{{registration_date}}', data.data.registration_date)
+            .replace('{{medical_history}}', data.data.medical_history)
+            .replace('{{alcohol_usage}}', data.data.alcohol_usage)
+            .replace('{{tobacco_usage}}', data.data.tobacco_usage)
+            .replace('{{family_history}}', data.data.family_history)
+            .replace('{{surgical_history}}', data.data.surgical_history);
 
         printElem("Patients Details", printHTML, null);
     });
@@ -186,7 +187,6 @@ function addPatient(form){
 function manage(id){
     var form = document.managePatientForm;
     $.getJSON(host + "phase/arrival/phase_patient.php?intent=getPatient&patientId=" + $(id).attr('patientid'), function(data){
-        console.log(data);
         if(data.status == 1){
             data = data.data;
             form.patient_id.value = data.patient_id;
@@ -224,6 +224,8 @@ function manage(id){
             }).modal('show').on('hidden.bs.modal', function (e) {
                 form.reset();
             });
+        }else{
+            showAlert("Unable to update patient's profile. Try again later");
         }
     });
 
@@ -268,6 +270,7 @@ function manage(id){
                 }else{
                     $('#managePatientModal').modal('hide');
                     init();
+                    ResponseModal.show('Patient updated successfully', true, false);
                 }
 
             }, 'json').fail(function(data){
