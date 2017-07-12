@@ -9,6 +9,13 @@ require_once '../_core/global/_require.php';
 
 Crave::requireAll(GLOBAL_VAR);
 Crave::requireAll(UTIL);
+Crave::requireFiles(MODEL, array('BaseModel', 'PatientModel'));
+Crave::requireFiles(CONTROLLER, array('PatientController', 'UserController'));
+
+$patientController = new PatientController();
+$hmos = $patientController->getAllHMO();
+
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -47,6 +54,8 @@ Crave::requireAll(UTIL);
                 <span class="bill_status hidden">{{bill_status}}</span>
                 <span class="home_address hidden">{{home_address}}</span>
                 <span class="telephone hidden">{{telephone}}</span>
+                <span class="hmo_name hidden">{{hmo_name}}</span>
+                <span class="hmo_id hidden">{{hmo_id}}</span>
                 <span class="modified_date hidden">{{modified_date}}</span>
             </div>
         </div>
@@ -84,6 +93,18 @@ Crave::requireAll(UTIL);
                                 <p id="patientRegNo" class="h4"></p>
                                 <p id="patientName"></p>
                                 <p id="home_address"></p>
+                                <div>
+                                    <strong>HMO:</strong>
+                                    <select id="patient_hmo_select" required class="form-control">
+                                        <option value="null">No HMO</option>
+                                        <?php
+                                        foreach ($hmos as $hmo){
+                                            echo "<option value='". $hmo['id'] ."'>". $hmo['name'] ."</option>";
+                                        }
+                                        ?>
+                                    </select>
+                                    <br>
+                                </div>
                                 <p><span class="fa fa-phone"></span> <span id="telephone"></span></p>
 
                             </div>

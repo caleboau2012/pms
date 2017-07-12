@@ -1005,16 +1005,15 @@ class TreatmentSqlStatement {
 
     const END_TREATMENT = "UPDATE treatment SET treatment_status = 2 WHERE treatment_id = :treatment_id ";
 
-    const UNBILLED_TREATMENT = "SELECT p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, t.treatment_status, t.bill_status, t.treatment_id, t.modified_date
-                                FROM treatment t
-                                LEFT JOIN patient p
-                                ON t.patient_id = p.patient_id
+    const UNBILLED_TREATMENT = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, t.treatment_status, t.bill_status, t.treatment_id, hmo.name as hmo_name, hmo.id as hmo_id, t.modified_date 
+                                FROM treatment t LEFT JOIN patient p ON t.patient_id = p.patient_id LEFT JOIN hmo ON hmo.id = p.hmo 
                                 WHERE t.bill_status = 1";
 
-    const UNBILLED_ENCOUNTERS = "SELECT p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, e.status, e.bill_status, e.encounter_id, e.treatment_id, e.modified_date
+    const UNBILLED_ENCOUNTERS = "SELECT p.patient_id, p.surname, p.firstname, p.middlename, p.regNo, p.telephone, p.home_address, e.status, e.bill_status, e.encounter_id, e.treatment_id, hmo.name as hmo_name, hmo.id as hmo_id, e.modified_date
                                 FROM encounter e
                                 LEFT JOIN patient p
                                 ON e.patient_id = p.patient_id
+                                LEFT JOIN hmo ON hmo.id = p.hmo
                                 WHERE e.bill_status = 1";
 
     const DAYS_SPENT = "SELECT DATEDIFF(exit_date, entry_date) AS days_spent
