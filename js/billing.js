@@ -129,7 +129,7 @@ Billing = {
         $('#patientName').text(name);
         $('#patientRegNo').text(regNo);
         $('#home_address').text(address);
-        (hmo_id != 'null' ? $("#patient_hmo_select").val(hmo_id) : '');
+        $("#patient_hmo_select").val(hmo_id);
         $('#telephone').text(telephone);
         $('#modified_date').text(date.substring(0, 10));
         $('#receipt_no').text(Billing.CONSTANTS.treatment_id);
@@ -298,6 +298,7 @@ Billing = {
         $(".delete").remove();
         $(".remove-one").parent().remove();
 
+
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'post_bills',
             treatment_id: Billing.CONSTANTS.treatment_id,
@@ -306,8 +307,14 @@ Billing = {
             amount: amounts
         }, function(data){
             if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
-                //console.log(bill.html());
-                printElem($('#print-header').html(), $(bill).html(), $('#print-footer').html());
+                var hmo_id = $("#patient_hmo_select").val();
+                var printHeaderHTML = $('#print-header').html();
+                /*keep the state of the HMO selected option*/
+                printHeaderHTML += "<script type='text/javascript'>";
+                printHeaderHTML += "document.getElementById('patient_hmo_select').selectedIndex = " + hmo_id + ";";
+                printHeaderHTML += "<\/script>";
+
+                printElem(printHeaderHTML, $(bill).html(), $('#print-footer').html());
                 location.reload();
             }
         }).fail(function(e){
