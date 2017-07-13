@@ -201,16 +201,16 @@ Treatment = {
             $('.patient-Sex').html(data.sex);
             $('.patient-Age').html($(patient).find('.patientAge').html());
             $('.patient-ID').html($(patient).find('.patientid').html());
-            $('.father_status').text(data.father_status);
-            $('.mother_status').text(data.mother_status);
-            $('.marital_status').text(data.marital_status);
-            $('.home_address').text(data.home_address);
-            $('.occupation').text(data.occupation);
-            $('.citizenship').text(data.citizenship);
-            $('.religion').text(data.religion);
-            $('.height').text(data.height);
-            $('.weight').text(data.weight);
-            $('.telephone').text(data.telephone);
+            $('.father_status').text(checkNull(data.father_status));
+            $('.mother_status').text(checkNull(data.mother_status));
+            $('.marital_status').text(checkNull(data.marital_status));
+            $('.home_address').text(checkNull(data.home_address));
+            $('.occupation').text(checkNull(data.occupation));
+            $('.citizenship').text(checkNull(data.citizenship));
+            $('.religion').text(checkNull(data.religion));
+            $('.height').text(checkNull(data.height));
+            $('.weight').text(checkNull(data.weight));
+            $('.telephone').text(checkNull(data.telephone));
 
             //    Pre-populate form
             if(typeof data.consultation != "undefined"){
