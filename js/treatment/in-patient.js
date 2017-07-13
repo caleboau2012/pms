@@ -74,7 +74,7 @@ Treatment = {
                 }
             });
             if(empty){
-                if(confirm("Are you sure you want to do this?")){
+                if(confirm("Are you sure you want to do this? It cannot be undone.")){
                     Treatment.endTreatment();
                 }
             }
