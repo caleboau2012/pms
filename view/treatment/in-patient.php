@@ -320,7 +320,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                     <li class="lh" onclick="switchTabs('lab-history', 'lh')"><a href="#">Lab History</a></li>
                 </ol>
                 <div class="add-treatment">
-                    <form name="addTreatmentForm" class="form">
+                    <form name="addTreatmentForm" class="form treatment-form">
                         <div class="row">
                             <br/>
                             <div class="col-sm-12">

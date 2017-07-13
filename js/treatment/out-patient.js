@@ -66,8 +66,19 @@ Treatment = {
             title: "What is this?",
             placement: "bottom"
         }).click(function(e){
-            if(confirm("Are you sure you want to do this?")){
-                Treatment.endTreatment();
+            var empty = true;
+            $(".treatment-form .form-control").each(function(){
+                if(this.value.trim() != ""){
+                    empty = false;
+                }
+            });
+            if(empty){
+                if(confirm("Are you sure you want to do this?")){
+                    Treatment.endTreatment();
+                }
+            }
+            else{
+                alert("You have not completed the treatment for this patient");
             }
         });
 
