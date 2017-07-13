@@ -37,7 +37,6 @@ Billing = {
             if(data.status == 1){
                 data = data.data;
                 $('#unbilled-patients').empty();
-
                 for(var i = 0; i < data.length; i++){
                     if (data[i].regNo.substr(0, 4) == 'EMER') {
                         panel = "panel-danger";
@@ -55,10 +54,13 @@ Billing = {
                     patientHTML = replaceAll('{{bill_status}}', data[i].bill_status, patientHTML);
                     patientHTML = replaceAll('{{regNo}}', data[i].regNo, patientHTML);
                     patientHTML = replaceAll('{{name}}', patientName, patientHTML);
+                    patientHTML = replaceAll('{{patient_id}}', data[i].patient_id, patientHTML);
                     patientHTML = replaceAll('{{treatment_id}}', data[i].treatment_id, patientHTML);
                     patientHTML = replaceAll('{{encounter_id}}', (data[i].encounter_id)?data[i].encounter_id:"", patientHTML);
                     patientHTML = replaceAll('{{treatment_status}}', data[i].treatment_status, patientHTML);
                     patientHTML = replaceAll('{{home_address}}', data[i].home_address, patientHTML);
+                    patientHTML = replaceAll('{{hmo_name}}', data[i].hmo_name, patientHTML);
+                    patientHTML = replaceAll('{{hmo_id}}', data[i].hmo_id, patientHTML);
                     patientHTML = replaceAll('{{telephone}}', data[i].telephone, patientHTML);
                     patientHTML = replaceAll('{{modified_date}}', data[i].modified_date, patientHTML);
 
@@ -108,7 +110,11 @@ Billing = {
         });
     },
     startBilling: function(patient){
+        $("#patient_hmo_select").val('null');
+
         var name = ($(patient).find('.name').text());
+        var hmo_name = ($(patient).find('.hmo_name').text());
+        var hmo_id = ($(patient).find('.hmo_id').text());
         var regNo = ($(patient).find('.regNo').text());
         var telephone = ($(patient).find('.telephone').text());
         var address = ($(patient).find('.home_address').text());
@@ -123,6 +129,7 @@ Billing = {
         $('#patientName').text(name);
         $('#patientRegNo').text(regNo);
         $('#home_address').text(address);
+        $("#patient_hmo_select").val(hmo_id);
         $('#telephone').text(telephone);
         $('#modified_date').text(date.substring(0, 10));
         $('#receipt_no').text(Billing.CONSTANTS.treatment_id);
@@ -291,6 +298,7 @@ Billing = {
         $(".delete").remove();
         $(".remove-one").parent().remove();
 
+
         $.getJSON(host + 'phase/phase_billing.php', {
             intent: 'post_bills',
             treatment_id: Billing.CONSTANTS.treatment_id,
@@ -299,8 +307,14 @@ Billing = {
             amount: amounts
         }, function(data){
             if(data.status == Billing.CONSTANTS.REQUEST_SUCCESS){
-                //console.log(bill.html());
-                printElem($('#print-header').html(), $(bill).html(), $('#print-footer').html());
+                var hmo_id = $("#patient_hmo_select").val();
+                var printHeaderHTML = $('#print-header').html();
+                /*keep the state of the HMO selected option*/
+                printHeaderHTML += "<script type='text/javascript'>";
+                printHeaderHTML += "document.getElementById('patient_hmo_select').selectedIndex = " + hmo_id + ";";
+                printHeaderHTML += "<\/script>";
+
+                printElem(printHeaderHTML, $(bill).html(), $('#print-footer').html());
                 location.reload();
             }
         }).fail(function(e){

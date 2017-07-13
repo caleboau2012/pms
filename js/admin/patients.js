@@ -73,7 +73,6 @@ function printDetails(e){
 function prepareData(patientID){
     $.get(host + "phase/arrival/phase_patient.php?intent=getPatient&patientId=" + patientID, function(data){
         data = JSON.parse(data);
-        console.log(data.data);
         name = data.data.surname + " " +
             data.data.firstname + " " +
             data.data.middlename;
@@ -110,11 +109,13 @@ function prepareData(patientID){
             .replace('{{nok_relationship}}', relationship[data.data.nok_relationship])
             .replace('{{citizenship}}', data.data.citizenship)
             .replace('{{religion}}', data.data.religion)
-            .replace('{{family_position}}', data.data.family_position)
-            .replace('{{mother_status}}', data.data.mother_status)
-            .replace('{{father_status}}', data.data.father_status)
-            .replace('{{marital_status}}', data.data.marital_status)
-            .replace('{{no_of_children}}', data.data.no_of_children);
+            .replace('{{allergies}}', data.data.allergies)
+            .replace('{{registration_date}}', data.data.registration_date)
+            .replace('{{medical_history}}', data.data.medical_history)
+            .replace('{{alcohol_usage}}', data.data.alcohol_usage)
+            .replace('{{tobacco_usage}}', data.data.tobacco_usage)
+            .replace('{{family_history}}', data.data.family_history)
+            .replace('{{surgical_history}}', data.data.surgical_history);
 
         printElem("Patients Details", printHTML, null);
     });
@@ -155,15 +156,20 @@ function addPatient(form){
             nok_relationship  : form.nok_relationship.value,
             citizenship : citizenship,
             religion : form.religion.value,
-            family_position : form.family_position.value,
-            mother_status : form.mother_status.value,
-            father_status : form.father_status.value,
             marital_status : form.marital_status.value,
-            no_of_children : form.no_of_children.value
+            registration_date : form.registration_date.value,
+            hmo : form.hmo.value,
+            allergies : form.allergies.value,
+            medical_history : form.medical_history.value,
+            alcohol_usage : form.alcohol_usage.value,
+            tobacco_usage : form.tobacco_usage.value,
+            surgical_history : form.surgical_history.value,
+            family_history : form.family_history.value
+
         },
         function(data){
-            data = JSON.parse(data);
             console.log(data);
+            data = JSON.parse(data);
             if(data.data){
                 $('#newPatientModal').modal('hide');
                 init();
@@ -181,7 +187,6 @@ function addPatient(form){
 function manage(id){
     var form = document.managePatientForm;
     $.getJSON(host + "phase/arrival/phase_patient.php?intent=getPatient&patientId=" + $(id).attr('patientid'), function(data){
-        console.log(data);
         if(data.status == 1){
             data = data.data;
             form.patient_id.value = data.patient_id;
@@ -204,9 +209,14 @@ function manage(id){
             form.nok_relationship.value = data.nok_relationship;
             form.citizenship.value = data.citizenship;
             form.religion.value = data.religion;
-            form.family_position.value = data.family_position;
-            form.mother_status.value = data.mother_status;
-            form.father_status.value = data.father_status;
+            form.hmo.value = data.hmo;
+            form.registration_date.value = data.registration_date;
+            form.allergies.value = data.allergies;
+            form.medical_history.value = data.medical_history;
+            form.alcohol_usage.value = data.alcohol_usage;
+            form.tobacco_usage.value = data.tobacco_usage;
+            form.surgical_history.value = data.surgical_history;
+            form.family_history.value = data.family_history;
             form.marital_status.value = data.marital_status;
 
             $('#managePatientModal').modal({
@@ -214,6 +224,8 @@ function manage(id){
             }).modal('show').on('hidden.bs.modal', function (e) {
                 form.reset();
             });
+        }else{
+            showAlert("Unable to update patient's profile. Try again later");
         }
     });
 
@@ -241,18 +253,28 @@ function manage(id){
                 nok_relationship  : form.nok_relationship.value,
                 citizenship : form.citizenship.value,
                 religion : form.religion.value,
-                family_position : form.family_position.value,
-                mother_status : form.mother_status.value,
-                father_status : form.father_status.value,
                 marital_status : form.marital_status.value,
-                no_of_children : form.no_of_children.value
+                registration_date : form.registration_date.value,
+                hmo : form.hmo.value,
+                allergies : form.allergies.value,
+                medical_history : form.medical_history.value,
+                alcohol_usage : form.alcohol_usage.value,
+                tobacco_usage : form.tobacco_usage.value,
+                surgical_history : form.surgical_history.value,
+                family_history : form.family_history.value
             },
             function(data){
                 console.log(data);
-                showSuccess(data.message);
-                $('#managePatientModal').modal('hide');
-                init();
-            }, 'json').fail(function(){
+                if(data.status == 2){
+                    showAlert(data.message);
+                }else{
+                    $('#managePatientModal').modal('hide');
+                    init();
+                    ResponseModal.show('Patient updated successfully', true, false);
+                }
+
+            }, 'json').fail(function(data){
+                showAlert(data.message);
                 console.log('shing');
             });
     });

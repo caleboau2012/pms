@@ -117,4 +117,8 @@ class PatientModel extends BaseModel {
         $data = array(TreatmentTable::treatment_id => $treatmentId);
         return $this->conn->fetch(PatientSqlStatement::GET_BY_TMT_ID, $data);
     }
+
+    public function getAvailableHMO(){
+        return $this->conn->fetchAll(PatientSqlStatement::GET_AVAILABLE_HMO, array());
+    }
 }

@@ -98,6 +98,14 @@ class PatientTable{
     const modified_date     = 'modified_date';
     const active_fg         = 'active_fg';
     const occupation        = 'occupation';
+    const registration_date        = 'registration_date';
+    const hmo        = 'hmo';
+    const allergies        = 'allergies';
+    const medical_history        = 'medical_history';
+    const alcohol_usage        = 'alcohol_usage';
+    const tobacco_usage        = 'tobacco_usage';
+    const family_history        = 'family_history';
+    const surgical_history      = 'surgical_history';
 }
 
 class PatientQueueTable {

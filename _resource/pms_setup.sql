@@ -678,7 +678,7 @@ CREATE TABLE IF NOT EXISTS `parasitology_req` (
 
 DROP TABLE IF EXISTS `patient`;
 CREATE TABLE IF NOT EXISTS `patient` (
-  `patient_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+  `patient_id` int(11) UNSIGNED NOT NULL,
   `surname` varchar(25) DEFAULT NULL,
   `firstname` varchar(25) DEFAULT NULL,
   `middlename` varchar(25) DEFAULT NULL,
@@ -697,17 +697,19 @@ CREATE TABLE IF NOT EXISTS `patient` (
   `nok_relationship` int(10) UNSIGNED DEFAULT '9',
   `citizenship` varchar(25) DEFAULT NULL,
   `religion` varchar(25) DEFAULT NULL,
-  `family_position` int(11) DEFAULT NULL,
-  `mother_status` varchar(25) DEFAULT NULL,
-  `father_status` varchar(25) DEFAULT NULL,
   `marital_status` varchar(25) DEFAULT NULL,
-  `no_of_children` int(11) DEFAULT NULL,
   `occupation` varchar(100) DEFAULT NULL,
+  `registration_date` date DEFAULT NULL,
+  `hmo` int(11) DEFAULT NULL,
+  `allergies` text,
+  `medical_history` text,
+  `alcohol_usage` varchar(255) DEFAULT NULL,
+  `tobacco_usage` varchar(255) DEFAULT NULL,
+  `surgical_history` text,
+  `family_history` text,
   `created_date` datetime DEFAULT NULL,
   `modified_date` datetime DEFAULT NULL,
-  `active_fg` tinyint(1) DEFAULT '1',
-  PRIMARY KEY (`patient_id`),
-  KEY `fk_PatientNok` (`nok_relationship`)
+  `active_fg` tinyint(1) DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -1631,3 +1633,11 @@ ALTER TABLE `xray_no`
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
+CREATE TABLE `hmo` (
+  `id` int(11) NOT NULL,
+  `name` text NOT NULL,
+  `address` text,
+  `created_on` datetime NOT NULL,
+  `modified_on` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
