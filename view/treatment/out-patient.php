@@ -348,7 +348,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     <textarea class="form-control" name="comment"></textarea>
                                 </div>
                                 <br/>
-                                <div class="center-block"><label>Prescriptions:</label>
+                                <div class="center-block"><label>Drug Prescriptions:</label>
                                     <input list="drugNames" type="text" id="prescriptionInput" class="form-control" placeholder="">
 
                                     <p>

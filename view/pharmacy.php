@@ -81,7 +81,7 @@ $units = $pharmacist->getUnits();
                     <div class="col-md-5 patient_prescription">
                         <div class="panel panel-primary">
                             <div class="panel-heading">
-                                PRESCRIPTIONS
+                                DRUG PRESCRIPTIONS
                             </div>
                             <div class="panel-body">
                                 <h5 class="small text-info text-center">
