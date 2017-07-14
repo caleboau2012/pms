@@ -284,11 +284,51 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     <span>
                                         <b>Country:</b>
                                         <span class="citizenship"></span>
-                                    </span>
+                                    </span><br>
                                     <span>
                                         <b>Religion:</b>
                                         <span class="religion"></span>
                                     </span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-xs-12">
+                            <div class="panel-group" id="accordion">
+                                <div class="panel panel-danger">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">
+                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                                Social/Medical History</a>
+                                        </h4>
+                                    </div>
+                                    <div id="collapse1" class="panel-collapse collapse">
+                                        <div class="panel-body">
+                                            <div class="row">
+                                                <div class="col-md-6">
+                                                    <span>
+                                                        <b>Allergies:</b>
+                                                        <span class="capitalize-first allergies"></span>
+                                                        </span><br>
+                                                            <span>
+                                                        <b>Alcohol Usage:</b>
+                                                        <span class="capitalize-first alcohol_usage"></span><br>
+                                                        <span>
+                                                        <b>Surgical History:</b>
+                                                        <span class="capitalize-first surgical_history"></span><br>
+                                                        <span>
+                                                    </span>
+                                                </div>
+                                                <div class="col-md-6">
+                                                    <b>Tobacco Usage:</b>
+                                                    <span class="capitalize-first tobacco_usage"></span><br>
+                                                    <span>
+                                                        <b>Medical History:</b>
+                                                        <span class="capitalize-first medical_history"></span>
+                                                </div>
+                                            </div>
+
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -1591,3 +1591,6 @@ input.cmn-toggle-round:checked + label:after{
     color: #a94442;
 
 }
+.capitalize-first:first-letter{
+    text-transform: uppercase;
+}

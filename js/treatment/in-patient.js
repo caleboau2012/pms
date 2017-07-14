@@ -249,6 +249,12 @@ Treatment = {
             $('.height').text(checkNull(data.height));
             $('.weight').text(checkNull(data.weight));
             $('.telephone').text(checkNull(data.telephone));
+            $('.allergies').text(checkNull(data.allergies));
+            $('.alcohol_usage').text(checkNull(data.alcohol_usage));
+            $('.surgical_history').text(checkNull(data.surgical_history));
+            $('.tobacco_usage').text(checkNull(data.tobacco_usage));
+            $('.medical_history').text(checkNull(data.medical_history));
+
 
             //    Pre-populate form
             if(typeof data.consultation != "undefined"){
