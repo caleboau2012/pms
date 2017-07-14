@@ -289,13 +289,6 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                         <b>Religion:</b>
                                         <span class="religion"></span>
                                     </span>
-                                    <br>
-                                    <span>
-                                        Father is <span class="father_status"></span>
-                                    </span>
-                                    <span>
-                                        Mother is <span class="mother_status"></span>
-                                    </span>
                                 </div>
                             </div>
                         </div>
