@@ -366,7 +366,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                 <br/>
                                 <div class="center-block">
                                     <label>Procedure:</label>
-                                    <textarea type="text" class="form-control" name="consultation"></textarea>
+                                    <textarea class="form-control" name="consultation"></textarea>
+                                </div>
+                                <div class="center-block">
+                                    <label>Glass Prescription:</label>
+                                    <input type="text" class="form-control" name="glass_prescription"/>
                                 </div>
                                 <br/>
                                 <div>

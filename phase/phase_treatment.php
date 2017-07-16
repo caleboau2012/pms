@@ -238,6 +238,7 @@ elseif  ($intent == 'submitTreatment') { //working
         $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
         $treatment_id =$_REQUEST['treatment_id'];
         $prescription = $_REQUEST['prescription'];
+        $glass_prescription = $_REQUEST['glass_prescription'];
         $encounter_id = (isset($_REQUEST['encounter_id'])) ? $_REQUEST['encounter_id'] : 0;
     }
     else {
@@ -262,6 +263,11 @@ elseif  ($intent == 'submitTreatment') { //working
                     exit();
                 }
             }
+        }
+        /*Check for Glass prescription*/
+        if($glass_prescription != null){
+            $pre_g  = new PharmacistController();
+            $pre_g->AddPrescription($glass_prescription, $treatment_id, BILLABLE_GLASS_PRESCRIPTION, DOCTOR, $encounter_id);
         }
 
     }
@@ -383,10 +389,11 @@ elseif($intent == 'logEncounter'){
     $comments      = isset($_REQUEST[EncounterTable::comments]) ? $_REQUEST[EncounterTable::comments] : "";
     $diagnosis     = isset($_REQUEST[EncounterTable::diagnosis]) ? $_REQUEST[EncounterTable::diagnosis] : "";
     $prescription = isset($_REQUEST[PrescriptionTable::prescription]) ? $_REQUEST[PrescriptionTable::prescription] : array();
+    $glass_prescription = $_REQUEST['glass_prescription'];
 
     if($doctor_id && $patient_id && $admission_id && $treatment_id && $encounter_id){
         $encounter = new TreatmentController();
-        $response = $encounter->logEncounter($doctor_id, $patient_id, $admission_id, $treatment_id, $encounter_id, $consultation, $symptoms, $diagnosis, $comments, $prescription);
+        $response = $encounter->logEncounter($doctor_id, $patient_id, $admission_id, $treatment_id, $encounter_id, $consultation, $symptoms, $diagnosis, $comments, $prescription, $glass_prescription);
 
         if($response['result']){
             echo JsonResponse::success($response['message']);

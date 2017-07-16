@@ -197,6 +197,7 @@ class TreatmentTable{
     const comments          = 'comments';
     const symptoms          = 'symptoms';
     const diagnosis         = 'diagnosis';
+    const glass_prescription         = 'glass_prescription';
     const created_date      = 'created_date';
     const modified_date     = 'modified_date';
     const treatment_status  = 'treatment_status';

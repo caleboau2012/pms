@@ -298,6 +298,7 @@ Treatment = {
             consultation: data.consultation.value,
             comments: data.comment.value,
             diagnosis: data.diagnosis.value,
+            glass_prescription: data.glass_prescription.value,
             prescription: prescription
         }, function(response){
             $('#loader').addClass('hidden');

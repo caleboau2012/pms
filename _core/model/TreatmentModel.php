@@ -285,7 +285,7 @@ class TreatmentModel extends BaseModel{
     /*
      * $encounterData is an assoc array of $doctorId, $patientId, $admissionId, $comments
      * */
-    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions){
+    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions, $glass_prescription){
         $data = array(EncounterTable::personnel_id => $doctorId, EncounterTable::patient_id => $patientId,
             EncounterTable::admission_id => $admissionId, EncounterTable::treatment_id => $treatmentId,
             EncounterTable::encounter_id => $encounterId, EncounterTable::consultation => $consultation,
@@ -302,6 +302,11 @@ class TreatmentModel extends BaseModel{
             foreach ($prescriptions as $prescription){
                 if(!$pharmacistModel->AddPrescription($prescription, $treatmentId, 1, $doctorId, $encounterId))
                     throw new Exception("Could not add prescription $prescription for this patient");
+            }
+            /*Check for Glass prescription*/
+            if($glass_prescription != null){
+                $pre_g  = new PharmacistController();
+                $pre_g->AddPrescription($glass_prescription, $treatmentId, BILLABLE_GLASS_PRESCRIPTION, $doctorId, $encounterId);
             }
 
             $this->conn->commit();

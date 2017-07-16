@@ -59,6 +59,7 @@ define('CLEARED', 4);
 define('PENDING', 5);
 define('PROCESSING', 6);
 define('COMPLETED', 7);
+define('BILLABLE_GLASS_PRESCRIPTION', 8);
 
 //PATIENT ARRIVAL CONSTANTS
 define('PARAMETER', 'parameter');

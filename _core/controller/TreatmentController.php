@@ -84,8 +84,8 @@ class TreatmentController{
         return $this->treatmentModel->logEncounter($data);
     }*/
 
-    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions){
-        return $this->treatmentModel->logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions);
+    public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions, $glass_prescription){
+        return $this->treatmentModel->logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions, $glass_prescription);
     }
 
     public function getEncounterId($treatmentId, $patientId, $admissionId, $doctorId){

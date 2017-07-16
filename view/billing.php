@@ -191,7 +191,7 @@ $hmos = $patientController->getAllHMO();
                             <span id="days_spent"></span>
                         </p>
                         <p>
-                        <p class="h4 text-center">Prescribed Drugs</p>
+                        <p class="h4 text-center">Prescriptions</p>
                         <div id="prescription"></div>
                         </p>
                         <p class="text-center">
