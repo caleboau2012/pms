@@ -1269,8 +1269,8 @@ CREATE TABLE IF NOT EXISTS `visual_skills_profile` (
 --
 
 DROP TABLE IF EXISTS `vitals`;
-CREATE TABLE IF NOT EXISTS `vitals` (
-  `vitals_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `vitals` (
+  `vitals_id` int(11) UNSIGNED NOT NULL,
   `patient_id` int(11) UNSIGNED NOT NULL,
   `encounter_id` int(11) UNSIGNED DEFAULT NULL,
   `added_by` int(11) NOT NULL,
@@ -1281,13 +1281,11 @@ CREATE TABLE IF NOT EXISTS `vitals` (
   `height` float DEFAULT NULL,
   `weight` float DEFAULT NULL,
   `bmi` float DEFAULT NULL,
+  `var` text DEFAULT NULL,
+  `val` text DEFAULT NULL,
   `active_fg` tinyint(11) NOT NULL,
-  `created_date` datetime NOT NULL,
-  PRIMARY KEY (`vitals_id`),
-  KEY `encounter_id` (`encounter_id`),
-  KEY `patient_id` (`patient_id`),
-  KEY `added_by` (`added_by`)
-) ENGINE=InnoDB AUTO_INCREMENT=18 DEFAULT CHARSET=latin1;
+  `created_date` datetime NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 
 --

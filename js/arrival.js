@@ -382,6 +382,7 @@ function openVitalsModal(e){
 }
 
 $(document.vitalsForm).on('submit', function(e){
+
     e.preventDefault();
     var data = {};
     data.intent = "addVitals";
@@ -395,6 +396,8 @@ $(document.vitalsForm).on('submit', function(e){
     data.vitals.height = this.height.value;
     data.vitals.weight = this.weight.value;
     data.vitals.bmi = this.bmi.value;
+    data.vitals.var = this.var.value;
+    data.vitals.val = this.val.value;
 
     $('#loading').removeClass('hidden');
 

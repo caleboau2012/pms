@@ -344,6 +344,20 @@ $wards = $admission->loadWards();
                                     </div>
 
                                 </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="var">VAR</label>
+                                        <input type="text" class="form-control" id="var" name="var" required="required">
+                                    </div>
+
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <label for="val">VAL</label>
+                                        <input type="text" class="form-control" id="val" name="val" required="required">
+                                    </div>
+
+                                </div>
                                 <div class="col-sm-offset-5 col-sm-3">
                                     <br/>
                                     <input type="submit" class="btn btn-lg btn-primary">

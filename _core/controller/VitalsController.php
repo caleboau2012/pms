@@ -40,7 +40,7 @@ class VitalsController {
             return false;
         }
 
-        $vitals_label = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi');
+        $vitals_label = array('temp', 'pulse', 'respiratory_rate', 'blood_pressure', 'height', 'weight', 'bmi', 'var', 'val');
 
         $is_empty = true;
         $valid_vitals = array();

@@ -463,6 +463,16 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                             </div>
                             <div class="form-group">
                                 <div class="col-sm-6">
+                                    <label for="height">Var</label>
+                                    <input type="text" class="form-control" name="var">
+                                </div>
+                                <div class="col-sm-6">
+                                    <label for="weight">Val</label>
+                                    <input type="text" class="form-control" name="val">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <div class="col-sm-6">
                                     <label for="bmi">BMI</label>
                                     <input type="text" class="form-control" id="bmi" name="bmi">
                                 </div>
