@@ -58,6 +58,12 @@ class TreatmentModel extends BaseModel{
         return $result;
     }
 
+    public function addProcedure($payload){
+        $sql = TreatmentSqlStatement::ADD_PROCEDURE;
+        $result = $this->conn->execute($sql, $payload);
+        return $result;
+    }
+
     public function addTreatment1($treatmentInfo){
 
         try {

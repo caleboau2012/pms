@@ -40,6 +40,19 @@ class BillingModel extends BaseModel {
         }
     }
 
+    public function getBillableProcedure($treatment_id, $encounter_id = ""){
+        if($encounter_id == ""){
+            $data = array(TreatmentTable::treatment_id => $treatment_id);
+            $procedures = $this->conn->fetchAll(TreatmentSqlStatement::BILLABLE_PROCEDURE, $data);
+        }
+        else{
+            $data = array(TreatmentTable::treatment_id => $encounter_id);
+            $procedures = $this->conn->fetchAll(TreatmentSqlStatement::BILLABLE_PROCEDURE, $data);
+        }
+
+        return $procedures;
+    }
+
     public function getAdmittedProcedure($encounter_id){
         $data = array(TreatmentTable::encounter_id => $encounter_id);
         $procedure = $this->conn->fetchAll(TreatmentSqlStatement::GET_PROCEDURE_ADMITTED, $data);
@@ -126,13 +139,14 @@ class BillingModel extends BaseModel {
         $details['days_spent'] = $this->getDaysSpent($treatment_id);
         $details['prescription'] = $this->getPrescription($treatment_id, $encounter_id);
         $details['test'] = $this->getTest($treatment_id, $encounter_id);
+        $details['procedures'] = $this->getBillableProcedure($treatment_id, $encounter_id);
 
-        if($encounter_id == ""){
+       /* if($encounter_id == ""){
             $details['procedure'] = $this->getProcedure($treatment_id);
         }
         else{
             $details['procedure'] = $this->getAdmittedProcedure($encounter_id);
-        }
+        }*/
 
         return $details;
     }
@@ -160,6 +174,9 @@ class BillingModel extends BaseModel {
             $this->conn->execute($stmt, $data);
 
             $stmt = TreatmentSqlStatement::UPDATE_VISUALTEST_BILLING;
+            $this->conn->execute($stmt, $data);
+
+            $stmt = TreatmentSqlStatement::CLEAR_BILLABLE_PROCEDURE;
             $this->conn->execute($stmt, $data);
 
             $this->conn->commit();

@@ -1155,6 +1155,14 @@ FROM radiology INNER JOIN encounter ON (encounter.encounter_id = radiology.encou
     const MAKE_BILLABLE = "UPDATE treatment SET bill_status = 1 WHERE treatment_id = :treatment_id";
 
     const MAKE_BILLABLE_ENCOUNTER = "UPDATE encounter SET bill_status = 1 WHERE encounter_id = :encounter_id";
+
+    const ADD_PROCEDURE= "INSERT INTO treatment_procedure (treatment_id, description, bill_status, created_date, modified_date)
+    VALUES(:treatment_id, :description, 1, NOW(), NOW())";
+
+    const BILLABLE_PROCEDURE = "SELECT id, description, created_date FROM treatment_procedure
+                            WHERE bill_status = 1 ORDER BY id DESC";
+    const CLEAR_BILLABLE_PROCEDURE = "UPDATE treatment_procedure SET bill_status = 2 WHERE treatment_id = :treatment_id OR treatment_id = :encounter_id";
+
 }
 
 class EmergencySqlStatement {

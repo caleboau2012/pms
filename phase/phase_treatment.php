@@ -237,7 +237,7 @@ elseif  ($intent == 'submitTreatment') { //working
         $comments= $_REQUEST[TreatmentTable::comments];
         $diagnosis =$_REQUEST[TreatmentTable::diagnosis];
         $treatment_id =$_REQUEST['treatment_id'];
-        $prescription = $_REQUEST['prescription'];
+        $prescription = isset($_REQUEST['prescription']) ? $_REQUEST['prescription'] : null;
         $glass_prescription = $_REQUEST['glass_prescription'];
         $encounter_id = (isset($_REQUEST['encounter_id'])) ? $_REQUEST['encounter_id'] : 0;
     }

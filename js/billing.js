@@ -255,26 +255,20 @@ Billing = {
                     "<td colspan='3'>No Test Performed</td></tr>")
             }
 
-            if(Array.isArray(data.data.procedure)){
-                var text;
-                for(var i = 0; i < data.data.procedure.length; i++){
-                    text = "No procedure";
-                    //console.log(data.data.procedure[i].consultation == null);
-                    if(data.data.procedure[i].consultation != null)
-                        text = data.data.procedure[i].consultation;
-                    $('#procedure').append("<p>"+ text +  "</p>");
+            var pr_len = data.data.procedures.length;
+
+            if(pr_len > 0){
+                var procedureHTML = "<ul>";
+                for(var i = 0; i < pr_len; i++){
+                    procedureHTML = "<li class='text-center'>" + data.data.procedures[i].description + "</li>";
+                    $("#procedure").append(procedureHTML);
                 }
-                //if(Array.isArray(data.data.admitted_procedure)){
-                //
-                //    for(var i = 0; i < data.data.admitted_procedure.length; i++){
-                //        if(data.data.admitted_procedure[i].consultation){
-                //            $('#procedure').append("<p>"+ data.data.admitted_procedure[i].consultation +  "</p>");
-                //        }
-                //    }
-                //}
+                $("#procedure").append("</ul>");
+
+
             }
             else{
-                $('#procedure').append("<p>No procedure was done during this session</p>");
+                $('#procedure').append("<p>No procedure</p>");
             }
         });
     },

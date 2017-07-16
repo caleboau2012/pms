@@ -1639,3 +1639,15 @@ CREATE TABLE `hmo` (
   `created_on` datetime NOT NULL,
   `modified_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Table structure for table `treatment_procedure`
+--
+CREATE TABLE `treatment_procedure` (
+  `id` int(11) NOT NULL,
+  `treatment_id` int(11) NOT NULL,
+  `description` text NOT NULL,
+  `bill_status` int(11) NOT NULL,
+  `created_date` datetime NOT NULL,
+  `modified_date` datetime DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
