@@ -220,7 +220,7 @@ Treatment = {
 
             //    Pre-populate form
             if(typeof data.consultation != "undefined"){
-                document.addTreatmentForm.consultation.value = data.consultation;
+                // document.addTreatmentForm.consultation.value = data.consultation;
                 document.addTreatmentForm.symptoms.value = data.symptoms;
                 document.addTreatmentForm.diagnosis.value = data.diagnosis;
                 document.addTreatmentForm.comment.value = data.comments;

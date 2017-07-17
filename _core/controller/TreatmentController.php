@@ -35,13 +35,15 @@ class TreatmentController{
         $treatmentInfo = array(TreatmentTable::doctor_id => $doctorId, TreatmentTable::patient_id => $patientId,
                                TreatmentTable::consultation => $consultation, TreatmentTable::symptoms => $symptoms,
                                TreatmentTable::diagnosis => $diagnosis, TreatmentTable::comments => $comments, TreatmentTable::treatment_id => $treatment_id);
-//        TODO Check for new consultation
-        $this->treatmentModel->addProcedure(
-            array(
-                'treatment_id' => $treatment_id,
-                'description' => $consultation
-            )
-        );
+//      Check for new consultation
+        if($consultation != null){
+            $this->treatmentModel->addProcedure(
+                array(
+                    'treatment_id' => $treatment_id,
+                    'description' => $consultation
+                )
+            );
+        }
 
         return $this->treatmentModel->addTreatment2($treatmentInfo);
     }
