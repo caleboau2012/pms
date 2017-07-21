@@ -1632,6 +1632,9 @@ ALTER TABLE `xray_no`
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 
+--
+-- HMO Table
+--
 CREATE TABLE `hmo` (
   `id` int(11) NOT NULL,
   `name` text NOT NULL,
@@ -1639,6 +1642,70 @@ CREATE TABLE `hmo` (
   `created_on` datetime NOT NULL,
   `modified_on` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data for table `hmo`
+--
+INSERT INTO `hmo` (`id`, `name`, `address`, `created_on`, `modified_on`) VALUES
+(1, 'No HMO', NULL, '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(2, 'HYGEIA HMO LIMITED', '11A Idejo Street, Off Ademola Odeku Street Victoria Island, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(3, 'TOTAL HEALTH TRUST LIMITED', '2 Marconi Road Palmgrove Estate, Lagos', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(4, 'CLEARLINE INTERNATIONAL LIMITED\r\n', '16 Oyefe Avenue, Off Ikorodu Road, Savoil B/Stop/Hallmark Assurance Plc. Obanikoro, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(5, 'HEALTHCARE INTERNATIONAL LIMITED', '308A Murtala Mohammed Way, Yaba, Lagos', '2017-07-22 00:00:00', '2017-07-21 00:00:00'),
+(6, 'MEDI PLAN HEALTH CARE LIMITED\r\n', 'Plot 286B, Ajose Adeogun Street Victoria Island, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(7, 'MULTI SHIELD NIGERIA LIMITED\r\n', 'No. 322, Ikorodu Road, Anthony, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(8, 'UNITED HEALTHCARE INTERNATIONAL LIMITED\r\n', 'NICON Plaza, 2nd Floor, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(9, 'PREMIUM PRIVATE HEALTH TRUST LIMITED\r\n', '31B, Itafaji Road, Dolphin Estate Ikoyi, Lagos', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(10, 'RONSBERGER NIGERIA LIMITED\r\n', 'Plot 359, Mambolo Street, Zone 2, Wuse District, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(11, 'INTERNATIONAL HEALTH MANAGEMENT SERVICES LIMITED', '2, Joseph Street, Off Broad Street, Lagos', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(12, 'EXPATCARE HEALTH INTERNATIONAL LTD.\r\n\r\n', '39A, Sura Mogaji Street, Off Coker Road, Ilupeju, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(13, 'SONGHAI HEALTH TRUST LTD.\r\n', 'Ground Floor, Nigeria Re-Insurance Building Beside Unity Bank, Plot 78A Herbert Macaulay Way, Central Area, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(14, 'PREMIER MEDICAID LTD.\r\n', 'Olive House, No. 6/53 Fajuyi Road Adamasingha, Ibadan.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(15, 'MANAGED HEALTHCARE SERVICES LTD.\r\n', '16 Obokun Street, Off Coker Road, Illupeju, P.O.Box 641, Oshodi, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(16, 'PRINCETON HEALTH GROUP\r\n', '26, Mogaji-Are Road, Opposite Vital Bakery, Ring Road, P.O. Box 23512, Mapo, Ibadan.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(17, 'MAAYOIT HEALTHCARE LTD.\r\n\r\n', '1, Iloffa Road, G.R.A., P O Box 5504, Ilorin, Kwara State.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(18, 'WISE HEALTH SERVICES LTD.\r\n', 'Plot 533, Durban, Off Adetokunbo Ademola Crescent, Wuse II, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(19, 'WETLANDS HEALTH SERVICES LTD.\r\n', '5, National Supply Road, Off Trans-Amadi Road, P O Box 12403, Port Harcourt, Rivers State.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(20, 'ZENITH MEDICARE LTD.', 'Plot 131B Adetokunbo Ademola Crescent Wuse II, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(21, 'DEFENCE HEALTH MAINTENANCE LTD.\r\n', 'No. 2 Kamina Close, Off Ndele Street, Wuse Zone 3, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(22, 'UNITED COMPREHENSIVE HEALTH MANAGERS LTD.\r\n', 'Suite 40, 24 Old Aba Road, Rumuogba\r\nP O Box 6150, Trans Amadi, Port Harcourt, Rivers State.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(23, 'HEALTHCARE SECURITY LTD.\r\n', '3 Kanta Road (Near NNDC), P. O. Box 8318 Kaduna.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(24, 'STRATEGIC HEALTH PLANNERS CO. LTD.\r\n', 'BK International House SPC Junction, Murtala Mohammed Highway P O Box 3047, Calabar, Cross River State.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(25, 'ROYAL HEALTH MAINTENANCE SERVICES\r\n', '24 Wetheral Road, Owerri, Imo State.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(26, 'AREWA HEALTH MAINTENANCE SERVICES\r\n', 'Plot 645, Alex Ekwueme Street, Jabi, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(27, 'ZUMA HEALTH TRUST', '1235, No. 6 Sapele Street,\r\nOpp. NSMP Quarters, Garki, Abuja.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(28, 'MARKFEMA NIGERIA LTD.\r\n', '4A Gurara Street Ibrahim Abacha Estate Zone 4, Abuja', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(29, 'PREPAID MEDICARE SERVICES LTD.\r\n', 'No. 1 Bengui Street\r\nOff Adetokunbo Ademola Crescent Wuse II, Abuja', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(30, 'CIGNET HEALTH LIMITED\r\n', '15 Admiralty Way Lekki Phase I, Lagos Lagos State.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(31, 'FORTECARE LIMITED\r\n', '303 Nnebisi Road Asaba. Delta State', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(32, 'GTI HEALTHCARE LIMITED\r\n', '39A Saka Tinubu Street Victoria Island, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(33, 'STERLING HEALTH MANAGED CARE SERVICES LIMITED', 'Valley View Plaza\r\n99 Opebi Road, Ikeja, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(34, 'HEALTH PARTNERS LIMITED\r\n', '12, Sobo Arobiodu Street G.R.A., Ikeja, Lagos, Lagos State', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(35, 'PRECIOUS HEALTHCARE LIMITED\r\n', 'No. 8, Lungi Street, Off Cairo Wuse II, Abuja', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(36, 'KADUNA GMD HEALTHCARE LIMITED\r\n', '13 Isa Kaita Road Kaduna, Kaduna State', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(37, 'DIAMOND SHIELD HEALTH SERVICES LIMITED\r\n', '73A, Mainland Way Dolphin Estate, Ikoyi Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(38, 'OCEANIC HEALTH MANAGEMENT LIMITED\r\n', '20, Ozumba Mbadiwe Avenue, Victoria Island, Lagos', '2017-07-21 00:00:00', '2017-07-21 00:00:00'),
+(39, 'UNIC HEALTH MANAGED CARE SERVICES LIMITED\r\n', 'Plot 144, Oba Akran Avenue\r\nIkeja, Lagos.', '2017-07-21 00:00:00', '2017-07-21 00:00:00');
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `hmo`
+--
+ALTER TABLE `hmo`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `hmo`
+--
+ALTER TABLE `hmo`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;COMMIT;
 
 --
 -- Table structure for table `treatment_procedure`
