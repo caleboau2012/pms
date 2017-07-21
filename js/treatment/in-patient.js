@@ -252,6 +252,7 @@ Treatment = {
             $('.allergies').text(checkNull(data.allergies));
             $('.alcohol_usage').text(checkNull(data.alcohol_usage));
             $('.surgical_history').text(checkNull(data.surgical_history));
+            $('.family_history').text(checkNull(data.family_history));
             $('.tobacco_usage').text(checkNull(data.tobacco_usage));
             $('.medical_history').text(checkNull(data.medical_history));
 

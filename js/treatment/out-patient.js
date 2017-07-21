@@ -192,7 +192,6 @@ Treatment = {
         var url = host + "phase/phase_treatment.php?intent=startTreatment&doctor_id=" + Treatment.CONSTANTS.doctorid
             + "&patient_id=" + $(patient).find('.patientid').html();
         $.getJSON(url, function (data) {
-            console.log(data);
             document.addTreatmentForm.reset();
             data = data.data;
             $('.treatment-ID').html(data.treatment_id);
@@ -215,6 +214,7 @@ Treatment = {
             $('.allergies').text(checkNull(data.allergies));
             $('.alcohol_usage').text(checkNull(data.alcohol_usage));
             $('.surgical_history').text(checkNull(data.surgical_history));
+            $('.family_history').text(checkNull(data.family_history));
             $('.tobacco_usage').text(checkNull(data.tobacco_usage));
             $('.medical_history').text(checkNull(data.medical_history));
 

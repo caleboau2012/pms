@@ -323,7 +323,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                                     <span class="capitalize-first tobacco_usage"></span><br>
                                                     <span>
                                                         <b>Medical History:</b>
-                                                        <span class="capitalize-first medical_history"></span>
+                                                        <span class="capitalize-first medical_history"></span><br>
+                                                        <b>Family History:</b>
+                                                        <span class="capitalize-first family_history"></span><br>
+                                                        <span>
                                                 </div>
                                             </div>
 

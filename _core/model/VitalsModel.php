@@ -1,6 +1,6 @@
 <?php
 class VitalsModel extends BaseModel {
-    public function __construct($vitals_data, $conn=NULL, $vitals_id=NULL) {
+    public function __construct($vitals_data = NULL, $conn=NULL, $vitals_id=NULL) {
         parent::__construct();
         $this->vitals_data = $vitals_data;
         $this->conn = ($conn == NULL) ? $this->conn : $conn;
