@@ -235,7 +235,7 @@ if(!isset($_SESSION[UserAuthTable::userid])){
                                         </div>
                                         <div class="form-group col-md-3">
                                             <label for="telephone">Mobile Number</label>
-                                            <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::telephone.']'?>" id="telephone" value="<?php echo $profile[ProfileTable::telephone]?>">
+                                            <input type="text" class="form-control" name="<?php echo ProfileTable::table_name.'['.ProfileTable::telephone.']'?>" id="telephone">
                                         </div>
                                         <div class="form-group col-md-6">
                                             <label for="dept">Department</label>
