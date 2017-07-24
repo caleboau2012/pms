@@ -97,7 +97,7 @@ if ($intent == 'getDepartments') {
 // Accumulate an output array of event data arrays.
     $output_arrays = array();
     foreach ($staffRoster as $array) {
-        $params['title'] = ucwords($array['firstname'] ." ".$array['middlename'] . " " .$array['lastname']);
+        $params['title'] = ucwords($array['firstname'] ." ".$array['middlename'] . " " .$array['surname']);
         $params['start'] = $array['duty_date'];
         $params['roster_id'] = $array['roster_id'];
 
@@ -123,7 +123,7 @@ if ($intent == 'getDepartments') {
 // Accumulate an output array of event data arrays.
     $output_arrays = array();
     foreach ($staffRoster as $array) {
-        $params['title'] = ucwords($array['firstname'] ." ".$array['middlename'] . " " .$array['lastname']);
+        $params['title'] = ucwords($array['firstname'] ." ".$array['middlename'] . " " .$array['surname']);
         $params['start'] = $array['duty_date'];
         $params['roster_id'] = $array['roster_id'];
 

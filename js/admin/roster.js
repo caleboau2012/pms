@@ -13,7 +13,6 @@
             /* initialize the external events
              -----------------------------------------------------------------*/
             $('#external-events .fc-event').each(function() {
-
                 // store data so the calendar knows to render an event upon drop
                 $(this).data('event', {
 //                title: $.trim($(this).text()), // use the element's text as the event title
@@ -46,7 +45,10 @@
                 editable: true,
                 droppable: true, // this allows things to be dropped onto the calendar
                 events:{
-                    url: host + 'phase/admin/phase_roster.php?intent=getAllRoster'
+                    url: host + 'phase/admin/phase_roster.php?intent=getAllRoster',
+                    error: function(err) {
+                        alert('Currently unable to display roster correctly');
+                    }
                 },
                 loading: function(bool) {
                     $('#roster_loading').toggle(bool);
@@ -133,7 +135,8 @@
 
                 }
             ).fail(function(data){
-                    console.log(data.responseText);
+                alert('Currently unable to process request');
+                    // console.log(data.responseText);
                 });
         },
         updateRoster: function(roster_id, date){
@@ -150,7 +153,7 @@
                     }, 2000);
                 }
             ).fail(function(data){
-                    console.log(data.responseText);
+                alert('Currently unable to process request')
                 });
         },
         deleteRoster: function(roster_id){
@@ -166,7 +169,7 @@
                     }, 2000);
                 }
             ).fail(function(data){
-                    console.log(data.responseText);
+                alert('Currently unable to process request')
                 });
         }
     };
