@@ -15,6 +15,8 @@ class PatientModel extends BaseModel {
     public function  InsertPatient ($PatientData){
         $sql = PatientSqlStatement::ADD;
         $result = $this->conn->execute($sql, $PatientData);
+//        print_r($this->conn->execute($sql, $PatientData)->errorInfo());
+//        (var_dump($PatientData));
         $result = $this->conn->getLastInsertedId();
 
         return $result;

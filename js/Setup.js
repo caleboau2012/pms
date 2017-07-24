@@ -62,7 +62,7 @@ Setup = {
                 $(form_data).find(":submit").removeClass("disabled").html("Proceed");
             }
         }, "json").fail(function(e){
-            console.log(e.responseText);
+            // console.log(e.responseText);
         });
     },
     processStepTwo: function (form_data) {
@@ -87,10 +87,10 @@ Setup = {
                 });
             });
             $(form_data).find(":submit").addClass("disabled").html("Processing...");
-            console.log(payload);
+            // console.log(payload);
 
             $.post(host + "phase/phase_system_setup.php", payload, function (data) {
-                console.log(data);
+                // console.log(data);
                 if (data.status == Setup.Constants.REQUEST_SUCCESS) {
                     //    Proceed to step 2
                     $("#response").empty();
@@ -103,7 +103,7 @@ Setup = {
                     $(form_data).find(":submit").removeClass("disabled").html("Proceed");
                 }
             }, "json").fail(function (e) {
-                console.log(e.responseText);
+                // console.log(e.responseText);
             });
         }
 

@@ -168,17 +168,17 @@ function addPatient(form){
 
         },
         function(data){
-            console.log(data);
+            // console.log(data);
             data = JSON.parse(data);
             if(data.data){
                 $('#newPatientModal').modal('hide');
                 init();
             }
             else{
-                alert('Sorry but something went wrong: ' + data.message)
+                alert('Sorry but something went wrong: ' + data.message);
             }
         }).fail(function(){
-            console.log('shing');
+            alert('Sorry but something went wrong: ');
         });
 
     return false;

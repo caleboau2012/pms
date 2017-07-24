@@ -77,6 +77,11 @@ class SqlClient {
     public function getLastInsertedId(){
         return $this->pdo->lastInsertId();
     }
+    public function getLastError(){
+        $this->pdo->setAttribute( PDO::ATTR_ERRMODE, PDO::ERRMODE_WARNING );
+//        return $this->pdo->errorInfo();
+        return 'Error occurred:'.implode(":",$this->pdo->errorInfo());
+    }
 
     public function beginTransaction() {
         return $this->pdo->beginTransaction();
