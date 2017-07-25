@@ -1381,6 +1381,10 @@ CREATE TABLE IF NOT EXISTS `visual_skills_profile` (
 --
 
 DROP TABLE IF EXISTS `vitals`;
+--
+-- Table structure for table `vitals`
+--
+
 CREATE TABLE `vitals` (
   `vitals_id` int(11) UNSIGNED NOT NULL,
   `patient_id` int(11) UNSIGNED NOT NULL,
@@ -1393,12 +1397,27 @@ CREATE TABLE `vitals` (
   `height` float DEFAULT NULL,
   `weight` float DEFAULT NULL,
   `bmi` float DEFAULT NULL,
-  `var` text DEFAULT NULL,
-  `val` text DEFAULT NULL,
+  `var` text,
+  `val` text,
   `active_fg` tinyint(11) NOT NULL,
   `created_date` datetime NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Indexes for table `vitals`
+--
+ALTER TABLE `vitals`
+  ADD PRIMARY KEY (`vitals_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `vitals`
+--
+ALTER TABLE `vitals`
+  MODIFY `vitals_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;COMMIT;
 
 --
 -- Table structure for table `ward_ref`
