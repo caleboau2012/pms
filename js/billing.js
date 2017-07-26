@@ -242,10 +242,10 @@ Billing = {
                 });
             }
             if(data.data.test.blood_test){
-                $.each(data.data.test.chemical_test, function(key, value ) {
+                $.each(data.data.test.blood_test, function(key, value ) {
                     $('#test').append("<tr>" +
                         "<td>Haematology</td>" +
-                        "<td>" + checkNull(value.clinical_diagnosis) + "</td>" +
+                        "<td>" + checkNull(value.clinical_diagnosis_details) + "</td>" +
                         "<td>" + value.created_date + "</td>" +
                         "</tr>");
                 });

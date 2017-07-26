@@ -133,11 +133,11 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 
 <script id="tmplTreatmentHistory" type="text/html">
     <li class="list-group-item">
-        <a class="collapsed treatment-history-template" data-toggle="collapse" data-parent="#accordion{{userid}}"
-           href="#collapse{{treatmentid}}" aria-expanded="false" aria-controls="collapse{{treatmentid}}">
+        <a class="collapsed treatment-history-template" data-toggle="collapse" data-parent="#treatment{{userid}}"
+           href="#collapseTreatment{{treatmentid}}" aria-expanded="false" aria-controls="collapseTreatment{{treatmentid}}">
             <span>Session {{treatmentid}}</span> <b>Diagnosis:</b> {{diagnosis}}
         </a>
-        <div id="collapse{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
+        <div id="collapseTreatment{{treatmentid}}" class="panel-collapse collapse" role="tabpanel"
              aria-labelledby="heading{{treatmentid}}">
             <div class="panel-body">
                 <p><b>Comments:</b> {{comments}}</p>
@@ -185,10 +185,10 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
 <script id="tmplVitals" type="text/html">
     <li class="list-group-item">
         <a class="collapsed" data-toggle="collapse" data-parent="#vitals{{userid}}"
-           href="#collapse{{id}}" aria-expanded="false" aria-controls="collapse{{id}}">
+           href="#collapseVitals{{id}}" aria-expanded="false" aria-controls="collapseVitals{{id}}">
             <b>Date:</b> {{created_date}}
         </a>
-        <div id="collapse{{id}}" class="panel-collapse collapse" role="tabpanel"
+        <div id="collapseVitals{{id}}" class="panel-collapse collapse" role="tabpanel"
              aria-labelledby="heading{{id}}">
             <div class="panel-body">
                 <p><b>Blood Pressure:</b> {{blood_pressure}}</p>
@@ -298,15 +298,15 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                             </div>
                         </div>
                         <div class="col-xs-12">
-                            <div class="panel-group" id="accordion">
+                            <div class="panel-group" id="socialMedical">
                                 <div class="panel panel-danger">
                                     <div class="panel-heading">
                                         <h4 class="panel-title">
-                                            <a data-toggle="collapse" data-parent="#accordion" href="#collapse1">
+                                            <a data-toggle="collapse" data-parent="#socialMedical" href="#socialMedicalHistory">
                                                 Social/Medical History</a>
                                         </h4>
                                     </div>
-                                    <div id="collapse1" class="panel-collapse collapse">
+                                    <div id="socialMedicalHistory" class="panel-collapse collapse">
                                         <div class="panel-body">
                                             <div class="row">
                                                 <div class="col-md-6">

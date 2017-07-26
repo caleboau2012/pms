@@ -256,6 +256,7 @@ CREATE TABLE IF NOT EXISTS `chemical_pathology_request` (
   `doctor_id` int(11) DEFAULT NULL,
   `lab_attendant_id` int(11) DEFAULT NULL,
   `status_id` int(11) NOT NULL DEFAULT '5',
+  `bill_status` int(11) NOT NULL DEFAULT '1',
   `cp_ref_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`cpreq_id`),
   UNIQUE KEY `NewIndex1` (`laboratory_ref`),
@@ -415,6 +416,7 @@ INSERT INTO `emergency_detail` (`emergency_status_id`, `emergency_status`) VALUE
 --
 -- Table structure for table `treatment_procedure`
 --
+
 CREATE TABLE `treatment_procedure` (
   `id` int(11) NOT NULL,
   `treatment_id` int(11) NOT NULL,
@@ -424,6 +426,25 @@ CREATE TABLE `treatment_procedure` (
   `modified_date` datetime DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `treatment_procedure`
+--
+ALTER TABLE `treatment_procedure`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `treatment_procedure`
+--
+ALTER TABLE `treatment_procedure`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;COMMIT;
 --
 -- HMO Table
 --
@@ -506,9 +527,14 @@ ALTER TABLE `hmo`
 -- Table structure for table `encounter`
 --
 
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `encounter`
+--
 DROP TABLE IF EXISTS `encounter`;
-CREATE TABLE IF NOT EXISTS `encounter` (
-  `encounter_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT,
+CREATE TABLE `encounter` (
+  `encounter_id` int(11) UNSIGNED NOT NULL,
   `personnel_id` int(11) DEFAULT NULL,
   `patient_id` int(11) UNSIGNED DEFAULT NULL,
   `admission_id` int(11) UNSIGNED DEFAULT NULL,
@@ -516,18 +542,36 @@ CREATE TABLE IF NOT EXISTS `encounter` (
   `created_date` datetime DEFAULT NULL,
   `active_fg` tinyint(1) DEFAULT '1',
   `treatment_id` int(11) DEFAULT NULL,
-  `symptoms` varchar(200) DEFAULT NULL,
-  `consultation` varchar(200) DEFAULT NULL,
+  `symptoms` text,
+  `consultation` text,
   `status` int(11) DEFAULT '1',
   `bill_status` int(11) DEFAULT '1',
   `modified_date` timestamp NULL DEFAULT CURRENT_TIMESTAMP,
-  `diagnosis` text,
-  PRIMARY KEY (`encounter_id`),
-  KEY `fk_PatientEncountered` (`patient_id`),
-  KEY `fk_PersonnelEncountered` (`personnel_id`),
-  KEY `fk_AdmissionEncounter` (`admission_id`)
+  `diagnosis` text
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `encounter`
+--
+ALTER TABLE `encounter`
+  ADD PRIMARY KEY (`encounter_id`),
+  ADD KEY `fk_PatientEncountered` (`patient_id`),
+  ADD KEY `fk_PersonnelEncountered` (`personnel_id`),
+  ADD KEY `fk_AdmissionEncounter` (`admission_id`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `encounter`
+--
+ALTER TABLE `encounter`
+  MODIFY `encounter_id` int(11) UNSIGNED NOT NULL AUTO_INCREMENT;COMMIT;
 -- --------------------------------------------------------
 
 --
