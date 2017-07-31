@@ -489,7 +489,7 @@ Admission = {
             }else if(res.status == Admission.CONSTANTS.REQUEST_ERROR){
                 response = '<div class="alert alert-dismissible alert-danger text-center">' +
                 ' <button type="button" class="close" data-dismiss="alert">×</button>' +
-                '<strong>' + res.message +'</strong><br/> Ensure to enter appropriate values' +
+                '<strong>Oops!</strong><br/> Ensure to enter appropriate values' +
                 '</div>';
                 $('#log_encounter_loading').addClass('hidden');
                 $('#log_encounter_response').html(response);
