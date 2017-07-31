@@ -232,12 +232,16 @@ Treatment = {
         }, function (data) {
             data = data.data;
             Treatment.CONSTANTS.encounterid = data.encounter_id;
+            var currentYear = new Date().getFullYear();
+            var age = currentYear - parseInt(data.birth_date.split('-')[0]) +' years';
+
             $('.treatment-ID').html(Treatment.CONSTANTS.treatmentid);
             $('.encounter-ID').html(Treatment.CONSTANTS.encounterid);
             $('.patient-name').html($(patient).find('.patientName').html());
             $('.patient-RegNo').html(data.regNo);
             $('.patient-Sex').html(data.sex);
-            $('.patient-Age').html(data.birth_date);
+            // $('.patient-Age').html(data.birth_date);
+            $('.patient-Age').html(age);
             $('.patient-ID').html(Treatment.CONSTANTS.patientid);
             $('.father_status').text(checkNull(data.father_status));
             $('.mother_status').text(checkNull(data.mother_status));
