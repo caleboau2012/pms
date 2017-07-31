@@ -318,7 +318,7 @@ class DrugSqlStatement{
 
 class VitalsSqlStatement {
     const ADD = "INSERT INTO vitals (patient_id, added_by, temp, pulse, respiratory_rate, blood_pressure, height, weight, bmi, var, val, active_fg, created_date) VALUES (:patient_id, :added_by, :temp, :pulse, :respiratory_rate, :blood_pressure, :height, :weight, :bmi, :var, :val, 1, NOW())";
-    const GET_VITALS = "SELECT patient_id, encounter_id, added_by, temp, pulse, respiratory_rate, blood_pressure, height, weight, bmi, created_date FROM vitals WHERE patient_id = :patient_id ORDER BY created_date DESC";
+    const GET_VITALS = "SELECT * FROM vitals WHERE patient_id = :patient_id ORDER BY created_date DESC";
 }
 
 class UnitsSqlStatement{

@@ -186,13 +186,39 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
         <div id="collapseVitals{{id}}" class="panel-collapse collapse" role="tabpanel"
              aria-labelledby="heading{{id}}">
             <div class="panel-body">
-                <p><b>Blood Pressure:</b> {{blood_pressure}}</p>
-                <p><b>BMI:</b> {{bmi}}</p>
-                <p><b>Pulse:</b> {{pulse}}</p>
-                <p><b>Respiratory Rate:</b> {{respiratory_rate}}</p>
-                <p><b>Temperature:</b> {{temp}}</p>
-                <p><b>Weight:</b> {{weight}}</p>
-                <p><b>Height:</b> {{height}}</p>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><b>Blood Pressure:</b> {{blood_pressure}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>BMI:</b> {{bmi}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Pulse:</b> {{pulse}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><b>Respiratory Rate:</b> {{respiratory_rate}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Temperature:</b> {{temp}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Weight:</b> {{weight}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <p><b>Height:</b> {{height}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Val:</b> {{val}}</p>
+                    </div>
+                    <div class="col-md-4">
+                        <p><b>Var:</b> {{val}}</p>
+                    </div>
+                </div>
                 <span class="encounter_id" hidden>{{encounter_id}}</span>
                 <span class="patient_id" hidden>{{patient_id}}</span>
             </div>

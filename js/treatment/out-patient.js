@@ -507,6 +507,8 @@ Treatment = {
                     patientHTML = replaceAll('{{temp}}', data[i].temp, patientHTML);
                     patientHTML = replaceAll('{{weight}}', data[i].weight, patientHTML);
                     patientHTML = replaceAll('{{height}}', data[i].height, patientHTML);
+                    patientHTML = replaceAll('{{var}}', data[i].var, patientHTML);
+                    patientHTML = replaceAll('{{val}}', data[i].val, patientHTML);
                     patientHTML = replaceAll('{{encounter_id}}', data[i].encounter_id, patientHTML);
                     patientHTML = replaceAll('{{patient_id}}', data[i].patient_id, patientHTML);
 
