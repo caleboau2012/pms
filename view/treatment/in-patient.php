@@ -283,7 +283,7 @@ if (!isset($_SESSION[UserAuthTable::userid])) {
                                     </span>
                                     <br>
                                     <span>
-                                        <b>Date of Birth:</b>
+                                        <b>Age:</b>
                                         <span class="patient-Age"></span>
                                     </span>
                                 </div>
