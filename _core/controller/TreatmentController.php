@@ -94,6 +94,14 @@ class TreatmentController{
     }*/
 
     public function logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions, $glass_prescription){
+        if($consultation != null){
+            $this->treatmentModel->addProcedure(
+                array(
+                    'treatment_id' => $treatmentId,
+                    'description' => $consultation
+                )
+            );
+        }
         return $this->treatmentModel->logEncounter($doctorId, $patientId, $admissionId, $treatmentId, $encounterId, $consultation, $symptoms, $diagnosis, $comments, $prescriptions, $glass_prescription);
     }
 
