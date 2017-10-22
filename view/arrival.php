@@ -332,7 +332,7 @@ $hmos = $patientController->getAllHMO();
                             <table class="table table-responsive">
                                 <tr>
                                     <td class="form-inline">
-                                        <div class="pull-left">
+                                        <div>
                                             Citizenship:
                                             <label class="label label-success">Nigerian</label>
                                             <input checked id="naija" type="checkbox" class="naija form-control checkbox">
@@ -345,39 +345,39 @@ $hmos = $patientController->getAllHMO();
                                 </tr>
                                 <tr>
                                     <td class="form-inline">
-                                        <div class="pull-left">
+                                        <div>
                                             <label for="allergies">Allergies</label><br>
                                             <textarea id="allergies" name="<?php echo PatientTable::allergies ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
                                     <td class="form-inline">
-                                        <div class="pull-left">
+                                        <div>
                                             <label for="med_history">Medical History</label><br>
                                             <textarea id="med_history" name="<?php echo PatientTable::medical_history ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
                                     <td class="form-inline">
-                                        <div class="pull-left">
+                                        <div>
                                             <label for="alcohol_usage">Alcohol Usage</label><br>
                                             <textarea id="alcohol_usage" name="<?php echo PatientTable::alcohol_usage ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
                                     <td class="form-inline">
-                                        <div class="pull-left">
+                                        <div>
                                             <label for="tobacco_usage">Tobacco Usage</label><br>
                                             <textarea id="tobacco_usage" name="<?php echo PatientTable::tobacco_usage ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td class="form-inline">
-                                        <div class="pull-left">
+                                    <td class="form-inlinew">
+                                        <div>
                                             <label for="family_history">Family History</label><br>
                                             <textarea id="family_history" name="<?php echo PatientTable::family_history ;?>" class="form-control"></textarea>
                                         </div>
                                     </td>
-                                    <td class="form-inline">
-                                        <div class="pull-left">
+                                    <td class="form-inlinew">
+                                        <div>
                                             <label for="surgical_history">Surgical History</label><br>
                                             <textarea id="surgical_history" name="<?php echo PatientTable::surgical_history ;?>" class="form-control">
                                             </textarea>
