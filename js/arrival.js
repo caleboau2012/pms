@@ -105,6 +105,21 @@ function init(){
         $(".general").find('.drop').html(patientHTML);
         draggableDropabble();
     });
+
+    $('.verify').click(function(e){
+        e.preventDefault();
+        $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $('#regNo').val()), function(data){
+            console.log(data);
+            if(data.status == 2){
+                showAlert(data.message);
+            }
+            else if(data.status == 1){
+                showSuccess(data.data);
+            }
+        }, 'json').fail(function(e){
+            console.log(e.responseText);
+        });
+    });
 }
 
 var limit;
