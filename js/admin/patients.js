@@ -21,9 +21,7 @@ function init(){
 
     $('.verify').click(function(e){
         e.preventDefault();
-        console.log($('.regNo'));
         $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $(this).parent().find('.regNo').val()), function(data){
-            console.log(data);
             if(data.status == 2){
                 showAlert(data.message);
             }
@@ -31,7 +29,6 @@ function init(){
                 showSuccess(data.data);
             }
         }, 'json').fail(function(e){
-            console.log(e.responseText);
         });
     });
 
@@ -264,7 +261,6 @@ function manage(id){
                 family_history : form.family_history.value
             },
             function(data){
-                console.log(data);
                 if(data.status == 2){
                     showAlert(data.message);
                 }else{
@@ -275,7 +271,6 @@ function manage(id){
 
             }, 'json').fail(function(data){
                 showAlert(data.message);
-                console.log('shing');
             });
     });
 }

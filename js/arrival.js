@@ -109,7 +109,6 @@ function init(){
     $('.verify').click(function(e){
         e.preventDefault();
         $.get((host + 'phase/arrival/phase_patient.php?intent=verifyRegNo&regNo=' + $('#regNo').val()), function(data){
-            console.log(data);
             if(data.status == 2){
                 showAlert(data.message);
             }
@@ -117,9 +116,11 @@ function init(){
                 showSuccess(data.data);
             }
         }, 'json').fail(function(e){
-            console.log(e.responseText);
         });
     });
+
+    calendar_pop();
+
 }
 
 var limit;
@@ -226,7 +227,7 @@ function patientDrop(e, ui){
     var patient = ($(source).find('.patientid').html());
     var toDoctor = ($(target).find('.to_doctor').html());
 
-    console.log('Moving: ' + patient + ' From: ' + fromDoctor + ' To: ' + toDoctor)
+    // console.log('Moving: ' + patient + ' From: ' + fromDoctor + ' To: ' + toDoctor)
 
     $(source).find('.doctorid').html(toDoctor);
 
@@ -246,7 +247,6 @@ function addToQueue(patient){
 
 function removeFromQueue(patient){
     $.get((host + 'phase/arrival/phase_patient_arrival.php?intent=removeFromQueue&patient_id=' + patient.find('.patientid').html()), function(data){
-        console.log(data);
         patient.remove();
     });
 }
@@ -370,7 +370,6 @@ function emergency(){
 }
 
 function searchResult(patientDetails){
-    console.log(patientDetails);
     var patientHTML = "";
     //patientName = toTitleCase(form.surname.value) + " " + toTitleCase(form.firstname.value) + " " + toTitleCase(form.middlename.value);
     patientHTML += $('#tmplPatients').html();
@@ -436,3 +435,11 @@ $(document.vitalsForm).on('submit', function(e){
         //console.log(data.responseText);
     });
 });
+
+function calendar_pop(){
+    $('.date-picker').datepicker({
+        format: 'yyyy-mm-dd',
+        startView: 'decade'
+        //startDate: '3d'
+    });
+}

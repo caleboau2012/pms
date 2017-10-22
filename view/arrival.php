@@ -497,11 +497,10 @@ $hmos = $patientController->getAllHMO();
 <script src="../js/bootstrap/jquery-1.10.2.min.js"></script>
 <script src="../js/bootstrap/jquery.dataTables.js"></script>
 <script src="../js/bootstrap/bootstrap.min.js"></script>
+<script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/bootstrap/bootstrap-datepicker.min.js"></script>
 <script src="../js/constants.js"></script>
-<script src="../js/bootstrap/jquery-ui.min.js"></script>
 <script src="../js/libs/bootstrap-notify/bootstrap-notify.min.js"></script>
-<script src="../js/constants.js"></script>
 <script src="../js/libs/masonry.js"></script>
 <script src="../js/arrival.js"></script>
 
