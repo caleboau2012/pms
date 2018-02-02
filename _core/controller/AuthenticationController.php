@@ -5,6 +5,12 @@ class AuthenticationController {
         return $user_model->verify($data);
     }*/
 
+    public function verifyReg($regNo){
+        $user_model = new UserModel();
+        $user_id = $user_model->getUserId($regNo);
+        return $user_id;
+    }
+
     public function verify($data){
         $verification_result = array();
 

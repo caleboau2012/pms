@@ -97,6 +97,30 @@ if ($intent == 'login') {
     CxSessionHandler::destroy();
     echo JsonResponse::message(STATUS_OK, "Logout successful");
     exit();
+} elseif ($intent == "shutdown") {
+    if(isset($_REQUEST['regNo'])){
+        $authenticator = new AuthenticationController();
+        $verify = $authenticator->verifyReg($_REQUEST['regNo']);
+
+        if (is_array($verify)) {
+            $authenticator->flagUserOffline($verify['userid']);
+            echo JsonResponse::message(STATUS_OK, "Logout successful");
+            exit();
+        }else{
+            echo JsonResponse::error('Unknown user');
+            exit();
+        }
+
+    }
+    $authenticator = new AuthenticationController();
+
+    $userid = CxSessionHandler::getItem(UserAuthTable::userid);
+
+    $authenticator->flagUserOffline($userid);
+
+    CxSessionHandler::destroy();
+    echo JsonResponse::message(STATUS_OK, "Logout successful");
+    exit();
 } else {
     echo JsonResponse::error('Invalid intent!');
     exit();

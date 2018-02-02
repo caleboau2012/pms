@@ -3,6 +3,38 @@
  */
 
 $(function(){
+    $('#shutdownForm').on('submit', function (e) {
+        e.preventDefault();
+
+        $('#shutdownForm-error').addClass('hidden');
+        $('#shutdownForm-loading').removeClass('hidden');
+
+        var regNo = $('#shutRegInput').val();
+        var payload = { intent: 'shutdown', 'regNo' : regNo };
+
+        var request = $.post('phase/phase_auth.php', payload);
+        request.done(function (data) {
+            var response = JSON.parse(data);
+
+            if(response.status == 2){
+                $('#shutdownForm-error').removeClass('hidden');
+                $('#shutdownForm-loading').addClass('hidden');
+                $('#shutdownForm-error-msg').html(response.message);
+            }else{
+                $('#shutdownForm').trigger('reset');
+                $('#shutdownForm-loading').addClass('hidden');
+                $('#shutdownUserModal').hide();
+                ResponseModal.show(response.message, true);
+            }
+
+        }).fail(function (data) {
+            $('#shutdownForm-error').removeClass('hidden');
+            $('#shutdownForm-loading').addClass('hidden');
+            $('#shutdownForm-error-msg').html('Currently unable to process request.');
+
+        })
+    });
+
     $('#login').on('submit', function (e) {
         e.preventDefault();
 

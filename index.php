@@ -69,6 +69,51 @@
     </form>
 </div> <!-- /container -->
 
+<!---->
+<div class="power-off">
+    <a href="#" data-toggle="modal" data-target="#shutdownUserModal">
+        <span class="fa fa-power-off"></span>
+    </a>
+</div>
+
+<!-- Shutdown modal -->
+<div class="modal fade" id="shutdownUserModal" tabindex="-1" role="dialog" aria-labelledby="shutdownUserModal"
+     aria-hidden="true">
+    <div class="modal-dialog modal-sm">
+        <div class="modal-content">
+            <form id="shutdownForm" name="shutdownForm" class="form-group">
+                <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                    <h4 class="modal-title">Clear Session</h4>
+                </div>
+                <div class="modal-body">
+                    <div class="alert hidden alert-danger alert-dismissable" role="alert" id="shutdownForm-error">
+                        <span id="shutdownForm-error-msg"></span>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Username</label>
+                        <input type="text" id="shutRegInput" class="form-control" name="regNo" required>
+                    </div>
+
+                </div>
+                <div class="modal-footer">
+                    <span id="shutdownForm-loading" class="fa fa-spinner fa-spin hidden"></span>
+                    <button class="btn btn-primary" type="submit">Shutdown</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+<script src="js/bootstrap/jquery-1.10.2.min.js"></script>
+<script src="js/bootstrap/bootstrap.min.js"></script>
+<script src="js/constants.js"></script>
+
+
 <?php
 include("view/footer.php");
 ?>

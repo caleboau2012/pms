@@ -1594,3 +1594,16 @@ input.cmn-toggle-round:checked + label:after{
 .capitalize-first:first-letter{
     text-transform: uppercase;
 }
+.power-off{
+    position: fixed;
+    bottom: 0;
+    z-index: 99;
+}
+.power-off span{
+    font-size: 30px;
+    color: #808080;
+    margin: 20px;
+}
+.power-off span:hover{
+    color: #a94442;
+}
