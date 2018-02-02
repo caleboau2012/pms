@@ -225,8 +225,9 @@ Treatment = {
                 document.addTreatmentForm.diagnosis.value = data.diagnosis;
                 document.addTreatmentForm.comment.value = data.comments;
 
-                $("#end-incomplete").animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow")
+                /*$("#end-incomplete").animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow")
                     .animate({"opacity": "0"}, "slow").animate({"opacity": "1"}, "slow");
+            */
             }
         });
         $('.end').removeClass('hidden');
