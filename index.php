@@ -101,7 +101,7 @@
                 </div>
                 <div class="modal-footer">
                     <span id="shutdownForm-loading" class="fa fa-spinner fa-spin hidden"></span>
-                    <button class="btn btn-primary" type="submit">Shutdown</button>
+                    <button class="btn btn-primary" type="submit">Submit</button>
                 </div>
             </form>
         </div>
