@@ -30,6 +30,21 @@ class PharmacistModel extends BaseModel{
         $data = array(PrescriptionTable::treatment_id => $treatmentId);
         return $this->conn->fetchAll(PrescriptionSqlStatement::GET_TREATMENT_PRESCRIPTIONS, $data);
     }
+    public function getAllEncounterPrescriptions($encounterId){
+        $data = array(PrescriptionTable::encounter_id => $encounterId);
+        return $this->conn->fetchAll(PrescriptionSqlStatement::GET_ENCOUNTER_PRESCRIPTIONS, $data);
+    }
+
+    public function removePrescriptionsByTreatmentId($treatment_id){
+        $data = array(PrescriptionTable::treatment_id => $treatment_id);
+        $sql = PrescriptionSqlStatement::REMOVE_PRESCRIPTION_BY_TREATMENT;
+        return $this->conn->execute($sql, $data);
+    }
+    public function removePrescriptionsByEncounterId($encounter_id){
+        $data = array(PrescriptionTable::encounter_id => $encounter_id);
+        $sql = PrescriptionSqlStatement::REMOVE_PRESCRIPTION_BY_ENCOUNTER;
+        return $this->conn->execute($sql, $data);
+    }
 
     public function AddPrescription($somepre, $treatment_id, $status, $mod, $encounter_id){
         $data = array(PrescriptionTable::prescription => $somepre, PrescriptionTable::treatment_id => $treatment_id,

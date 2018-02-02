@@ -71,6 +71,20 @@ class TreatmentController{
         return $history;
     }
 
+    public function getTreatmentPrescriptions($treatmentId){
+        $prescriptionModel = new PharmacistModel();
+        $prescriptions = $prescriptionModel->getAllTreatmentPrescriptions($treatmentId);
+
+        return $prescriptions;
+    }
+
+    public function getEncounterPrescriptions($encounterId){
+        $prescriptionModel = new PharmacistModel();
+        $prescriptions = $prescriptionModel->getAllEncounterPrescriptions($encounterId);
+
+        return $prescriptions;
+    }
+
     public function requestLabTest($doctorId, $treatmentId, $encounterId, $labTestType, $comment){
         return $this->treatmentModel->requestLabTest($doctorId, $treatmentId, $encounterId, $labTestType, $comment);
     }

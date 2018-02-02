@@ -293,6 +293,8 @@ class PrescriptionSqlStatement{
                               p.encounter_id = :encounter_id AND status = 1";
     const GET_TREATMENT_PRESCRIPTIONS = "SELECT * FROM prescription AS p WHERE p.treatment_id = :treatment_id
                             ";
+    const GET_ENCOUNTER_PRESCRIPTIONS = "SELECT * FROM prescription AS p WHERE p.encounter_id = :encounter_id
+                            ";
     const GET_QUEUE = "SELECT t.treatment_id, p.encounter_id, t.patient_id, pa.firstname, pa.surname, pa.middlename, pa.regNo FROM
                       treatment AS t INNER JOIN prescription as p ON (t.treatment_id = p.treatment_id)  INNER JOIN
                       patient as pa ON (t.patient_id = pa.patient_id) WHERE p.status = :status GROUP BY t.treatment_id, p.encounter_id
@@ -302,6 +304,8 @@ class PrescriptionSqlStatement{
     const ADD_PRESCRIPTION = "INSERT INTO prescription (prescription, treatment_id, encounter_id, status, modified_by, created_date, modified_date, active_fg)
      VALUES (:prescription, :treatment_id, :encounter_id, :status, :modified_by, NOW(), NOW(), '1')";
     const ADD_UNITS = "INSERT INTO unit_ref (unit, symbol) VALUES ";
+    const REMOVE_PRESCRIPTION_BY_TREATMENT = "DELETE FROM prescription where treatment_id = :treatment_id";
+    const REMOVE_PRESCRIPTION_BY_ENCOUNTER = "DELETE FROM prescription where encounter_id = :encounter_id";
 }
 
 class DrugSqlStatement{
